@@ -8,12 +8,9 @@ import './styles/index.css';
 import { initHeader } from './components/header';
 import { initReveal } from './lib/reveal';
 import { initScrollLink } from './lib/scrollLink';
-import { mountGlyphs } from './visuals/glyphs';
 import { ready } from './lib/dom';
 
 export function enhance(root: ParentNode = document, mount?: (root: ParentNode) => void): void {
-  mountGlyphs(root);
-
   try {
     mount?.(root);
   } catch (error) {

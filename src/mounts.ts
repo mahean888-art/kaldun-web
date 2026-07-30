@@ -7,11 +7,12 @@ import { el, qs, qsa } from './lib/dom';
 import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
 import { initClock } from './components/clock';
+import { initFitText } from './components/fitText';
 import { initStack } from './sections/stack';
 import { MOVEMENTS } from './data/engine';
 import { DOMAINS } from './data/domains';
 import { BACKGROUNDS_SHORT } from './data/fellowship';
-import { CALENDLY, COMMITMENT_REASONS, EMAIL, PILLARS, RECORD_FIELDS, THESIS_SHOWS } from './data/site';
+import { CALENDLY, EMAIL, PILLARS, RECORD_FIELDS, THESIS_SHOWS } from './data/site';
 
 /** Both primary actions open the same scheduling link. */
 function wireActions(root: ParentNode): void {
@@ -29,6 +30,7 @@ function wireActions(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initClock(root);
+  initFitText(root);
   wireActions(root);
 
   const canvas = qs<HTMLCanvasElement>('[data-ring-field]', root);
@@ -72,11 +74,6 @@ export function mountHome(root: ParentNode = document): void {
         ]),
       ),
     );
-  }
-
-  const reasons = qs('[data-commitment-reasons]', root);
-  if (reasons) {
-    reasons.replaceChildren(...COMMITMENT_REASONS.map((reason) => el('li', {}, [reason])));
   }
 
   const backgrounds = qs('[data-backgrounds]', root);

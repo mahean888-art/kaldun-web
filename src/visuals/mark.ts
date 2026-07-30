@@ -1,34 +1,23 @@
 /**
- * The Kaldun mark, rebuilt as geometry.
+ * The Kaldun mark, rebuilt from coordinates.
  *
- * A crimson beacon — a bowl with three risers — inside a gold measuring ring.
- * Drawn from coordinates rather than shipped as a raster, so it stays crisp at
- * every size, in the header, in the footer and as the favicon.
+ * A red dome over three descending tines, held in a dark disc: the sun above
+ * the horizon and what falls from it. Drawn rather than shipped as a raster, so
+ * it stays exact in the header, the footer and the favicon.
+ *
+ * The dome's flat edge sits on the disc's centre line; the outer tines are
+ * chamfered on their outer corner and the centre tine runs deepest.
  */
 
 import { svg } from '../lib/dom';
 
-const BOWL = 'M13 27.4C13 34.5 17.9 39.6 24 39.6C30.1 39.6 35 34.5 35 27.4Z';
-
-/** Three risers: outer pair equal, centre one taller. */
-const RISERS: Array<[number, number]> = [
-  [13, 16.6],
-  [21.4, 12.4],
-  [29.8, 16.6],
-];
-
-const RISER_W = 5.2;
+const DOME = 'M4.4 24A19.6 19.6 0 0 1 43.6 24Z';
+const TINE_LEFT = 'M11.6 24H15.9V35.6L11.6 31.4Z';
+const TINE_CENTRE = 'M21.4 24H26.6V40.2H21.4Z';
+const TINE_RIGHT = 'M36.4 24H32.1V35.6L36.4 31.4Z';
 
 export function makeMark(size = 34): SVGElement {
-  const risers = RISERS.map(([x, y]) =>
-    svg('rect', {
-      x,
-      y,
-      width: RISER_W,
-      height: 27.4 - y,
-      fill: 'var(--crimson)',
-    }),
-  );
+  const red = (d: string): SVGElement => svg('path', { d, fill: 'var(--crimson)' });
 
   return svg(
     'svg',
@@ -42,17 +31,20 @@ export function makeMark(size = 34): SVGElement {
       class: 'mark',
     },
     [
-      svg('circle', { cx: 24, cy: 24, r: 23, fill: 'var(--void)' }),
+      svg('circle', { cx: 24, cy: 24, r: 23.4, fill: '#0d0d0d' }),
+      // A hairline in the mark's own yellow, so the disc reads on a dark page.
       svg('circle', {
         cx: 24,
         cy: 24,
-        r: 22.2,
+        r: 22.9,
         fill: 'none',
         stroke: 'var(--gold)',
-        'stroke-width': 1.1,
+        'stroke-width': 1,
       }),
-      svg('path', { d: BOWL, fill: 'var(--crimson)' }),
-      ...risers,
+      red(DOME),
+      red(TINE_LEFT),
+      red(TINE_CENTRE),
+      red(TINE_RIGHT),
     ],
   );
 }

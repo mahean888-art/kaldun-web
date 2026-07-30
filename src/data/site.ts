@@ -8,7 +8,7 @@
 export const EMAIL = 'hello@kaldun.ai';
 
 /** Scheduling link used by both primary actions. */
-export const CALENDLY = 'https://calendly.com/kaldun/decision';
+export const CALENDLY = 'https://calendly.com/mahean888/30min';
 
 export const PILLARS: Array<{ ordinal: string; title: string; body: string }> = [
   {
@@ -45,20 +45,8 @@ export const THESIS_SHOWS: string[] = [
 export const RECORD_FIELDS: Array<[string, string]> = [
   ['QUESTION', 'The claim, written so it can only resolve one way'],
   ['PROBABILITY', 'The belief at commitment, never overwritten'],
-  ['COMMITTED', 'Timestamp of the first published belief'],
-  ['INFORMATION', 'What the Engine could see when it committed'],
+  ['COMMITTED', 'Timestamp, and what the Engine could see'],
   ['RESOLUTION', 'The named source and rule that will decide it'],
-  ['MODEL', 'The Engine version that produced it'],
-  ['UPDATES', 'Every revision since, in order, with what moved it'],
   ['OUTCOME', 'What reality returned'],
   ['SCORE', 'Calibration against that outcome, and against a baseline'],
-  ['COMMITMENT', 'The hash that proves the record predates the outcome'],
-];
-
-export const COMMITMENT_REASONS: string[] = [
-  'Prove the forecast existed before the outcome.',
-  'Prevent the original probability from being silently changed.',
-  'Preserve every update as a new version.',
-  'Allow the record to be verified independently.',
-  'Make it impossible to show only the forecasts that worked.',
 ];

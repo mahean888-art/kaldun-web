@@ -59,8 +59,8 @@
 .wordmark__type {
   font-family: var(--mono);
   font-size: 0.9375rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
+  font-weight: 700;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--cream);
   line-height: 1;
@@ -405,4 +405,23 @@ body.is-locked {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ash-dim);
+}
+
+/* --- the fitted footer wordmark -------------------------------------- */
+
+.footer-wordmark {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: clamp(2rem, 5vw, 4rem);
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: var(--cream);
+  white-space: nowrap;
+  /* Cropped at the baseline, so the wordmark sits on the page edge. */
+  margin-bottom: -0.14em;
+  user-select: none;
 }

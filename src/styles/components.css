@@ -77,39 +77,6 @@
   overflow-wrap: anywhere;
 }
 
-/* --- generated glyphs -------------------------------------------------- */
-
-.glyph {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  color: var(--gold);
-}
-
-.glyph svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.glyph [data-draw] {
-  stroke-dasharray: var(--len, 400);
-  stroke-dashoffset: var(--len, 400);
-  transition: stroke-dashoffset 1.05s var(--ease-out);
-  transition-delay: calc(var(--d, 0) * 55ms);
-}
-
-.glyph.is-in [data-draw] {
-  stroke-dashoffset: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glyph [data-draw] {
-    stroke-dashoffset: 0 !important;
-    transition: none;
-  }
-}
-
 /* --- footnote --------------------------------------------------------- */
 
 .footnote {

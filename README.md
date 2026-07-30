@@ -32,7 +32,7 @@ once Pages is switched to "GitHub Actions" in repository settings.
 | 02 | Thesis | The calibrated future is the output |
 | 03 | Engine | Know the state · Run it forward · Make futures explicit · Learn from reality |
 | 04 | Domains | Five decision classes, each naming the institutions that own it |
-| 05 | Record | What a committed forecast carries, and why it is committed |
+| 05 | Record | Why a self-authored foresight report cannot be audited, and what a committed forecast carries instead |
 | 06 | Project 10191 | The fellowship |
 | — | Closing | Bring us a decision |
 
@@ -56,11 +56,11 @@ src/lib/
   scrollLink.ts             writes --p (0..1) on [data-scroll]; CSS animates
   reveal.ts                 one IntersectionObserver; masked line reveals
   dom.ts math.ts prefers.ts
-src/components/             header, clock
+src/components/             header, clock, fitText
 src/visuals/
   ringField.ts              the hero dial
-  mark.ts                   the Kaldun mark, drawn from coordinates
-  glyphs.ts                 generated line-art glyph set
+  mark.ts                   the mark, drawn from coordinates
+  figures.ts                the nine generated panel plates
 src/sections/stack.ts       the rail-and-panel section, used by Engine and Domains
 src/data/                   domains, engine, fellowship, site constants
 src/mounts.ts               page composition
@@ -69,9 +69,18 @@ src/pages/home.ts           entry
 
 ## Design
 
-**Palette** is taken from the mark: crimson `#c2313b` on near-black `#0a0a0a`,
-with olive-gold `#b9a44c` for structure and measurement and a warm cream
-`#ede8de` for type. One accent points; gold rules and graduates.
+**Palette** is the mark's own three colours and nothing else: deep red
+`#b91f2e`, saturated yellow `#d9a626`, near-black `#0a0a0a`, with a warm cream
+`#ede8de` for type. Red points; yellow rules, graduates and measures.
+
+**The mark** is a red dome over three descending tines inside a dark disc, built
+from coordinates in `src/visuals/mark.ts` and reused for the favicon.
+
+**Figures** — one generated plate per Engine movement and per domain, in
+`src/visuals/figures.ts`. Each is a diagram of the thing it sits beside: a
+measured field, a branching, a distribution of odds, a cycle closed by
+resolution, a staged allocation, a wavefront, crossing cost curves, correlated
+arrivals, a cascade. Seeded, so they are identical on every load.
 
 **Type** is Geist for display and structure, Geist Mono for labels, data and the
 wordmark — both self-hosted variable subsets, preloaded, OFL.

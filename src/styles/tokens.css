@@ -21,12 +21,14 @@
   --ash-dim: #5b5a56;
 
   /* --- accents ------------------------------------------------------- */
-  --crimson: #c2313b;
-  --crimson-hi: #dd5a63;
-  --crimson-dim: #3a1418;
-  --gold: #b9a44c;
-  --gold-hi: #d8c271;
-  --gold-dim: #2e2815;
+  /* Three colours, taken straight off the mark: deep red, saturated yellow,
+     near-black. The highlights stay red and yellow — never pink, never olive. */
+  --crimson: #b91f2e;
+  --crimson-hi: #e04434;
+  --crimson-dim: #3d1116;
+  --gold: #d9a626;
+  --gold-hi: #edc357;
+  --gold-dim: #3a2c0e;
 
   /* --- type ---------------------------------------------------------- */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;

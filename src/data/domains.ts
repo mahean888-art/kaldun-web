@@ -16,6 +16,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'capital',
     ordinal: '01',
+    figure: 'allocation',
+    figureSeed: 101,
     label: 'Capital allocation',
     title: 'Capital should not depend on one future.',
     body: 'Investment cases usually hide a single path for demand, financing, regulation, execution and exit. Kaldun runs those conditions together, before capital is committed, and returns the allocation and staging that hold across the plausible futures.',
@@ -31,6 +33,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'market',
     ordinal: '02',
+    figure: 'wavefront',
+    figureSeed: 202,
     label: 'Market entry & expansion',
     title: 'The market will react to your arrival.',
     body: 'An entry plan is a claim about a market that has not been told yet. Kaldun runs the response: how demand forms, how incumbents reprice, how regulators read the move, and whether supply keeps up — then returns the order and timing that survive it.',
@@ -46,6 +50,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'technology',
     ordinal: '03',
+    figure: 'curves',
+    figureSeed: 303,
     label: 'Product & technology',
     title: 'A roadmap is a forecast about what will matter.',
     body: 'Every roadmap encodes beliefs about cost curves, standards, supply and what customers will want in three years. Kaldun makes those beliefs explicit, tests the roadmap against them, and scores the beliefs when they resolve.',
@@ -61,6 +67,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'resilience',
     ordinal: '04',
+    figure: 'correlation',
+    figureSeed: 404,
     label: 'Risk & resilience',
     title: 'The risks that matter rarely arrive alone.',
     body: 'Risk registers list events separately; reality delivers them in combination. Kaldun runs correlated arrivals and tests which mitigations still hold when several conditions fail at once — and which of them quietly share a dependency.',
@@ -76,6 +84,8 @@ export const DOMAINS: Domain[] = [
   {
     id: 'policy',
     ordinal: '05',
+    figure: 'cascade',
+    figureSeed: 505,
     label: 'Policy & geopolitics',
     title: 'The rule change is only the first-order event.',
     body: 'A rule is written once and felt for years. Kaldun runs the propagation — who reprices, who relocates, who files, who waits — and shows where the largest effect actually lands, which is rarely on the party the rule names.',

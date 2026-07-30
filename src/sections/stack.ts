@@ -10,9 +10,13 @@
  */
 
 import { el, qs } from '../lib/dom';
+import { makeFigure, prepareFigures, type FigureName } from '../visuals/figures';
 
 export type StackItem = {
   id: string;
+  /** Generated diagram shown above the panel copy. */
+  figure?: FigureName;
+  figureSeed?: number;
   ordinal: string;
   /** Rail label — short. */
   label: string;
@@ -72,6 +76,13 @@ export function initStack({ root, items, label }: Options): void {
         hidden: i !== 0,
       },
       [
+        ...(item.figure
+          ? [(() => {
+              const host = el('div', { class: 'figure' });
+              host.append(makeFigure(item.figure, item.figureSeed));
+              return host;
+            })()]
+          : []),
         el('h3', { class: 'panel__title' }, [item.title]),
         el('p', { class: 'panel__body' }, [item.body]),
         ...(item.note ? [el('p', { class: 'panel__note' }, [item.note])] : []),
@@ -104,6 +115,7 @@ export function initStack({ root, items, label }: Options): void {
   railHost.setAttribute('aria-label', label);
   railHost.replaceChildren(...buttons);
   panelHost.replaceChildren(...panels);
+  prepareFigures(panelHost);
 
   const select = (index: number, focus = false): void => {
     buttons.forEach((btn, i) => {
@@ -112,6 +124,15 @@ export function initStack({ root, items, label }: Options): void {
     });
     panels.forEach((panel, i) => {
       panel.hidden = i !== index;
+      // The figure inscribes itself each time its panel is shown.
+      if (i === index) {
+        const figure = panel.querySelector('.figure');
+        if (figure) {
+          figure.classList.remove('is-in');
+          void (figure as HTMLElement).offsetWidth;
+          figure.classList.add('is-in');
+        }
+      }
     });
     root.style.setProperty('--active', String(index));
     if (focus) buttons[index]?.focus();

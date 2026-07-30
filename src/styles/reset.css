@@ -16,9 +16,9 @@
 html {
   -webkit-text-size-adjust: 100%;
   /* The hero's dial bleeds past the right edge on purpose. Clip at the document
-     so that bleed can never become a horizontal scrollbar. */
+     so that bleed can never become a horizontal scrollbar. `clip` does not make
+     a scroll container, so the document keeps the browser's native scrolling. */
   overflow-x: clip;
-  scroll-behavior: smooth;
   /* Anchor links must clear the fixed header. */
   scroll-padding-top: calc(var(--header-h) + 1.5rem);
 }
@@ -35,8 +35,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Nothing on this site scrolls sideways at the document level. */
-  overflow-x: hidden;
 }
 
 img,
@@ -125,8 +123,4 @@ hr {
   transform: translate(-50%, 0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
+

@@ -295,6 +295,18 @@ export type FormHandle = { destroy: () => void };
 /** One full pass of the present across the body, in milliseconds. */
 const PERIOD = 11000;
 
+/** Redraw interval. The drift is slow, so 30fps is indistinguishable from 60. */
+const FRAME_MS = 33;
+
+/** Alpha is quantised into this many steps per colour so marks can be batched. */
+const STEPS = 7;
+
+const TONES: Array<[number, number, number]> = [
+  [237, 232, 222],
+  [217, 166, 38],
+  [224, 68, 52],
+];
+
 export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): FormHandle {
   const ctx = canvas.getContext('2d');
   if (!ctx) return { destroy: () => undefined };
@@ -356,8 +368,17 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
     build();
   };
 
+  let elapsed = 0;
+
   const draw = (frame: Frame): void => {
     if (w < 8 || marks.length === 0) return;
+
+    // Throttle: thousands of marks do not need 60 redraws a second, and the
+    // spare frames belong to scrolling.
+    elapsed += frame.dt;
+    if (!reduced && elapsed < FRAME_MS) return;
+    elapsed = 0;
+
     const time = frame.time;
 
     // The present, crossing the body and a little past each edge.
@@ -371,6 +392,10 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
     // Rake of the engraving, constant across every body.
     const dx = Math.cos(-0.62);
     const dy = Math.sin(-0.62);
+
+    // One path per colour and alpha step: ~21 stroke calls a frame instead of
+    // one per mark, which is the difference between smooth and not.
+    const buckets: Array<Path2D | null> = new Array(TONES.length * STEPS).fill(null);
 
     for (const m of marks) {
       const ahead = (m.hx - sweep) / horizon;
@@ -396,26 +421,35 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
       const nearNow = 1 - Math.min(1, Math.abs(ahead) / 0.06);
       if (nearNow > 0) alpha += nearNow * 0.34 * m.d;
 
+      const tone = m.accent === 1 && ahead <= 0 ? 2 : m.accent === 2 ? 1 : 0;
+      if (tone === 2) alpha *= 2;
+      else if (tone === 1) alpha *= 1.15;
+
+      const step = Math.min(STEPS - 1, Math.max(0, Math.round(clamp(alpha) * (STEPS - 1))));
+      const key = tone * STEPS + step;
+      let path = buckets[key];
+      if (!path) {
+        path = new Path2D();
+        buckets[key] = path;
+      }
+
       const px = cx + (m.hx + driftX) * halfH;
       const py = cy + (m.hy + driftY) * halfH;
       const length = 1.1 + m.d * 3 + (ahead > 0 ? 0 : 0.5);
 
-      if (m.accent === 1 && ahead <= 0) {
-        // A resolved mark, committed in red.
-        ctx.strokeStyle = `rgba(224, 68, 52, ${(alpha * 2).toFixed(3)})`;
-        ctx.lineWidth = 1.1;
-      } else if (m.accent === 2) {
-        ctx.strokeStyle = `rgba(217, 166, 38, ${(alpha * 1.15).toFixed(3)})`;
-        ctx.lineWidth = 0.9;
-      } else {
-        ctx.strokeStyle = `rgba(237, 232, 222, ${alpha.toFixed(3)})`;
-        ctx.lineWidth = 0.9;
-      }
+      path.moveTo(px, py);
+      path.lineTo(px + dx * length, py + dy * length);
+    }
 
-      ctx.beginPath();
-      ctx.moveTo(px, py);
-      ctx.lineTo(px + dx * length, py + dy * length);
-      ctx.stroke();
+    for (let key = 0; key < buckets.length; key++) {
+      const path = buckets[key];
+      if (!path) continue;
+      const tone = TONES[Math.floor(key / STEPS)] ?? TONES[0];
+      const alpha = (key % STEPS) / (STEPS - 1);
+      if (alpha <= 0) continue;
+      ctx.strokeStyle = `rgba(${tone?.[0]}, ${tone?.[1]}, ${tone?.[2]}, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = Math.floor(key / STEPS) === 2 ? 1.1 : 0.9;
+      ctx.stroke(path);
     }
 
     // The present itself: a hairline, only while it is crossing the body.
@@ -441,8 +475,10 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
   const stopResize = onResize(resize);
   let stopFrame: (() => void) | null = null;
 
-  const still = (): void =>
-    draw({ dt: 0, time: PERIOD, scrollY: 0, velocity: 0, vh: window.innerHeight, vw: window.innerWidth });
+  const still = (): void => {
+    elapsed = FRAME_MS;
+    draw({ dt: FRAME_MS, time: PERIOD, scrollY: 0, velocity: 0, vh: window.innerHeight, vw: window.innerWidth });
+  };
 
   if (reduced) {
     still();

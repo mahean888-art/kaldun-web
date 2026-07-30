@@ -27,8 +27,10 @@
 }
 
 .site-header.is-stuck {
-  background: color-mix(in srgb, var(--void) 90%, transparent);
-  backdrop-filter: blur(14px) saturate(1.15);
+  /* Opaque rather than blurred: a backdrop-filter across the full width repaints
+     on every scrolled frame and is the single most expensive thing a fixed header
+     can do. */
+  background: var(--void);
   border-bottom-color: var(--edge-soft);
 }
 

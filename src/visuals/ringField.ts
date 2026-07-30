@@ -122,47 +122,64 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
     if (ring.kind === 'dotted') {
       const count = Math.max(80, Math.round(radius * 0.75));
-      ctx.fillStyle = stroke(ring.tone, ring.alpha);
+      const path = new Path2D();
       for (let i = 0; i < count; i++) {
         const a = phase + (i / count) * Math.PI * 2;
-        ctx.fillRect(cx + Math.cos(a) * radius - 0.6, cy + Math.sin(a) * radius - 0.6, 1.2, 1.2);
+        path.rect(cx + Math.cos(a) * radius - 0.6, cy + Math.sin(a) * radius - 0.6, 1.2, 1.2);
       }
+      ctx.fillStyle = stroke(ring.tone, ring.alpha);
+      ctx.fill(path);
       return;
     }
 
     // 'ticked' and 'graduated' are ruled scales; graduated marks every fifth
     // division longer, the way an instrument dial is engraved.
+    // Two paths — major and minor divisions — rather than a stroke per tick.
     const divisions = ring.kind === 'graduated' ? 144 : 72;
-    ctx.lineWidth = 1;
+    const majors = new Path2D();
+    const minors = new Path2D();
     for (let i = 0; i < divisions; i++) {
       const a = phase + (i / divisions) * Math.PI * 2;
       const major = ring.kind === 'graduated' && i % 5 === 0;
       const len = major ? radius * 0.055 : radius * 0.024;
-      ctx.strokeStyle = stroke(ring.tone, major ? ring.alpha * 1.9 : ring.alpha);
-      ctx.beginPath();
-      ctx.moveTo(cx + Math.cos(a) * radius, cy + Math.sin(a) * radius);
-      ctx.lineTo(cx + Math.cos(a) * (radius + len), cy + Math.sin(a) * (radius + len));
-      ctx.stroke();
+      const cos = Math.cos(a);
+      const sin = Math.sin(a);
+      const path = major ? majors : minors;
+      path.moveTo(cx + cos * radius, cy + sin * radius);
+      path.lineTo(cx + cos * (radius + len), cy + sin * (radius + len));
     }
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = stroke(ring.tone, ring.alpha);
+    ctx.stroke(minors);
+    ctx.strokeStyle = stroke(ring.tone, ring.alpha * 1.9);
+    ctx.stroke(majors);
   };
 
+  let elapsed = 0;
+
   const draw = (frame: Frame): void => {
+    elapsed += frame.dt;
+    if (!reduced && elapsed < 33) return;
+    elapsed = 0;
+
     const time = frame.time;
     ctx.clearRect(0, 0, w, h);
 
     // Sightlines first, so the rings sit on top of them.
     ctx.lineWidth = 1;
+    const plain = new Path2D();
+    const accent = new Path2D();
     for (const line of sightlines) {
       const drift = reduced ? 0 : Math.sin(time * 0.00008 + line.angle) * 0.012;
       const a = line.angle + drift;
-      ctx.strokeStyle = line.crimson
-        ? stroke('crimson', line.alpha * 2.6)
-        : stroke('cream', line.alpha * 0.55);
-      ctx.beginPath();
-      ctx.moveTo(cx + Math.cos(a) * base * line.from, cy + Math.sin(a) * base * line.from);
-      ctx.lineTo(cx + Math.cos(a) * base * line.to, cy + Math.sin(a) * base * line.to);
-      ctx.stroke();
+      const path = line.crimson ? accent : plain;
+      path.moveTo(cx + Math.cos(a) * base * line.from, cy + Math.sin(a) * base * line.from);
+      path.lineTo(cx + Math.cos(a) * base * line.to, cy + Math.sin(a) * base * line.to);
     }
+    ctx.strokeStyle = stroke('cream', 0.1);
+    ctx.stroke(plain);
+    ctx.strokeStyle = stroke('crimson', 0.4);
+    ctx.stroke(accent);
 
     for (const ring of RINGS) drawRing(ring, time);
 

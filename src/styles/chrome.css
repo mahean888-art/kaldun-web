@@ -411,15 +411,13 @@ body.is-locked {
 
 .footer-wordmark {
   display: block;
-  max-width: 100%;
-  /* Negative tracking pulls the box in past the final glyph; the padding gives
-     that ink somewhere to live so the last letter is never clipped. */
-  padding-right: 0.07em;
+  /* The band clips, so the fitter's probe size is never visible. */
+  overflow: hidden;
   margin-top: clamp(2rem, 5vw, 4rem);
   font-family: var(--sans);
   font-weight: 700;
   line-height: 0.78;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
   color: var(--cream);
   white-space: nowrap;

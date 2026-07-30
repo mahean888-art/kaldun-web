@@ -269,7 +269,7 @@
 .figure {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 7;
+  aspect-ratio: 16 / 5;
   margin-bottom: clamp(0.25rem, 1vw, 0.75rem);
   opacity: 0;
   transition: opacity var(--dur-3) var(--ease-out);
@@ -293,7 +293,7 @@
 .panel {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 2vw, 1.5rem);
+  gap: clamp(0.85rem, 1.5vw, 1.15rem);
   min-width: 0;
   animation: panel-in var(--dur-2) var(--ease-out) both;
 }
@@ -309,6 +309,54 @@
 
 @media (prefers-reduced-motion: reduce) {
   .panel { animation: none; }
+}
+
+/* From tablet up the panel reads in two columns — prose left, form and detail
+   right — so a whole option fits one screen without reducing any type size. */
+@media (min-width: 820px) {
+  .panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    column-gap: clamp(1.5rem, 2.6vw, 2.75rem);
+    row-gap: clamp(0.85rem, 1.4vw, 1.25rem);
+    align-content: start;
+  }
+
+  .panel__title {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .panel__body {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .panel__note {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  /* In a column rather than a banner, the form gets height back so a body reads
+     as a body. */
+  .panel .figure {
+    grid-column: 2;
+    grid-row: 1;
+    aspect-ratio: 5 / 4;
+    margin-bottom: 0;
+  }
+
+  .panel__rows {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    align-self: start;
+  }
+
+  .panel__chips {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
 }
 
 .panel__title {

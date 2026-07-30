@@ -4,10 +4,9 @@
  * Used for the footer wordmark, which should span the measure exactly rather
  * than approximately.
  *
- * The measurement is taken from a canvas text metric, so nothing is ever added to
- * the document to measure it. Measuring by resizing the visible element — or by
- * parking a probe node off-screen — lets the layout report a document wider than
- * the viewport while the measurement is in flight.
+ * Measured from a Range over the element's own text, which reports the ink width
+ * without adding anything to the document. The wrapper clips, so the brief probe
+ * size can never widen the page.
  */
 
 import { qsa } from '../lib/dom';
@@ -15,43 +14,34 @@ import { onResize } from '../lib/ticker';
 
 const PROBE = 100;
 
-let context: CanvasRenderingContext2D | null = null;
-
-function getContext(): CanvasRenderingContext2D | null {
-  if (context) return context;
-  context = document.createElement('canvas').getContext('2d');
-  return context;
-}
-
-/** Letter-spacing in px, resolved at the probe size. */
-function spacingPx(value: string): number {
-  if (value.endsWith('em')) return Number.parseFloat(value) * PROBE;
-  if (value.endsWith('px')) return Number.parseFloat(value);
-  return 0;
+/** Ink width of the element's text, measured without changing its box. */
+function inkWidth(node: HTMLElement): number {
+  const range = document.createRange();
+  range.selectNodeContents(node);
+  return range.getBoundingClientRect().width;
 }
 
 function fit(node: HTMLElement): void {
   const parent = node.parentElement;
-  const ctx = getContext();
-  if (!parent || !ctx) return;
+  if (!parent) return;
 
   const available = parent.clientWidth;
   if (available <= 0) return;
 
-  const style = getComputedStyle(node);
-  const text =
-    style.textTransform === 'uppercase'
-      ? (node.textContent ?? '').toUpperCase()
-      : (node.textContent ?? '');
-  if (!text) return;
+  // Advances scale linearly with font-size, so one probe gets close; a second
+  // pass absorbs hinting and tracking rounding so the fit is exact.
+  node.style.fontSize = `${PROBE}px`;
+  const probed = inkWidth(node);
+  if (probed <= 0) return;
 
-  ctx.font = `${style.fontWeight} ${PROBE}px ${style.fontFamily}`;
-  const tracking = spacingPx(style.letterSpacing);
-  // Advances scale linearly with font-size, so one measurement is enough.
-  const measured = ctx.measureText(text).width + tracking * Math.max(text.length - 1, 0);
-  if (measured <= 0) return;
+  let size = (available / probed) * PROBE;
+  node.style.fontSize = `${size.toFixed(2)}px`;
 
-  node.style.fontSize = `${Math.floor((available / measured) * PROBE * 0.985 * 100) / 100}px`;
+  const actual = inkWidth(node);
+  if (actual > 0) size *= available / actual;
+
+  // A hair under, so a sub-pixel rounding can never clip the final letter.
+  node.style.fontSize = `${(size * 0.997).toFixed(2)}px`;
 }
 
 export function initFitText(root: ParentNode = document): void {

@@ -74,18 +74,35 @@ function makeNoise(seed: number): (x: number, y: number) => number {
 
 /* --- the bodies --------------------------------------------------------- */
 
-/** Core — the present as a mass: a body with a stem, shaded on one flank. */
+/**
+ * World — the state of the world as it stands: a globe ruled by its own
+ * graticule, lit from one side, heavier along the limb. No handle, no
+ * instrument; the thing itself.
+ */
 function core(seed: number, _aspect: number): Field {
   const n = makeNoise(seed);
   return (x, y) => {
-    const r = len(x / 0.74, (y + 0.06) / 0.68);
-    let d = r < 1 ? 1 : 0;
-    if (Math.abs(x) < 0.14 && y > -0.98 && y < -0.5) d = 1;
-    if (Math.abs(x) < 0.3 && y > -0.62 && y < -0.5) d = 1;
-    if (d === 0) return 0;
-    const flank = 0.45 + 0.55 * clamp((x + 0.5) / 1.2);
-    const edge = r > 0.86 ? 1 : 0.7;
-    return clamp(flank * edge * (0.72 + 0.4 * n(x * 0.9 + 3, y * 0.9)));
+    const r = len(x / 0.94, y / 0.94);
+    if (r > 1) return 0;
+
+    // Read the disc as a sphere so the ruling wraps the way a globe's does.
+    const lat = Math.asin(clamp(y / 0.94, -1, 1));
+    const cosLat = Math.max(Math.cos(lat), 0.08);
+    const lon = Math.asin(clamp(x / 0.94 / cosLat, -1, 1));
+
+    const parallels = Math.pow(Math.abs(Math.cos(lat * 7)), 12);
+    const meridians = Math.pow(Math.abs(Math.cos(lon * 6)), 10) * cosLat;
+    const graticule = Math.min(1, parallels + meridians);
+
+    // Continents: a coherent noise mass, so the globe is not a bare grid.
+    const land = clamp((n(x * 1.15 + 5, y * 1.15 + 2) - 0.5) * 3.2);
+
+    // Limb brighter than the body; terminator falling to the left.
+    const limb = r > 0.93 ? 1 : 0;
+    const daylight = 0.32 + 0.68 * clamp((x + 0.75) / 1.5);
+
+    const d = Math.max(limb, Math.max(graticule * 0.85, land * 0.6) * daylight);
+    return clamp(d);
   };
 }
 

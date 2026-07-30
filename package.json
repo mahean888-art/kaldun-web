@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Kaldun — machine foresight. Marketing site.",
+  "description": "Kaldun \u2014 machine foresight. Marketing site.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:artifact": "vite build --config vite.artifact.config.ts && node scripts/build-artifact.mjs",
+    "build:all": "npm run build && npm run build:artifact",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc --noEmit"
   },

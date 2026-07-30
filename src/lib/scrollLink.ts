@@ -30,6 +30,7 @@ type Tracked = {
 
 const tracked: Tracked[] = [];
 let measured = false;
+let stopTick: (() => void) | null = null;
 
 function measure(): void {
   const docTop = window.scrollY || document.documentElement.scrollTop || 0;
@@ -101,7 +102,7 @@ export function initScrollLink(root: ParentNode = document): void {
   }
   if (tracked.length === 0) return;
 
-  onFrame(tick);
+  if (!stopTick) stopTick = onFrame(tick);
   onResize(() => {
     measured = false;
   });
@@ -120,4 +121,15 @@ export function initScrollLink(root: ParentNode = document): void {
 /** Invalidate cached offsets — call after inserting or resizing content. */
 export function invalidateScrollLink(): void {
   measured = false;
+}
+
+/**
+ * Forget every tracked element and stop the frame task. Used when a route swap
+ * replaces the document body, so detached nodes are not measured forever.
+ */
+export function resetScrollLink(): void {
+  tracked.length = 0;
+  measured = false;
+  stopTick?.();
+  stopTick = null;
 }

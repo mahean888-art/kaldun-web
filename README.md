@@ -10,14 +10,36 @@ no third-party requests at page load.
 
 ```bash
 npm install
-npm run dev        # vite dev server on 127.0.0.1:5173
-npm run build      # typecheck + static build into dist/
-npm run preview    # serve the built output
-npm run typecheck  # tsc --noEmit
+npm run dev             # vite dev server on 127.0.0.1:5173
+npm run build           # typecheck + static build into dist/
+npm run preview         # serve the built output on :4173
+npm run build:artifact  # the self-contained single-file bundle
+npm run build:all       # both targets
+npm run typecheck       # tsc --noEmit
 ```
 
 `dist/` is plain static output — every asset path is relative (`base: './'`), so it
 deploys to any static host or subdirectory without configuration.
+
+### Deploying
+
+`.github/workflows/pages.yml` builds and publishes `dist/` to GitHub Pages on every
+push to `main`. Enable it once under **Settings → Pages → Build and deployment →
+Source: GitHub Actions**; after that it is automatic.
+
+### The single-file bundle
+
+`npm run build:artifact` produces `dist-artifact/kaldun.html`: the whole site —
+all five routes, both stylesheets' worth of CSS, the JavaScript and all five
+woff2 faces — inlined into one file that makes no external requests. It exists
+for sharing a live, clickable build where there is no static host to point at.
+
+It is packaging, not a second copy of the site. `scripts/build-artifact.mjs` lifts
+each page's `<main>` verbatim out of the built `dist/` documents and reuses the
+same mounts (`src/mounts.ts`), so the bundle cannot drift from the real pages.
+Navigation becomes hash routing — `#/home`, `#/engine`, `#/domains`, `#/record`,
+`#/project`, with an optional third segment for a domain (`#/domains/risk`) or an
+element to scroll to (`#/record/calibration`).
 
 ## Pages
 
@@ -37,6 +59,7 @@ not a separate product. Project 10191 is the only research-oriented section.
 ```
 index.html … project-10191.html   one document per route; all prose lives here
 public/fonts/                     self-hosted woff2 (Geist, Geist Mono, Cinzel)
+scripts/build-artifact.mjs        assembles the single-file bundle from dist/
 src/styles/                       the design system, loaded via styles/index.css
   tokens.css                      colour, type scale, space, motion, depth
   fonts.css reset.css typography.css layout.css motion.css
@@ -47,6 +70,7 @@ src/lib/                          primitives
   reveal.ts                       one IntersectionObserver; masked line reveals
   dom.ts math.ts prefers.ts
 src/components/                   behaviour: header, carousel, tabs, stickySequence, counters
+src/mounts.ts                     per-route composition, shared by both builds
 src/visuals/                      generated graphics
   probabilityField.ts             the hero canvas: NOW, and futures opening from it
   glyphs.ts                       procedural line-art glyph set

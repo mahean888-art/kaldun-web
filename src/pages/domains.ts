@@ -1,14 +1,6 @@
-/** Domains page composition. */
+/** domains page entry. Composition lives in src/mounts.ts. */
 
 import { bootstrap } from '../main';
-import { qs } from '../lib/dom';
-import { initDomainView } from '../sections/domainView';
-import { renderDecisionModule } from '../sections/decisionModule';
+import { mountDomains } from '../mounts';
 
-bootstrap(() => {
-  const view = qs('[data-domain-view]');
-  if (view) initDomainView(view);
-
-  const decisions = qs('[data-decision-module]');
-  if (decisions) renderDecisionModule(decisions);
-});
+bootstrap(mountDomains);

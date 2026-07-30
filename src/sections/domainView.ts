@@ -88,7 +88,18 @@ function panel(domain: Domain, index: number): HTMLElement {
   );
 }
 
-export function initDomainView(root: HTMLElement): void {
+export type DomainViewOptions = {
+  /**
+   * Mirror the selected domain in the URL hash. True for the standalone page;
+   * false when the page is embedded under a hash router that owns the hash.
+   */
+  syncHash?: boolean;
+  /** Domain to select on first render, overriding the hash. */
+  initialId?: string;
+};
+
+export function initDomainView(root: HTMLElement, options: DomainViewOptions = {}): void {
+  const syncHash = options.syncHash ?? true;
   const nav = qs<HTMLElement>('[data-domain-nav]', root);
   const host = qs<HTMLElement>('[data-domain-panels]', root);
   if (!nav || !host) return;
@@ -135,7 +146,7 @@ export function initDomainView(root: HTMLElement): void {
       for (const node of Array.from(active.querySelectorAll('.glyph'))) node.classList.add('is-in');
     }
 
-    if (pushHash && window.location.hash.slice(1) !== id) {
+    if (syncHash && pushHash && window.location.hash.slice(1) !== id) {
       history.replaceState(null, '', `#${id}`);
     }
   };
@@ -148,11 +159,13 @@ export function initDomainView(root: HTMLElement): void {
 
   prepareGlyphDraw(host);
 
-  const fromHash = window.location.hash.slice(1);
-  select(DOMAINS.some((d) => d.id === fromHash) ? fromHash : (DOMAINS[0]?.id ?? ''), false);
+  const requested = options.initialId ?? (syncHash ? window.location.hash.slice(1) : '');
+  select(DOMAINS.some((d) => d.id === requested) ? requested : (DOMAINS[0]?.id ?? ''), false);
 
-  window.addEventListener('hashchange', () => {
-    const next = window.location.hash.slice(1);
-    if (DOMAINS.some((d) => d.id === next)) select(next, false);
-  });
+  if (syncHash) {
+    window.addEventListener('hashchange', () => {
+      const next = window.location.hash.slice(1);
+      if (DOMAINS.some((d) => d.id === next)) select(next, false);
+    });
+  }
 }

@@ -69,6 +69,12 @@ export function initReveal(root: ParentNode = document): void {
   }
 }
 
+/** Drop the observer so replaced nodes are not held onto. */
+export function resetReveal(): void {
+  observer?.disconnect();
+  observer = null;
+}
+
 /** Reveal freshly inserted content. */
 export function observeReveal(nodes: HTMLElement[]): void {
   if (prefersReducedMotion()) {

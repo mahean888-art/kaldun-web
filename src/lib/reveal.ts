@@ -61,7 +61,9 @@ export function initReveal(root: ParentNode = document): void {
   for (const node of targets) {
     // Anything already on screen at load reveals immediately, no flash.
     const rect = node.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
+    // Anything inside the first viewport reveals immediately: the observer's
+    // bottom inset would otherwise leave hero content hidden at scroll zero.
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
       node.classList.add('is-in');
       continue;
     }

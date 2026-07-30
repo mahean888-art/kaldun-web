@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Hero + sub-hero.
-   Extremely sparse: a label, four words, one sentence, two actions — and the
-   probability field opening behind them from NOW.
+   Hero.
+   Display type on the left, the measuring dial on the right. The two never
+   cross: the canvas is inset past the headline and faded at its inner edge.
    ========================================================================== */
 
 .hero {
@@ -9,194 +9,219 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: calc(var(--header-h) + clamp(2rem, 7vh, 5rem));
-  padding-bottom: clamp(2rem, 5vh, 4rem);
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
   overflow: hidden;
 }
 
-.hero__field {
+/* --- the dial --------------------------------------------------------- */
+
+.hero__dial {
   position: relative;
-  order: 2;
+  order: 3;
   width: 100%;
-  height: clamp(230px, 36svh, 360px);
-  margin-top: clamp(1.5rem, 4vh, 3rem);
+  height: clamp(230px, 34svh, 380px);
+  margin-top: auto;
   pointer-events: none;
 }
 
-.hero__field canvas {
+.hero__dial canvas {
   width: 100%;
   height: 100%;
 }
 
-/* The NOW label is positioned from the same coordinates the canvas uses for
-   the origin, so the two cannot drift apart at any viewport size. */
-.field-now {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: var(--tr-label);
-  text-transform: uppercase;
-  color: var(--signal-hi);
-  white-space: nowrap;
-  transform: translate3d(-200px, -200px, 0);
+@media (min-width: 1000px) {
+  .hero__dial {
+    position: absolute;
+    /* Starts to the right of the headline column, bleeds off the right edge. */
+    inset: calc(var(--header-h) * 0.2) calc(var(--gutter) * -2.5) 0 53%;
+    width: auto;
+    height: auto;
+    margin: 0;
+    order: 0;
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
+  }
 }
 
-.hero__inner {
+/* --- corner meta ------------------------------------------------------ */
+
+.hero__meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-bottom: clamp(1rem, 3vh, 2.25rem);
+}
+
+.hero__clock {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: start;
+  gap: 0 0.6rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  color: var(--cream-2);
+  text-transform: uppercase;
+}
+
+.hero__clock::before {
+  content: '';
+  grid-row: span 2;
+  width: 5px;
+  height: 5px;
+  background: var(--crimson);
+  margin-top: 0.35em;
+}
+
+.hero__clock span:last-child {
+  grid-column: 2;
+  color: var(--ash);
+}
+
+/* --- headline --------------------------------------------------------- */
+
+.hero__head {
   position: relative;
   z-index: 2;
   order: 1;
 }
 
-.hero__label {
-  margin-bottom: clamp(1.25rem, 3vh, 2.25rem);
-}
-
 .hero__title {
-  margin-bottom: clamp(1.5rem, 3.4vh, 2.5rem);
+  font-size: var(--t-hero);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--cream);
 }
 
-.hero__lead {
-  max-width: 44ch;
-  margin-bottom: clamp(1.75rem, 4vh, 2.75rem);
+.hero__title sup {
+  font-size: 0.62em;
+  line-height: 0;
+  vertical-align: baseline;
+  letter-spacing: 0;
+  color: var(--cream);
+}
+
+/* --- the standing sub-explanation ------------------------------------ */
+
+.hero__brief {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  order: 2;
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 46ch;
+}
+
+.hero__ledger {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.hero__ledger b {
+  font-weight: 500;
+  color: var(--gold-hi);
+}
+
+.hero__brief-body {
+  position: relative;
+  padding-top: 1rem;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cream-2);
+  border-top: 1px solid var(--edge);
+}
+
+.hero__brief-body::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--crimson);
+}
+
+@media (min-width: 1000px) {
+  .hero__title {
+    /* fit-content so the box hugs the glyphs — the dial is positioned off this
+       edge, and a wider box would let a line cross the type. */
+    width: fit-content;
+    max-width: 11ch;
+  }
+
+  /* The brief sits under the dial's inner edge, clear of the type. */
+  .hero__brief {
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    right: var(--gutter);
+    max-width: 42ch;
+    margin: 0;
+  }
+
+  /* A soft scrim so the mono copy stays crisp over the dial's hatching. */
+  .hero__brief::after {
+    content: '';
+    position: absolute;
+    inset: -1.75rem -2.5rem -1.75rem -1.5rem;
+    z-index: -1;
+    background: radial-gradient(
+      70% 100% at 26% 50%,
+      var(--void) 0%,
+      color-mix(in srgb, var(--void) 78%, transparent) 55%,
+      transparent 100%
+    );
+  }
+}
+
+/* --- actions and footnote -------------------------------------------- */
+
+.hero__foot {
+  position: relative;
+  z-index: 2;
+  order: 4;
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vh, 1.75rem);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1.25rem;
 }
 
-.hero__cue {
-  position: relative;
-  z-index: 2;
-  order: 3;
-  margin-top: clamp(1.5rem, 4vh, 3rem);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.hero__note {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: var(--tr-label);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ash-dim);
 }
 
-.hero__cue-line {
-  display: block;
-  width: 46px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--bronze), transparent);
-  animation: cue-slide 2.8s var(--ease-in-out) infinite;
-}
-
-@keyframes cue-slide {
-  0%, 100% { transform: translateX(0); opacity: 0.5; }
-  50% { transform: translateX(8px); opacity: 1; }
-}
-
-@media (min-width: 900px) {
-  /* The field takes the open right half. NOW sits on its left edge, clear of
-     the headline, and the futures open into empty space. */
-  .hero__field {
-    position: absolute;
-    inset: 0 calc(var(--gutter) * -1) 0 53%;
-    width: auto;
-    height: auto;
-    margin: 0;
-    order: 0;
-  }
-
-  .hero__title {
-    max-width: 12ch;
-  }
-
-  .hero__lead {
-    max-width: 36ch;
-  }
-}
-
-@media (min-width: 1300px) {
-  .hero__field {
-    inset: 0 calc(var(--gutter) * -1) 0 50%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__cue-line { animation: none; }
-}
-
-/* --- sub-hero: the three standing claims ------------------------------ */
-
-.subhero {
-  border-top: var(--hairline);
-  border-bottom: var(--hairline);
-  background: color-mix(in srgb, var(--basalt) 70%, transparent);
-}
-
-.subhero__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-.subhero__cell {
-  position: relative;
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
-  display: grid;
-  grid-template-columns: 58px minmax(0, 1fr);
-  gap: 1.25rem;
-  align-items: start;
-}
-
-.subhero__cell + .subhero__cell {
-  border-top: var(--hairline-soft);
-}
-
-.subhero__glyph {
-  width: 58px;
-  aspect-ratio: 1;
-  color: var(--bronze);
-  opacity: 0.9;
-}
-
-.subhero__title {
-  font-size: var(--t-d4);
-  font-weight: 500;
-  letter-spacing: -0.014em;
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
-}
-
-.subhero__body {
-  font-size: 0.9375rem;
-  line-height: 1.56;
-  color: var(--limestone-2);
-  max-width: 40ch;
-}
-
-@media (min-width: 860px) {
-  .subhero__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .subhero__cell {
-    padding: clamp(2rem, 3.4vw, 3rem) clamp(1.25rem, 2.4vw, 2.5rem);
-  }
-
-  .subhero__cell:first-child {
-    padding-left: 0;
-  }
-
-  .subhero__cell:last-child {
-    padding-right: 0;
-  }
-
-  .subhero__cell + .subhero__cell {
-    border-top: 0;
-    border-left: var(--hairline-soft);
+@media (min-width: 1000px) {
+  .hero__foot {
+    order: 4;
+    margin-top: auto;
   }
 }

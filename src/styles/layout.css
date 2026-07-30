@@ -21,7 +21,7 @@
 }
 
 .band--tight {
-  padding-block: var(--band-tight);
+  padding-block: var(--band);
 }
 
 .band--flush-top {
@@ -34,25 +34,6 @@
 
 .band--slab {
   background: linear-gradient(180deg, var(--basalt), var(--slab) 60%, var(--basalt));
-}
-
-.band--parchment {
-  background: var(--parchment);
-  color: var(--parchment-ink);
-}
-
-.band--parchment .t-label,
-.band--parchment .dim {
-  color: var(--parchment-ink-2);
-}
-
-.band--parchment .t-body,
-.band--parchment .t-lead {
-  color: var(--parchment-ink-2);
-}
-
-.band--parchment .rule {
-  background: var(--parchment-edge);
 }
 
 /* Hairline that separates bands, inset to the gutter. */
@@ -77,10 +58,10 @@
 }
 
 .section-head__numeral {
-  font-family: var(--inscribed);
+  font-family: var(--mono);
   font-size: var(--t-small);
   letter-spacing: 0.1em;
-  color: var(--bronze);
+  color: var(--gold);
   opacity: 0.6;
 }
 

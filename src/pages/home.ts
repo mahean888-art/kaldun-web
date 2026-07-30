@@ -1,4 +1,4 @@
-/** home page entry. Composition lives in src/mounts.ts. */
+/** The single page. */
 
 import { bootstrap } from '../main';
 import { mountHome } from '../mounts';

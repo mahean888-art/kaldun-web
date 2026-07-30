@@ -16,7 +16,7 @@ export default defineConfig({
     cssCodeSplit: false,
     target: 'es2020',
     lib: {
-      entry: 'src/pages/artifact.ts',
+      entry: 'src/pages/home.ts',
       formats: ['iife'],
       name: 'KaldunArtifact',
       fileName: () => 'kaldun.js',

@@ -1,10 +1,10 @@
 # Kaldun — website
 
-Machine foresight. The future, as an input.
+Kaldun is a machine foresight system for institutions making consequential
+decisions. It turns the present into calibrated possible futures, so teams can
+test a move before reality does.
 
-A static, multi-page marketing site: five real HTML documents, a token-driven CSS
-system, and TypeScript that only enhances. No framework, no runtime dependencies,
-no third-party requests at page load.
+One page, one scroll, dark throughout.
 
 ## Run it
 
@@ -15,126 +15,92 @@ npm run build           # typecheck + static build into dist/
 npm run preview         # serve the built output on :4173
 npm run build:artifact  # the self-contained single-file bundle
 npm run build:all       # both targets
-npm run typecheck       # tsc --noEmit
 ```
 
-`dist/` is plain static output — every asset path is relative (`base: './'`), so it
-deploys to any static host or subdirectory without configuration.
+`dist/` is a single static document with relative asset paths, so it deploys to
+any host or subdirectory without configuration. The GitHub Pages workflow in
+`.github/workflows/pages.yml` builds and publishes it on every push to `main`
+once Pages is switched to "GitHub Actions" in repository settings.
 
-### Deploying
+## The page, in order
 
-`.github/workflows/pages.yml` builds and publishes `dist/` to GitHub Pages on every
-push to `main`. Enable it once under **Settings → Pages → Build and deployment →
-Source: GitHub Actions**; after that it is automatic.
+| # | Section | Job |
+| --- | --- | --- |
+| — | Hero | The category, the one-sentence definition, and the two actions |
+| 01 | Problem | Models learned to answer before they learned to anticipate |
+| — | Pillars | Four reasons an answer is not foresight |
+| 02 | Thesis | The calibrated future is the output |
+| 03 | Engine | Know the state · Run it forward · Make futures explicit · Learn from reality |
+| 04 | Domains | Five decision classes, each naming the institutions that own it |
+| 05 | Record | What a committed forecast carries, and why it is committed |
+| 06 | Project 10191 | The fellowship |
+| — | Closing | Bring us a decision |
 
-### The single-file bundle
-
-`npm run build:artifact` produces `dist-artifact/kaldun.html`: the whole site —
-all five routes, both stylesheets' worth of CSS, the JavaScript and all five
-woff2 faces — inlined into one file that makes no external requests. It exists
-for sharing a live, clickable build where there is no static host to point at.
-
-It is packaging, not a second copy of the site. `scripts/build-artifact.mjs` lifts
-each page's `<main>` verbatim out of the built `dist/` documents and reuses the
-same mounts (`src/mounts.ts`), so the bundle cannot drift from the real pages.
-Navigation becomes hash routing — `#/home`, `#/engine`, `#/domains`, `#/record`,
-`#/project`, with an optional third segment for a domain (`#/domains/risk`) or an
-element to scroll to (`#/record/calibration`).
-
-## Pages
-
-| File | Purpose |
-| --- | --- |
-| `index.html` | The full argument: problem → category → thesis → connected world → Engine → record → deployment → moat → fellowship → mission |
-| `engine.html` | The Engine in seven pinned steps, plus the Console on a live question |
-| `domains.html` | Five decision domains, selectable, each with a specific decision |
-| `record.html` | The forecast ledger, the forecast object, commitment and calibration |
-| `project-10191.html` | The fellowship |
-
-The logo and Home both return to the hero. The Console is a surface of the Engine,
-not a separate product. Project 10191 is the only research-oriented section.
+Every "run a decision" and every fellowship action opens the same scheduling
+link; everything else goes to `hello@kaldun.ai`. Both live in `src/data/site.ts`
+as single constants.
 
 ## Structure
 
 ```
-index.html … project-10191.html   one document per route; all prose lives here
-public/fonts/                     self-hosted woff2 (Geist, Geist Mono, Cinzel)
-scripts/build-artifact.mjs        assembles the single-file bundle from dist/
-src/styles/                       the design system, loaded via styles/index.css
-  tokens.css                      colour, type scale, space, motion, depth
+index.html                  the whole page; all copy lives here
+public/fonts/               self-hosted woff2 (Geist, Geist Mono)
+public/favicon.svg          the mark
+scripts/build-artifact.mjs  assembles the single-file bundle from dist/
+src/styles/                 the design system, loaded via styles/index.css
+  tokens.css                colour, type scale, space, motion
   fonts.css reset.css typography.css layout.css motion.css
-  chrome.css components.css hero.css sections.css record.css pages.css
-src/lib/                          primitives
-  ticker.ts                       ONE rAF loop for the whole page
-  scrollLink.ts                   writes --p (0..1) on [data-scroll]; CSS animates
-  reveal.ts                       one IntersectionObserver; masked line reveals
+  chrome.css components.css hero.css sections.css
+src/lib/
+  ticker.ts                 ONE rAF loop for the whole page
+  scrollLink.ts             writes --p (0..1) on [data-scroll]; CSS animates
+  reveal.ts                 one IntersectionObserver; masked line reveals
   dom.ts math.ts prefers.ts
-src/components/                   behaviour: header, carousel, tabs, stickySequence, counters
-src/mounts.ts                     per-route composition, shared by both builds
-src/visuals/                      generated graphics
-  probabilityField.ts             the hero canvas: NOW, and futures opening from it
-  glyphs.ts                       procedural line-art glyph set
-  sparkline.ts                    update-history sparkline
-src/sections/                     data → DOM for the repeated modules
-src/data/                         all copy that repeats, plus every external source
-src/pages/                        one entry per document
+src/components/             header, clock
+src/visuals/
+  ringField.ts              the hero dial
+  mark.ts                   the Kaldun mark, drawn from coordinates
+  glyphs.ts                 generated line-art glyph set
+src/sections/stack.ts       the rail-and-panel section, used by Engine and Domains
+src/data/                   domains, engine, fellowship, site constants
+src/mounts.ts               page composition
+src/pages/home.ts           entry
 ```
 
-### Motion
+## Design
 
-Two mechanisms, deliberately:
+**Palette** is taken from the mark: crimson `#c2313b` on near-black `#0a0a0a`,
+with olive-gold `#b9a44c` for structure and measurement and a warm cream
+`#ede8de` for type. One accent points; gold rules and graduates.
 
-1. **Enter reveals** — an `IntersectionObserver` adds `.is-in` once; CSS owns the
-   transition.
-2. **Scroll-linked** — `src/lib/ticker.ts` runs a single `requestAnimationFrame`
-   loop that reads scroll once per frame; `scrollLink.ts` writes a `--p` custom
-   property on tracked elements. Everything animated is transform or opacity, so
-   scrolling never triggers layout.
+**Type** is Geist for display and structure, Geist Mono for labels, data and the
+wordmark — both self-hosted variable subsets, preloaded, OFL.
 
-Nothing captures the wheel and nothing hijacks scrolling. The pinned sequences use
-`position: sticky` inside a tall band, so the page keeps scrolling normally and a
-reader can always continue. Every effect has a `prefers-reduced-motion` resting
-state, and the canvas pauses when off screen or when the tab is hidden.
+**The hero** is a measuring dial: concentric rings ruled with graduated ticks,
+hatched bands and radial sightlines, with the present marked at the centre. It is
+positioned and masked so that no line ever crosses the display type — there is a
+test for this. A live New York clock sits above the headline, because the whole
+claim is that time is the input.
 
-### Typography
+**Motion** is two mechanisms. An IntersectionObserver adds `.is-in` once and CSS
+owns the transition; and a single `requestAnimationFrame` loop reads scroll once
+per frame and writes a `--p` custom property. Everything animated is transform or
+opacity, nothing captures the wheel, and every effect has a
+`prefers-reduced-motion` resting state.
 
-- **Geist** — structural sans
-- **Geist Mono** — labels, data, ledgers, Engine output
-- **Cinzel** — the inscriptional voice: wordmark, numerals, the mission slab
+## What is not on this page
 
-All three are self-hosted variable woff2 subsets under `public/fonts`, preloaded,
-and licensed under the SIL Open Font License.
-
-### The symbolic layer
-
-Kaldun's visual register is the astronomer-scribe: the stepped ziggurat (the state
-beneath a forecast), the ruled clay tablet (the Record), the eclipse cycle (learning
-from resolution), the gnomon (time as supervision). Every glyph is generated
-geometry in `src/visuals/glyphs.ts` — deterministic, seeded, hairline-thin, and
-resolution-independent — not decorative artwork.
-
-## Data provenance
-
-This matters more here than on most sites, because the product is calibration.
-
-- **External figures** are declared in `src/data/sources.ts` with publisher and URL,
-  and every one is rendered with a link beside it. The Engine demonstration uses
-  published figures from the IEA (`Energy and AI`) and Berkeley Lab (`Queued Up`),
-  against a real public forecasting question.
-- **Kaldun's own numbers** — the futures and odds in the Console, the propagation
-  magnitudes, the ledger entries — are worked examples of output *form*, and every
-  module that shows them is labelled `Illustrative` in the interface, with an
-  explicit disclosure under the Console.
-
-The two are never blended, and no customer, logo, or track record is implied.
+No console mock-up, no invented forecast ledger, no numbers presented as a track
+record. The Record section describes the fields a committed forecast carries and
+why the commitment exists — the structure is the claim. A track record is earned
+by resolution, so it will appear when there is one to show.
 
 ## Checks
 
-`npm run build` runs `tsc --noEmit` first, so a type error fails the build.
-
-Beyond that, the site was verified in a real browser at 320, 390, 834, 1280 and
-1440 px: no horizontal overflow on any page at any of those widths, no console or
-page errors, and a 28-check interaction pass covering the carousel (buttons, drag,
-touch, rail, end states), the propagation levers, the decision tabs (pointer and
-keyboard), the domain selector and its deep links, the record filters, the pinned
-Engine sequence, the mobile drawer, and scrolling to the end of every page.
+`npm run build` typechecks before it builds. Beyond that the page is verified in
+a real browser: no horizontal overflow at 320, 390, 834, 1280 or 1920px; no
+console or page errors; the hero's actions visible at scroll zero; the dial
+provably clear of the headline; both rail-and-panel sections switching by pointer
+and by keyboard; every action pointing at the scheduler or the single address;
+the drawer opening, navigating and closing; and the page scrolling to its last
+pixel.

@@ -16,7 +16,7 @@ export const DOMAINS: Domain[] = [
   {
     id: 'capital',
     ordinal: '01',
-    figure: 'allocation',
+    figure: 'strata',
     figureSeed: 101,
     label: 'Capital allocation',
     title: 'Capital should not depend on one future.',
@@ -50,7 +50,7 @@ export const DOMAINS: Domain[] = [
   {
     id: 'technology',
     ordinal: '03',
-    figure: 'curves',
+    figure: 'aperture',
     figureSeed: 303,
     label: 'Product & technology',
     title: 'A roadmap is a forecast about what will matter.',
@@ -67,7 +67,7 @@ export const DOMAINS: Domain[] = [
   {
     id: 'resilience',
     ordinal: '04',
-    figure: 'correlation',
+    figure: 'dissolve',
     figureSeed: 404,
     label: 'Risk & resilience',
     title: 'The risks that matter rarely arrive alone.',
@@ -84,7 +84,7 @@ export const DOMAINS: Domain[] = [
   {
     id: 'policy',
     ordinal: '05',
-    figure: 'cascade',
+    figure: 'descent',
     figureSeed: 505,
     label: 'Policy & geopolitics',
     title: 'The rule change is only the first-order event.',

@@ -60,7 +60,7 @@ src/components/             header, clock, fitText
 src/visuals/
   ringField.ts              the hero dial
   mark.ts                   the mark, drawn from coordinates
-  figures.ts                the nine generated panel plates
+  forms.ts                  the nine living panel forms
 src/sections/stack.ts       the rail-and-panel section, used by Engine and Domains
 src/data/                   domains, engine, fellowship, site constants
 src/mounts.ts               page composition
@@ -73,14 +73,22 @@ src/pages/home.ts           entry
 `#b91f2e`, saturated yellow `#d9a626`, near-black `#0a0a0a`, with a warm cream
 `#ede8de` for type. Red points; yellow rules, graduates and measures.
 
-**The mark** is a red dome over three descending tines inside a dark disc, built
-from coordinates in `src/visuals/mark.ts` and reused for the favicon.
+**The mark** is a red vessel with three risers standing out of it inside a dark
+disc, built from coordinates in `src/visuals/mark.ts` and reused for the favicon.
 
-**Figures** — one generated plate per Engine movement and per domain, in
-`src/visuals/figures.ts`. Each is a diagram of the thing it sits beside: a
-measured field, a branching, a distribution of odds, a cycle closed by
-resolution, a staged allocation, a wavefront, crossing cost curves, correlated
-arrivals, a cascade. Seeded, so they are identical on every load.
+**Forms** — `src/visuals/forms.ts`. One mechanic, nine bodies. Every panel runs
+the same law: a present sweeps through the form left to right. Ahead of it the
+marks drift and spread, further out the wider they wander. Behind it they are
+fixed and quiet — resolved, no longer free to move. Then the sweep loops and the
+future reopens. It is the site's argument rendered as motion rather than
+decoration hung beside the copy.
+
+Each body is declared as a density field — `field(x, y)` returns 0..1 — so a form
+says what it *is* and the renderer decides where marks belong. The nine: a mass
+with a stem, a light cone, a distribution of lobes, a returning torus, layered
+strata, a wavefront, an aperture with a gap, a dissolving mass, a descent through
+orders. Seeded, so the marks are identical on every load; only the visible
+panel's canvas animates, and reduced-motion renders the settled state.
 
 **Type** is Geist for display and structure, Geist Mono for labels, data and the
 wordmark — both self-hosted variable subsets, preloaded, OFL.
@@ -107,7 +115,8 @@ by resolution, so it will appear when there is one to show.
 ## Checks
 
 `npm run build` typechecks before it builds. Beyond that the page is verified in
-a real browser: no horizontal overflow at 320, 390, 834, 1280 or 1920px; no
+a real browser: the page cannot be scrolled sideways at 320, 390, 834, 1280 or
+1920px, and nothing but the hero's deliberate bleed crosses the viewport; no
 console or page errors; the hero's actions visible at scroll zero; the dial
 provably clear of the headline; both rail-and-panel sections switching by pointer
 and by keyboard; every action pointing at the scheduler or the single address;

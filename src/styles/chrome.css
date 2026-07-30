@@ -412,7 +412,9 @@ body.is-locked {
 .footer-wordmark {
   display: block;
   max-width: 100%;
-  overflow: hidden;
+  /* Negative tracking pulls the box in past the final glyph; the padding gives
+     that ink somewhere to live so the last letter is never clipped. */
+  padding-right: 0.07em;
   margin-top: clamp(2rem, 5vw, 4rem);
   font-family: var(--sans);
   font-weight: 700;

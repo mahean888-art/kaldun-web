@@ -10,12 +10,12 @@
  */
 
 import { el, qs } from '../lib/dom';
-import { makeFigure, prepareFigures, type FigureName } from '../visuals/figures';
+import { initForm, type FormHandle, type FormName } from '../visuals/forms';
 
 export type StackItem = {
   id: string;
-  /** Generated diagram shown above the panel copy. */
-  figure?: FigureName;
+  /** Generated form shown above the panel copy. */
+  figure?: FormName;
   figureSeed?: number;
   ordinal: string;
   /** Rail label — short. */
@@ -77,11 +77,11 @@ export function initStack({ root, items, label }: Options): void {
       },
       [
         ...(item.figure
-          ? [(() => {
-              const host = el('div', { class: 'figure' });
-              host.append(makeFigure(item.figure, item.figureSeed));
-              return host;
-            })()]
+          ? [
+              el('div', { class: 'figure' }, [
+                el('canvas', { 'data-form': item.figure, 'data-form-seed': item.figureSeed ?? 1 }),
+              ]),
+            ]
           : []),
         el('h3', { class: 'panel__title' }, [item.title]),
         el('p', { class: 'panel__body' }, [item.body]),
@@ -115,7 +115,28 @@ export function initStack({ root, items, label }: Options): void {
   railHost.setAttribute('aria-label', label);
   railHost.replaceChildren(...buttons);
   panelHost.replaceChildren(...panels);
-  prepareFigures(panelHost);
+
+  /**
+   * A form animates only while its panel is on screen. A hidden panel has no box
+   * to measure, so the animation is started the first time its panel is shown
+   * and the previous one is torn down — one running canvas at a time.
+   */
+  let live: FormHandle | null = null;
+  let livePanel: HTMLElement | null = null;
+
+  const activate = (panel: HTMLElement): void => {
+    if (livePanel === panel) return;
+    const canvas = panel.querySelector<HTMLCanvasElement>('canvas[data-form]');
+    if (!canvas) return;
+    live?.destroy();
+    live = initForm(
+      canvas,
+      canvas.dataset.form as FormName,
+      Number(canvas.dataset.formSeed ?? '1'),
+    );
+    livePanel = panel;
+    canvas.parentElement?.classList.add('is-in');
+  };
 
   const select = (index: number, focus = false): void => {
     buttons.forEach((btn, i) => {
@@ -124,15 +145,7 @@ export function initStack({ root, items, label }: Options): void {
     });
     panels.forEach((panel, i) => {
       panel.hidden = i !== index;
-      // The figure inscribes itself each time its panel is shown.
-      if (i === index) {
-        const figure = panel.querySelector('.figure');
-        if (figure) {
-          figure.classList.remove('is-in');
-          void (figure as HTMLElement).offsetWidth;
-          figure.classList.add('is-in');
-        }
-      }
+      if (i === index) activate(panel);
     });
     root.style.setProperty('--active', String(index));
     if (focus) buttons[index]?.focus();

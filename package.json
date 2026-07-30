@@ -1,0 +1,17 @@
+{
+  "name": "kaldun-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Kaldun — machine foresight. Marketing site.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.0.7"
+  }
+}

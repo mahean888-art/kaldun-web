@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Hero + sub-hero.
+   Extremely sparse: a label, four words, one sentence, two actions — and the
+   probability field opening behind them from NOW.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--header-h) + clamp(2rem, 7vh, 5rem));
+  padding-bottom: clamp(2rem, 5vh, 4rem);
+  overflow: hidden;
+}
+
+.hero__field {
+  position: relative;
+  order: 2;
+  width: 100%;
+  height: clamp(230px, 36svh, 360px);
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  pointer-events: none;
+}
+
+.hero__field canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* The NOW label is positioned from the same coordinates the canvas uses for
+   the origin, so the two cannot drift apart at any viewport size. */
+.field-now {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--signal-hi);
+  white-space: nowrap;
+  transform: translate3d(-200px, -200px, 0);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  order: 1;
+}
+
+.hero__label {
+  margin-bottom: clamp(1.25rem, 3vh, 2.25rem);
+}
+
+.hero__title {
+  margin-bottom: clamp(1.5rem, 3.4vh, 2.5rem);
+}
+
+.hero__lead {
+  max-width: 44ch;
+  margin-bottom: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero__cue {
+  position: relative;
+  z-index: 2;
+  order: 3;
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ash-dim);
+}
+
+.hero__cue-line {
+  display: block;
+  width: 46px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--bronze), transparent);
+  animation: cue-slide 2.8s var(--ease-in-out) infinite;
+}
+
+@keyframes cue-slide {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(8px); opacity: 1; }
+}
+
+@media (min-width: 900px) {
+  /* The field takes the open right half. NOW sits on its left edge, clear of
+     the headline, and the futures open into empty space. */
+  .hero__field {
+    position: absolute;
+    inset: 0 calc(var(--gutter) * -1) 0 53%;
+    width: auto;
+    height: auto;
+    margin: 0;
+    order: 0;
+  }
+
+  .hero__title {
+    max-width: 12ch;
+  }
+
+  .hero__lead {
+    max-width: 36ch;
+  }
+}
+
+@media (min-width: 1300px) {
+  .hero__field {
+    inset: 0 calc(var(--gutter) * -1) 0 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__cue-line { animation: none; }
+}
+
+/* --- sub-hero: the three standing claims ------------------------------ */
+
+.subhero {
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+  background: color-mix(in srgb, var(--basalt) 70%, transparent);
+}
+
+.subhero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.subhero__cell {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.subhero__cell + .subhero__cell {
+  border-top: var(--hairline-soft);
+}
+
+.subhero__glyph {
+  width: 58px;
+  aspect-ratio: 1;
+  color: var(--bronze);
+  opacity: 0.9;
+}
+
+.subhero__title {
+  font-size: var(--t-d4);
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.subhero__body {
+  font-size: 0.9375rem;
+  line-height: 1.56;
+  color: var(--limestone-2);
+  max-width: 40ch;
+}
+
+@media (min-width: 860px) {
+  .subhero__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .subhero__cell {
+    padding: clamp(2rem, 3.4vw, 3rem) clamp(1.25rem, 2.4vw, 2.5rem);
+  }
+
+  .subhero__cell:first-child {
+    padding-left: 0;
+  }
+
+  .subhero__cell:last-child {
+    padding-right: 0;
+  }
+
+  .subhero__cell + .subhero__cell {
+    border-top: 0;
+    border-left: var(--hairline-soft);
+  }
+}

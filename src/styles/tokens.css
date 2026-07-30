@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Kaldun — design tokens
+   A single source of truth for colour, type, space, motion and depth.
+   Palette logic: cool basalt ground, warm limestone ink, bronze inscription,
+   one electric signal blue reserved for NOW / live / primary action.
+   ========================================================================== */
+
+:root {
+  /* --- ground -------------------------------------------------------- */
+  --void: #07080a;
+  --basalt: #0b0d10;
+  --slab: #11141a;
+  --slab-2: #161a21;
+  --edge: #1e232b;
+  --edge-soft: #171b22;
+
+  /* --- ink ----------------------------------------------------------- */
+  --limestone: #ece7dd;
+  --limestone-2: #b6b1a7;
+  --ash: #7b8089;
+  --ash-dim: #545a63;
+
+  /* --- accents ------------------------------------------------------- */
+  --signal: #2b5bff;
+  --signal-hi: #7c9bff;
+  --signal-dim: #1b2c5e;
+  --bronze: #c1873f;
+  --bronze-hi: #e3b877;
+  --bronze-dim: #3d2f1c;
+  --verdigris: #34917c;
+  --oxide: #b4553e;
+
+  /* --- parchment (inverted slabs) ------------------------------------ */
+  --parchment: #ece5d6;
+  --parchment-2: #ded5c2;
+  --parchment-ink: #14161a;
+  --parchment-ink-2: #4b4a45;
+  --parchment-edge: #cdc3ae;
+
+  /* --- type ---------------------------------------------------------- */
+  --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --inscribed: 'Cinzel', 'Times New Roman', serif;
+
+  /* Fluid display scale. Lower bounds are set for a 360px viewport. */
+  --t-hero: clamp(2.6rem, 8.4vw, 7.75rem);
+  --t-d1: clamp(2.1rem, 5.6vw, 4.75rem);
+  --t-d2: clamp(1.65rem, 3.7vw, 3rem);
+  --t-d3: clamp(1.35rem, 2.5vw, 2rem);
+  --t-d4: clamp(1.1rem, 1.6vw, 1.375rem);
+  --t-lead: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  --t-body: clamp(0.9375rem, 1.05vw, 1.0625rem);
+  --t-small: 0.875rem;
+  --t-label: clamp(0.625rem, 0.72vw, 0.6875rem);
+  --t-data: clamp(0.6875rem, 0.85vw, 0.8125rem);
+
+  --lh-hero: 0.94;
+  --lh-display: 1.04;
+  --lh-body: 1.62;
+  --tr-hero: -0.038em;
+  --tr-display: -0.028em;
+  --tr-label: 0.18em;
+
+  /* --- space --------------------------------------------------------- */
+  --gutter: clamp(1.25rem, 4.4vw, 4.5rem);
+  --measure: 62ch;
+  --shell: 1560px;
+  --band: clamp(5rem, 11vh, 9.5rem);
+  --band-tight: clamp(3.25rem, 7vh, 6rem);
+
+  /* --- motion -------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-glide: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-1: 0.28s;
+  --dur-2: 0.55s;
+  --dur-3: 0.9s;
+  --dur-4: 1.5s;
+
+  /* --- depth --------------------------------------------------------- */
+  --hairline: 1px solid var(--edge);
+  --hairline-soft: 1px solid var(--edge-soft);
+  --radius: 2px;
+  --radius-lg: 4px;
+  --lift: 0 1px 0 rgb(255 255 255 / 4%) inset, 0 24px 60px -28px rgb(0 0 0 / 80%);
+
+  /* Header height, read by scroll offsets and sticky tops. */
+  --header-h: 62px;
+  color-scheme: dark;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --header-h: 72px;
+  }
+}

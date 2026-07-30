@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Motion primitives.
+   Two mechanisms only:
+     1. Enter reveals  — an IntersectionObserver adds .is-in once.
+     2. Scroll-linked  — a single rAF loop writes --p (0..1) on [data-scroll].
+   Both are transform/opacity only, so nothing triggers layout while scrolling.
+   ========================================================================== */
+
+/* --- 1. enter reveals -------------------------------------------------- */
+
+[data-reveal] {
+  --reveal-y: 18px;
+  --reveal-delay: 0ms;
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y), 0);
+  transition:
+    opacity var(--dur-3) var(--ease-out) var(--reveal-delay),
+    transform var(--dur-3) var(--ease-out) var(--reveal-delay);
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal='fade'] {
+  --reveal-y: 0px;
+}
+
+[data-reveal='rise'] {
+  --reveal-y: 34px;
+}
+
+/* Hairline that draws itself in from the left. */
+[data-reveal='draw'] {
+  opacity: 1;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform var(--dur-4) var(--ease-out) var(--reveal-delay);
+}
+
+[data-reveal='draw'].is-in {
+  transform: scaleX(1);
+}
+
+/* Masked line-by-line headline reveal. */
+.lines > .line > span {
+  transform: translate3d(0, 110%, 0);
+  transition: transform 1.05s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 78ms + var(--reveal-delay, 0ms));
+}
+
+.lines.is-in > .line > span,
+.is-in > .lines > .line > span {
+  transform: none;
+}
+
+/* Staggered children inside a revealed container. */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-out);
+}
+
+[data-stagger].is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger].is-in > *:nth-child(1) { transition-delay: 0ms; }
+[data-stagger].is-in > *:nth-child(2) { transition-delay: 90ms; }
+[data-stagger].is-in > *:nth-child(3) { transition-delay: 180ms; }
+[data-stagger].is-in > *:nth-child(4) { transition-delay: 270ms; }
+[data-stagger].is-in > *:nth-child(5) { transition-delay: 360ms; }
+[data-stagger].is-in > *:nth-child(6) { transition-delay: 450ms; }
+[data-stagger].is-in > *:nth-child(7) { transition-delay: 540ms; }
+[data-stagger].is-in > *:nth-child(8) { transition-delay: 630ms; }
+[data-stagger].is-in > *:nth-child(9) { transition-delay: 720ms; }
+[data-stagger].is-in > *:nth-child(10) { transition-delay: 810ms; }
+
+/* --- 2. scroll-linked ------------------------------------------------- */
+
+[data-scroll] {
+  --p: 0;
+}
+
+/* Utility parallax layers: depth without moving the reading line. */
+.par-slow {
+  transform: translate3d(0, calc((var(--p) - 0.5) * -3rem), 0);
+}
+
+.par-fast {
+  transform: translate3d(0, calc((var(--p) - 0.5) * -7rem), 0);
+}
+
+/* Brightens as the band takes over the viewport. */
+.par-fade {
+  opacity: clamp(0.3, calc(0.3 + var(--p) * 1.4), 1);
+}
+
+/* --- reduced motion --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-reveal='draw'] {
+    scale: 1 1 !important;
+  }
+
+  .lines > .line > span {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .par-slow,
+  .par-fast {
+    transform: none !important;
+  }
+
+  .par-fade {
+    opacity: 1 !important;
+  }
+}

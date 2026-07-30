@@ -1,0 +1,183 @@
+/* ==========================================================================
+   Layout — shell, bands, editorial grids.
+   Every grid collapses to a single column below 900px. No fixed widths.
+   ========================================================================== */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.shell--narrow {
+  max-width: 1180px;
+}
+
+/* A band is one vertical movement of the page. */
+.band {
+  position: relative;
+  padding-block: var(--band);
+}
+
+.band--tight {
+  padding-block: var(--band-tight);
+}
+
+.band--flush-top {
+  padding-block-start: 0;
+}
+
+.band--basalt {
+  background: var(--basalt);
+}
+
+.band--slab {
+  background: linear-gradient(180deg, var(--basalt), var(--slab) 60%, var(--basalt));
+}
+
+.band--parchment {
+  background: var(--parchment);
+  color: var(--parchment-ink);
+}
+
+.band--parchment .t-label,
+.band--parchment .dim {
+  color: var(--parchment-ink-2);
+}
+
+.band--parchment .t-body,
+.band--parchment .t-lead {
+  color: var(--parchment-ink-2);
+}
+
+.band--parchment .rule {
+  background: var(--parchment-edge);
+}
+
+/* Hairline that separates bands, inset to the gutter. */
+.band-edge {
+  border-top: var(--hairline-soft);
+}
+
+/* --- section header: ordinal + label + headline ------------------------ */
+
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  align-items: start;
+}
+
+.section-head__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block-end: 0.5rem;
+}
+
+.section-head__numeral {
+  font-family: var(--inscribed);
+  font-size: var(--t-small);
+  letter-spacing: 0.1em;
+  color: var(--bronze);
+  opacity: 0.6;
+}
+
+/* --- editorial two-column: sticky left rail, flowing right column ----- */
+
+.editorial {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 3vw, 3.5rem);
+}
+
+.editorial__aside {
+  min-width: 0;
+}
+
+.editorial__main {
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .editorial {
+    grid-template-columns: minmax(180px, 22%) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 6rem);
+  }
+
+  .editorial--sticky .editorial__aside {
+    position: sticky;
+    top: calc(var(--header-h) + 3rem);
+  }
+}
+
+/* --- generic responsive columns --------------------------------------- */
+
+.cols {
+  display: grid;
+  gap: clamp(1.25rem, 2.4vw, 2.5rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .cols--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .cols--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cols--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 700px) and (max-width: 899px) {
+  .cols--3,
+  .cols--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Actions inside a vertical stack keep their intrinsic width. */
+.stack > .btn,
+.stack > .link-arrow,
+.stack > .chips,
+.editorial__main > .btn,
+.editorial__main > .link-arrow {
+  align-self: flex-start;
+}
+
+.stack--xs { gap: 0.5rem; }
+.stack--sm { gap: 0.875rem; }
+.stack--md { gap: 1.5rem; }
+.stack--lg { gap: clamp(1.75rem, 3vw, 3rem); }
+.stack--xl { gap: clamp(2.5rem, 5vw, 5rem); }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.row--between {
+  justify-content: space-between;
+}
+
+.row--baseline {
+  align-items: baseline;
+}
+
+.spacer-sm { height: clamp(1rem, 2vw, 2rem); }
+.spacer-md { height: clamp(2rem, 4vw, 3.5rem); }
+.spacer-lg { height: clamp(3rem, 7vw, 6rem); }

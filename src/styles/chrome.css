@@ -1,0 +1,488 @@
+/* ==========================================================================
+   Site chrome — header, nav, drawer, footer, buttons.
+   ========================================================================== */
+
+/* --- header ------------------------------------------------------------ */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    backdrop-filter var(--dur-2) var(--ease-out);
+}
+
+.site-header::after {
+  /* Bronze ruling that grows with page progress — a tablet scribe line. */
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--bronze), var(--signal));
+  transform: scaleX(var(--read, 0));
+  transform-origin: left center;
+  opacity: 0.9;
+}
+
+.site-header.is-stuck {
+  background: color-mix(in srgb, var(--void) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom-color: var(--edge-soft);
+}
+
+.site-header__inner {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+}
+
+/* --- wordmark ---------------------------------------------------------- */
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.wordmark__mark {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.wordmark__mark::before {
+  /* The clay tablet: a filled square with a bronze rule. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--bronze);
+}
+
+.wordmark__mark::after {
+  /* NOW: the live point. */
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--signal);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--signal) 70%, transparent);
+  animation: pulse-now 3.4s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse-now {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.42; }
+}
+
+.wordmark__type {
+  font-family: var(--inscribed);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--limestone);
+  line-height: 1;
+  padding-top: 1px;
+}
+
+/* --- primary nav ------------------------------------------------------- */
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: clamp(0.75rem, 1.9vw, 2rem);
+  margin-inline-start: clamp(0.5rem, 2vw, 2.5rem);
+}
+
+.nav__link {
+  position: relative;
+  padding: 0.4rem 0;
+  font-size: 0.875rem;
+  font-weight: 450;
+  letter-spacing: -0.005em;
+  color: var(--limestone-2);
+  transition: color var(--dur-1) var(--ease-out);
+  white-space: nowrap;
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--bronze);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.nav__link:hover,
+.nav__link:focus-visible {
+  color: var(--limestone);
+}
+
+.nav__link:hover::after,
+.nav__link[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+.nav__link[aria-current='page'] {
+  color: var(--limestone);
+}
+
+.header__actions {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header__utility {
+  display: none;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ash);
+  padding: 0.55rem 0.25rem;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.header__utility:hover {
+  color: var(--limestone);
+}
+
+@media (min-width: 1000px) {
+  .nav,
+  .header__utility {
+    display: flex;
+  }
+}
+
+/* --- drawer toggle (mobile) ------------------------------------------- */
+
+.drawer-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  align-items: stretch;
+}
+
+.drawer-toggle span {
+  display: block;
+  height: 1px;
+  background: var(--limestone);
+  transition: transform var(--dur-2) var(--ease-out), opacity var(--dur-1) linear;
+}
+
+.drawer-toggle[aria-expanded='true'] span:nth-child(1) {
+  transform: translateY(3px) rotate(45deg);
+}
+
+.drawer-toggle[aria-expanded='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.drawer-toggle[aria-expanded='true'] span:nth-child(3) {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+@media (min-width: 1000px) {
+  .drawer-toggle {
+    display: none;
+  }
+}
+
+/* --- drawer ----------------------------------------------------------- */
+
+.drawer {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  z-index: 99;
+  background: var(--void);
+  border-top: var(--hairline-soft);
+  padding: clamp(1.5rem, 5vw, 3rem) var(--gutter) 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, -10px, 0);
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out),
+    visibility var(--dur-2) linear;
+}
+
+.drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.drawer__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 0;
+  border-bottom: var(--hairline-soft);
+  font-size: clamp(1.375rem, 6vw, 1.875rem);
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  color: var(--limestone);
+}
+
+.drawer__link span {
+  font-family: var(--inscribed);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--bronze);
+  opacity: 0.7;
+}
+
+.drawer__foot {
+  margin-top: auto;
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+@media (min-width: 1000px) {
+  .drawer {
+    display: none;
+  }
+}
+
+body.is-locked {
+  overflow: hidden;
+}
+
+/* --- buttons ---------------------------------------------------------- */
+
+.btn {
+  /* Never stretch to fill a flex-column parent; .btn--block opts back in. */
+  align-self: flex-start;
+  --btn-bg: transparent;
+  --btn-fg: var(--limestone);
+  --btn-edge: var(--edge);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.85em 1.4em;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-edge);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  line-height: 1;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-1) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+
+.btn::before {
+  /* Wipe-up fill, the Augustus-class hover. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-fill, var(--limestone));
+  transform: translate3d(0, 101%, 0);
+  transition: transform var(--dur-2) var(--ease-glide);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: none;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--btn-fill-fg, var(--void));
+  border-color: var(--btn-fill, var(--limestone));
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  --btn-bg: var(--signal);
+  --btn-fg: #fff;
+  --btn-edge: var(--signal);
+  --btn-fill: #fff;
+  --btn-fill-fg: var(--signal);
+}
+
+.btn--ghost {
+  --btn-fg: var(--limestone-2);
+}
+
+.btn--bronze {
+  --btn-edge: var(--bronze-dim);
+  --btn-fg: var(--bronze-hi);
+  --btn-fill: var(--bronze);
+  --btn-fill-fg: var(--void);
+}
+
+.btn--sm {
+  padding: 0.7em 1.05em;
+}
+
+.btn--block {
+  width: 100%;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.btn__arrow {
+  display: inline-block;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* Text link with a sliding underline and arrow. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--limestone);
+  padding-block: 0.35em;
+  border-bottom: 1px solid var(--edge);
+  transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+
+.link-arrow:hover {
+  color: var(--bronze-hi);
+  border-bottom-color: var(--bronze);
+}
+
+.link-arrow span {
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.link-arrow:hover span {
+  transform: translateX(4px);
+}
+
+/* --- footer ----------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+  border-top: var(--hairline-soft);
+  background: var(--void);
+  padding-block: clamp(3rem, 7vw, 6rem) 2rem;
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .site-footer__grid {
+    grid-template-columns: 1.4fr repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .site-footer__grid {
+    grid-template-columns: 1.6fr repeat(3, minmax(0, 1fr));
+  }
+}
+
+.footer-col__title {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ash-dim);
+  margin-bottom: 1.1rem;
+}
+
+.footer-col__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.footer-col__list a,
+.footer-col__list span {
+  font-size: 0.9375rem;
+  color: var(--limestone-2);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.footer-col__list a:hover {
+  color: var(--limestone);
+}
+
+.site-footer__base {
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  padding-top: 1.5rem;
+  border-top: var(--hairline-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ash-dim);
+}
+
+/* The stone-cut sign-off, echoing the wordmark at scale. */
+.footer-inscription {
+  font-family: var(--inscribed);
+  font-size: clamp(2.5rem, 13vw, 11rem);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--edge);
+  margin-top: clamp(2rem, 5vw, 4rem);
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}

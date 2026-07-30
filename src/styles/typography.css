@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Typography — one scale, used everywhere. Readability first: generous
+   line-height on prose, tight tracking only on display sizes.
+   ========================================================================== */
+
+.t-hero {
+  font-size: var(--t-hero);
+  font-weight: 480;
+  line-height: var(--lh-hero);
+  letter-spacing: var(--tr-hero);
+  text-wrap: balance;
+}
+
+.t-d1 {
+  font-size: var(--t-d1);
+  font-weight: 480;
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  text-wrap: balance;
+}
+
+.t-d2 {
+  font-size: var(--t-d2);
+  font-weight: 480;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.t-d3 {
+  font-size: var(--t-d3);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.016em;
+}
+
+.t-d4 {
+  font-size: var(--t-d4);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+}
+
+.t-lead {
+  font-size: var(--t-lead);
+  font-weight: 400;
+  line-height: 1.52;
+  letter-spacing: -0.008em;
+  color: var(--limestone-2);
+  max-width: 46ch;
+}
+
+.t-body {
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--limestone-2);
+  max-width: var(--measure);
+}
+
+.t-small {
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ash);
+}
+
+/* Monospace eyebrow label — the site's connective tissue. */
+.t-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.t-label--bronze {
+  color: var(--bronze);
+}
+
+.t-label--signal {
+  color: var(--signal-hi);
+}
+
+.t-data {
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stone-cut voice: reserved for the wordmark, numerals and axioms. */
+.t-inscribed {
+  font-family: var(--inscribed);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.t-numeral {
+  font-family: var(--inscribed);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--bronze);
+  opacity: 0.75;
+}
+
+/* An axiom: the short declarative line that closes a section. */
+.axiom {
+  font-size: var(--t-d3);
+  font-weight: 480;
+  line-height: 1.24;
+  letter-spacing: -0.016em;
+  color: var(--limestone);
+  text-wrap: balance;
+}
+
+.axiom em {
+  font-style: normal;
+  color: var(--bronze-hi);
+}
+
+.dim {
+  color: var(--ash);
+}
+
+.bright {
+  color: var(--limestone);
+}
+
+.signal-text {
+  color: var(--signal-hi);
+}
+
+.bronze-text {
+  color: var(--bronze-hi);
+}
+
+/* A headline split into deliberate lines. Each child is a mask row. */
+.lines {
+  display: block;
+}
+
+.lines > .line {
+  display: block;
+  overflow: hidden;
+}
+
+.lines > .line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* Hairline rule with a bronze tick at the left, like a tablet ruling. */
+.rule {
+  position: relative;
+  height: 1px;
+  background: var(--edge);
+}
+
+.rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 22px;
+  height: 5px;
+  background: var(--bronze);
+  opacity: 0.85;
+}

@@ -25,7 +25,11 @@ function fit(node: HTMLElement): void {
   const parent = node.parentElement;
   if (!parent) return;
 
-  const available = parent.clientWidth;
+  // clientWidth includes the container's padding, which on the shell is a full
+  // gutter each side — measuring against it overshot by exactly that much.
+  const box = getComputedStyle(parent);
+  const available =
+    parent.clientWidth - Number.parseFloat(box.paddingLeft) - Number.parseFloat(box.paddingRight);
   if (available <= 0) return;
 
   // Advances scale linearly with font-size, so one probe gets close; a second

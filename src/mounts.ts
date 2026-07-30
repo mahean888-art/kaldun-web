@@ -11,7 +11,7 @@ import { initFitText } from './components/fitText';
 import { initStack } from './sections/stack';
 import { MOVEMENTS } from './data/engine';
 import { DOMAINS } from './data/domains';
-import { BACKGROUNDS_SHORT } from './data/fellowship';
+import { BLOCKS } from './data/fellowship';
 import { CALENDLY, EMAIL, PILLARS, RECORD_FIELDS, THESIS_SHOWS } from './data/site';
 
 /** Both primary actions open the same scheduling link. */
@@ -76,10 +76,24 @@ export function mountHome(root: ParentNode = document): void {
     );
   }
 
-  const backgrounds = qs('[data-backgrounds]', root);
-  if (backgrounds) {
-    backgrounds.replaceChildren(
-      ...BACKGROUNDS_SHORT.map((item) => el('span', { class: 'chip' }, [item])),
+  const blocks = qs('[data-fellowship-blocks]', root);
+  if (blocks) {
+    blocks.replaceChildren(
+      ...BLOCKS.map((block) =>
+        el('article', { class: 'block', 'data-reveal': 'fade' }, [
+          el('h3', { class: 'block__label' }, [block.label]),
+          el('p', { class: 'block__body' }, [block.body]),
+          ...(block.items
+            ? [
+                el(
+                  'ul',
+                  { class: 'block__items' },
+                  block.items.map((item) => el('li', {}, [item])),
+                ),
+              ]
+            : []),
+        ]),
+      ),
     );
   }
 }

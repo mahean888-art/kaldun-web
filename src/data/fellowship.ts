@@ -2,50 +2,34 @@
  * Project 10191 — a recruiting and invention programme, not an academic centre.
  */
 
-export const BACKGROUNDS_SHORT: string[] = [
-  'Time-series modeling',
-  'State-space models',
-  'Superforecasting',
-  'Reinforcement learning from verifiable rewards',
-  'Probabilistic modeling',
-  'Sequential decision-making',
-  'Causal inference',
-  'Market and event modeling',
-  'Scientific machine learning',
-  'Unconventional forecasting systems',
-];
+export type Block = {
+  label: string;
+  body: string;
+  /** The keywords that matter, listed plainly. */
+  items?: string[];
+};
 
-export const BACKGROUNDS_LONG: string[] = [
-  'Time-series and sequence modeling',
-  'State-space and dynamical systems',
-  'Superforecasting and forecast aggregation',
-  'RLVR and verifiable learning',
-  'Probabilistic programming',
-  'Bayesian inference',
-  'Causal and counterfactual modeling',
-  'Sequential decision systems',
-  'Prediction markets',
-  'Scientific computing',
-  'Domain-specific forecasting',
-  'Unconventional independent research',
-];
-
-export const PROVIDES: Array<{ label: string; body: string }> = [
-  { label: 'Funding', body: 'Paid for the duration, with no teaching or grant obligations.' },
-  { label: 'Compute', body: 'Training and evaluation capacity allocated to the work, not queued for.' },
-  { label: 'Data', body: 'Access to Kaldun’s evidence, state, and resolved-outcome history.' },
-  { label: 'Engineering support', body: 'Infrastructure, evaluation harnesses, and data engineering.' },
-  { label: 'Live decision environments', body: 'Real decisions, with real resolution dates.' },
-  { label: 'A path into Kaldun', body: 'The programme exists to find people who should build the Engine.' },
-];
-
-export const FELLOWS_WORK_ON: string[] = [
-  'Live state estimation',
-  'Future-state generation',
-  'Calibration',
-  'Resolution systems',
-  'Connected-event modeling',
-  'Temporal data',
-  'Decision evaluation',
-  'New domains for the Kaldun Engine',
+export const BLOCKS: Block[] = [
+  {
+    label: 'Who we are looking for',
+    body: 'People who build systems that make measurable claims about what happens next. Where you trained matters less than whether your work can be scored.',
+    items: [
+      'Time-series and sequence modelling',
+      'State-space and dynamical systems',
+      'Superforecasting and forecast aggregation',
+      'Reinforcement learning from verifiable rewards',
+      'Probabilistic programming and Bayesian inference',
+      'Causal and counterfactual modelling',
+      'Sequential decision-making',
+      'Prediction markets and event modelling',
+    ],
+  },
+  {
+    label: 'What fellows work on',
+    body: 'The Engine itself, not a paper about it: estimating the live state of a domain, generating the futures that follow, calibrating them, and building the resolution systems that decide who was right.',
+  },
+  {
+    label: 'What fellows receive',
+    body: 'Funding for the duration, compute allocated rather than queued for, access to Kaldun\u2019s evidence and resolved-outcome history, engineering support, and real decisions with real resolution dates. Fellows who should stay are offered a role.',
+  },
 ];

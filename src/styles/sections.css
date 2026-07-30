@@ -571,3 +571,66 @@
   font-style: normal;
   color: var(--crimson-hi);
 }
+
+/* --- fellowship blocks ------------------------------------------------- */
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--edge);
+}
+
+.block {
+  padding: clamp(1.1rem, 2vw, 1.6rem) 0;
+  border-bottom: 1px solid var(--edge-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.block__label {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.block__body {
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--cream-2);
+  max-width: 54ch;
+}
+
+.block__items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem 1.5rem;
+  margin-top: 0.35rem;
+}
+
+@media (min-width: 620px) {
+  .block__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.block__items li {
+  position: relative;
+  padding-left: 0.95rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--cream);
+}
+
+.block__items li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 1px;
+  background: var(--crimson);
+}

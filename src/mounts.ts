@@ -6,7 +6,7 @@
 import { el, qs, qsa } from './lib/dom';
 import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
-import { initFutures, type FuturesVariant } from './visuals/futures';
+import { initFutures } from './visuals/futures';
 import { initGlobe } from './visuals/globe';
 import { initPillar } from './visuals/pillar';
 import { initClock } from './components/clock';
@@ -41,7 +41,7 @@ export function mountHome(root: ParentNode = document): void {
   if (canvas) initRingField(canvas);
 
   for (const node of qsa<HTMLCanvasElement>('canvas[data-futures]', root)) {
-    initFutures(node, node.dataset.futures as FuturesVariant);
+    initFutures(node);
   }
 
   const statements = qs('[data-statements]', root);

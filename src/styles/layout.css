@@ -28,12 +28,12 @@
   padding-block-start: 0;
 }
 
-.band--basalt {
-  background: var(--basalt);
+.band--ground-2 {
+  background: var(--ground-2);
 }
 
-.band--slab {
-  background: linear-gradient(180deg, var(--basalt), var(--slab) 60%, var(--basalt));
+.band--panel {
+  background: linear-gradient(180deg, var(--ground-2), var(--panel) 60%, var(--ground-2));
 }
 
 /* Hairline that separates bands, inset to the gutter. */

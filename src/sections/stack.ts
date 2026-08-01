@@ -76,25 +76,32 @@ export function initStack({ root, items, label }: Options): void {
         hidden: i !== 0,
       },
       [
-        ...(item.figure
-          ? [
-              el('div', { class: 'figure' }, [
-                el('canvas', { 'data-form': item.figure, 'data-form-seed': item.figureSeed ?? 1 }),
-              ]),
-            ]
-          : []),
-        el('h3', { class: 'panel__title' }, [item.title]),
-        el('p', { class: 'panel__body' }, [item.body]),
-        ...(item.note ? [el('p', { class: 'panel__note' }, [item.note])] : []),
-        ...(item.rows
-          ? [
-              el(
-                'dl',
-                { class: 'panel__rows' },
-                item.rows.flatMap(([k, v]) => [el('dt', {}, [k]), el('dd', {}, [v])]),
-              ),
-            ]
-          : []),
+        // Two real columns: prose stacks on the left, figure and data on the
+        // right. Each column packs naturally, so neither can stretch the other
+        // apart and leave dead space between title and body.
+        el('div', { class: 'panel__main' }, [
+          el('h3', { class: 'panel__title' }, [item.title]),
+          el('p', { class: 'panel__body' }, [item.body]),
+          ...(item.note ? [el('p', { class: 'panel__note' }, [item.note])] : []),
+        ]),
+        el('div', { class: 'panel__side' }, [
+          ...(item.figure
+            ? [
+                el('div', { class: 'figure' }, [
+                  el('canvas', { 'data-form': item.figure, 'data-form-seed': item.figureSeed ?? 1 }),
+                ]),
+              ]
+            : []),
+          ...(item.rows
+            ? [
+                el(
+                  'dl',
+                  { class: 'panel__rows' },
+                  item.rows.flatMap(([k, v]) => [el('dt', {}, [k]), el('dd', {}, [v])]),
+                ),
+              ]
+            : []),
+        ]),
         ...(item.chips
           ? [
               el('div', { class: 'panel__chips' }, [

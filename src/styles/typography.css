@@ -36,21 +36,21 @@
   font-size: var(--t-lead);
   line-height: 1.55;
   letter-spacing: -0.006em;
-  color: var(--cream-2);
+  color: var(--ink-2);
   max-width: 46ch;
 }
 
 .t-body {
   font-size: var(--t-body);
   line-height: var(--lh-body);
-  color: var(--cream-2);
+  color: var(--ink-2);
   max-width: var(--measure);
 }
 
 .t-small {
   font-size: var(--t-small);
   line-height: 1.6;
-  color: var(--ash);
+  color: var(--mute);
 }
 
 /* Monospace eyebrow — the site's connective tissue. */
@@ -63,7 +63,7 @@
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ash);
+  color: var(--mute);
 }
 
 .t-label--gold { color: var(--gold); }
@@ -82,7 +82,7 @@
   font-weight: 550;
   line-height: 1.22;
   letter-spacing: -0.022em;
-  color: var(--cream);
+  color: var(--ink);
   text-wrap: balance;
 }
 
@@ -91,8 +91,8 @@
   color: var(--gold-hi);
 }
 
-.dim { color: var(--ash); }
-.bright { color: var(--cream); }
+.dim { color: var(--mute); }
+.bright { color: var(--ink); }
 .crimson-text { color: var(--crimson-hi); }
 .gold-text { color: var(--gold-hi); }
 

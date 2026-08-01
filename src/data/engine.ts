@@ -13,7 +13,7 @@ export const MOVEMENTS: StackItem[] = [
     figureSeed: 11,
     label: 'Know the state',
     title: 'Know the state.',
-    body: 'Kaldun records evidence as it becomes available and maintains a live picture of what appears true, what remains uncertain, and what is moving. The state is a learned representation, not a document store, so new evidence changes the picture rather than being filed beside it.',
+    body: 'Kaldun holds a live picture of what appears true, what is uncertain, and what is moving. New evidence changes the picture — it is not filed beside it.',
     rows: [
       ['INPUT', 'Evidence, as it arrives'],
       ['HELD', 'Conditions, relationships, uncertainty'],
@@ -27,7 +27,7 @@ export const MOVEMENTS: StackItem[] = [
     figureSeed: 23,
     label: 'Run it forward',
     title: 'Run it forward.',
-    body: 'The Engine tests how the current state changes under actions, shocks and assumptions. The unit it learns is the transition — not that an event happened, but what that event moved, and how far the effect travelled.',
+    body: 'The Engine tests how the state changes under actions, shocks and assumptions. What it learns is the transition: what an event moved, and how far the effect travelled.',
     rows: [
       ['INPUT', 'Actions, shocks, assumptions'],
       ['HELD', 'Transitions between states'],
@@ -41,7 +41,7 @@ export const MOVEMENTS: StackItem[] = [
     figureSeed: 37,
     label: 'Make futures explicit',
     title: 'Make the futures explicit.',
-    body: 'It returns the small number of futures that change the decision: the outcomes, the odds of each, what they depend on, and the evidence that would move them. Latent inside, explicit outside.',
+    body: 'It returns the futures that change the decision: the outcomes, the odds of each, and the evidence that would move them.',
     rows: [
       ['RETURNS', 'Outcomes, odds, dependencies'],
       ['ALSO', 'What would change the view'],
@@ -55,7 +55,7 @@ export const MOVEMENTS: StackItem[] = [
     figureSeed: 41,
     label: 'Learn from reality',
     title: 'Learn from reality.',
-    body: 'Every eligible forecast is written with the source and rule that will decide it. When the outcome arrives, the forecast is scored and the Engine is calibrated — by domain, by horizon, by question type. Time is the supervision signal, and it cannot be backfilled.',
+    body: 'Every forecast is written with the rule that will decide it. When the outcome arrives it is scored, and the Engine is recalibrated. Time is the supervision signal.',
     rows: [
       ['INPUT', 'Resolved outcomes'],
       ['MEASURED', 'By domain and horizon'],

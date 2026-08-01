@@ -20,7 +20,7 @@
   font-size: var(--t-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--cream-2);
+  color: var(--ink-2);
   transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
 }
 
@@ -38,7 +38,7 @@
 
 .surface {
   position: relative;
-  background: var(--slab);
+  background: var(--panel);
   border: var(--hairline);
 }
 
@@ -84,12 +84,12 @@
   font-size: var(--t-label);
   line-height: 1.75;
   letter-spacing: 0.05em;
-  color: var(--ash-dim);
+  color: var(--faint);
   text-transform: uppercase;
 }
 
 .footnote a {
-  color: var(--ash);
+  color: var(--mute);
   border-bottom: 1px solid var(--edge);
 }
 

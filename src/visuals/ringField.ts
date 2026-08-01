@@ -36,10 +36,11 @@ const RINGS: Ring[] = [
   { r: 1.06, kind: 'solid', alpha: 0.14, spin: 0, tone: 'cream' },
 ];
 
+/* Ink, gold and crimson: an instrument engraved on paper, not lit on black. */
 const TONES: Record<Ring['tone'], [number, number, number]> = {
-  cream: [237, 232, 222],
-  gold: [185, 164, 76],
-  crimson: [194, 49, 59],
+  cream: [30, 27, 20],
+  gold: [168, 124, 16],
+  crimson: [163, 20, 33],
 };
 
 export type RingHandle = { destroy: () => void };
@@ -57,7 +58,7 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
   /** Radial sightlines: fixed bearings, a few of them crimson. */
   const sightlines = (() => {
-    const rnd = seeded(10191);
+    const rnd = seeded(1377);
     return Array.from({ length: 30 }, (_, i) => ({
       angle: (i / 30) * Math.PI * 2 + rnd() * 0.14,
       from: 0.18 + rnd() * 0.5,
@@ -185,7 +186,7 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
     // The present: a single crimson square at the centre of the dial.
     const beat = reduced ? 1 : 0.7 + Math.sin(time * 0.0014) * 0.3;
-    ctx.fillStyle = `rgba(194, 49, 59, ${(0.55 + 0.45 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(185, 31, 46, ${(0.55 + 0.45 * beat).toFixed(3)})`;
     ctx.fillRect(cx - 2.5, cy - 2.5, 5, 5);
 
     ctx.strokeStyle = stroke('crimson', 0.22 * beat);

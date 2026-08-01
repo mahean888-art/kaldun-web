@@ -2,10 +2,11 @@
  * Living forms.
  *
  * One mechanic, nine bodies. Every panel shows the same law at work: a present
- * sweeping through a form from left to right. Ahead of the sweep the marks drift
- * and spread — the further from now, the wider they wander. Behind it they are
- * fixed and quiet: resolved, and no longer free to move. The sweep loops, and the
- * future re-opens.
+ * sweeping through a form from left to right. Ahead of the sweep the marks are
+ * scattered — unresolved, displaced from where they belong, and further from it
+ * the further out they sit. As the line passes, each mark snaps to its settled
+ * position and holds it: the form resolves out of the noise. The sweep loops,
+ * and the future re-opens.
  *
  * That is the whole argument of the site rendered as motion, so the figures are
  * not decoration attached to the copy — they are the copy, moving.
@@ -280,12 +281,15 @@ type Mark = {
   /** Settled position, in field space. */
   hx: number;
   hy: number;
-  /** Field density here — drives brightness and mark length. */
+  /** Field density here — drives darkness and mark length. */
   d: number;
   phase: number;
   freq: number;
   /** How far this mark wanders while it is still in the future. */
   amp: number;
+  /** Fixed scatter direction: where this mark sits while unresolved. */
+  sx: number;
+  sy: number;
   /** A few marks resolve in the accent colour. */
   accent: 0 | 1 | 2;
 };
@@ -301,10 +305,11 @@ const FRAME_MS = 33;
 /** Alpha is quantised into this many steps per colour so marks can be batched. */
 const STEPS = 7;
 
+/* Ink, gold and crimson — dark marks on the site's paper ground. */
 const TONES: Array<[number, number, number]> = [
-  [237, 232, 222],
-  [217, 166, 38],
-  [224, 68, 52],
+  [30, 27, 20],
+  [168, 124, 16],
+  [163, 20, 33],
 ];
 
 export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): FormHandle {
@@ -335,13 +340,17 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
       const d = field(x, y);
       if (d <= 0.02 || rnd() > d) continue;
       const a = rnd();
+      const scatterAngle = rnd() * Math.PI * 2;
+      const scatterReach = 0.08 + rnd() * 0.34;
       marks.push({
         hx: x,
         hy: y,
         d,
         phase: rnd() * Math.PI * 2,
         freq: 0.00035 + rnd() * 0.0009,
-        amp: 0.035 + rnd() * 0.11,
+        amp: 0.02 + rnd() * 0.05,
+        sx: Math.cos(scatterAngle) * scatterReach,
+        sy: Math.sin(scatterAngle) * scatterReach,
         accent: a < 0.02 ? 1 : a < 0.07 ? 2 : 0,
       });
     }
@@ -403,26 +412,29 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
       let driftY = 0;
       let driftX = 0;
       let alpha: number;
+      let resolved = true;
 
       if (ahead > 0) {
-        // Still in the future: free to move, and freer the further out it is.
-        const reach = Math.min(1, ahead * 3.4);
+        // Still in the future: displaced from where it belongs, and further
+        // displaced the further out it sits. A slow wobble keeps the noise alive.
+        resolved = false;
+        const reach = Math.pow(Math.min(1, ahead * 2.6), 0.75);
         const wobble = Math.sin(time * m.freq + m.phase);
-        driftY = wobble * m.amp * reach;
-        driftX = Math.cos(time * m.freq * 0.7 + m.phase) * m.amp * reach * 0.4;
-        // Unformed further out, but never invisible: the body must always read.
-        alpha = (0.12 + m.d * 0.34) * (1 - Math.min(0.42, ahead * 0.6));
+        driftX = m.sx * reach + Math.cos(time * m.freq * 0.7 + m.phase) * m.amp * reach;
+        driftY = m.sy * reach + wobble * m.amp * reach;
+        // Fainter while unresolved, but never invisible: the haze must read.
+        alpha = (0.1 + m.d * 0.24) * (1 - Math.min(0.4, ahead * 0.55));
       } else {
-        // Resolved: fixed where it landed, and quieter for it.
-        alpha = 0.11 + m.d * 0.4;
+        // Resolved: snapped to its settled position, dark and exact.
+        alpha = 0.16 + m.d * 0.5;
       }
 
-      // Brightest right at the present, where the future is being decided.
+      // Darkest right at the present, where the future is being decided.
       const nearNow = 1 - Math.min(1, Math.abs(ahead) / 0.06);
       if (nearNow > 0) alpha += nearNow * 0.34 * m.d;
 
       const tone = m.accent === 1 && ahead <= 0 ? 2 : m.accent === 2 ? 1 : 0;
-      if (tone === 2) alpha *= 2;
+      if (tone === 2) alpha *= 1.6;
       else if (tone === 1) alpha *= 1.15;
 
       const step = Math.min(STEPS - 1, Math.max(0, Math.round(clamp(alpha) * (STEPS - 1))));
@@ -435,7 +447,10 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
 
       const px = cx + (m.hx + driftX) * halfH;
       const py = cy + (m.hy + driftY) * halfH;
-      const length = 1.1 + m.d * 3 + (ahead > 0 ? 0 : 0.5);
+      // Unresolved marks are specks; resolved marks are engraved strokes on the
+      // shared rake. The change of character is what makes the line's passage
+      // read as resolution, not just brightness.
+      const length = resolved ? 1.6 + m.d * 3.2 : 0.9;
 
       path.moveTo(px, py);
       path.lineTo(px + dx * length, py + dy * length);
@@ -452,16 +467,11 @@ export function initForm(canvas: HTMLCanvasElement, name: FormName, seed = 1): F
       ctx.stroke(path);
     }
 
-    // The present itself: a hairline, only while it is crossing the body.
+    // The present itself: a bare hairline, only while it is crossing the body.
+    // No trailing wash — a tinted band reads as a smear on paper.
     if (!reduced && cycle > 0 && cycle < 1) {
       const sx = cx + sweep * halfH;
-      const grad = ctx.createLinearGradient(sx - 26, 0, sx + 4, 0);
-      grad.addColorStop(0, 'rgba(224, 68, 52, 0)');
-      grad.addColorStop(1, 'rgba(224, 68, 52, 0.1)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(sx - 26, 0, 28, h);
-
-      ctx.strokeStyle = 'rgba(224, 68, 52, 0.34)';
+      ctx.strokeStyle = 'rgba(185, 31, 46, 0.5)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(sx, h * 0.06);

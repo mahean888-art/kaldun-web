@@ -1,5 +1,6 @@
 /**
- * Project 10191 — a recruiting and invention programme, not an academic centre.
+ * Project 1377 — a recruiting and invention programme, not an academic centre.
+ * Named for the year Ibn Khaldun completed the Muqaddimah.
  */
 
 export type Block = {
@@ -12,7 +13,7 @@ export type Block = {
 export const BLOCKS: Block[] = [
   {
     label: 'Who we are looking for',
-    body: 'People who build systems that make measurable claims about what happens next. Where you trained matters less than whether your work can be scored.',
+    body: 'People whose work can be scored. Where you trained matters less than whether your systems make claims that resolve.',
     items: [
       'Time-series and sequence modelling',
       'State-space and dynamical systems',
@@ -30,6 +31,6 @@ export const BLOCKS: Block[] = [
   },
   {
     label: 'What fellows receive',
-    body: 'Funding for the duration, compute allocated rather than queued for, access to Kaldun\u2019s evidence and resolved-outcome history, engineering support, and real decisions with real resolution dates. Fellows who should stay are offered a role.',
+    body: 'A funded term, allocated compute, access to Kaldun’s evidence and resolved-outcome history, and engineering support. Fellows who should stay are offered a role.',
   },
 ];

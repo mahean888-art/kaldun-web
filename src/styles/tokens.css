@@ -1,36 +1,37 @@
 /* ==========================================================================
    Kaldun — design tokens
-   Palette taken from the mark: crimson on near-black, with an olive-gold
-   secondary and a warm cream for type. One accent does the pointing; gold
-   carries structure and measurement.
+   Palette taken from the mark: crimson and gold on warm paper, with near-black
+   ink. Crimson does the pointing; gold carries structure and measurement.
+   The page is light; two bands (Project 1377 and the footer) invert to the
+   mark's own near-black through the .theme-dark scope below.
    ========================================================================== */
 
 :root {
-  /* --- ground -------------------------------------------------------- */
-  --void: #0a0a0a;
-  --basalt: #0e0e0e;
-  --slab: #131313;
-  --slab-2: #181818;
-  --edge: #242424;
-  --edge-soft: #1b1b1b;
+  /* --- ground: warm paper --------------------------------------------- */
+  --ground: #f6f3ea;
+  --ground-2: #f1ede1;
+  --panel: #efeadc;
+  --panel-2: #e9e3d3;
+  --edge: #d9d2bf;
+  --edge-soft: #e4ddcb;
 
-  /* --- ink ----------------------------------------------------------- */
-  --cream: #ede8de;
-  --cream-2: #b0aca4;
-  --ash: #85837d;
-  --ash-dim: #5b5a56;
+  /* --- ink ------------------------------------------------------------ */
+  --ink: #12100c;
+  --ink-2: #45423a;
+  --mute: #6d6a5f;
+  --faint: #97927f;
 
-  /* --- accents ------------------------------------------------------- */
+  /* --- accents --------------------------------------------------------- */
   /* Three colours, taken straight off the mark: deep red, saturated yellow,
-     near-black. The highlights stay red and yellow — never pink, never olive. */
+     near-black. On paper the working shades run darker so they read as ink. */
   --crimson: #b91f2e;
-  --crimson-hi: #e04434;
-  --crimson-dim: #3d1116;
-  --gold: #d9a626;
-  --gold-hi: #edc357;
-  --gold-dim: #3a2c0e;
+  --crimson-hi: #971421;
+  --crimson-dim: #e5c6c1;
+  --gold: #a87c10;
+  --gold-hi: #8a650c;
+  --gold-dim: #ddcda2;
 
-  /* --- type ---------------------------------------------------------- */
+  /* --- type ------------------------------------------------------------ */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -43,18 +44,18 @@
   --t-lead: clamp(1.0625rem, 1.3vw, 1.3125rem);
   --t-body: clamp(0.9375rem, 1.02vw, 1.0625rem);
   --t-small: 0.875rem;
-  --t-label: clamp(0.625rem, 0.7vw, 0.6875rem);
+  --t-label: clamp(0.6875rem, 0.75vw, 0.75rem);
   --t-data: clamp(0.6875rem, 0.82vw, 0.8125rem);
 
   --lh-body: 1.62;
 
-  /* --- space --------------------------------------------------------- */
+  /* --- space ----------------------------------------------------------- */
   --gutter: clamp(1.25rem, 4.2vw, 4rem);
   --measure: 60ch;
   --shell: 1520px;
   --band: clamp(4.5rem, 10vh, 8.5rem);
 
-  /* --- motion -------------------------------------------------------- */
+  /* --- motion ----------------------------------------------------------- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-glide: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -63,17 +64,46 @@
   --dur-3: 0.9s;
   --dur-4: 1.4s;
 
-  /* --- depth --------------------------------------------------------- */
+  /* --- depth ------------------------------------------------------------ */
   --hairline: 1px solid var(--edge);
   --hairline-soft: 1px solid var(--edge-soft);
   --radius: 1px;
 
-  --header-h: 60px;
-  color-scheme: dark;
+  --header-h: 64px;
+  color-scheme: light;
 }
 
 @media (min-width: 900px) {
   :root {
-    --header-h: 76px;
+    --header-h: 88px;
   }
+}
+
+/* --- the inverted bands ------------------------------------------------ */
+
+/* Project 1377 and the footer sit on the mark's own near-black. Everything
+   inside them is written in tokens, so one scope flips the whole band. */
+.theme-dark {
+  --ground: #0a0a0a;
+  --ground-2: #0e0e0e;
+  --panel: #131313;
+  --panel-2: #181818;
+  --edge: #262626;
+  --edge-soft: #1c1c1c;
+
+  --ink: #ede8de;
+  --ink-2: #b0aca4;
+  --mute: #85837d;
+  --faint: #5b5a56;
+
+  --crimson: #c2313b;
+  --crimson-hi: #e04434;
+  --crimson-dim: #3d1116;
+  --gold: #d9a626;
+  --gold-hi: #edc357;
+  --gold-dim: #3a2c0e;
+
+  background: var(--ground);
+  color: var(--ink);
+  color-scheme: dark;
 }

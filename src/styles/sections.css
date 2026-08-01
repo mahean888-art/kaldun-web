@@ -128,7 +128,7 @@
 .pillar__body {
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: var(--cream-2);
+  color: var(--ink-2);
 }
 
 /* --- thesis ----------------------------------------------------------- */
@@ -171,7 +171,7 @@
   font-size: var(--t-d4);
   font-weight: 450;
   letter-spacing: -0.01em;
-  color: var(--cream);
+  color: var(--ink);
   display: flex;
   gap: 1rem;
 }
@@ -220,7 +220,7 @@
   padding: clamp(0.9rem, 1.7vw, 1.2rem) 0;
   border-bottom: 1px solid var(--edge-soft);
   text-align: left;
-  color: var(--ash);
+  color: var(--mute);
   transition: color var(--dur-1) var(--ease-out), padding-left var(--dur-2) var(--ease-out);
 }
 
@@ -237,11 +237,11 @@
 }
 
 .rail__item:hover {
-  color: var(--cream-2);
+  color: var(--ink-2);
 }
 
 .rail__item[aria-selected='true'] {
-  color: var(--cream);
+  color: var(--ink);
   padding-left: 1.6rem;
 }
 
@@ -269,8 +269,7 @@
 .figure {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 5;
-  margin-bottom: clamp(0.25rem, 1vw, 0.75rem);
+  aspect-ratio: 16 / 7;
   opacity: 0;
   transition: opacity var(--dur-3) var(--ease-out);
 }
@@ -293,7 +292,7 @@
 .panel {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.85rem, 1.5vw, 1.15rem);
+  gap: clamp(1rem, 2vw, 1.5rem);
   min-width: 0;
   animation: panel-in var(--dur-2) var(--ease-out) both;
 }
@@ -311,51 +310,40 @@
   .panel { animation: none; }
 }
 
+/* Each column of the panel packs its own content, so the prose and the figure
+   can never stretch each other apart. */
+.panel__main,
+.panel__side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.85rem, 1.5vw, 1.15rem);
+  min-width: 0;
+}
+
 /* From tablet up the panel reads in two columns — prose left, form and detail
    right — so a whole option fits one screen without reducing any type size. */
 @media (min-width: 820px) {
   .panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-    column-gap: clamp(1.5rem, 2.6vw, 2.75rem);
-    row-gap: clamp(0.85rem, 1.4vw, 1.25rem);
-    align-content: start;
+    column-gap: clamp(1.75rem, 3vw, 3.25rem);
+    row-gap: clamp(1rem, 2vw, 1.5rem);
+    align-items: start;
   }
 
-  .panel__title {
+  .panel__main {
     grid-column: 1;
     grid-row: 1;
-    align-self: start;
   }
 
-  .panel__body {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .panel__note {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  /* In a column rather than a banner, the form gets height back so a body reads
-     as a body. */
-  .panel .figure {
+  .panel__side {
     grid-column: 2;
     grid-row: 1;
-    aspect-ratio: 5 / 4;
-    margin-bottom: 0;
-  }
-
-  .panel__rows {
-    grid-column: 2;
-    grid-row: 2 / span 2;
-    align-self: start;
   }
 
   .panel__chips {
     grid-column: 1 / -1;
-    grid-row: 4;
+    grid-row: 2;
   }
 }
 
@@ -370,7 +358,7 @@
 .panel__body {
   font-size: var(--t-lead);
   line-height: 1.55;
-  color: var(--cream-2);
+  color: var(--ink-2);
   max-width: 52ch;
 }
 
@@ -380,7 +368,7 @@
   line-height: 1.7;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--ash);
+  color: var(--mute);
   padding-left: 1.1rem;
   border-left: 1px solid var(--gold-dim);
   max-width: 52ch;
@@ -398,12 +386,12 @@
 }
 
 .panel__rows dt {
-  color: var(--ash-dim);
+  color: var(--faint);
   letter-spacing: 0.1em;
 }
 
 .panel__rows dd {
-  color: var(--cream);
+  color: var(--ink);
 }
 
 .panel__chips {
@@ -437,7 +425,7 @@
 
 .spec {
   border: var(--hairline);
-  background: var(--slab);
+  background: var(--panel);
 }
 
 .spec__row {
@@ -469,7 +457,7 @@
 .spec__value {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--cream-2);
+  color: var(--ink-2);
 }
 
 .reasons {
@@ -488,7 +476,7 @@
   border-bottom: 1px solid var(--edge-soft);
   font-size: 0.9375rem;
   line-height: 1.55;
-  color: var(--cream-2);
+  color: var(--ink-2);
 }
 
 .reasons li::before {
@@ -600,7 +588,7 @@
 .block__body {
   font-size: var(--t-body);
   line-height: 1.6;
-  color: var(--cream-2);
+  color: var(--ink-2);
   max-width: 54ch;
 }
 
@@ -622,7 +610,7 @@
   padding-left: 0.95rem;
   font-size: 0.9375rem;
   line-height: 1.45;
-  color: var(--cream);
+  color: var(--ink);
 }
 
 .block__items li::before {

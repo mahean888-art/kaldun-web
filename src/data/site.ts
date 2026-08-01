@@ -14,28 +14,27 @@ export const PILLARS: Array<{ ordinal: string; title: string; body: string }> = 
   {
     ordinal: '01',
     title: 'Fluent is not calibrated',
-    body: 'A model can produce a confident sentence about 2030 and give you no way to act on it. A decision needs a number that has been tested against outcomes, not a paragraph that reads well.',
+    body: 'A confident sentence about 2030 is not a number that has been tested against outcomes.',
   },
   {
     ordinal: '02',
     title: 'Events do not stay in their category',
-    body: 'A regulation becomes a financing event. Financing changes supply. Supply changes price. Forecast each step alone and every one of them moves the same way — which is almost never what happens.',
+    body: 'A regulation becomes a financing event, financing changes supply, supply changes price. Forecast each step alone and you miss the chain.',
   },
   {
     ordinal: '03',
     title: 'Confidence is not a record',
-    body: 'A percentage with no timestamp, no information boundary and no resolution rule cannot be scored. Without a record there is no way to know whether the system was ever right.',
+    body: 'A percentage with no timestamp, no information boundary and no resolution rule can never be scored.',
   },
   {
     ordinal: '04',
     title: 'Analyst review does not scale',
-    body: 'When a team has to reconstruct the reasoning before it will trust the answer, the work has not been removed. It has been moved, and it now arrives later.',
+    body: 'If a team must reconstruct the reasoning before trusting the answer, the work has moved — not disappeared.',
   },
 ];
 
 export const THESIS_SHOWS: string[] = [
   'what state it holds',
-  'which assumptions it made',
   'which futures follow',
   'the odds of each',
   'what evidence would change them',

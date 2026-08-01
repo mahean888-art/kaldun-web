@@ -33,7 +33,7 @@ once Pages is switched to "GitHub Actions" in repository settings.
 | 03 | Engine | Know the state · Run it forward · Make futures explicit · Learn from reality |
 | 04 | Domains | Five decision classes, each naming the institutions that own it |
 | 05 | Record | Why a self-authored foresight report cannot be audited, and what a committed forecast carries instead |
-| 06 | Project 10191 | The fellowship |
+| 06 | Project 1377 | The fellowship |
 | — | Closing | Bring us a decision |
 
 Every "run a decision" and every fellowship action opens the same scheduling

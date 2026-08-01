@@ -354,7 +354,8 @@ body.is-locked {
 .site-footer {
   border-top: var(--hairline);
   background: var(--ground);
-  padding-block: clamp(3rem, 7vw, 6rem) 1.75rem;
+  /* No bottom padding: the wordmark band is the page's last pixel. */
+  padding-block: clamp(3rem, 7vw, 6rem) 0;
 }
 
 .site-footer__statement {
@@ -431,7 +432,8 @@ body.is-locked {
   text-transform: uppercase;
   color: var(--ink);
   white-space: nowrap;
-  /* Cropped at the baseline, so the wordmark sits on the page edge. */
-  margin-bottom: -0.14em;
+  /* No negative margin here: pulling the band up past the footer's edge lets
+     the page background show through as a light strip under the letters. */
+  margin-bottom: 0;
   user-select: none;
 }

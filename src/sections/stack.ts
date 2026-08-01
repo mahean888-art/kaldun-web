@@ -10,13 +10,14 @@
  */
 
 import { el, qs } from '../lib/dom';
-import { initForm, type FormHandle, type FormName } from '../visuals/forms';
+import { initConcept, type ConceptHandle, type ConceptName } from '../visuals/concept';
 
 export type StackItem = {
   id: string;
-  /** Generated form shown above the panel copy. */
-  figure?: FormName;
-  figureSeed?: number;
+  /** Concept glyph drawn beside the panel copy. */
+  glyph?: ConceptName;
+  /** Floating terms placed around the glyph. */
+  tags?: string[];
   ordinal: string;
   /** Rail label — short. */
   label: string;
@@ -85,10 +86,10 @@ export function initStack({ root, items, label }: Options): void {
           ...(item.note ? [el('p', { class: 'panel__note' }, [item.note])] : []),
         ]),
         el('div', { class: 'panel__side' }, [
-          ...(item.figure
+          ...(item.glyph
             ? [
-                el('div', { class: 'figure' }, [
-                  el('canvas', { 'data-form': item.figure, 'data-form-seed': item.figureSeed ?? 1 }),
+                el('div', { class: 'figure figure--concept', 'data-glyph': item.glyph }, [
+                  el('canvas', {}),
                 ]),
               ]
             : []),
@@ -124,25 +125,22 @@ export function initStack({ root, items, label }: Options): void {
   panelHost.replaceChildren(...panels);
 
   /**
-   * A form animates only while its panel is on screen. A hidden panel has no box
-   * to measure, so the animation is started the first time its panel is shown
+   * A figure animates only while its panel is on screen. A hidden panel has no
+   * box to measure, so the concept is mounted the first time its panel is shown
    * and the previous one is torn down — one running canvas at a time.
    */
-  let live: FormHandle | null = null;
+  let live: ConceptHandle | null = null;
   let livePanel: HTMLElement | null = null;
 
   const activate = (panel: HTMLElement): void => {
     if (livePanel === panel) return;
-    const canvas = panel.querySelector<HTMLCanvasElement>('canvas[data-form]');
-    if (!canvas) return;
+    const host = panel.querySelector<HTMLElement>('.figure--concept');
+    if (!host) return;
+    const item = items.find((it) => `panel-${it.id}` === panel.id);
     live?.destroy();
-    live = initForm(
-      canvas,
-      canvas.dataset.form as FormName,
-      Number(canvas.dataset.formSeed ?? '1'),
-    );
+    live = initConcept(host, host.dataset.glyph as ConceptName, item?.tags ?? []);
     livePanel = panel;
-    canvas.parentElement?.classList.add('is-in');
+    host.classList.add('is-in');
   };
 
   const select = (index: number, focus = false): void => {

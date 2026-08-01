@@ -28,7 +28,6 @@ once Pages is switched to "GitHub Actions" in repository settings.
 | --- | --- | --- |
 | — | Hero | The category, the one-sentence definition, and the two actions |
 | 01 | Problem | Models learned to answer before they learned to anticipate |
-| — | Pillars | Four reasons an answer is not foresight |
 | 02 | Thesis | The calibrated future is the output |
 | 03 | Engine | Know the state · Run it forward · Make futures explicit · Learn from reality |
 | 04 | Domains | Five decision classes, each naming the institutions that own it |

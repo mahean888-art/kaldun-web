@@ -32,6 +32,13 @@
   background: var(--ground-2);
 }
 
+/* A faintly shaded band, used to set Project 1377 apart without going dark. */
+.band--tinted {
+  background: var(--ground-2);
+  border-top: var(--hairline-soft);
+  border-bottom: var(--hairline-soft);
+}
+
 .band--panel {
   background: linear-gradient(180deg, var(--ground-2), var(--panel) 60%, var(--ground-2));
 }

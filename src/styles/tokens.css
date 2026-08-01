@@ -7,19 +7,19 @@
    ========================================================================== */
 
 :root {
-  /* --- ground: warm paper --------------------------------------------- */
-  --ground: #f6f3ea;
-  --ground-2: #f1ede1;
-  --panel: #efeadc;
-  --panel-2: #e9e3d3;
-  --edge: #d9d2bf;
-  --edge-soft: #e4ddcb;
+  /* --- ground: near-white, a whisper of warmth ------------------------- */
+  --ground: #fbfbf9;
+  --ground-2: #f5f5f2;
+  --panel: #f1f0ec;
+  --panel-2: #eaeae5;
+  --edge: #e0dfd8;
+  --edge-soft: #ebeae4;
 
   /* --- ink ------------------------------------------------------------ */
-  --ink: #12100c;
-  --ink-2: #45423a;
-  --mute: #6d6a5f;
-  --faint: #97927f;
+  --ink: #101010;
+  --ink-2: #403f3a;
+  --mute: #6a6962;
+  --faint: #9b9a92;
 
   /* --- accents --------------------------------------------------------- */
   /* Three colours, taken straight off the mark: deep red, saturated yellow,

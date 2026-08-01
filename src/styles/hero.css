@@ -58,28 +58,31 @@
 .hero__clock {
   display: grid;
   grid-template-columns: auto auto;
-  align-items: start;
-  gap: 0 0.7rem;
+  align-items: center;
+  column-gap: 0.9rem;
   font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.1em;
-  line-height: 1.5;
-  color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
   text-transform: uppercase;
 }
 
-.hero__clock::before {
-  content: '';
+.hero__clock-dial {
   grid-row: span 2;
-  width: 5px;
-  height: 5px;
-  background: var(--crimson);
-  margin-top: 0.35em;
+  width: 40px;
+  height: 40px;
 }
 
-.hero__clock span:last-child {
+.hero__clock-time {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__clock-place {
   grid-column: 2;
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
   color: var(--mute);
 }
 

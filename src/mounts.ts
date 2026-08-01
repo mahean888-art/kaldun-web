@@ -6,13 +6,17 @@
 import { el, qs, qsa } from './lib/dom';
 import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
+import { initFutures, type FuturesVariant } from './visuals/futures';
+import { initGlobe } from './visuals/globe';
+import { initPillar } from './visuals/pillar';
 import { initClock } from './components/clock';
 import { initFitText } from './components/fitText';
 import { initStack } from './sections/stack';
+import { initTabs } from './sections/tabs';
 import { MOVEMENTS } from './data/engine';
 import { DOMAINS } from './data/domains';
 import { BLOCKS } from './data/fellowship';
-import { CALENDLY, EMAIL, PILLARS, RECORD_FIELDS, THESIS_SHOWS } from './data/site';
+import { CALENDLY, EMAIL, RECORD_FIELDS, STATEMENTS, THESIS_SHOWS } from './data/site';
 
 /** Both primary actions open the same scheduling link. */
 function wireActions(root: ParentNode): void {
@@ -36,17 +40,13 @@ export function mountHome(root: ParentNode = document): void {
   const canvas = qs<HTMLCanvasElement>('[data-ring-field]', root);
   if (canvas) initRingField(canvas);
 
-  const pillars = qs('[data-pillars]', root);
-  if (pillars) {
-    pillars.replaceChildren(
-      ...PILLARS.map((pillar) =>
-        el('article', { class: 'pillar' }, [
-          el('span', { class: 'pillar__ord' }, [pillar.ordinal]),
-          el('h3', { class: 'pillar__title' }, [pillar.title]),
-          el('p', { class: 'pillar__body' }, [pillar.body]),
-        ]),
-      ),
-    );
+  for (const node of qsa<HTMLCanvasElement>('canvas[data-futures]', root)) {
+    initFutures(node, node.dataset.futures as FuturesVariant);
+  }
+
+  const statements = qs('[data-statements]', root);
+  if (statements) {
+    statements.replaceChildren(...STATEMENTS.map((line) => el('li', {}, [line])));
   }
 
   const thesisList = qs('[data-thesis-list]', root);
@@ -59,10 +59,16 @@ export function mountHome(root: ParentNode = document): void {
     initStack({ root: engineStack, items: MOVEMENTS, label: 'Engine movements' });
   }
 
-  const domainStack = qs<HTMLElement>('[data-domain-stack]', root);
-  if (domainStack) {
-    initStack({ root: domainStack, items: DOMAINS, label: 'Decision domains' });
+  const domainTabs = qs<HTMLElement>('[data-domain-tabs]', root);
+  if (domainTabs) {
+    initTabs({ root: domainTabs, items: DOMAINS, label: 'Decision domains' });
   }
+
+  const globe = qs<HTMLCanvasElement>('[data-globe]', root);
+  if (globe) initGlobe(globe);
+
+  const pillar = qs<HTMLCanvasElement>('[data-pillar]', root);
+  if (pillar) initPillar(pillar);
 
   const spec = qs('[data-record-spec]', root);
   if (spec) {

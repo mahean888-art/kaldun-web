@@ -10,27 +10,12 @@ export const EMAIL = 'hello@kaldun.ai';
 /** Scheduling link used by both primary actions. */
 export const CALENDLY = 'https://calendly.com/mahean888/30min';
 
-export const PILLARS: Array<{ ordinal: string; title: string; body: string }> = [
-  {
-    ordinal: '01',
-    title: 'Fluent is not calibrated',
-    body: 'A confident sentence about 2030 is not a number that has been tested against outcomes.',
-  },
-  {
-    ordinal: '02',
-    title: 'Events do not stay in their category',
-    body: 'A regulation becomes a financing event, financing changes supply, supply changes price. Forecast each step alone and you miss the chain.',
-  },
-  {
-    ordinal: '03',
-    title: 'Confidence is not a record',
-    body: 'A percentage with no timestamp, no information boundary and no resolution rule can never be scored.',
-  },
-  {
-    ordinal: '04',
-    title: 'Analyst review does not scale',
-    body: 'If a team must reconstruct the reasoning before trusting the answer, the work has moved — not disappeared.',
-  },
+/** The cost of the failure, stated in four lines and attached to the argument. */
+export const STATEMENTS: string[] = [
+  'Fluent is not calibrated.',
+  'Events do not stay in their category.',
+  'Confidence is not a record.',
+  'Analyst review does not scale.',
 ];
 
 export const THESIS_SHOWS: string[] = [

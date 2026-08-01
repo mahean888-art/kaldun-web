@@ -8,7 +8,7 @@
       name="description"
       content="Kaldun is a machine foresight system for institutions making consequential decisions. It turns the present into calibrated possible futures, so a move can be tested before it is committed to."
     />
-    <meta name="theme-color" content="#f6f3ea" />
+    <meta name="theme-color" content="#fbfbf9" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -82,8 +82,9 @@
 
         <div class="shell hero__meta">
           <p class="hero__clock">
-            <span data-clock>—</span>
-            <span>NYC, NY</span>
+            <canvas class="hero__clock-dial" data-clock-dial aria-hidden="true"></canvas>
+            <span class="hero__clock-time" data-clock>—</span>
+            <span class="hero__clock-place">New York City</span>
           </p>
         </div>
 
@@ -142,17 +143,13 @@
               <p class="axiom" data-reveal="fade">The next token is not the next <em>state</em>.</p>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- ==================== PILLARS ==================== -->
-      <section class="band" id="pillars">
-        <div class="shell">
-          <div class="head">
-            <span class="t-label t-label--gold">Why answers are not enough</span>
-            <span class="head__rule" data-reveal="draw"></span>
+          <div class="problem__lower">
+            <div class="futures-fig" data-reveal="fade" aria-hidden="true">
+              <canvas data-futures="problem"></canvas>
+            </div>
+            <ul class="statements" data-statements></ul>
           </div>
-          <div class="pillars" data-pillars></div>
         </div>
       </section>
 
@@ -175,6 +172,10 @@
                 about what happens next, keeps it current as evidence arrives, and is scored when
                 reality decides.
               </p>
+              <div class="spacer-sm"></div>
+              <div class="futures-fig futures-fig--thesis" data-reveal="fade" aria-hidden="true">
+                <canvas data-futures="thesis"></canvas>
+              </div>
             </div>
 
             <div>
@@ -228,11 +229,14 @@
 
           <div class="spacer-md"></div>
 
-          <div class="stack" data-domain-stack>
-            <div class="stack__rail-wrap">
-              <div class="rail" data-stack-rail></div>
-            </div>
-            <div data-stack-panel></div>
+          <div data-domain-tabs>
+            <div class="tabbar" data-tabbar></div>
+            <div class="spacer-sm"></div>
+            <div data-tab-panel></div>
+          </div>
+
+          <div class="globe-band" aria-hidden="true">
+            <canvas data-globe></canvas>
           </div>
         </div>
       </section>
@@ -270,14 +274,19 @@
             <div class="stack-col">
               <span class="t-label t-label--gold">What a committed forecast carries</span>
               <div class="spacer-sm" style="height: 1rem"></div>
-              <div class="spec" data-record-spec></div>
+              <div class="record__aside">
+                <div class="pillar-fig ticked" aria-hidden="true">
+                  <canvas data-pillar></canvas>
+                </div>
+                <div class="spec" data-record-spec></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ==================== 06 — PROJECT 1377 ==================== -->
-      <section class="band theme-dark" id="project-1377">
+      <section class="band band--tinted" id="project-1377">
         <div class="shell">
           <div class="head">
             <span class="t-label t-label--crimson">06 — Project 1377</span>

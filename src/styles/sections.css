@@ -81,8 +81,7 @@
 }
 
 .futures-fig--thesis {
-  aspect-ratio: 16 / 8;
-  max-width: 34rem;
+  aspect-ratio: 16 / 7;
 }
 
 /* The cost of the failure: plain lines, no cards, no numbering. */
@@ -263,12 +262,9 @@
   }
 }
 
-/* Concept field: a faint dot grid behind the glyph, Pramaana-stack style. */
+/* Concept field: the glyph and its tags float on the open page — no frame,
+   no grid, nothing that reads as a template. */
 .figure--concept {
-  border: 1px solid var(--edge-soft);
-  background-image: radial-gradient(var(--edge) 1px, transparent 1px);
-  background-size: 22px 22px;
-  background-position: center;
   /* The floating tags may never leak past the field. */
   overflow: hidden;
 }
@@ -685,7 +681,7 @@
 }
 
 .dcard {
-  border: 1px solid var(--edge);
+  border-radius: 10px;
   background: var(--ground-2);
   padding: clamp(1.5rem, 3vw, 2.75rem);
   display: flex;
@@ -768,10 +764,10 @@
   border-top: 1px solid var(--edge-soft);
 }
 
-/* One shared figure under the domains: the world, turning. */
+/* One shared figure under the domains: the world, cresting from below. */
 .globe-band {
-  height: clamp(320px, 44vw, 540px);
-  margin-top: clamp(2rem, 4vw, 3.5rem);
+  height: clamp(240px, 30vw, 400px);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
   pointer-events: none;
 }
 

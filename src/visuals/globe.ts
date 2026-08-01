@@ -1,8 +1,9 @@
 /**
- * The globe: one striking shared figure for the domains — the world as a slow,
- * rotating point-field, ruled by its graticule, lit from the west, with a few
- * crimson sites marking where decisions land. Ink on the page's white, drawn
- * as an orthographic projection so it reads as an instrument, not a render.
+ * The world under the domains: an enormous sphere of drifting ink dust rising
+ * from below the section — mostly hidden, only its upper limb cresting into
+ * view, turning slowly. Dust gathers at the silhouette and thins toward the
+ * face; a loose atmosphere of particles hangs above the limb. A few crimson
+ * grains ride the surface: the decisions.
  */
 
 import { seeded } from '../lib/math';
@@ -14,38 +15,11 @@ export type GlobeHandle = { destroy: () => void };
 const INK = '16, 16, 16';
 const CRIMSON = '185, 31, 46';
 const FRAME_MS = 33;
-const TILT = 0.42;
-const POINTS = 4200;
+const POINTS = 7600;
+const LOOSE = 430;
 
-/** Cheap wrapped value noise on the sphere for a stable continent mask. */
-function makeLand(seed: number): (lat: number, lon: number) => number {
-  const rnd = seeded(seed);
-  const size = 48;
-  const grid = new Float32Array(size * size);
-  for (let i = 0; i < grid.length; i++) grid[i] = rnd();
-  const at = (x: number, y: number): number =>
-    grid[((y % size) + size) % size * size + (((x % size) + size) % size)] ?? 0;
-  const sample = (u: number, v: number): number => {
-    const fx = u * size;
-    const fy = v * size;
-    const ix = Math.floor(fx);
-    const iy = Math.floor(fy);
-    const tx = fx - ix;
-    const ty = fy - iy;
-    const sx = tx * tx * (3 - 2 * tx);
-    const sy = ty * ty * (3 - 2 * ty);
-    const a = at(ix, iy) + (at(ix + 1, iy) - at(ix, iy)) * sx;
-    const b = at(ix, iy + 1) + (at(ix + 1, iy + 1) - at(ix, iy + 1)) * sx;
-    return a + (b - a) * sy;
-  };
-  return (lat, lon) => {
-    const u = (lon / (Math.PI * 2) + 0.5) * 1.6;
-    const v = (lat / Math.PI + 0.5) * 1.6;
-    return sample(u, v) * 0.65 + sample(u * 2.3, v * 2.3) * 0.35;
-  };
-}
-
-type Pt = { lat: number; lon: number; land: boolean };
+type Grain = { lat: number; lon: number; r: number; a: number; tw: number; crimson: boolean };
+type Mote = { u: number; v: number; a: number; phase: number; freq: number };
 
 export function initGlobe(canvas: HTMLCanvasElement): GlobeHandle {
   const ctx = canvas.getContext('2d');
@@ -55,24 +29,30 @@ export function initGlobe(canvas: HTMLCanvasElement): GlobeHandle {
   let w = 0;
   let h = 0;
 
-  const land = makeLand(1377);
-  const rnd = seeded(524287);
+  const rnd = seeded(1377);
 
-  // Fibonacci sphere: even coverage, no pole clumping.
-  const pts: Pt[] = [];
-  const GA = Math.PI * (3 - Math.sqrt(5));
+  // Grains scattered at random over the crown — random, not a lattice, so the
+  // surface reads as dust and weather rather than machined rings.
+  const grains: Grain[] = [];
   for (let i = 0; i < POINTS; i++) {
-    const y = 1 - (i / (POINTS - 1)) * 2;
-    const lat = Math.asin(y);
-    const lon = ((i * GA) % (Math.PI * 2)) - Math.PI;
-    pts.push({ lat, lon, land: land(lat, lon) > 0.5 });
+    const y = 0.42 + rnd() * 0.58;
+    grains.push({
+      lat: Math.asin(y),
+      lon: (rnd() * 2 - 1) * Math.PI,
+      r: 0.985 + rnd() * 0.035,
+      a: 0.25 + rnd() * 0.75,
+      tw: rnd() * Math.PI * 2,
+      crimson: rnd() < 0.004,
+    });
   }
 
-  // Sites: fixed bearings that pulse when they face the viewer.
-  const sites = Array.from({ length: 5 }, () => ({
-    lat: (rnd() - 0.5) * 1.9,
-    lon: (rnd() * 2 - 1) * Math.PI,
+  // The loose atmosphere: motes that hang above the limb and drift.
+  const motes: Mote[] = Array.from({ length: LOOSE }, () => ({
+    u: rnd(),
+    v: rnd(),
+    a: 0.08 + rnd() * 0.3,
     phase: rnd() * Math.PI * 2,
+    freq: 0.00006 + rnd() * 0.00018,
   }));
 
   const resize = (): void => {
@@ -86,20 +66,6 @@ export function initGlobe(canvas: HTMLCanvasElement): GlobeHandle {
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   };
 
-  /** Project a lat/lon at rotation rot; returns [sx, sy, zFront, shade]. */
-  const project = (lat: number, lon: number, rot: number, cx: number, cy: number, R: number): [number, number, number, number] => {
-    const L = lon + rot;
-    const x = Math.cos(lat) * Math.sin(L);
-    let y = Math.sin(lat);
-    let z = Math.cos(lat) * Math.cos(L);
-    const y2 = y * Math.cos(TILT) - z * Math.sin(TILT);
-    z = y * Math.sin(TILT) + z * Math.cos(TILT);
-    y = y2;
-    // Light from the upper west.
-    const shade = Math.max(0, -x * 0.62 + y * 0.3 + z * 0.72);
-    return [cx + x * R, cy - y * R, z, shade];
-  };
-
   let elapsed = 0;
 
   const draw = (frame: Frame): void => {
@@ -109,86 +75,69 @@ export function initGlobe(canvas: HTMLCanvasElement): GlobeHandle {
     elapsed = 0;
 
     const t = frame.time;
-    const rot = reduced ? 0.6 : t * 0.000045;
+    const rot = reduced ? 0.8 : t * 0.00003;
+
+    // The sphere is far larger than the canvas; only its crown is visible.
+    const R = Math.max(w * 0.52, h * 1.15);
     const cx = w / 2;
-    const cy = h / 2;
-    const R = Math.min(w / 2, h / 2) * 0.86;
+    const cy = h + R * 0.55;
 
     ctx.clearRect(0, 0, w, h);
 
-    // Limb.
-    ctx.strokeStyle = `rgba(${INK}, 0.5)`;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI * 2);
-    ctx.stroke();
+    // Surface dust. Limb-weighted: densest at the silhouette, thin on the face.
+    const buckets: Array<Path2D | null> = new Array(5).fill(null);
+    const crimsonPath = new Path2D();
+    for (const g of grains) {
+      const L = g.lon + rot;
+      const x = Math.cos(g.lat) * Math.sin(L);
+      const y = Math.sin(g.lat);
+      const z = Math.cos(g.lat) * Math.cos(L);
+      if (z <= 0) continue;
+      const sx = cx + x * R * g.r;
+      const sy = cy - y * R * g.r;
+      if (sy < -8 || sy > h + 8 || sx < -8 || sx > w + 8) continue;
 
-    // Graticule: parallels and meridians as short front-face segments.
-    ctx.strokeStyle = `rgba(${INK}, 0.16)`;
-    ctx.beginPath();
-    const seg = 48;
-    for (let p = -60; p <= 60; p += 30) {
-      const lat = (p / 180) * Math.PI;
-      let prev: [number, number, number, number] | null = null;
-      for (let i = 0; i <= seg; i++) {
-        const lon = (i / seg) * Math.PI * 2 - Math.PI;
-        const cur = project(lat, lon, rot, cx, cy, R);
-        if (prev && prev[2] > 0 && cur[2] > 0) {
-          ctx.moveTo(prev[0], prev[1]);
-          ctx.lineTo(cur[0], cur[1]);
-        }
-        prev = cur;
-      }
-    }
-    for (let m = 0; m < 12; m++) {
-      const lon = (m / 12) * Math.PI * 2 - Math.PI;
-      let prev: [number, number, number, number] | null = null;
-      for (let i = 0; i <= seg; i++) {
-        const lat = (i / seg) * Math.PI - Math.PI / 2;
-        const cur = project(lat, lon, rot, cx, cy, R);
-        if (prev && prev[2] > 0 && cur[2] > 0) {
-          ctx.moveTo(prev[0], prev[1]);
-          ctx.lineTo(cur[0], cur[1]);
-        }
-        prev = cur;
-      }
-    }
-    ctx.stroke();
+      // z near 0 is the limb; the face fades away.
+      const limb = Math.pow(1 - z, 1.3);
+      const twinkle = reduced ? 0.8 : 0.65 + 0.35 * Math.sin(t * 0.0011 + g.tw);
+      const alpha = (0.1 + limb * 0.95) * g.a * twinkle;
+      if (alpha < 0.03) continue;
 
-    // Continents: bucketed by alpha so the field is a handful of fills.
-    const buckets: Array<Path2D | null> = [null, null, null, null];
-    for (const p of pts) {
-      if (!p.land) continue;
-      const [sx, sy, z, shade] = project(p.lat, p.lon, rot, cx, cy, R);
-      if (z <= 0.02) continue;
-      const a = 0.3 + shade * 0.6;
-      const k = Math.min(3, Math.floor(a * 4));
+      if (g.crimson) {
+        crimsonPath.rect(sx - 1.4, sy - 1.4, 2.8, 2.8);
+        continue;
+      }
+      const k = Math.min(4, Math.floor(alpha * 6));
       let path = buckets[k];
       if (!path) {
         path = new Path2D();
         buckets[k] = path;
       }
-      const s = 1.5 + shade * 1.3;
+      const s = 1.1 + limb * 1.7;
       path.rect(sx - s / 2, sy - s / 2, s, s);
     }
     buckets.forEach((path, k) => {
       if (!path) return;
-      ctx.fillStyle = `rgba(${INK}, ${(0.22 + (k / 3) * 0.6).toFixed(3)})`;
+      ctx.fillStyle = `rgba(${INK}, ${(0.12 + (k / 4) * 0.68).toFixed(3)})`;
       ctx.fill(path);
     });
+    ctx.fillStyle = `rgba(${CRIMSON}, 0.8)`;
+    ctx.fill(crimsonPath);
 
-    // Sites: crimson marks with a breathing ring while they face us.
-    for (const s of sites) {
-      const [sx, sy, z] = project(s.lat, s.lon, rot, cx, cy, R);
-      if (z <= 0.15) continue;
-      const beat = reduced ? 0.5 : 0.5 + 0.5 * Math.sin(t * 0.0016 + s.phase);
-      ctx.fillStyle = `rgba(${CRIMSON}, ${(0.5 + z * 0.5).toFixed(3)})`;
-      ctx.fillRect(sx - 2.2, sy - 2.2, 4.4, 4.4);
-      ctx.strokeStyle = `rgba(${CRIMSON}, ${(0.35 * (1 - beat) * z).toFixed(3)})`;
-      ctx.beginPath();
-      ctx.arc(sx, sy, 4 + beat * 9, 0, Math.PI * 2);
-      ctx.stroke();
+    // Atmosphere: dust hanging above the crown, rising and falling slowly.
+    const loose = new Path2D();
+    for (const m of motes) {
+      const mx = m.u * w + (reduced ? 0 : Math.sin(t * m.freq + m.phase) * 26);
+      // Held near the limb: distance above the sphere surface at this x.
+      const dx = (mx - cx) / R;
+      if (Math.abs(dx) > 0.995) continue;
+      const surface = cy - Math.sqrt(1 - dx * dx) * R;
+      const my = surface - 6 - m.v * h * 0.42 + (reduced ? 0 : Math.cos(t * m.freq * 1.3 + m.phase) * 14);
+      if (my < -4 || my > h + 4) continue;
+      loose.rect(mx - 0.7, my - 0.7, 1.4, 1.4);
     }
+    ctx.fillStyle = `rgba(${INK}, 0.28)`;
+    ctx.fill(loose);
   };
 
   resize();

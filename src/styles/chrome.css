@@ -428,7 +428,9 @@ body.is-locked {
   font-family: var(--sans);
   font-weight: 700;
   line-height: 0.78;
-  letter-spacing: -0.045em;
+  /* Tight: the letters stand shoulder to shoulder, so the fitted size runs
+     larger for the same width. */
+  letter-spacing: -0.075em;
   text-transform: uppercase;
   color: var(--ink);
   white-space: nowrap;

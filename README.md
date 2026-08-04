@@ -36,7 +36,7 @@ once Pages is switched to "GitHub Actions" in repository settings.
 | — | Closing | Bring us a decision |
 
 Every "run a decision" and every fellowship action opens the same scheduling
-link; everything else goes to `hello@kaldun.ai`. Both live in `src/data/site.ts`
+link; everything else goes to `hello@ulmolabs.com`. Both live in `src/data/site.ts`
 as single constants.
 
 ## Structure

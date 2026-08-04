@@ -5,7 +5,7 @@
  * scheduling link; everything else goes to the single address.
  */
 
-export const EMAIL = 'hello@kaldun.ai';
+export const EMAIL = 'hello@ulmolabs.com';
 
 /** Scheduling link used by both primary actions. */
 export const CALENDLY = 'https://calendly.com/mahean888/30min';

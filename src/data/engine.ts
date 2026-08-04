@@ -13,7 +13,7 @@ export const MOVEMENTS: StackItem[] = [
     tags: ['Evidence', 'Conditions', 'Relationships', 'Uncertainty', 'Revision'],
     label: 'Know the state',
     title: 'Know the state.',
-    body: 'Kaldun holds a live picture of what appears true, what is uncertain, and what is moving. New evidence changes the picture — it is not filed beside it.',
+    body: 'Ulmo holds a live picture of what appears true, what is uncertain, and what is moving. New evidence changes the picture — it is not filed beside it.',
     rows: [
       ['INPUT', 'Evidence, as it arrives'],
       ['HELD', 'Conditions, relationships, uncertainty'],

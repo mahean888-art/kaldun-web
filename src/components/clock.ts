@@ -1,7 +1,7 @@
 /**
  * The hero's standing clock.
  *
- * Kaldun's whole claim is that time is the input, so the page shows the actual
+ * Ulmo's whole claim is that time is the input, so the page shows the actual
  * present rather than a static string. New York, because that is where the
  * decisions this is built for get signed.
  */

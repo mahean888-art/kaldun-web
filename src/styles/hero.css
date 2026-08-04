@@ -221,3 +221,70 @@
     margin-top: auto;
   }
 }
+
+/* --- the promise, with its changing verb ------------------------------- */
+
+.hero__promise {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(1rem, 2.4vh, 1.75rem);
+  font-size: clamp(1.125rem, 1.9vw, 1.75rem);
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink-2);
+  max-width: 22ch;
+}
+
+/* The ghost holds the line's baseline and height; the words ride over it.
+   Width is set in script so the full stop never jumps. */
+.rotor {
+  position: relative;
+  display: inline-block;
+  color: var(--ink);
+  transition: width var(--dur-2) var(--ease-out);
+}
+
+.rotor__ghost {
+  visibility: hidden;
+}
+
+.rotor__word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
+}
+
+/* Below, in place, above — the three stations of the roll. */
+.rotor__word.is-below {
+  transform: translate3d(0, 0.55em, 0);
+  opacity: 0;
+}
+
+.rotor__word.is-in {
+  transform: none;
+  opacity: 1;
+}
+
+.rotor__word.is-above {
+  transform: translate3d(0, -0.55em, 0);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotor,
+  .rotor__word {
+    transition: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  /* One line, and never wide enough to run under the dial. */
+  .hero__promise {
+    max-width: min(48%, 44ch);
+  }
+}

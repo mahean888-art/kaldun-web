@@ -1,6 +1,6 @@
-# Kaldun — website
+# Ulmo Labs — website
 
-Kaldun is a machine foresight system for institutions making consequential
+Ulmo is a machine foresight system for institutions making consequential
 decisions. It turns the present into calibrated possible futures, so teams can
 test a move before reality does.
 

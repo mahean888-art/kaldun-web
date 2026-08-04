@@ -31,6 +31,6 @@ export const BLOCKS: Block[] = [
   },
   {
     label: 'What fellows receive',
-    body: 'A funded term, allocated compute, access to Kaldun’s evidence and resolved-outcome history, and engineering support. Fellows who should stay are offered a role.',
+    body: 'A funded term, allocated compute, access to Ulmo’s evidence and resolved-outcome history, and engineering support. Fellows who should stay are offered a role.',
   },
 ];

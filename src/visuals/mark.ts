@@ -1,5 +1,5 @@
 /**
- * The Kaldun mark, built from coordinates.
+ * The Ulmo mark, built from coordinates.
  *
  * A red vessel with three risers standing out of it, held in a dark disc: the
  * bowl below the horizon, what rises from it above. Drawn rather than shipped as

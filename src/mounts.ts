@@ -7,9 +7,9 @@ import { el, qs, qsa } from './lib/dom';
 import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
 import { initFutures } from './visuals/futures';
-import { initGlobe } from './visuals/globe';
 import { initPillar } from './visuals/pillar';
 import { initClock } from './components/clock';
+import { initRotor } from './components/rotor';
 import { initFitText } from './components/fitText';
 import { initStack } from './sections/stack';
 import { initTabs } from './sections/tabs';
@@ -34,6 +34,7 @@ function wireActions(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initClock(root);
+  initRotor(root);
   initFitText(root);
   wireActions(root);
 
@@ -63,9 +64,6 @@ export function mountHome(root: ParentNode = document): void {
   if (domainTabs) {
     initTabs({ root: domainTabs, items: DOMAINS, label: 'Decision domains' });
   }
-
-  const globe = qs<HTMLCanvasElement>('[data-globe]', root);
-  if (globe) initGlobe(globe);
 
   const pillar = qs<HTMLCanvasElement>('[data-pillar]', root);
   if (pillar) initPillar(pillar);

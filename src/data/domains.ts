@@ -13,7 +13,7 @@ export const DOMAINS: StackItem[] = [
     ordinal: '01',
     label: 'Capital allocation',
     title: 'Capital should not depend on one future.',
-    body: 'An investment case usually hides a single path for demand, financing, regulation and exit. Kaldun runs those conditions together and returns the allocation and staging that hold across the plausible futures.',
+    body: 'An investment case usually hides a single path for demand, financing, regulation and exit. Ulmo runs those conditions together and returns the allocation and staging that hold across the plausible futures.',
     note: 'Institutional investors, asset managers, infrastructure and energy operators, corporate treasuries.',
     rows: [
       ['DECIDES', 'Size, timing, staging, downside'],
@@ -27,7 +27,7 @@ export const DOMAINS: StackItem[] = [
     ordinal: '02',
     label: 'Market entry & expansion',
     title: 'The market will react to your arrival.',
-    body: 'An entry plan is a claim about a market that has not been told yet. Kaldun runs the response — demand, incumbents, regulators, supply — and returns the order and timing that survive it.',
+    body: 'An entry plan is a claim about a market that has not been told yet. Ulmo runs the response — demand, incumbents, regulators, supply — and returns the order and timing that survive it.',
     note: 'Operators entering regulated markets, expansion and corporate development teams.',
     rows: [
       ['DECIDES', 'Market, order, timing, mode'],
@@ -41,7 +41,7 @@ export const DOMAINS: StackItem[] = [
     ordinal: '03',
     label: 'Product & technology',
     title: 'A roadmap is a forecast about what will matter.',
-    body: 'Every roadmap encodes beliefs about cost curves, standards and supply. Kaldun makes those beliefs explicit, tests the roadmap against them, and scores them when they resolve.',
+    body: 'Every roadmap encodes beliefs about cost curves, standards and supply. Ulmo makes those beliefs explicit, tests the roadmap against them, and scores them when they resolve.',
     note: 'Semiconductor and industrial manufacturers, platform and infrastructure engineering.',
     rows: [
       ['DECIDES', 'Commitments now, options later'],
@@ -55,7 +55,7 @@ export const DOMAINS: StackItem[] = [
     ordinal: '04',
     label: 'Risk & resilience',
     title: 'The risks that matter rarely arrive alone.',
-    body: 'Risk registers list events separately; reality delivers them in combination. Kaldun runs correlated arrivals and shows which mitigations still hold when several conditions fail at once.',
+    body: 'Risk registers list events separately; reality delivers them in combination. Ulmo runs correlated arrivals and shows which mitigations still hold when several conditions fail at once.',
     note: 'Risk committees, supervisory and prudential functions, continuity and operations.',
     rows: [
       ['DECIDES', 'Which exposure to reduce, which mitigation to fund'],
@@ -69,7 +69,7 @@ export const DOMAINS: StackItem[] = [
     ordinal: '05',
     label: 'Policy & geopolitics',
     title: 'The rule change is only the first-order event.',
-    body: 'A rule is written once and felt for years. Kaldun runs the propagation — who reprices, who relocates, who waits — and shows where the largest effect actually lands.',
+    body: 'A rule is written once and felt for years. Ulmo runs the propagation — who reprices, who relocates, who waits — and shows where the largest effect actually lands.',
     note: 'Sovereign and public institutions, central banks and financial regulators, national security organisations.',
     rows: [
       ['DECIDES', 'Which position, and when to move'],

@@ -37,7 +37,7 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     ctx.clearRect(0, 0, w, h);
 
-    const rnd = seeded(1377);
+    const rnd = seeded(1654);
     const cell = Math.max(7, Math.floor(w / 15));
     const font = Math.floor(cell * 0.92);
     ctx.font = `500 ${font}px "Geist Mono", monospace`;

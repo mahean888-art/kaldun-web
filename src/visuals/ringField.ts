@@ -58,7 +58,7 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
   /** Radial sightlines: fixed bearings, a few of them crimson. */
   const sightlines = (() => {
-    const rnd = seeded(1377);
+    const rnd = seeded(1654);
     return Array.from({ length: 30 }, (_, i) => ({
       angle: (i / 30) * Math.PI * 2 + rnd() * 0.14,
       from: 0.18 + rnd() * 0.5,

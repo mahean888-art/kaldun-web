@@ -2,7 +2,7 @@
    Ulmo — design tokens
    Palette taken from the mark: crimson and gold on warm paper, with near-black
    ink. Crimson does the pointing; gold carries structure and measurement.
-   The page is light; two bands (Project 1377 and the footer) invert to the
+   The page is light; two bands (Project 1654 and the footer) invert to the
    mark's own near-black through the .theme-dark scope below.
    ========================================================================== */
 
@@ -81,7 +81,7 @@
 
 /* --- the inverted bands ------------------------------------------------ */
 
-/* Project 1377 and the footer sit on the mark's own near-black. Everything
+/* Project 1654 and the footer sit on the mark's own near-black. Everything
    inside them is written in tokens, so one scope flips the whole band. */
 .theme-dark {
   --ground: #0a0a0a;

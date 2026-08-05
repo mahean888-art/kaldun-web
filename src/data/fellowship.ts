@@ -1,5 +1,5 @@
 /**
- * Project 1377 — a recruiting and invention programme, not an academic centre.
+ * Project 1654 — a recruiting and invention programme, not an academic centre.
  * Named for the year Ibn Khaldun completed the Muqaddimah.
  */
 

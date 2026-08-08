@@ -8,7 +8,6 @@ import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
 import { initFutures } from './visuals/futures';
 import { initPillar } from './visuals/pillar';
-import { initClock } from './components/clock';
 import { initRotor } from './components/rotor';
 import { initFitText } from './components/fitText';
 import { initStack } from './sections/stack';
@@ -33,7 +32,6 @@ function wireActions(root: ParentNode): void {
 
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
-  initClock(root);
   initRotor(root);
   initFitText(root);
   wireActions(root);

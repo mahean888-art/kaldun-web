@@ -44,40 +44,6 @@
   }
 }
 
-/* --- corner meta ------------------------------------------------------ */
-
-.hero__meta {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(1.25rem, 3vw, 3rem);
-  margin-bottom: clamp(1rem, 3vh, 2.25rem);
-}
-
-/* A readout, not a widget: a crimson tick, then the time and the place set in
-   mono on two lines. */
-.hero__clock {
-  display: flex;
-  flex-direction: column;
-  font-family: var(--mono);
-  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 1.35;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  text-transform: uppercase;
-}
-
-.hero__clock::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--crimson);
-  margin-bottom: 0.9rem;
-}
-
 /* --- headline --------------------------------------------------------- */
 
 .hero__head {

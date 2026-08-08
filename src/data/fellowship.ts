@@ -1,6 +1,5 @@
 /**
  * Project 1654 — a recruiting and invention programme, not an academic centre.
- * Named for the year Ibn Khaldun completed the Muqaddimah.
  */
 
 export type Block = {

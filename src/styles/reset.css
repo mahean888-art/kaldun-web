@@ -15,6 +15,9 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* No rubber-band past either end, so the page's own white can never appear
+     below the footer's black band. */
+  overscroll-behavior: none;
   /* The hero's dial bleeds past the right edge on purpose. Clip at the document
      so that bleed can never become a horizontal scrollbar. `clip` does not make
      a scroll container, so the document keeps the browser's native scrolling. */

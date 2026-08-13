@@ -354,6 +354,10 @@ body.is-locked {
 .site-footer {
   border-top: var(--hairline);
   background: var(--ground);
+  /* Paints the footer's own black below the last pixel of the page without
+     adding height, so any gap under the wordmark — an overscroll, a short
+     embedding frame — is black rather than white. */
+  box-shadow: 0 50vh 0 var(--ground);
   /* No bottom padding: the wordmark band is the page's last pixel. */
   padding-block: clamp(3rem, 7vw, 6rem) 0;
 }

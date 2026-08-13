@@ -207,7 +207,9 @@
 .rotor {
   position: relative;
   display: inline-block;
-  color: var(--ink);
+  /* The word that changes is the one in the accent, so the change is seen. */
+  color: var(--crimson);
+  font-weight: 500;
   transition: width var(--dur-2) var(--ease-out);
 }
 

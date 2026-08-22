@@ -202,14 +202,15 @@
   max-width: 22ch;
 }
 
-/* The ghost holds the line's baseline and height; the words ride over it.
-   Width is set in script so the full stop never jumps. */
+/* The ghost sits in flow and fixes the line's baseline and height. The slot is
+   the highlight itself — a crimson block, painted outside the word's box, that
+   the words roll through and are clipped by. Its width is set in script, so the
+   block grows and shrinks with the word and the full stop never jumps. */
 .rotor {
   position: relative;
   display: inline-block;
-  /* The word that changes is the one in the accent, so the change is seen. */
-  color: var(--crimson);
-  font-weight: 500;
+  /* The slot is painted wider than the word, so the stop needs room to clear it. */
+  margin-right: 0.34em;
   transition: width var(--dur-2) var(--ease-out);
 }
 
@@ -217,11 +218,21 @@
   visibility: hidden;
 }
 
+.rotor__slot {
+  position: absolute;
+  inset: -0.08em -0.24em -0.18em -0.24em;
+  overflow: hidden;
+  background: var(--crimson);
+  border-radius: 2px;
+}
+
 .rotor__word {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 0.24em;
+  top: 0.08em;
   white-space: nowrap;
+  color: #fff;
+  font-weight: 500;
   transition:
     transform var(--dur-2) var(--ease-out),
     opacity var(--dur-2) var(--ease-out);
@@ -229,7 +240,7 @@
 
 /* Below, in place, above — the three stations of the roll. */
 .rotor__word.is-below {
-  transform: translate3d(0, 0.55em, 0);
+  transform: translate3d(0, 0.9em, 0);
   opacity: 0;
 }
 
@@ -239,7 +250,7 @@
 }
 
 .rotor__word.is-above {
-  transform: translate3d(0, -0.55em, 0);
+  transform: translate3d(0, -0.9em, 0);
   opacity: 0;
 }
 

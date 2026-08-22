@@ -1,10 +1,11 @@
 /**
  * The changing verb.
  *
- * "See what could happen before you decide." — the last word steps through the
+ * "Run the world forward before you decide." — the last word steps through the
  * decisions Ulmo is pointed at and comes to rest on the one it started with.
- * Each word rises into the place the last one left, holds long enough to be
- * read, and the line's width follows it so the full stop never jumps.
+ * The words roll through a crimson slot: each rises into the place the last one
+ * left, holds long enough to be read, and the slot's width follows it so the
+ * full stop never jumps.
  *
  * The sequence plays once. It is a statement of range, not a loop that nags.
  */
@@ -35,12 +36,17 @@ function mount(host: HTMLElement): void {
   ghost.className = 'rotor__ghost';
   ghost.setAttribute('aria-hidden', 'true');
 
+  // The slot is the highlight, and it clips the roll.
+  const slot = document.createElement('span');
+  slot.className = 'rotor__slot';
+
   let word = document.createElement('span');
   word.className = 'rotor__word is-in';
   word.textContent = WORDS[0] ?? 'decide';
 
   ghost.textContent = word.textContent;
-  host.replaceChildren(ghost, word);
+  slot.append(word);
+  host.replaceChildren(ghost, slot);
 
   /** The ghost sits in flow, so it fixes the baseline and gives us a ruler. */
   const measure = (text: string): number => {
@@ -75,7 +81,7 @@ function mount(host: HTMLElement): void {
     const incoming = document.createElement('span');
     incoming.className = 'rotor__word is-below';
     incoming.textContent = next;
-    host.append(incoming);
+    slot.append(incoming);
 
     // The width leads the word by a hair, so the stop settles as it arrives.
     setWidth(next);

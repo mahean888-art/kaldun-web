@@ -25,22 +25,22 @@ type Ring = {
 };
 
 const RINGS: Ring[] = [
-  { r: 0.2, kind: 'solid', alpha: 0.22, spin: 0, tone: 'cream' },
-  { r: 0.32, kind: 'graduated', alpha: 0.3, spin: 0.0000075, tone: 'cream' },
-  { r: 0.44, kind: 'hatched', alpha: 0.17, spin: -0.0000041, tone: 'cream' },
-  { r: 0.54, kind: 'dotted', alpha: 0.42, spin: -0.0000052, tone: 'gold' },
-  { r: 0.62, kind: 'ticked', alpha: 0.26, spin: 0.0000034, tone: 'cream' },
-  { r: 0.74, kind: 'hatched', alpha: 0.13, spin: 0.0000022, tone: 'cream' },
-  { r: 0.86, kind: 'graduated', alpha: 0.22, spin: -0.0000026, tone: 'cream' },
-  { r: 0.97, kind: 'dotted', alpha: 0.3, spin: 0.0000019, tone: 'gold' },
-  { r: 1.06, kind: 'solid', alpha: 0.14, spin: 0, tone: 'cream' },
+  { r: 0.2, kind: 'solid', alpha: 0.3, spin: 0, tone: 'cream' },
+  { r: 0.32, kind: 'graduated', alpha: 0.4, spin: 0.0000075, tone: 'cream' },
+  { r: 0.44, kind: 'hatched', alpha: 0.22, spin: -0.0000041, tone: 'cream' },
+  { r: 0.54, kind: 'dotted', alpha: 0.5, spin: -0.0000052, tone: 'gold' },
+  { r: 0.62, kind: 'ticked', alpha: 0.34, spin: 0.0000034, tone: 'cream' },
+  { r: 0.74, kind: 'hatched', alpha: 0.18, spin: 0.0000022, tone: 'cream' },
+  { r: 0.86, kind: 'graduated', alpha: 0.3, spin: -0.0000026, tone: 'cream' },
+  { r: 0.97, kind: 'dotted', alpha: 0.38, spin: 0.0000019, tone: 'gold' },
+  { r: 1.06, kind: 'solid', alpha: 0.2, spin: 0, tone: 'cream' },
 ];
 
-/* Ink, gold and crimson: an instrument engraved on paper, not lit on black. */
+/* An instrument lit on black: warm white ruling, gold measures, crimson bearings. */
 const TONES: Record<Ring['tone'], [number, number, number]> = {
-  cream: [30, 27, 20],
-  gold: [168, 124, 16],
-  crimson: [163, 20, 33],
+  cream: [237, 232, 222],
+  gold: [217, 166, 38],
+  crimson: [224, 68, 52],
 };
 
 export type RingHandle = { destroy: () => void };
@@ -177,16 +177,16 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
       path.moveTo(cx + Math.cos(a) * base * line.from, cy + Math.sin(a) * base * line.from);
       path.lineTo(cx + Math.cos(a) * base * line.to, cy + Math.sin(a) * base * line.to);
     }
-    ctx.strokeStyle = stroke('cream', 0.1);
+    ctx.strokeStyle = stroke('cream', 0.14);
     ctx.stroke(plain);
-    ctx.strokeStyle = stroke('crimson', 0.4);
+    ctx.strokeStyle = stroke('crimson', 0.5);
     ctx.stroke(accent);
 
     for (const ring of RINGS) drawRing(ring, time);
 
     // The present: a single crimson square at the centre of the dial.
     const beat = reduced ? 1 : 0.7 + Math.sin(time * 0.0014) * 0.3;
-    ctx.fillStyle = `rgba(185, 31, 46, ${(0.55 + 0.45 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(224, 68, 52, ${(0.6 + 0.4 * beat).toFixed(3)})`;
     ctx.fillRect(cx - 2.5, cy - 2.5, 5, 5);
 
     ctx.strokeStyle = stroke('crimson', 0.22 * beat);

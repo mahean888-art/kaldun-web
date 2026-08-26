@@ -12,6 +12,19 @@
   padding-top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
   overflow: hidden;
+  /* Not a flat black: the ground lifts a little behind the dial and falls away
+     at the edges, so the plate has depth without any visible banding. */
+  background:
+    radial-gradient(130% 95% at 68% 44%, #17171a 0%, #0d0d0e 46%, #08080a 100%);
+}
+
+/* The cut into the light page is deliberate and hard, ruled in the accent. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--crimson) 0%, rgba(217, 166, 38, 0.5) 22%, transparent 62%);
 }
 
 /* --- the dial --------------------------------------------------------- */
@@ -74,7 +87,6 @@
 .hero__brief {
   position: relative;
   z-index: 2;
-  isolation: isolate;
   order: 2;
   margin-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
@@ -139,19 +151,6 @@
     margin: 0;
   }
 
-  /* A soft scrim so the mono copy stays crisp over the dial's hatching. */
-  .hero__brief::after {
-    content: '';
-    position: absolute;
-    inset: -1.75rem -2.5rem -1.75rem -1.5rem;
-    z-index: -1;
-    background: radial-gradient(
-      70% 100% at 26% 50%,
-      var(--ground) 0%,
-      color-mix(in srgb, var(--ground) 78%, transparent) 55%,
-      transparent 100%
-    );
-  }
 }
 
 /* --- actions and footnote -------------------------------------------- */
@@ -222,7 +221,9 @@
   position: absolute;
   inset: -0.08em -0.24em -0.18em -0.24em;
   overflow: hidden;
-  background: var(--crimson);
+  /* The mark's own red, not the theme's lighter reading red: this is a block of
+     colour, not type, and it should match the logo exactly. */
+  background: #b91f2e;
   border-radius: 2px;
 }
 

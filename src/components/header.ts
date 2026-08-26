@@ -43,13 +43,32 @@ export function initHeader(): void {
   });
 
   let stuck = false;
+  let inverted = false;
   let lastRead = -1;
+
+  // The hero is dark and the rest of the page is light, so the header has to
+  // change ink as it crosses the boundary. Measured from the hero's own height
+  // rather than a magic number, and re-measured when the viewport changes.
+  const hero = qs<HTMLElement>('.hero');
+  let heroEnd = 0;
+  const measureHero = (): void => {
+    heroEnd = hero ? hero.offsetTop + hero.offsetHeight - header.offsetHeight : 0;
+  };
+  measureHero();
+  window.addEventListener('resize', measureHero, { passive: true });
+  window.addEventListener('load', measureHero);
 
   onFrame((frame: Frame) => {
     const nextStuck = frame.scrollY > 12;
     if (nextStuck !== stuck) {
       stuck = nextStuck;
       header.classList.toggle('is-stuck', stuck);
+    }
+
+    const nextInverted = frame.scrollY < heroEnd;
+    if (nextInverted !== inverted) {
+      inverted = nextInverted;
+      header.classList.toggle('is-inverted', inverted);
     }
 
     const doc = document.documentElement;

@@ -26,24 +26,6 @@
   transform-origin: left center;
 }
 
-/* Over the hero the header writes itself in light ink on the hero's own black,
-   the same way the .theme-dark scope flips a band: redeclare the tokens and
-   every child follows, buttons included. */
-/* The drawer is the header's own surface, so it follows it into the dark. */
-.site-header.is-inverted,
-.site-header.is-inverted + .drawer {
-  --ground: #0a0a0a;
-  --ink: #ede8de;
-  --ink-2: #b0aca4;
-  --mute: #85837d;
-  --faint: #5b5a56;
-  --edge: #2a2a2a;
-  --edge-soft: #1c1c1c;
-  --crimson: #c2313b;
-  --gold: #d9a626;
-  --gold-hi: #edc357;
-}
-
 .site-header.is-stuck {
   /* Opaque rather than blurred: a backdrop-filter across the full width repaints
      on every scrolled frame and is the single most expensive thing a fixed header

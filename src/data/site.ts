@@ -1,36 +1,20 @@
 /**
- * Contact points, in one place.
- *
- * Every "bring us a decision" and every fellowship action opens the same
- * scheduling link; everything else goes to the single address.
+ * Contact points and the page's data, in one place.
  */
 
-export const EMAIL = 'hello@ulmolabs.com';
+export const EMAIL = 'hello@kaldun.ai';
 
-/** Scheduling link used by both primary actions. */
+/** Scheduling link, offered inside the decision moment — never on first click. */
 export const CALENDLY = 'https://calendly.com/mahean888/30min';
 
-/** The cost of the failure, stated in four lines and attached to the argument. */
-export const STATEMENTS: string[] = [
-  'Fluent is not calibrated.',
-  'Events do not stay in their category.',
-  'Confidence is not a record.',
-  'Analyst review does not scale.',
-];
-
-export const THESIS_SHOWS: string[] = [
-  'what state it holds',
-  'which futures follow',
-  'the odds of each',
-  'what evidence would change them',
-  'how it scored last time',
-];
-
+/** What a sealed commitment carries, and how the seal is made. */
 export const RECORD_FIELDS: Array<[string, string]> = [
-  ['QUESTION', 'The claim, written so it can only resolve one way'],
-  ['PROBABILITY', 'The belief at commitment, never overwritten'],
-  ['COMMITTED', 'Timestamp, and what the Engine could see'],
-  ['RESOLUTION', 'The named source and rule that will decide it'],
-  ['OUTCOME', 'What reality returned'],
-  ['SCORE', 'Calibration against that outcome, and against a baseline'],
+  ['CLAIM', 'Written so it can only resolve one way'],
+  ['PROBABILITY', 'A number or a distribution, never overwritten'],
+  ['HORIZON', 'When the claim must resolve'],
+  ['RESOLUTION RULE', 'The named source that will decide it'],
+  ['EVIDENCE SNAPSHOT', 'What the machine could see at commitment'],
+  ['MODEL VERSION', 'Which state of Kaldun made the claim'],
+  ['SEAL', 'SHA-256 over the canonical bundle, published at commitment'],
+  ['ANCHOR', 'RFC 3161 timestamp, plus a daily batch anchor of the Merkle root'],
 ];

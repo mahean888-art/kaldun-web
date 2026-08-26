@@ -1,8 +1,31 @@
 /* ==========================================================================
-   Hero.
-   Display type on the left, the measuring dial on the right. The two never
-   cross: the canvas is inset past the headline and faded at its inner edge.
+   The fanfield: hero and manifesto share one running belief. The canvas is
+   sticky, viewport-sized, and sits behind both — the fan drifts under the
+   type on the hero and stays quietly behind the beats as they arrive.
    ========================================================================== */
+
+.fanfield {
+  position: relative;
+}
+
+.fanfield__bg {
+  position: absolute;
+  inset: 0;
+  /* No overflow rule here: an overflow-clipped box becomes the sticky
+     scrollport and the canvas would never pin. Nothing overflows anyway —
+     the canvas is exactly one viewport tall. */
+  pointer-events: none;
+}
+
+.fanfield__canvas {
+  position: sticky;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100svh;
+}
+
+/* --- hero -------------------------------------------------------------- */
 
 .hero {
   position: relative;
@@ -11,45 +34,11 @@
   flex-direction: column;
   padding-top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
-  overflow: hidden;
 }
-
-/* --- the dial --------------------------------------------------------- */
-
-.hero__dial {
-  position: relative;
-  order: 3;
-  width: 100%;
-  height: clamp(230px, 34svh, 380px);
-  margin-top: auto;
-  pointer-events: none;
-}
-
-.hero__dial canvas {
-  width: 100%;
-  height: 100%;
-}
-
-@media (min-width: 1000px) {
-  .hero__dial {
-    position: absolute;
-    /* Starts to the right of the headline column, bleeds off the right edge. */
-    inset: calc(var(--header-h) * 0.2) calc(var(--gutter) * -2.5) 0 53%;
-    width: auto;
-    height: auto;
-    margin: 0;
-    order: 0;
-    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
-  }
-}
-
-/* --- headline --------------------------------------------------------- */
 
 .hero__head {
   position: relative;
   z-index: 2;
-  order: 1;
 }
 
 .hero__title {
@@ -69,13 +58,11 @@
   color: var(--ink);
 }
 
-/* --- the standing sub-explanation ------------------------------------ */
+/* --- the standing sub-deck --------------------------------------------- */
 
 .hero__brief {
   position: relative;
   z-index: 2;
-  isolation: isolate;
-  order: 2;
   margin-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
   flex-direction: column;
@@ -96,7 +83,7 @@
 
 .hero__ledger b {
   font-weight: 500;
-  color: var(--gold-hi);
+  color: var(--signal);
 }
 
 .hero__brief-body {
@@ -118,49 +105,33 @@
   left: 0;
   width: 5px;
   height: 5px;
-  background: var(--crimson);
+  background: var(--signal);
 }
 
 @media (min-width: 1000px) {
   .hero__title {
-    /* fit-content so the box hugs the glyphs — the dial is positioned off this
-       edge, and a wider box would let a line cross the type. */
     width: fit-content;
     max-width: 11ch;
   }
 
-  /* The brief sits under the dial's inner edge, clear of the type. */
+  /* The brief stands over the fan's open half, clear of the type. */
   .hero__brief {
     position: absolute;
-    top: 50%;
-    left: 52%;
+    top: 52%;
+    left: 56%;
     right: var(--gutter);
     max-width: 42ch;
     margin: 0;
   }
-
-  /* A soft scrim so the mono copy stays crisp over the dial's hatching. */
-  .hero__brief::after {
-    content: '';
-    position: absolute;
-    inset: -1.75rem -2.5rem -1.75rem -1.5rem;
-    z-index: -1;
-    background: radial-gradient(
-      70% 100% at 26% 50%,
-      var(--ground) 0%,
-      color-mix(in srgb, var(--ground) 78%, transparent) 55%,
-      transparent 100%
-    );
-  }
 }
 
-/* --- actions and footnote -------------------------------------------- */
+/* --- actions and footnote ---------------------------------------------- */
 
 .hero__foot {
   position: relative;
   z-index: 2;
-  order: 4;
-  margin-top: clamp(1.5rem, 4vh, 3rem);
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 3vh, 1.75rem);
@@ -181,13 +152,6 @@
   color: var(--faint);
 }
 
-@media (min-width: 1000px) {
-  .hero__foot {
-    order: 4;
-    margin-top: auto;
-  }
-}
-
 /* --- the promise, with its changing verb ------------------------------- */
 
 .hero__promise {
@@ -202,14 +166,18 @@
   max-width: 22ch;
 }
 
+@media (min-width: 1000px) {
+  .hero__promise {
+    max-width: min(48%, 44ch);
+  }
+}
+
 /* The ghost sits in flow and fixes the line's baseline and height. The slot is
-   the highlight itself — a crimson block, painted outside the word's box, that
-   the words roll through and are clipped by. Its width is set in script, so the
-   block grows and shrinks with the word and the full stop never jumps. */
+   the highlight itself — a signal block the words roll through and are clipped
+   by. Its width is set in script, so the full stop never jumps. */
 .rotor {
   position: relative;
   display: inline-block;
-  /* The slot is painted wider than the word, so the stop needs room to clear it. */
   margin-right: 0.34em;
   transition: width var(--dur-2) var(--ease-out);
 }
@@ -222,7 +190,7 @@
   position: absolute;
   inset: -0.08em -0.24em -0.18em -0.24em;
   overflow: hidden;
-  background: var(--crimson);
+  background: var(--signal);
   border-radius: 2px;
 }
 
@@ -238,7 +206,6 @@
     opacity var(--dur-2) var(--ease-out);
 }
 
-/* Below, in place, above — the three stations of the roll. */
 .rotor__word.is-below {
   transform: translate3d(0, 0.9em, 0);
   opacity: 0;
@@ -261,9 +228,42 @@
   }
 }
 
-@media (min-width: 1000px) {
-  /* One line, and never wide enough to run under the dial. */
-  .hero__promise {
-    max-width: min(48%, 44ch);
-  }
+/* ==========================================================================
+   The manifesto: five beats, one per screen-moment, in the editorial face,
+   told over the fan. No heading, no sections — the spine of the page.
+   ========================================================================== */
+
+.manifesto {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(3rem, 10vh, 8rem) 0;
+}
+
+.manifesto__beat {
+  min-height: 52svh;
+  display: flex;
+  align-items: center;
+  max-width: 26ch;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.2vw, 2.625rem);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* The one "we" sentence lands as conviction; the rest never says it. */
+.manifesto__beat:nth-child(even) {
+  margin-left: auto;
+}
+
+/* The last line takes the size jump and doubles as the chapter break. */
+.manifesto__beat--last {
+  max-width: 18ch;
+  margin-left: 0;
+  font-size: var(--t-d1);
+  line-height: 1.1;
+  font-style: italic;
+  padding-bottom: 250px;
 }

@@ -17,7 +17,7 @@ const RISER_CENTRE = 'M21.4 24V8H26.6V24Z';
 const RISER_RIGHT = 'M36.1 24V15.9L34.1 13.9H30.9V24Z';
 
 export function makeMark(size = 34): SVGElement {
-  const red = (d: string): SVGElement => svg('path', { d, fill: 'var(--crimson)' });
+  const red = (d: string): SVGElement => svg('path', { d, fill: '#b91f2e' });
 
   return svg(
     'svg',
@@ -38,7 +38,7 @@ export function makeMark(size = 34): SVGElement {
         cy: 24,
         r: 22.9,
         fill: 'none',
-        stroke: 'var(--gold)',
+        stroke: '#d9a626',
         'stroke-width': 1,
       }),
       red(VESSEL),

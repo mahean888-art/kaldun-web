@@ -1,29 +1,22 @@
 /**
- * Page composition. The prose lives in index.html; this fills in the parts that
- * are driven by data, and points every action at the right destination.
+ * Page composition. The prose lives in index.html; this fills in the parts
+ * driven by data, starts the figures, and points every action at the
+ * decision moment.
  */
 
 import { el, qs, qsa } from './lib/dom';
-import { initRingField } from './visuals/ringField';
 import { mountMarks } from './visuals/mark';
-import { initFutures } from './visuals/futures';
-import { initPillar } from './visuals/pillar';
+import { initFan } from './visuals/fan';
+import { initInstrument } from './visuals/instrument';
+import { initGlyph } from './visuals/glyphs';
 import { initRotor } from './components/rotor';
 import { initFitText } from './components/fitText';
-import { initStack } from './sections/stack';
-import { initTabs } from './sections/tabs';
-import { MOVEMENTS } from './data/engine';
+import { initDecision } from './components/decision';
 import { DOMAINS } from './data/domains';
-import { BLOCKS } from './data/fellowship';
-import { CALENDLY, EMAIL, RECORD_FIELDS, STATEMENTS, THESIS_SHOWS } from './data/site';
+import { AREAS } from './data/areas';
+import { EMAIL, RECORD_FIELDS } from './data/site';
 
-/** Both primary actions open the same scheduling link. */
-function wireActions(root: ParentNode): void {
-  for (const node of qsa<HTMLAnchorElement>('[data-book]', root)) {
-    node.href = CALENDLY;
-    node.target = '_blank';
-    node.rel = 'noopener noreferrer';
-  }
+function wireEmail(root: ParentNode): void {
   for (const node of qsa<HTMLAnchorElement>('[data-email]', root)) {
     node.href = `mailto:${EMAIL}`;
     if (!node.textContent?.trim()) node.textContent = EMAIL;
@@ -34,37 +27,39 @@ export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
   initFitText(root);
-  wireActions(root);
+  wireEmail(root);
+  initDecision(root);
 
-  const canvas = qs<HTMLCanvasElement>('[data-ring-field]', root);
-  if (canvas) initRingField(canvas);
+  const fan = qs<HTMLCanvasElement>('[data-fan]', root);
+  if (fan) initFan(fan);
 
-  for (const node of qsa<HTMLCanvasElement>('canvas[data-futures]', root)) {
-    initFutures(node);
+  const instrument = qs<HTMLElement>('[data-instrument]', root);
+  if (instrument) initInstrument(instrument);
+
+  const domains = qs('[data-domains]', root);
+  if (domains) {
+    domains.replaceChildren(
+      ...DOMAINS.map((d) => {
+        const glyph = el('canvas', { class: 'run__glyph' }) as unknown as HTMLCanvasElement;
+        const block = el('article', { class: 'run', 'data-reveal': 'fade' }, [
+          el('div', { class: 'run__meta' }, [
+            el('span', { class: 'run__ord' }, [d.ordinal]),
+            el('h3', { class: 'run__label' }, [d.label]),
+            el('p', { class: 'run__tagline' }, [d.tagline]),
+            glyph,
+          ]),
+          el(
+            'ul',
+            { class: 'run__questions' },
+            d.questions.map((q) => el('li', {}, [q])),
+          ),
+        ]);
+        // Mounted after insertion, when the canvas has a box to measure.
+        queueMicrotask(() => initGlyph(glyph, Number(d.ordinal) * 733));
+        return block;
+      }),
+    );
   }
-
-  const statements = qs('[data-statements]', root);
-  if (statements) {
-    statements.replaceChildren(...STATEMENTS.map((line) => el('li', {}, [line])));
-  }
-
-  const thesisList = qs('[data-thesis-list]', root);
-  if (thesisList) {
-    thesisList.replaceChildren(...THESIS_SHOWS.map((item) => el('li', {}, [item])));
-  }
-
-  const engineStack = qs<HTMLElement>('[data-engine-stack]', root);
-  if (engineStack) {
-    initStack({ root: engineStack, items: MOVEMENTS, label: 'Engine movements' });
-  }
-
-  const domainTabs = qs<HTMLElement>('[data-domain-tabs]', root);
-  if (domainTabs) {
-    initTabs({ root: domainTabs, items: DOMAINS, label: 'Decision domains' });
-  }
-
-  const pillar = qs<HTMLCanvasElement>('[data-pillar]', root);
-  if (pillar) initPillar(pillar);
 
   const spec = qs('[data-record-spec]', root);
   if (spec) {
@@ -78,22 +73,14 @@ export function mountHome(root: ParentNode = document): void {
     );
   }
 
-  const blocks = qs('[data-fellowship-blocks]', root);
-  if (blocks) {
-    blocks.replaceChildren(
-      ...BLOCKS.map((block) =>
-        el('article', { class: 'block', 'data-reveal': 'fade' }, [
-          el('h3', { class: 'block__label' }, [block.label]),
-          el('p', { class: 'block__body' }, [block.body]),
-          ...(block.items
-            ? [
-                el(
-                  'ul',
-                  { class: 'block__items' },
-                  block.items.map((item) => el('li', {}, [item])),
-                ),
-              ]
-            : []),
+  const areas = qs('[data-areas]', root);
+  if (areas) {
+    areas.replaceChildren(
+      ...AREAS.map((area, i) =>
+        el('li', { class: 'area' }, [
+          el('span', { class: 'area__ord' }, [String(i + 1).padStart(2, '0')]),
+          el('span', { class: 'area__name' }, [area.name]),
+          el('span', { class: 'area__q' }, [area.question]),
         ]),
       ),
     );

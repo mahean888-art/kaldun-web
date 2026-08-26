@@ -1,81 +1,68 @@
 /**
- * Decision domains.
+ * Decisions you can run.
  *
- * One Engine, five places it is pointed. Each domain names the institutions that
- * own that decision, so the buyer is explicit rather than implied.
+ * Five domains, three questions each. Every question is runnable — it contains
+ * a decision, a shock or assumption, and a horizon, phrased the way the owner
+ * of the decision would say it out loud.
  */
 
-import type { StackItem } from '../sections/stack';
+export type Domain = {
+  ordinal: string;
+  label: string;
+  /** One line on why commitments outrun certainty here. */
+  tagline: string;
+  questions: string[];
+};
 
-export const DOMAINS: StackItem[] = [
+export const DOMAINS: Domain[] = [
   {
-    id: 'capital',
     ordinal: '01',
     label: 'Capital allocation',
-    title: 'Capital should not depend on one future.',
-    body: 'An investment case usually hides a single path for demand, financing, regulation and exit. Ulmo runs those conditions together and returns the allocation and staging that hold across the plausible futures.',
-    note: 'Institutional investors, asset managers, infrastructure and energy operators, corporate treasuries.',
-    rows: [
-      ['DECIDES', 'Size, timing, staging, downside'],
-      ['DEPENDS ON', 'Demand, permitting, rates, equipment'],
-      ['RETURNS', 'Allocation, staging, triggers, downside'],
+    tagline: 'Money committed before the world that repays it exists.',
+    questions: [
+      'We’re underwriting a $1.8B data-center portfolio at 6.2% financing. Under which power, demand and rate paths does it clear — and at what price does it survive most of them?',
+      'If the Fed cuts 150bp over twelve months, which combinations of deposit behavior, spreads and refinancing windows become plausible — and which of our three allocation options holds across them?',
+      'Our thesis assumes AI capex keeps compounding. What sequence of evidence would tell us it’s breaking — early enough to act?',
     ],
-    chips: ['Portfolio construction', 'Infrastructure investment', 'M&A', 'Capital staging'],
   },
   {
-    id: 'market',
     ordinal: '02',
-    label: 'Market entry & expansion',
-    title: 'The market will react to your arrival.',
-    body: 'An entry plan is a claim about a market that has not been told yet. Ulmo runs the response — demand, incumbents, regulators, supply — and returns the order and timing that survive it.',
-    note: 'Operators entering regulated markets, expansion and corporate development teams.',
-    rows: [
-      ['DECIDES', 'Market, order, timing, mode'],
-      ['DEPENDS ON', 'Licensing, incumbents, channel, FX'],
-      ['RETURNS', 'Sequence, entry mode, stop conditions'],
+    label: 'Market entry',
+    tagline: 'Crossing into a jurisdiction is a bet on how it behaves.',
+    questions: [
+      'Entering Japan assumes approval inside nine months and a stable yen corridor. How do the futures re-weight if either slips?',
+      'A subsidized competitor lands at 30% under our price. Which responses hold share across the widest range of demand paths?',
+      'Which of these four expansion markets stays attractive across rate, currency and policy futures — not just in the base case?',
     ],
-    chips: ['Market selection', 'Entry sequencing', 'Partner and channel', 'Pricing entry'],
   },
   {
-    id: 'technology',
     ordinal: '03',
     label: 'Product & technology',
-    title: 'A roadmap is a forecast about what will matter.',
-    body: 'Every roadmap encodes beliefs about cost curves, standards and supply. Ulmo makes those beliefs explicit, tests the roadmap against them, and scores them when they resolve.',
-    note: 'Semiconductor and industrial manufacturers, platform and infrastructure engineering.',
-    rows: [
-      ['DECIDES', 'Commitments now, options later'],
-      ['DEPENDS ON', 'Lead times, cost curves, standards'],
-      ['RETURNS', 'Commitment, optionality, reversal triggers'],
+    tagline: 'Roadmaps are forecasts wearing Gantt charts.',
+    questions: [
+      'Committing to this silicon roadmap bets on packaging capacity and export rules holding. Run both the other way: where does it break, and when would we know?',
+      'If inference costs fall another 10× in twenty-four months, which of our bets get stronger, which get commoditized, and in what order?',
+      'Ship the platform in March, or wait for the standard to settle? Which choice survives more futures of the standards fight?',
     ],
-    chips: ['Roadmap sequencing', 'Architecture bets', 'Build vs buy', 'Capacity planning'],
   },
   {
-    id: 'resilience',
     ordinal: '04',
     label: 'Risk & resilience',
-    title: 'The risks that matter rarely arrive alone.',
-    body: 'Risk registers list events separately; reality delivers them in combination. Ulmo runs correlated arrivals and shows which mitigations still hold when several conditions fail at once.',
-    note: 'Risk committees, supervisory and prudential functions, continuity and operations.',
-    rows: [
-      ['DECIDES', 'Which exposure to reduce, which mitigation to fund'],
-      ['DEPENDS ON', 'Grid, logistics, counterparties, controls'],
-      ['RETURNS', 'Correlated futures, surviving mitigations'],
+    tagline: 'The expensive failures are sequences, not events.',
+    questions: [
+      'Port capacity falls 35% for ninety days. What sequence of inventory, pricing, substitution and policy response follows — and which pre-commitments blunt it?',
+      'Which three concentrations in our supplier network drive most of the modeled downside?',
+      'A major counterparty fails on a Friday. What do the next two weeks look like across funding, collateral and customer behavior — and what should already be in place?',
     ],
-    chips: ['Correlated exposure', 'Supply continuity', 'Liquidity stress', 'Concentration'],
   },
   {
-    id: 'policy',
     ordinal: '05',
     label: 'Policy & geopolitics',
-    title: 'The rule change is only the first-order event.',
-    body: 'A rule is written once and felt for years. Ulmo runs the propagation — who reprices, who relocates, who waits — and shows where the largest effect actually lands.',
-    note: 'Sovereign and public institutions, central banks and financial regulators, national security organisations.',
-    rows: [
-      ['DECIDES', 'Which position, and when to move'],
-      ['DEPENDS ON', 'Licensing, substitution, retaliation'],
-      ['RETURNS', 'Propagation path, timing, magnitude'],
+    tagline: 'Rules change the board while the game is being played.',
+    questions: [
+      'Export controls tighten one more notch. Where do flows, prices and capacity actually migrate over eighteen months?',
+      'Which escalation paths matter to our operations, what are their leading indicators, and which contingencies stay useful across most of them?',
+      'A new tariff schedule lands mid-year. Which pricing, sourcing and siting responses are robust before the final numbers are known?',
     ],
-    chips: ['Regulatory exposure', 'Sanctions and controls', 'Trade measures', 'Policy design'],
   },
 ];

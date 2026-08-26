@@ -3,19 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ulmo Labs — machine foresight</title>
+    <title>Kaldun — Machine Foresight</title>
     <meta
       name="description"
-      content="Ulmo is a machine foresight system for institutions making consequential decisions. It turns the present into calibrated possible futures, so a move can be tested before it is committed to."
+      content="Kaldun is a machine that maintains what is true now, runs what could happen next, and learns from what actually does. Run the world forward before you decide."
     />
-    <meta name="theme-color" content="#fbfbf9" />
+    <meta name="theme-color" content="#fafbfc" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <meta property="og:title" content="Ulmo Labs — machine foresight" />
+    <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:title" content="Kaldun — Machine Foresight" />
     <meta
       property="og:description"
-      content="Turns the present into calibrated possible futures, so institutions can test a consequential move before committing to it."
+      content="A machine that maintains what is true now, runs what could happen next, and learns from what actually does."
     />
     <meta property="og:type" content="website" />
     <script type="module" src="/src/pages/home.ts"></script>
@@ -24,215 +25,147 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- ==================== HEADER ==================== -->
+    <!-- ==================== HEADER: mark left, one action right ==================== -->
     <header class="site-header" data-header>
       <div class="site-header__inner">
-        <a class="wordmark" href="#top" aria-label="Ulmo Labs — top of page">
+        <a class="wordmark" href="#top" aria-label="Kaldun — top of page">
           <span data-mark="42"></span>
-          <span class="wordmark__type">Ulmo Labs</span>
+          <span class="wordmark__type">Kaldun</span>
         </a>
 
-        <nav class="nav" aria-label="Sections">
-          <a class="nav__link" href="#problem">Problem</a>
-          <a class="nav__link" href="#thesis">Thesis</a>
-          <a class="nav__link" href="#engine">Engine</a>
-          <a class="nav__link" href="#domains">Domains</a>
-          <a class="nav__link" href="#record">Record</a>
-          <a class="nav__link" href="#project-1654">Project 1654</a>
-        </nav>
-
         <div class="header__actions">
-          <a class="btn btn--sm" data-book href="#book">
+          <a class="btn btn--sm" data-book href="#close">
             Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
           </a>
-          <button
-            class="drawer-toggle"
-            type="button"
-            data-drawer-toggle
-            aria-expanded="false"
-            aria-controls="drawer"
-            aria-label="Open menu"
-          >
-            <span></span><span></span><span></span>
-          </button>
         </div>
       </div>
     </header>
 
-    <div class="drawer" id="drawer" data-drawer>
-      <a class="drawer__link" href="#problem">Problem <span>01</span></a>
-      <a class="drawer__link" href="#thesis">Thesis <span>02</span></a>
-      <a class="drawer__link" href="#engine">Engine <span>03</span></a>
-      <a class="drawer__link" href="#domains">Domains <span>04</span></a>
-      <a class="drawer__link" href="#record">Record <span>05</span></a>
-      <a class="drawer__link" href="#project-1654">Project 1654 <span>06</span></a>
-      <div class="drawer__foot">
-        <a class="btn btn--block" data-book href="#book">
-          Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-
     <main id="main">
-      <!-- ==================== HERO ==================== -->
-      <section class="hero" id="top">
-        <div class="hero__dial" aria-hidden="true">
-          <canvas data-ring-field></canvas>
+      <!-- ==================== HERO + MANIFESTO over the living fan ==================== -->
+      <div class="fanfield">
+        <div class="fanfield__bg" aria-hidden="true">
+          <canvas class="fanfield__canvas" data-fan></canvas>
         </div>
 
-        <div class="shell hero__head">
-          <h1 class="hero__title" data-lines>
-            Machine<br />Foresight<sup>*</sup>
-          </h1>
-          <p class="hero__promise" data-reveal="rise" style="--reveal-delay: 300ms">
-            Run the world forward before you <span class="rotor" data-rotor>decide</span>.
-          </p>
-        </div>
-
-        <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 420ms">
-          <p class="hero__ledger">
-            <span>State <b>T₀</b></span>
-            <span>Futures <b>T₁ → Tₙ</b></span>
-          </p>
-          <p class="hero__brief-body">
-            A continuously trained world model that turns live signals into calibrated futures —
-            so institutions can test consequential moves before they commit.
-          </p>
-        </div>
-
-        <div class="shell hero__foot">
-          <div class="hero__actions" data-reveal="rise" style="--reveal-delay: 540ms">
-            <a class="btn" data-book href="#book">
-              Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
-            </a>
-            <a class="link-under" href="#engine">
-              See the engine <span aria-hidden="true">↓</span>
-            </a>
+        <section class="hero" id="top">
+          <div class="shell hero__head">
+            <h1 class="hero__title" data-lines>
+              Machine<br />Foresight<sup>*</sup>
+            </h1>
+            <p class="hero__promise" data-reveal="rise" style="--reveal-delay: 300ms">
+              Run the world forward before you <span class="rotor" data-rotor>decide</span>.
+            </p>
           </div>
-          <p class="hero__note">* The future, as an input.</p>
-        </div>
-      </section>
 
-      <!-- ==================== 01 — PROBLEM ==================== -->
-      <section class="band" id="problem">
+          <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 420ms">
+            <p class="hero__ledger">
+              <span>State <b>T₀</b></span>
+              <span>Futures <b>T₁ → Tₙ</b></span>
+            </p>
+            <p class="hero__brief-body">
+              A machine that maintains what is true now, runs what could happen next, and learns
+              from what actually does.
+            </p>
+          </div>
+
+          <div class="shell hero__foot">
+            <div class="hero__actions" data-reveal="rise" style="--reveal-delay: 540ms">
+              <a class="btn" data-book href="#close">
+                Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="link-under" href="#instrument">
+                See the instrument <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+            <p class="hero__note">* The future, as an input.</p>
+          </div>
+        </section>
+
+        <!-- The manifesto: five beats, one at a time, over the running fan. -->
+        <section class="manifesto" id="manifesto" aria-label="What Kaldun believes">
+          <div class="shell">
+            <p class="manifesto__beat" data-reveal="rise">
+              Every consequential choice is a bet on a future that hasn&rsquo;t happened yet.
+            </p>
+            <p class="manifesto__beat" data-reveal="rise">
+              People make those bets every day — in memos, models and meetings — and almost never
+              keep score.
+            </p>
+            <p class="manifesto__beat" data-reveal="rise">
+              Software learned to answer. It never learned to anticipate.
+            </p>
+            <p class="manifesto__beat" data-reveal="rise">
+              We built Kaldun to hold a belief about the world, run it forward under the choices in
+              front of you, and let reality grade the result.
+            </p>
+            <p class="manifesto__beat manifesto__beat--last" data-reveal="rise">
+              The next token is not the next state.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ==================== THE INSTRUMENT ==================== -->
+      <section class="band band--chapter" id="instrument">
         <div class="shell">
           <div class="head">
-            <span class="t-label">01 — The problem</span>
+            <span class="t-label">The Instrument</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <div class="problem">
-            <h2 class="problem__title" data-lines>
-              Models learned to answer<br />before they learned<br />to <em>anticipate</em>.
-            </h2>
-            <div class="problem__body">
-              <p class="t-lead" data-reveal="fade">
-                Language models predict what comes next in text. Consequential decisions depend on
-                what comes next in the world.
-              </p>
-              <p class="t-body" data-reveal="fade">
-                A decision needs more than a good answer: possible outcomes, calibrated odds, and a
-                view that changes when the evidence changes. Nothing in a model&rsquo;s default form
-                maintains that.
-              </p>
-              <p class="axiom" data-reveal="fade">The next token is not the next <em>state</em>.</p>
-            </div>
-          </div>
-
-          <div class="problem__lower">
-            <div class="futures-fig" data-reveal="fade" aria-hidden="true">
-              <canvas data-futures="problem"></canvas>
-            </div>
-            <ul class="statements" data-statements></ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==================== 02 — THESIS ==================== -->
-      <section class="band" id="thesis">
-        <div class="shell">
-          <div class="head">
-            <span class="t-label">02 — Our thesis</span>
-            <span class="head__rule" data-reveal="draw"></span>
-          </div>
-
-          <div class="thesis">
-            <div class="stack-col">
-              <h2 class="thesis__title" data-lines>
-                For a consequential decision,<br />the answer is not the output.<br /><em>The calibrated future is.</em>
-              </h2>
-              <div class="spacer-sm"></div>
-              <p class="t-body" data-reveal="fade">
-                The next frontier is not a more articulate model. It is a system that holds a belief
-                about what happens next, keeps it current as evidence arrives, and is scored when
-                reality decides.
-              </p>
-            </div>
-
-            <div>
-              <span class="t-label">A foresight system should be able to show</span>
-              <div class="spacer-sm" style="height: 1rem"></div>
-              <ul class="thesis__list" data-thesis-list></ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==================== 03 — THE ENGINE ==================== -->
-      <section class="band" id="engine">
-        <div class="shell">
-          <div class="head">
-            <span class="t-label">03 — The Ulmo Engine</span>
-            <span class="head__rule" data-reveal="draw"></span>
-          </div>
-
-          <h2 class="t-d1" data-lines style="max-width: 22ch">
-            Know the state. Run it forward.<br />Learn from reality.
+          <h2 class="t-d1" data-lines style="max-width: 18ch">
+            Run the world forward.
           </h2>
+          <div class="spacer-sm"></div>
+          <p class="t-lead" data-reveal="fade" style="max-width: 56ch">
+            Kaldun turns a changing world into distributions over what could happen next — and lets
+            you change the assumptions, actions and shocks that shape them.
+          </p>
 
           <div class="spacer-md"></div>
 
-          <div class="stack" data-engine-stack>
-            <div class="stack__rail-wrap">
-              <div class="rail" data-stack-rail></div>
+          <div class="instrument" data-instrument>
+            <canvas class="instrument__canvas" aria-hidden="true"></canvas>
+            <div class="instrument__controls" role="group" aria-label="Counterfactual — the same world, run differently">
+              <span class="instrument__controls-label">Counterfactual</span>
+              <button type="button" class="instrument__mode" data-mode="assumption" aria-pressed="false">Assumption</button>
+              <button type="button" class="instrument__mode" data-mode="action" aria-pressed="true">Action</button>
+              <button type="button" class="instrument__mode" data-mode="shock" aria-pressed="false">Shock</button>
             </div>
-            <div data-stack-panel></div>
+            <p class="instrument__stamp" aria-live="off">STATE · <span data-state-version>v.0317</span></p>
           </div>
 
-          <div class="spacer-md"></div>
-          <p class="axiom" data-reveal="fade">
-            Latent inside. <em>Explicit outside.</em>
+          <div class="spacer-sm"></div>
+          <p class="t-small" data-reveal="fade" style="max-width: 52ch">
+            Solid is observed. Dashed is possible. When an outcome lands, the dashed line becomes
+            solid and the state moves forward.
           </p>
         </div>
       </section>
 
-      <!-- ==================== 04 — DOMAINS ==================== -->
+      <!-- ==================== DOMAINS: decisions you can run ==================== -->
       <section class="band" id="domains">
         <div class="shell">
           <div class="head">
-            <span class="t-label">04 — Domains</span>
+            <span class="t-label">Domains</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <h2 class="t-d1" data-lines style="max-width: 24ch">
-            Built for decisions that become<br />expensive after you commit.
-          </h2>
+          <h2 class="t-d1" data-lines>Decisions you can run.</h2>
+          <div class="spacer-sm"></div>
+          <p class="t-lead" data-reveal="fade">Five places where commitments outrun certainty.</p>
 
           <div class="spacer-md"></div>
-
-          <div data-domain-tabs>
-            <div class="tabbar" data-tabbar></div>
-            <div class="spacer-sm"></div>
-            <div data-tab-panel></div>
-          </div>
+          <div class="runs" data-domains></div>
         </div>
       </section>
 
-      <!-- ==================== 05 — RECORD ==================== -->
-      <section class="band" id="record">
+      <!-- ==================== THE RECORD ==================== -->
+      <section class="band band--tinted" id="record">
         <div class="shell">
           <div class="head">
-            <span class="t-label">05 — The Ulmo Record</span>
+            <span class="t-label">The Record</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -243,83 +176,95 @@
               </h2>
               <div class="spacer-sm"></div>
               <p class="t-lead" data-reveal="fade">
-                A foresight report is usually written by the party it benefits. Nobody goes back to
-                check, so it can never be wrong.
-              </p>
-              <div class="spacer-sm"></div>
-              <p class="t-body" data-reveal="fade">
-                Ulmo commits instead. A forecast is fixed with its date, what the Engine could
-                see, and the rule that will decide it — cryptographically committed before the
-                outcome is known, so nothing can be rewritten afterwards.
+                Every claim Kaldun commits is sealed before the outcome exists — hashed,
+                timestamped, and anchored where Kaldun cannot quietly edit it. When reality
+                resolves the claim, the seal opens, the score posts, and the model learns.
               </p>
               <div class="spacer-sm"></div>
               <p class="axiom" data-reveal="fade">
-                Integrity by commitment. <em>Accuracy by resolution.</em>
+                The Record is not a trust badge.<br /><em>It is the training loop.</em>
               </p>
             </div>
 
             <div class="stack-col">
-              <span class="t-label t-label--gold">What a committed forecast carries</span>
+              <span class="t-label">What a sealed commitment carries</span>
               <div class="spacer-sm" style="height: 1rem"></div>
-              <div class="record__aside">
-                <div class="pillar-fig ticked" aria-hidden="true">
-                  <canvas data-pillar></canvas>
-                </div>
-                <div class="spec" data-record-spec></div>
-              </div>
+              <div class="spec" data-record-spec></div>
+              <div class="spacer-sm" style="height: 1rem"></div>
+              <p class="record__legend" data-reveal="fade">
+                Open claims are dashed. <em>Resolution makes them solid.</em>
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ==================== 06 — PROJECT 1654 ==================== -->
-      <section class="band band--tinted" id="project-1654">
+      <!-- ==================== PROJECT 1654 ==================== -->
+      <section class="band" id="project-1654">
         <div class="shell">
           <div class="head">
-            <span class="t-label t-label--crimson">06 — Project 1654</span>
+            <span class="t-label">Project 1654</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <div class="fellowship">
+          <div class="p1654__intro">
             <div class="stack-col">
               <p class="fellowship__number" aria-hidden="true">1654</p>
-              <div class="spacer-sm"></div>
-              <h2 class="t-d1" data-lines>
-                Build the systems<br />that learn from time.
-              </h2>
+              <h2 class="t-d1" data-lines>Systems that learn from time.</h2>
               <div class="spacer-sm"></div>
               <p class="t-lead" data-reveal="fade">
-                A fellowship for people who build systems that make measurable claims about what
-                happens next.
+                In 1654, Pascal and Fermat traded letters about how to divide the stakes of an
+                unfinished game — and began the mathematics of probability. The unfinished game is
+                now the world.
+              </p>
+              <p class="t-body" data-reveal="fade">
+                Project 1654 is Kaldun&rsquo;s fellowship for researchers building machines whose
+                claims time can test.
               </p>
               <div class="spacer-sm"></div>
-              <p class="axiom" data-reveal="fade">
-                Do not write about the future.<br /><em>Build systems that survive it.</em>
-              </p>
-              <div class="spacer-sm"></div>
-              <a class="btn btn--ghost" data-book href="#book">
+              <a class="btn btn--ghost" data-book href="#close">
                 Apply to Project 1654 <span class="btn__arrow" aria-hidden="true">↗</span>
               </a>
             </div>
 
-            <div class="blocks" data-fellowship-blocks></div>
+            <div class="stack-col">
+              <span class="t-label">Who it is for</span>
+              <p class="t-body" data-reveal="fade">
+                Researchers and builders — PhD or not — who want their work scored by reality
+                rather than reviewers alone.
+              </p>
+              <div class="spacer-sm" style="height: 0.5rem"></div>
+              <span class="t-label">What fellows receive</span>
+              <p class="t-body" data-reveal="fade">
+                A salary or stipend; a serious compute budget; access to Kaldun&rsquo;s live state
+                and the Record as experimental infrastructure; publication of the work; a direct
+                path to the founding research team.
+              </p>
+              <div class="spacer-sm" style="height: 0.5rem"></div>
+              <p class="axiom axiom--sm" data-reveal="fade">
+                Every fellow&rsquo;s project must commit at least one claim to the Record.
+                <em>Nothing at Kaldun goes ungraded.</em>
+              </p>
+            </div>
           </div>
+
+          <div class="spacer-md"></div>
+          <span class="t-label">Research areas</span>
+          <div class="spacer-sm" style="height: 1rem"></div>
+          <ol class="areas" data-areas></ol>
         </div>
       </section>
 
-      <!-- ==================== CLOSING ==================== -->
-      <section class="band" id="book">
+      <!-- ==================== CLOSE ==================== -->
+      <section class="band band--chapter" id="close">
         <div class="shell">
           <div class="cta">
             <h2 class="cta__title" data-lines>
               Bring us a decision<br />you have not made yet.
             </h2>
             <div class="cta__actions">
-              <a class="btn" data-book href="#book">
+              <a class="btn" data-book href="#close">
                 Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
-              </a>
-              <a class="btn btn--ghost" data-email href="#">
-                Email us <span class="btn__arrow" aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -327,55 +272,77 @@
       </section>
     </main>
 
+    <!-- ==================== THE DECISION MOMENT ==================== -->
+    <dialog class="decision" data-decision>
+      <form class="decision__form" method="dialog" data-decision-form>
+        <div class="decision__head">
+          <span class="t-label">Run a decision</span>
+          <button type="button" class="decision__close" data-decision-close aria-label="Close">×</button>
+        </div>
+
+        <label class="decision__field">
+          <span>01 — What decision</span>
+          <textarea name="decision" rows="2" required placeholder="The move on the table, in your words."></textarea>
+        </label>
+        <label class="decision__field">
+          <span>02 — When must it be made</span>
+          <input name="deadline" type="text" required placeholder="A date, a quarter, a board meeting." />
+        </label>
+        <label class="decision__field">
+          <span>03 — What would change your mind</span>
+          <textarea name="evidence" rows="2" required placeholder="The evidence that would move you."></textarea>
+        </label>
+        <label class="decision__field">
+          <span>Contact</span>
+          <input name="contact" type="email" required placeholder="you@institution.com" />
+        </label>
+
+        <div class="decision__actions">
+          <button type="submit" class="btn">
+            Send <span class="btn__arrow" aria-hidden="true">↗</span>
+          </button>
+          <a class="link-under" data-calendly href="#" target="_blank" rel="noopener noreferrer">
+            Prefer to talk first? Book directly <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </form>
+    </dialog>
+
     <!-- ==================== FOOTER ==================== -->
     <footer class="site-footer theme-dark">
       <div class="shell">
-        <p class="statement site-footer__statement" data-lines>
-          Make the future <em>measurable</em>.
-        </p>
-
         <div class="site-footer__grid">
           <div>
             <a class="wordmark" href="#top">
               <span data-mark="38"></span>
-              <span class="wordmark__type">Ulmo Labs</span>
+              <span class="wordmark__type">Kaldun</span>
             </a>
             <div class="spacer-sm" style="height: 1rem"></div>
             <p class="t-small" style="max-width: 34ch">
-              Machine foresight for institutions making consequential decisions.
+              A machine that maintains what is true now, runs what could happen next, and learns
+              from what actually does.
             </p>
           </div>
 
           <div>
-            <p class="footer-col__title">Sections</p>
+            <p class="footer-col__title">Index</p>
             <div class="footer-col__list">
-              <a href="#problem">Problem</a>
-              <a href="#thesis">Thesis</a>
-              <a href="#engine">Engine</a>
-              <a href="#domains">Domains</a>
               <a href="#record">Record</a>
               <a href="#project-1654">Project 1654</a>
-            </div>
-          </div>
-
-          <div>
-            <p class="footer-col__title">Contact</p>
-            <div class="footer-col__list">
-              <a data-book href="#book">Run a decision</a>
-              <a data-book href="#book">Apply to Project 1654</a>
-              <a data-email href="#">hello@ulmolabs.com</a>
+              <a data-book href="#close">Run a decision</a>
+              <a data-email href="#">hello@kaldun.ai</a>
             </div>
           </div>
         </div>
 
         <div class="site-footer__base">
-          <span>© 2026 Ulmo Labs</span>
+          <span>© 2026 Kaldun</span>
           <span>Made before the answer was known</span>
         </div>
       </div>
 
       <div class="shell">
-        <p class="footer-wordmark" data-fit-text aria-hidden="true">Ulmo Labs</p>
+        <p class="footer-wordmark" data-fit-text aria-hidden="true">Kaldun</p>
       </div>
     </footer>
   </body>

@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Sections — problem, pillars, thesis, rail-and-panel, record, fellowship, CTA.
-   The page is one scroll, so each band is a single clear move.
+   Sections — the Instrument, the domains, the Record, Project 1654, the
+   close, and the decision moment. The page is one scroll; each band is one
+   clear move.
    ========================================================================== */
 
-/* --- section head ----------------------------------------------------- */
+/* --- section head ------------------------------------------------------ */
 
 .head {
   display: flex;
@@ -15,404 +16,192 @@
 .head__rule {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, var(--gold-dim), var(--edge) 55%, transparent);
+  background: var(--edge);
   transform-origin: left center;
 }
 
-/* --- problem ---------------------------------------------------------- */
-
-.problem {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: start;
+/* A chapter opens with more air above it than an ordinary band. */
+.band--chapter {
+  padding-block-start: clamp(5rem, 14vh, 10rem);
 }
 
-@media (min-width: 960px) {
-  .problem {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  }
-}
+/* --- the instrument ----------------------------------------------------- */
 
-.problem__title {
-  font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
-}
-
-.problem__title em {
-  font-style: normal;
-  color: var(--crimson-hi);
-}
-
-.problem__body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-/* --- problem: the figure and the attached statements ------------------- */
-
-.problem__lower {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: center;
-  margin-top: clamp(2.5rem, 5vw, 4.5rem);
-}
-
-@media (min-width: 960px) {
-  .problem__lower {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  }
-}
-
-.futures-fig {
+.instrument {
   position: relative;
+  width: 100%;
+}
+
+.instrument__canvas {
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 7;
 }
 
-.futures-fig canvas {
-  width: 100%;
-  height: 100%;
-}
-
-/* The cost of the failure: plain lines, no cards, no numbering. */
-.statements li {
-  position: relative;
-  padding: clamp(0.8rem, 1.5vw, 1.1rem) 0 clamp(0.8rem, 1.5vw, 1.1rem) 1.4rem;
-  border-bottom: 1px solid var(--edge-soft);
-  font-size: var(--t-d4);
-  font-weight: 480;
-  letter-spacing: -0.012em;
-  color: var(--ink-2);
-}
-
-.statements li:first-child {
-  border-top: 1px solid var(--edge);
-}
-
-.statements li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  transform: translateY(-50%);
-  background: var(--crimson);
-}
-
-/* --- thesis ----------------------------------------------------------- */
-
-.thesis {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: start;
-}
-
-@media (min-width: 960px) {
-  .thesis {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+@media (max-width: 759px) {
+  .instrument__canvas {
+    /* The portrait instrument: the flow runs downward. */
+    aspect-ratio: 4 / 5;
   }
 }
 
-.thesis__title {
-  font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
-}
-
-.thesis__title em {
-  font-style: normal;
-  color: var(--gold-hi);
-}
-
-.thesis__list {
+.instrument__controls {
   display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--edge);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
-.thesis__list li {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--edge-soft);
-  font-size: var(--t-d4);
-  font-weight: 450;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  display: flex;
-  gap: 1rem;
-}
-
-.thesis__list li::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  flex: 0 0 auto;
-  background: var(--gold);
-  margin-top: 0.6em;
-}
-
-/* --- rail and panel --------------------------------------------------- */
-
-.stack {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 3.5vw, 3.5rem);
-  align-items: start;
-}
-
-@media (min-width: 960px) {
-  .stack {
-    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
-  }
-
-  .stack__rail-wrap {
-    position: sticky;
-    top: calc(var(--header-h) + 2.5rem);
-  }
-}
-
-/* Pramaana-style blocks: each movement is a cell; the active one is filled. */
-.rail {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--edge);
-  background: var(--ground);
-}
-
-.rail__item {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  width: 100%;
-  padding: clamp(1rem, 1.9vw, 1.4rem) clamp(1rem, 1.8vw, 1.5rem);
-  border-bottom: 1px solid var(--edge-soft);
-  text-align: left;
+.instrument__controls-label {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--mute);
-  transition: color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
+  margin-right: 0.5rem;
 }
 
-.rail__item:last-child {
-  border-bottom: 0;
+.instrument__mode {
+  padding: 0.55em 0.95em;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 
-.rail__item:hover {
+.instrument__mode:hover {
   color: var(--ink);
-  background: var(--ground-2);
+  border-color: var(--mute);
 }
 
-.rail__item[aria-selected='true'] {
-  background: var(--crimson);
+.instrument__mode[aria-pressed='true'] {
+  background: var(--signal);
+  border-color: var(--signal);
   color: #fff;
 }
 
-.rail__item[aria-selected='true'] .rail__ord {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.rail__ord {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  color: var(--gold);
-  flex: 0 0 auto;
-}
-
-.rail__label {
-  font-size: var(--t-d4);
-  font-weight: 500;
-  letter-spacing: -0.014em;
-  line-height: 1.25;
-}
-
-/* --- panel forms ------------------------------------------------------- */
-
-.figure {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  opacity: 0;
-  transition: opacity var(--dur-3) var(--ease-out);
-}
-
-.figure.is-in {
-  opacity: 1;
-}
-
-.figure canvas {
-  width: 100%;
-  height: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .figure {
-    transition: none;
-  }
-}
-
-/* Concept field: the glyph and its tags float on the open page — no frame,
-   no grid, nothing that reads as a template. */
-.figure--concept {
-  /* The floating tags may never leak past the field. */
-  overflow: hidden;
-}
-
-.fig-tag {
+.instrument__stamp {
   position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  padding: 0.35em 0.7em;
-  border: 1px solid var(--crimson-dim);
-  background: var(--ground);
+  top: 0;
+  right: 0;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.1em;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.instrument__stamp [data-state-version] {
+  color: var(--signal);
+}
+
+/* On desktop the control sits on the counterfactual arm itself. */
+@media (min-width: 760px) {
+  .instrument__controls {
+    position: absolute;
+    left: 42%;
+    bottom: 2%;
+    margin-top: 0;
+  }
+}
+
+/* --- domains: decisions you can run ------------------------------------- */
+
+.runs {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--edge);
+}
+
+.run {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  padding-block: clamp(1.75rem, 3.5vw, 3rem);
+  border-bottom: 1px solid var(--edge-soft);
+}
+
+@media (min-width: 960px) {
+  .run {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+}
+
+.run__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.run__ord {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--crimson-hi);
-  white-space: nowrap;
-  animation: tag-float 5.5s var(--ease-in-out) infinite;
-}
-
-.fig-tag::before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--crimson);
-}
-
-@keyframes tag-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fig-tag {
-    animation: none;
-  }
-}
-
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  min-width: 0;
-  animation: panel-in var(--dur-2) var(--ease-out) both;
-}
-
-.panel[hidden] {
-  display: none;
-}
-
-@keyframes panel-in {
-  from { opacity: 0; transform: translate3d(0, 12px, 0); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .panel { animation: none; }
-}
-
-/* Each column of the panel packs its own content, so the prose and the figure
-   can never stretch each other apart. */
-.panel__main,
-.panel__side {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.85rem, 1.5vw, 1.15rem);
-  min-width: 0;
-}
-
-/* From tablet up the panel reads in two columns — prose left, form and detail
-   right — so a whole option fits one screen without reducing any type size. */
-@media (min-width: 820px) {
-  .panel {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-    column-gap: clamp(1.75rem, 3vw, 3.25rem);
-    row-gap: clamp(1rem, 2vw, 1.5rem);
-    align-items: start;
-  }
-
-  .panel__main {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .panel__side {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .panel__chips {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-}
-
-.panel__title {
-  font-size: var(--t-d2);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-
-.panel__body {
-  font-size: var(--t-lead);
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 52ch;
-}
-
-.panel__note {
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  line-height: 1.7;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0.14em;
   color: var(--mute);
-  padding-left: 1.1rem;
-  border-left: 1px solid var(--gold-dim);
-  max-width: 52ch;
 }
 
-.panel__rows {
-  display: grid;
-  grid-template-columns: minmax(90px, 22%) minmax(0, 1fr);
-  gap: 0.5rem 1.25rem;
-  padding-top: clamp(0.85rem, 1.6vw, 1.25rem);
-  border-top: 1px solid var(--edge);
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  line-height: 1.65;
+.run__label {
+  font-size: var(--t-d3);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
 }
 
-.panel__rows dt {
-  color: var(--faint);
-  letter-spacing: 0.1em;
+.run__tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--t-d4);
+  line-height: 1.4;
+  color: var(--ink-2);
+  max-width: 30ch;
 }
 
-.panel__rows dd {
-  color: var(--ink);
+.run__glyph {
+  width: min(120px, 40%);
+  height: 44px;
+  margin-top: 0.5rem;
 }
 
-.panel__chips {
+.run__questions {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  min-width: 0;
 }
 
-/* --- record ----------------------------------------------------------- */
+.run__questions li {
+  position: relative;
+  padding: clamp(0.85rem, 1.6vw, 1.2rem) 0 clamp(0.85rem, 1.6vw, 1.2rem) 1.5rem;
+  border-bottom: 1px solid var(--edge-soft);
+  font-size: var(--t-body);
+  line-height: 1.58;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.run__questions li:last-child {
+  border-bottom: 0;
+}
+
+.run__questions li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.55em;
+  width: 8px;
+  height: 1px;
+  background: var(--signal);
+}
+
+/* --- the record --------------------------------------------------------- */
 
 .record {
   display: grid;
@@ -437,7 +226,7 @@
 
 .spec {
   border: var(--hairline);
-  background: var(--panel);
+  background: var(--ground);
 }
 
 .spec__row {
@@ -454,7 +243,7 @@
 
 @media (min-width: 620px) {
   .spec__row {
-    grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
     align-items: baseline;
   }
 }
@@ -463,7 +252,7 @@
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.12em;
-  color: var(--gold);
+  color: var(--mute);
 }
 
 .spec__value {
@@ -472,37 +261,35 @@
   color: var(--ink-2);
 }
 
-.reasons {
-  counter-reset: reason;
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--edge);
-}
-
-.reasons li {
-  counter-increment: reason;
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--edge-soft);
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-
-.reasons li::before {
-  content: counter(reason, decimal-leading-zero);
+/* The grammar, stated: open is dashed, resolved is solid. */
+.record__legend {
+  position: relative;
+  padding-left: 3.2rem;
   font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.1em;
-  color: var(--crimson-hi);
-  padding-top: 0.3em;
+  font-size: var(--t-data);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mute);
 }
 
-/* --- fellowship ------------------------------------------------------- */
+.record__legend::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  width: 2.4rem;
+  height: 0;
+  border-top: 1px dashed var(--mute);
+}
 
-.fellowship {
+.record__legend em {
+  font-style: normal;
+  color: var(--signal);
+}
+
+/* --- project 1654 ------------------------------------------------------- */
+
+.p1654__intro {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(1.75rem, 4vw, 4rem);
@@ -510,22 +297,73 @@
 }
 
 @media (min-width: 960px) {
-  .fellowship {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  .p1654__intro {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 }
 
 .fellowship__number {
   font-family: var(--mono);
-  font-size: clamp(4rem, 13vw, 10rem);
+  font-size: clamp(3.5rem, 11vw, 8rem);
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: var(--crimson);
+  color: var(--signal);
   user-select: none;
+  margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
 }
 
-/* --- closing CTA ------------------------------------------------------ */
+.areas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 clamp(2rem, 4vw, 4rem);
+  border-top: 1px solid var(--edge);
+  counter-reset: none;
+}
+
+@media (min-width: 860px) {
+  .areas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.area {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 0.15rem 0.9rem;
+  padding-block: clamp(0.85rem, 1.6vw, 1.2rem);
+  border-bottom: 1px solid var(--edge-soft);
+  align-items: baseline;
+}
+
+.area__ord {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  color: var(--mute);
+}
+
+.area__name {
+  font-size: var(--t-d4);
+  font-weight: 550;
+  letter-spacing: -0.014em;
+  line-height: 1.25;
+}
+
+.area__q {
+  grid-column: 2;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--t-body);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.axiom--sm {
+  font-size: var(--t-d4);
+}
+
+/* --- the close ---------------------------------------------------------- */
 
 .cta {
   display: grid;
@@ -541,11 +379,12 @@
 }
 
 .cta__title {
+  font-family: var(--serif);
   font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  max-width: 24ch;
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  max-width: 22ch;
   text-wrap: balance;
 }
 
@@ -555,242 +394,86 @@
   gap: 0.75rem;
 }
 
-/* --- the closing statement, Pramaana-style ---------------------------- */
+/* --- the decision moment ------------------------------------------------ */
 
-.statement {
-  font-size: clamp(1.5rem, 4.4vw, 3.75rem);
-  font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
-  max-width: 30ch;
-}
-
-.statement em {
-  font-style: normal;
-  color: var(--crimson-hi);
-}
-
-/* --- fellowship blocks ------------------------------------------------- */
-
-.blocks {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--edge);
-}
-
-.block {
-  padding: clamp(1.1rem, 2vw, 1.6rem) 0;
-  border-bottom: 1px solid var(--edge-soft);
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.block__label {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.block__body {
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--ink-2);
-  max-width: 54ch;
-}
-
-.block__items {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.4rem 1.5rem;
-  margin-top: 0.35rem;
-}
-
-@media (min-width: 620px) {
-  .block__items {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.block__items li {
-  position: relative;
-  padding-left: 0.95rem;
-  font-size: 0.9375rem;
-  line-height: 1.45;
-  color: var(--ink);
-}
-
-.block__items li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 5px;
-  height: 1px;
-  background: var(--crimson);
-}
-
-/* --- domain tabs and card (Aaru-adapted) -------------------------------- */
-
-.tabbar {
-  display: flex;
-  gap: 2px;
-  width: fit-content;
-  max-width: 100%;
-  padding: 4px;
+.decision {
+  /* The reset removes every default margin; a dialog centres itself with
+     margin auto, so it comes back here. */
+  margin: auto;
+  width: min(560px, calc(100vw - 2 * var(--gutter)));
   border: 1px solid var(--edge);
-  border-radius: 999px;
+  border-radius: 2px;
+  padding: 0;
   background: var(--ground);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tabbar::-webkit-scrollbar {
-  display: none;
-}
-
-.tabbar__tab {
-  flex: 0 0 auto;
-  padding: 0.7em 1.15em;
-  border-radius: 999px;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  white-space: nowrap;
-  transition: color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
-}
-
-.tabbar__tab:hover {
   color: var(--ink);
 }
 
-.tabbar__tab[aria-selected='true'] {
-  background: var(--ink);
-  color: var(--ground);
+.decision::backdrop {
+  background: rgba(14, 17, 22, 0.55);
 }
 
-.dcard {
-  border-radius: 10px;
-  background: var(--ground-2);
-  padding: clamp(1.5rem, 3vw, 2.75rem);
+.decision__form {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.9rem, 1.6vw, 1.25rem);
-  animation: panel-in var(--dur-2) var(--ease-out) both;
+  gap: clamp(1rem, 2vw, 1.35rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.dcard[hidden] {
-  display: none;
+.decision__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dcard { animation: none; }
-}
-
-.dcard__who {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.decision__close {
+  width: 36px;
+  height: 36px;
+  font-size: 1.4rem;
+  line-height: 1;
   color: var(--mute);
+  transition: color var(--dur-1) var(--ease-out);
 }
 
-.dcard__title {
-  font-size: var(--t-d2);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  max-width: 26ch;
+.decision__close:hover {
+  color: var(--ink);
 }
 
-.dcard__body {
-  font-size: var(--t-lead);
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 62ch;
-}
-
-.dcard__rows {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(0.9rem, 1.8vw, 1.5rem);
-  padding-top: clamp(0.9rem, 1.8vw, 1.4rem);
-  border-top: 1px solid var(--edge);
-}
-
-@media (min-width: 760px) {
-  .dcard__rows {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.dcard__row {
+.decision__field {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  min-width: 0;
 }
 
-.dcard__key {
+.decision__field span {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
 }
 
-.dcard__value {
-  font-size: 0.9375rem;
+.decision__field input,
+.decision__field textarea {
+  padding: 0.7em 0.85em;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  background: var(--ground-2);
+  font-size: var(--t-body);
   line-height: 1.5;
-  color: var(--ink);
+  resize: vertical;
 }
 
-.dcard__chips {
+.decision__field input:focus-visible,
+.decision__field textarea:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 0;
+}
+
+.decision__actions {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding-top: clamp(0.9rem, 1.8vw, 1.4rem);
-  border-top: 1px solid var(--edge-soft);
-}
-
-
-/* --- record aside: the pillar and the spec ------------------------------ */
-
-.record__aside {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: stretch;
-}
-
-@media (min-width: 620px) {
-  .record__aside {
-    grid-template-columns: clamp(116px, 11vw, 168px) minmax(0, 1fr);
-  }
-}
-
-.pillar-fig {
-  position: relative;
-  min-height: 280px;
-  display: none;
-}
-
-@media (min-width: 620px) {
-  .pillar-fig {
-    display: block;
-  }
-}
-
-.pillar-fig canvas {
-  position: absolute;
-  inset: 6px;
-  width: calc(100% - 12px);
-  height: calc(100% - 12px);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 0.25rem;
 }

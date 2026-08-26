@@ -21,7 +21,7 @@
   bottom: -1px;
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  background: var(--signal);
   transform: scaleX(var(--read, 0));
   transform-origin: left center;
 }
@@ -68,171 +68,17 @@
   line-height: 1;
 }
 
-/* --- nav -------------------------------------------------------------- */
-
-.nav {
-  display: none;
-  align-items: center;
-  gap: clamp(0.9rem, 2.2vw, 2.25rem);
-  margin-inline: auto;
-}
-
-.nav__link {
-  position: relative;
-  padding: 0.45rem 0;
-  font-size: 0.9375rem;
-  font-weight: 450;
-  color: var(--ink-2);
-  transition: color var(--dur-1) var(--ease-out);
-  white-space: nowrap;
-}
-
-.nav__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  width: 100%;
-  background: var(--crimson);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--dur-2) var(--ease-out);
-}
-
-.nav__link:hover {
-  color: var(--ink);
-}
-
-.nav__link:hover::after,
-.nav__link.is-current::after {
-  transform: scaleX(1);
-}
-
-.nav__link.is-current {
-  color: var(--ink);
-}
-
 .header__actions {
   margin-inline-start: auto;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
 }
 
-/* On the narrowest screens the wordmark keeps its scale and the call to action
-   lives in the drawer instead of the bar. */
-@media (max-width: 559px) {
-  .header__actions .btn {
+/* On the narrowest screens the mark stands alone and the action keeps its size. */
+@media (max-width: 430px) {
+  .wordmark__type {
     display: none;
   }
-}
-
-@media (min-width: 1040px) {
-  .nav {
-    display: flex;
-  }
-
-  .header__actions {
-    margin-inline-start: 0;
-  }
-}
-
-/* --- drawer ----------------------------------------------------------- */
-
-.drawer-toggle {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 0 8px;
-  align-items: stretch;
-}
-
-.drawer-toggle span {
-  display: block;
-  height: 1px;
-  background: var(--ink);
-  transition: transform var(--dur-2) var(--ease-out), opacity var(--dur-1) linear;
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(1) {
-  transform: translateY(3px) rotate(45deg);
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(2) {
-  opacity: 0;
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(3) {
-  transform: translateY(-3px) rotate(-45deg);
-}
-
-.drawer {
-  position: fixed;
-  inset: var(--header-h) 0 0 0;
-  z-index: 99;
-  background: var(--ground);
-  border-top: var(--hairline-soft);
-  padding: clamp(1.25rem, 5vw, 2.5rem) var(--gutter) 2.5rem;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate3d(0, -8px, 0);
-  transition:
-    opacity var(--dur-2) var(--ease-out),
-    transform var(--dur-2) var(--ease-out),
-    visibility var(--dur-2) linear;
-}
-
-.drawer.is-open {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.drawer__link {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: var(--hairline-soft);
-  font-size: clamp(1.375rem, 6vw, 1.75rem);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-}
-
-.drawer__link span {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-}
-
-.drawer__foot {
-  margin-top: auto;
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-@media (min-width: 1040px) {
-  .drawer-toggle,
-  .drawer {
-    display: none;
-  }
-}
-
-body.is-locked {
-  overflow: hidden;
 }
 
 /* --- buttons ---------------------------------------------------------- */
@@ -265,7 +111,7 @@ body.is-locked {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--crimson);
+  background: var(--signal);
   transform: translate3d(0, 101%, 0);
   transition: transform var(--dur-2) var(--ease-glide);
 }
@@ -278,7 +124,7 @@ body.is-locked {
 .btn:hover,
 .btn:focus-visible {
   color: #fff;
-  border-color: var(--crimson);
+  border-color: var(--signal);
 }
 
 .btn__arrow {
@@ -333,8 +179,8 @@ body.is-locked {
 }
 
 .link-under:hover {
-  color: var(--gold-hi);
-  border-bottom-color: var(--gold);
+  color: var(--signal);
+  border-bottom-color: var(--mute);
 }
 
 .link-under span {
@@ -376,7 +222,7 @@ body.is-locked {
 
 @media (min-width: 760px) {
   .site-footer__grid {
-    grid-template-columns: 1.6fr repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1.6fr minmax(0, 1fr);
   }
 }
 

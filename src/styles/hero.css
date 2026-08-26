@@ -1,31 +1,3 @@
-/* ==========================================================================
-   The fanfield: hero and manifesto share one running belief. The canvas is
-   sticky, viewport-sized, and sits behind both — the fan drifts under the
-   type on the hero and stays quietly behind the beats as they arrive.
-   ========================================================================== */
-
-.fanfield {
-  position: relative;
-}
-
-.fanfield__bg {
-  position: absolute;
-  inset: 0;
-  /* No overflow rule here: an overflow-clipped box becomes the sticky
-     scrollport and the canvas would never pin. Nothing overflows anyway —
-     the canvas is exactly one viewport tall. */
-  pointer-events: none;
-}
-
-.fanfield__canvas {
-  position: sticky;
-  top: 0;
-  display: block;
-  width: 100%;
-  height: 100svh;
-}
-
-/* --- hero -------------------------------------------------------------- */
 
 .hero {
   position: relative;
@@ -34,11 +6,43 @@
   flex-direction: column;
   padding-top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  overflow: hidden;
+}
+
+/* --- the dial ---------------------------------------------------------- */
+
+.hero__dial {
+  position: relative;
+  order: 3;
+  width: 100%;
+  height: clamp(230px, 34svh, 380px);
+  margin-top: auto;
+  pointer-events: none;
+}
+
+.hero__dial canvas {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 1000px) {
+  .hero__dial {
+    position: absolute;
+    /* Starts to the right of the headline column, bleeds off the right edge. */
+    inset: calc(var(--header-h) * 0.2) calc(var(--gutter) * -2.5) 0 53%;
+    width: auto;
+    height: auto;
+    margin: 0;
+    order: 0;
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
+  }
 }
 
 .hero__head {
   position: relative;
   z-index: 2;
+  order: 1;
 }
 
 .hero__title {
@@ -63,6 +67,7 @@
 .hero__brief {
   position: relative;
   z-index: 2;
+  order: 2;
   margin-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
   flex-direction: column;
@@ -114,11 +119,11 @@
     max-width: 11ch;
   }
 
-  /* The brief stands over the fan's open half, clear of the type. */
+  /* The brief sits under the dial's inner edge, clear of the type. */
   .hero__brief {
     position: absolute;
-    top: 52%;
-    left: 56%;
+    top: 50%;
+    left: 52%;
     right: var(--gutter);
     max-width: 42ch;
     margin: 0;
@@ -130,6 +135,7 @@
 .hero__foot {
   position: relative;
   z-index: 2;
+  order: 4;
   margin-top: auto;
   padding-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
@@ -229,41 +235,34 @@
 }
 
 /* ==========================================================================
-   The manifesto: five beats, one per screen-moment, in the editorial face,
-   told over the fan. No heading, no sections — the spine of the page.
+   The manifesto: five short beats in one tight column, in the editorial
+   face. No heading, no spread — a page of conviction, read in one place.
    ========================================================================== */
 
-.manifesto {
-  position: relative;
-  z-index: 2;
-  padding-block: clamp(3rem, 10vh, 8rem) 0;
+.manifesto .shell {
+  max-width: 1180px;
 }
 
 .manifesto__beat {
-  min-height: 52svh;
-  display: flex;
-  align-items: center;
-  max-width: 26ch;
+  max-width: 34ch;
   font-family: var(--serif);
-  font-size: clamp(1.5rem, 3.2vw, 2.625rem);
+  font-size: clamp(1.375rem, 2.5vw, 2.125rem);
   font-weight: 500;
-  line-height: 1.28;
-  letter-spacing: -0.01em;
+  line-height: 1.32;
+  letter-spacing: -0.008em;
   color: var(--ink);
   text-wrap: balance;
 }
 
-/* The one "we" sentence lands as conviction; the rest never says it. */
-.manifesto__beat:nth-child(even) {
-  margin-left: auto;
+.manifesto__beat + .manifesto__beat {
+  margin-top: clamp(1.5rem, 3.2vw, 2.75rem);
 }
 
-/* The last line takes the size jump and doubles as the chapter break. */
+/* The last line takes the size jump and closes the chapter. */
 .manifesto__beat--last {
-  max-width: 18ch;
-  margin-left: 0;
-  font-size: var(--t-d1);
-  line-height: 1.1;
+  max-width: 20ch;
+  margin-top: clamp(2.25rem, 4.5vw, 4rem);
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  line-height: 1.12;
   font-style: italic;
-  padding-bottom: 250px;
 }

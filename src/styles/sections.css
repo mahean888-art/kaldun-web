@@ -102,61 +102,139 @@
   color: var(--signal);
 }
 
-/* On desktop the control sits on the counterfactual arm itself. */
+/* On desktop the control cluster sits bottom-left, clear of the figure's own
+   labels — the operator's corner of the instrument. */
 @media (min-width: 760px) {
   .instrument__controls {
     position: absolute;
-    left: 42%;
-    bottom: 2%;
+    left: 0;
+    bottom: 3%;
     margin-top: 0;
   }
 }
 
-/* --- domains: decisions you can run ------------------------------------- */
+/* --- domains: one card at a time, behind a segmented bar ----------------- */
 
-.runs {
+.tabbar {
   display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--edge);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  border-bottom: 1px solid var(--edge);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.run {
+.tabbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabbar__tab {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0.9em 0.1em 1.1em;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--mute);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.tabbar__tab:hover {
+  color: var(--ink);
+}
+
+.tabbar__tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.tabbar__tab[aria-selected='true'] {
+  color: var(--ink);
+}
+
+.tabbar__tab[aria-selected='true']::after {
+  transform: none;
+}
+
+.dcard[hidden] {
+  display: none;
+}
+
+.dcard {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  padding-block: clamp(1.75rem, 3.5vw, 3rem);
-  border-bottom: 1px solid var(--edge-soft);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(1.75rem, 3.5vw, 3rem);
 }
 
 @media (min-width: 960px) {
-  .run {
+  .dcard {
     grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
     column-gap: clamp(2.5rem, 5vw, 5rem);
   }
 }
 
-.run__meta {
+/* Selection is a state change, so the card is allowed one quiet entrance. */
+.dcard:not([hidden]) {
+  animation: dcard-in var(--dur-3, 0.45s) var(--ease-out) both;
+}
+
+@keyframes dcard-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dcard:not([hidden]) {
+    animation: none;
+  }
+}
+
+.dcard__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.dcard__head > div {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   min-width: 0;
 }
 
-.run__ord {
+.dcard__ord {
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.14em;
   color: var(--mute);
 }
 
-.run__label {
+.dcard__title {
   font-size: var(--t-d3);
   font-weight: 600;
   letter-spacing: -0.022em;
   line-height: 1.1;
 }
 
-.run__tagline {
+.dcard__tagline {
   font-family: var(--serif);
   font-style: italic;
   font-size: var(--t-d4);
@@ -165,19 +243,20 @@
   max-width: 30ch;
 }
 
-.run__glyph {
-  width: min(120px, 40%);
-  height: 44px;
-  margin-top: 0.5rem;
+.dcard__glyph {
+  flex: 0 0 auto;
+  width: clamp(88px, 12vw, 130px);
+  height: 46px;
+  margin-top: 0.35rem;
 }
 
-.run__questions {
+.dcard__questions {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.run__questions li {
+.dcard__questions li {
   position: relative;
   padding: clamp(0.85rem, 1.6vw, 1.2rem) 0 clamp(0.85rem, 1.6vw, 1.2rem) 1.5rem;
   border-bottom: 1px solid var(--edge-soft);
@@ -187,11 +266,19 @@
   max-width: 62ch;
 }
 
-.run__questions li:last-child {
+.dcard__questions li:first-child {
+  padding-top: 0.35rem;
+}
+
+.dcard__questions li:first-child::before {
+  top: 0.95em;
+}
+
+.dcard__questions li:last-child {
   border-bottom: 0;
 }
 
-.run__questions li::before {
+.dcard__questions li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -311,52 +398,6 @@
   color: var(--signal);
   user-select: none;
   margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
-}
-
-.areas {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0 clamp(2rem, 4vw, 4rem);
-  border-top: 1px solid var(--edge);
-  counter-reset: none;
-}
-
-@media (min-width: 860px) {
-  .areas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.area {
-  display: grid;
-  grid-template-columns: 2.2rem minmax(0, 1fr);
-  gap: 0.15rem 0.9rem;
-  padding-block: clamp(0.85rem, 1.6vw, 1.2rem);
-  border-bottom: 1px solid var(--edge-soft);
-  align-items: baseline;
-}
-
-.area__ord {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  color: var(--mute);
-}
-
-.area__name {
-  font-size: var(--t-d4);
-  font-weight: 550;
-  letter-spacing: -0.014em;
-  line-height: 1.25;
-}
-
-.area__q {
-  grid-column: 2;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: var(--t-body);
-  line-height: 1.5;
-  color: var(--ink-2);
 }
 
 .axiom--sm {

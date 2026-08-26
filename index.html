@@ -42,23 +42,22 @@
     </header>
 
     <main id="main">
-      <!-- ==================== HERO + MANIFESTO over the living fan ==================== -->
-      <div class="fanfield">
-        <div class="fanfield__bg" aria-hidden="true">
-          <canvas class="fanfield__canvas" data-fan></canvas>
+      <!-- ==================== HERO ==================== -->
+      <section class="hero" id="top">
+        <div class="hero__dial" aria-hidden="true">
+          <canvas data-ring-field></canvas>
         </div>
 
-        <section class="hero" id="top">
-          <div class="shell hero__head">
-            <h1 class="hero__title" data-lines>
+        <div class="shell hero__head">
+          <h1 class="hero__title" data-lines>
               Machine<br />Foresight<sup>*</sup>
             </h1>
-            <p class="hero__promise" data-reveal="rise" style="--reveal-delay: 300ms">
+          <p class="hero__promise" data-reveal="rise" style="--reveal-delay: 300ms">
               Run the world forward before you <span class="rotor" data-rotor>decide</span>.
             </p>
           </div>
 
-          <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 420ms">
+        <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 420ms">
             <p class="hero__ledger">
               <span>State <b>T₀</b></span>
               <span>Futures <b>T₁ → Tₙ</b></span>
@@ -69,7 +68,7 @@
             </p>
           </div>
 
-          <div class="shell hero__foot">
+        <div class="shell hero__foot">
             <div class="hero__actions" data-reveal="rise" style="--reveal-delay: 540ms">
               <a class="btn" data-book href="#close">
                 Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
@@ -80,10 +79,10 @@
             </div>
             <p class="hero__note">* The future, as an input.</p>
           </div>
-        </section>
+      </section>
 
-        <!-- The manifesto: five beats, one at a time, over the running fan. -->
-        <section class="manifesto" id="manifesto" aria-label="What Kaldun believes">
+      <!-- The manifesto: five short beats, one tight column. -->
+      <section class="manifesto band" id="manifesto" aria-label="What Kaldun believes">
           <div class="shell">
             <p class="manifesto__beat" data-reveal="rise">
               Every consequential choice is a bet on a future that hasn&rsquo;t happened yet.
@@ -103,8 +102,7 @@
               The next token is not the next state.
             </p>
           </div>
-        </section>
-      </div>
+      </section>
 
       <!-- ==================== THE INSTRUMENT ==================== -->
       <section class="band band--chapter" id="instrument">
@@ -157,7 +155,11 @@
           <p class="t-lead" data-reveal="fade">Five places where commitments outrun certainty.</p>
 
           <div class="spacer-md"></div>
-          <div class="runs" data-domains></div>
+          <div data-domain-tabs>
+            <div class="tabbar" data-tabbar></div>
+            <div class="spacer-sm" style="height: 1.25rem"></div>
+            <div data-tab-panel></div>
+          </div>
         </div>
       </section>
 
@@ -248,10 +250,6 @@
             </div>
           </div>
 
-          <div class="spacer-md"></div>
-          <span class="t-label">Research areas</span>
-          <div class="spacer-sm" style="height: 1rem"></div>
-          <ol class="areas" data-areas></ol>
         </div>
       </section>
 

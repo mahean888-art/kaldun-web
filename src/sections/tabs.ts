@@ -33,7 +33,7 @@ export function initTabs({ root, items, label }: Options): void {
         'aria-selected': String(i === 0),
         tabindex: i === 0 ? '0' : '-1',
       },
-      [item.label],
+      [el('span', { class: 'tabbar__ord', 'aria-hidden': 'true' }, [item.ordinal]), item.label],
     ),
   );
 

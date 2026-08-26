@@ -1,8 +1,8 @@
 /* ==========================================================================
    Kaldun — design tokens
-   Cool chart-paper, ink, and one cold accent: the deep signal blue that is
-   also the dark end of the probability ramp. Colour means probability and
-   machine state — nothing else. The footer is the single ink band.
+   Cool chart-paper, ink, and one accent: the mark's crimson, which is also
+   the deep end of the probability ramp. Colour means probability and machine
+   state — nothing else. Dark bands flip the whole scale in one scope.
    ========================================================================== */
 
 :root {
@@ -21,11 +21,11 @@
   --faint: #99a1aa;
 
   /* --- the signal -------------------------------------------------------- */
-  /* One cold accent. The ramp runs faint ink to deep signal blue; the deep
-     end is the accent itself. */
-  --signal: #1733e6;
-  --signal-hi: #3d56f0;
-  --signal-dim: #dfe5fc;
+  /* One accent: the mark's own crimson. The ramp runs faint ink to crimson;
+     the deep end is the accent itself. */
+  --signal: #b91f2e;
+  --signal-hi: #d43a49;
+  --signal-dim: #f6e0e2;
 
   /* --- type -------------------------------------------------------------- */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -93,9 +93,9 @@
   --mute: #828a93;
   --faint: #565e67;
 
-  --signal: #5b74ff;
-  --signal-hi: #8194ff;
-  --signal-dim: #1a2350;
+  --signal: #e2606b;
+  --signal-hi: #ef838c;
+  --signal-dim: #3b151a;
 
   background: var(--ground);
   color: var(--ink);

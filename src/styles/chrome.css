@@ -249,7 +249,7 @@
 }
 
 .footer-col__list a:hover {
-  color: var(--ink);
+  color: var(--signal-hi);
 }
 
 .site-footer__base {
@@ -272,14 +272,14 @@
 
 .footer-wordmark {
   display: block;
-  /* The band clips, so the fitter's probe size is never visible. */
   overflow: hidden;
   margin-top: clamp(2rem, 5vw, 4rem);
   font-family: var(--sans);
+  /* Sized by the viewport, continuously: the word spans the shell at every
+     width with no measuring script and no jump when the fonts land. */
+  font-size: clamp(4rem, 24.5vw, 29rem);
   font-weight: 700;
   line-height: 0.78;
-  /* Tight: the letters stand shoulder to shoulder, so the fitted size runs
-     larger for the same width. */
   letter-spacing: -0.075em;
   text-transform: uppercase;
   color: var(--ink);

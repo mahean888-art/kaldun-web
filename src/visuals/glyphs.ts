@@ -11,7 +11,7 @@ import { onFrame, onResize, type Frame } from '../lib/ticker';
 export type GlyphHandle = { destroy: () => void };
 
 const INK: [number, number, number] = [14, 17, 22];
-const SIGNAL: [number, number, number] = [23, 51, 230];
+const SIGNAL: [number, number, number] = [185, 31, 46];
 const BARS = 14;
 const FRAME_MS = 50;
 const RESTEP_MS = 6000;

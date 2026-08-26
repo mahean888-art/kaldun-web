@@ -28,14 +28,13 @@
 @media (min-width: 1000px) {
   .hero__dial {
     position: absolute;
-    /* Starts to the right of the headline column, bleeds off the right edge. */
-    inset: calc(var(--header-h) * 0.2) calc(var(--gutter) * -2.5) 0 53%;
+    /* The dial owns the right half and fits it whole — the full instrument,
+       adjusted to the screen, never cropped by an edge. */
+    inset: calc(var(--header-h) * 0.9) var(--gutter) 4svh 52%;
     width: auto;
     height: auto;
     margin: 0;
     order: 0;
-    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
   }
 }
 
@@ -72,6 +71,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+}
+
+/* Cap the reading measure without shrinking the shell — a narrowed shell
+   would centre itself and drift off the left rail. */
+.hero__brief > * {
   max-width: 46ch;
 }
 
@@ -94,11 +98,9 @@
 .hero__brief-body {
   position: relative;
   padding-top: 1rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  line-height: 1.75;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: var(--t-lead);
+  line-height: 1.58;
+  letter-spacing: -0.012em;
   color: var(--ink-2);
   border-top: 1px solid var(--edge);
 }
@@ -119,14 +121,14 @@
     max-width: 11ch;
   }
 
-  /* The brief sits under the dial's inner edge, clear of the type. */
+  /* The brief stays in the left column, under the promise — the dial keeps
+     the right half to itself. */
   .hero__brief {
-    position: absolute;
-    top: 50%;
-    left: 52%;
-    right: var(--gutter);
-    max-width: 42ch;
-    margin: 0;
+    margin-top: clamp(2rem, 6vh, 4.5rem);
+  }
+
+  .hero__brief > * {
+    max-width: min(44%, 46ch);
   }
 }
 

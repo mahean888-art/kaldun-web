@@ -9,7 +9,6 @@ import { mountMarks } from './visuals/mark';
 import { initRingField } from './visuals/ringField';
 import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
-import { initFitText } from './components/fitText';
 import { initDecision } from './components/decision';
 import { initTabs } from './sections/tabs';
 import { DOMAINS } from './data/domains';
@@ -25,7 +24,6 @@ function wireEmail(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
-  initFitText(root);
   wireEmail(root);
   initDecision(root);
 

@@ -40,7 +40,7 @@ const RINGS: Ring[] = [
 const TONES: Record<Ring['tone'], [number, number, number]> = {
   cream: [30, 33, 40],
   gold: [104, 112, 121],
-  crimson: [23, 51, 230],
+  crimson: [185, 31, 46],
 };
 
 export type RingHandle = { destroy: () => void };
@@ -77,10 +77,11 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
     canvas.height = Math.round(h * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Centre sits right of the type and low enough to clear it.
-    cx = w * 0.44;
+    // The whole dial fits its box: the outermost ring (1.06 base) plus its
+    // graduations stays inside both dimensions, centred.
+    cx = w * 0.5;
     cy = h * 0.5;
-    base = Math.min(w, h) * 0.62;
+    base = (Math.min(w, h) / 2) * 0.88;
   };
 
   const stroke = (tone: Ring['tone'], alpha: number): string => {
@@ -186,7 +187,7 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
     // The present: a single crimson square at the centre of the dial.
     const beat = reduced ? 1 : 0.7 + Math.sin(time * 0.0014) * 0.3;
-    ctx.fillStyle = `rgba(23, 51, 230, ${(0.55 + 0.45 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(185, 31, 46, ${(0.55 + 0.45 * beat).toFixed(3)})`;
     ctx.fillRect(cx - 2.5, cy - 2.5, 5, 5);
 
     ctx.strokeStyle = stroke('crimson', 0.22 * beat);

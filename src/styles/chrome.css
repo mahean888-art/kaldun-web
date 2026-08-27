@@ -249,7 +249,7 @@
   /* Paints the footer's own black below the last pixel of the page without
      adding height, so any overscroll gap is black rather than white. */
   box-shadow: 0 50vh 0 var(--ground);
-  padding-block: clamp(3rem, 6vw, 5rem) 0;
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 2.5vw, 2rem);
 }
 
 /* The statement: one line, one action row — the Prime posture. */
@@ -258,7 +258,7 @@
 }
 
 .site-footer__line {
-  font-size: clamp(2.25rem, 5.4vw, 4.75rem);
+  font-size: clamp(1.9rem, 4vw, 3.5rem);
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.02;
@@ -338,32 +338,4 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--faint);
-}
-
-/* --- the giant wordmark: the page's last pixels ------------------------- */
-
-.footer-wordmark {
-  overflow: hidden;
-  margin-top: clamp(1.75rem, 3.5vw, 3rem);
-  font-weight: 700;
-  line-height: 0.8;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  color: var(--ink);
-  user-select: none;
-}
-
-.footer-wordmark span {
-  display: block;
-  white-space: nowrap;
-}
-
-/* Two lines, each sized by the viewport so both fill the shell with no
-   measuring script and no jump when the fonts land. */
-.footer-wordmark__l1 {
-  font-size: min(15.4vw, 232px);
-}
-
-.footer-wordmark__l2 {
-  font-size: min(16.5vw, 248px);
 }

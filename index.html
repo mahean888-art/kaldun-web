@@ -62,6 +62,7 @@
         </div>
 
         <div class="shell hero__head">
+          <p class="hero__kicker" data-reveal="rise">A new kind of computational object</p>
           <h1 class="hero__title" data-lines>
               Machine<br />Foresight<sup>*</sup>
             </h1>
@@ -106,10 +107,9 @@
             Every decision contains a model of the future.
           </h2>
           <div class="spacer-sm"></div>
-          <p class="t-lead" data-reveal="fade" style="max-width: 58ch">
-            An investment memo, a credit file, an underwriting book, a board strategy — each is a
-            model of a world that does not exist yet. Today that model is static: it disappears
-            into prose, spreadsheets and committee judgment. Software learned to answer. It never
+          <p class="t-lead" data-reveal="fade" style="max-width: 54ch">
+            An investment memo, a credit file, a board strategy — each is a model of a world that
+            does not exist yet. Today that model is static. Software learned to answer; it never
             learned to anticipate.
           </p>
 
@@ -117,7 +117,7 @@
 
           <div class="thesis">
             <div class="specimen" data-reveal="fade">
-              <p class="specimen__label">The decision</p>
+              <p class="specimen__label"><em class="figno">Fig. 1</em>The decision</p>
               <p class="specimen__q">Acquire a 1.8&nbsp;GW data-center portfolio at $1.8B?</p>
 
               <div class="specimen__rule"></div>
@@ -148,32 +148,32 @@
             <div class="thesis__side">
               <p class="thesis__bridge" data-reveal="fade">
                 So we build a different kind of computational object — <b>a foresight
-                machine</b> — with five properties:
+                machine.</b> Five properties define it:
               </p>
 
               <ol class="definition__props">
                 <li data-reveal="fade">
-                  <span class="definition__ord">01</span>
+                  <span class="definition__ord">1.1</span>
                   <span class="definition__term">State</span>
                   <span class="definition__desc">A persistent, time-indexed belief about what is true now.</span>
                 </li>
                 <li data-reveal="fade">
-                  <span class="definition__ord">02</span>
+                  <span class="definition__ord">1.2</span>
                   <span class="definition__term">Transition</span>
                   <span class="definition__desc">A model of how that state can change.</span>
                 </li>
                 <li data-reveal="fade">
-                  <span class="definition__ord">03</span>
+                  <span class="definition__ord">1.3</span>
                   <span class="definition__term">Intervention</span>
                   <span class="definition__desc">An action, an assumption, or a shock — introduced by you.</span>
                 </li>
                 <li data-reveal="fade">
-                  <span class="definition__ord">04</span>
+                  <span class="definition__ord">1.4</span>
                   <span class="definition__term">Distribution</span>
                   <span class="definition__desc">Many futures, weighted. Never one answer.</span>
                 </li>
                 <li data-reveal="fade">
-                  <span class="definition__ord">05</span>
+                  <span class="definition__ord">1.5</span>
                   <span class="definition__term">Resolution</span>
                   <span class="definition__desc">Claims committed before the outcome. The machine learns from what reality does.</span>
                 </li>
@@ -188,7 +188,7 @@
       </section>
 
       <!-- ============ 02 · THE RECORD (resolved evidence: light) ============ -->
-      <section class="band band--chapter band--paper" id="record">
+      <section class="band band--chapter theme-dark" id="record">
         <div class="shell">
           <div class="head">
             <span class="t-label">The Record<sup class="head__no">02</sup></span>
@@ -198,6 +198,9 @@
           <div class="record">
             <div class="record__pillar" aria-hidden="true">
               <canvas data-pillar></canvas>
+              <p class="figcap figcap--center">
+                <em class="figno">Fig. 3</em>The ledger as architecture
+              </p>
             </div>
 
             <div class="stack-col">
@@ -263,6 +266,7 @@
 
           <div class="spacer-md"></div>
 
+          <p class="figcap" data-reveal="fade"><em class="figno">Fig. 2</em>The loop</p>
           <div class="instrument" data-instrument>
             <div class="instrument__figure" data-instrument-figure aria-hidden="true"></div>
           </div>
@@ -277,28 +281,23 @@
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <h2 class="t-d1" data-lines>Decisions you can run.</h2>
-          <div class="spacer-sm"></div>
-          <p class="t-lead" data-reveal="fade" style="max-width: 54ch">
-            Fifteen questions from five domains — each one a decision, an assumption, and a
-            horizon. Bring your own.
-          </p>
+          <div class="usecases__head">
+            <h2 class="usecases__title" data-lines>
+              Ask, and you get an answer.<br /><em>Run, and you get futures.</em>
+            </h2>
+            <p class="usecases__sub" data-reveal="fade">
+              Five domains where commitments outrun certainty — and what the Machine hands back
+              before the ink is dry.
+            </p>
+          </div>
 
-          <div class="spacer-md"></div>
-
-          <div class="qstage" data-quotes tabindex="0" role="group" aria-label="Runnable questions" data-reveal="fade">
-            <div class="qstage__meter">
-              <span class="qstage__index" data-quote-index>01 / 15</span>
-              <span class="qstage__track"><span class="qstage__bar" data-quote-bar></span></span>
-            </div>
-            <blockquote class="qstage__quote">
-              <p class="qstage__text" data-quote-text></p>
-              <footer class="qstage__role" data-quote-role></footer>
-            </blockquote>
+          <div data-domain-tabs>
+            <div class="tabbar" data-tabbar></div>
+            <div data-tab-panel></div>
           </div>
 
           <div class="spacer-md"></div>
-          <p class="t-small" data-reveal="fade" style="max-width: 56ch">
+          <p class="t-small usecases__ext" data-reveal="fade">
             We start where uncertainty becomes capital allocation. The same machine extends to
             insurance, real assets, energy and national security.
           </p>
@@ -306,7 +305,7 @@
       </section>
 
       <!-- ============ 05 · RESEARCH (resolved methods: light) ============ -->
-      <section class="band band--chapter band--paper" id="research">
+      <section class="band band--chapter theme-dark" id="research">
         <div class="shell">
           <div class="head">
             <span class="t-label">Research<sup class="head__no">05</sup></span>
@@ -449,12 +448,6 @@
         </div>
       </div>
 
-      <div class="shell">
-        <p class="footer-wordmark" aria-hidden="true">
-          <span class="footer-wordmark__l1">Foresight</span>
-          <span class="footer-wordmark__l2">Machines</span>
-        </p>
-      </div>
     </footer>
   </body>
 </html>

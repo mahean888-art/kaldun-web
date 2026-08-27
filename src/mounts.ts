@@ -10,8 +10,9 @@ import { initBranches } from './visuals/branches';
 import { initInstrument } from './visuals/instrument';
 import { initPillar } from './visuals/pillar';
 import { initRotor } from './components/rotor';
-import { initQuotes } from './components/quotes';
+import { initTabs } from './sections/tabs';
 import { initDecision } from './components/decision';
+import { DOMAINS } from './data/domains';
 import { EMAIL, RECORD_FIELDS } from './data/site';
 
 function wireEmail(root: ParentNode): void {
@@ -30,8 +31,8 @@ export function mountHome(root: ParentNode = document): void {
   const fan = qs<HTMLCanvasElement>('[data-branches]', root);
   if (fan) initBranches(fan);
 
-  const quotes = qs<HTMLElement>('[data-quotes]', root);
-  if (quotes) initQuotes(quotes);
+  const tabsRoot = qs<HTMLElement>('[data-domain-tabs]', root);
+  if (tabsRoot) initTabs({ root: tabsRoot, items: DOMAINS, label: 'Use cases' });
 
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);

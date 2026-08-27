@@ -27,6 +27,28 @@
   color: var(--signal);
 }
 
+/* Figure captions, in the laboratory manner. */
+.figcap {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 0.9rem;
+}
+
+.figcap--center {
+  text-align: center;
+  margin-top: 0.9rem;
+  margin-bottom: 0;
+}
+
+.figno {
+  font-style: normal;
+  color: var(--signal);
+  margin-right: 0.9em;
+}
+
 /* A chapter opens with more air above it than an ordinary band. */
 .band--chapter {
   padding-block-start: clamp(5rem, 14vh, 10rem);
@@ -306,81 +328,217 @@
   color: var(--signal);
 }
 
-/* --- 04 · use cases: one question at a time ------------------------------ */
+/* --- 04 · use cases: pill bar, one case card at a time ------------------- */
 
-.qstage {
-  max-width: 980px;
-  cursor: pointer;
+.usecases__head {
+  text-align: center;
+  margin-inline: auto;
+  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
+  max-width: 62ch;
 }
 
-.qstage:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 6px;
+.usecases__title {
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  line-height: 1.12;
 }
 
-.qstage__meter {
+.usecases__title em {
+  font-style: normal;
+  color: var(--signal);
+}
+
+.usecases__sub {
+  margin-top: 1rem;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--mute);
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+/* The pill bar. */
+.tabbar {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  gap: 0.3rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 0.3rem;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.qstage__index {
+.tabbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabbar__tab {
+  flex-shrink: 0;
+  padding: 0.6em 1.05em;
+  border: 1px solid transparent;
+  border-radius: 999px;
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--mute);
-  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 
-.qstage__track {
-  position: relative;
-  flex: 1;
-  height: 1px;
-  background: var(--edge-soft);
-}
-
-.qstage__bar {
-  position: absolute;
-  inset: 0;
-  background: var(--signal);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-.qstage__quote {
-  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
-}
-
-.qstage.is-swapping .qstage__quote {
-  opacity: 0;
-  transform: translate3d(0, 10px, 0);
-}
-
-.qstage__text {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.375rem, 2.6vw, 2.375rem);
-  font-weight: 500;
-  line-height: 1.32;
-  letter-spacing: -0.008em;
+.tabbar__tab:hover {
   color: var(--ink);
-  text-wrap: balance;
-  min-height: 5.3em;
 }
 
-.qstage__role {
-  margin-top: clamp(1rem, 2vw, 1.5rem);
+.tabbar__tab[aria-selected='true'] {
+  color: var(--ink);
+  border-color: var(--edge);
+  background: var(--ground-2);
+}
+
+/* The case card. */
+.ucard[hidden] {
+  display: none;
+}
+
+.ucard {
+  display: block;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  margin-inline: auto;
+  max-width: 1080px;
+  padding: clamp(1.5rem, 3.2vw, 2.75rem);
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+  border: 1px solid var(--edge-soft);
+  border-radius: 18px;
+  backdrop-filter: blur(2px);
+}
+
+.ucard:not([hidden]) {
+  animation: ucard-in var(--dur-2) var(--ease-out) both;
+}
+
+@keyframes ucard-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ucard:not([hidden]) {
+    animation: none;
+  }
+}
+
+.ucard__scenario {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: clamp(1.25rem, 2.4vw, 2rem);
+}
+
+.ucard__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 900px) {
+  .ucard__cols {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: 0;
+  }
+
+  .ucard__col--run {
+    border-left: 1px solid var(--edge-soft);
+    padding-left: clamp(1.75rem, 3.2vw, 3rem);
+    margin-left: clamp(1.75rem, 3.2vw, 3rem);
+  }
+}
+
+.ucard__key {
+  display: block;
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--faint);
+  margin-bottom: 0.85rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .qstage__quote {
-    transition: none;
+.ucard__key--run {
+  color: var(--signal);
+}
+
+.ucard__bet {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.32;
+  color: var(--ink-2);
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.ucard__questions {
+  display: flex;
+  flex-direction: column;
+}
+
+.ucard__questions li {
+  padding-block: clamp(0.7rem, 1.4vw, 0.95rem);
+  border-bottom: 1px solid var(--edge-soft);
+  font-size: var(--t-body);
+  line-height: 1.58;
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+.ucard__questions li:first-child {
+  padding-top: 0;
+}
+
+.ucard__questions li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ucard__outcome {
+  display: grid;
+  gap: 0.35rem 2rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--edge-soft);
+}
+
+.ucard__outcome .ucard__key {
+  margin-bottom: 0;
+}
+
+.ucard__outcome p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 72ch;
+}
+
+@media (min-width: 760px) {
+  .ucard__outcome {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
   }
 }
 

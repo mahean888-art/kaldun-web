@@ -6,10 +6,11 @@
 
 import { el, qs, qsa } from './lib/dom';
 import { mountMarks } from './visuals/mark';
-import { initRingField } from './visuals/ringField';
+import { initBranches } from './visuals/branches';
 import { initInstrument } from './visuals/instrument';
 import { initPillar } from './visuals/pillar';
 import { initRotor } from './components/rotor';
+import { initQuotes } from './components/quotes';
 import { initDecision } from './components/decision';
 import { EMAIL, RECORD_FIELDS } from './data/site';
 
@@ -26,8 +27,11 @@ export function mountHome(root: ParentNode = document): void {
   wireEmail(root);
   initDecision(root);
 
-  const dial = qs<HTMLCanvasElement>('[data-ring-field]', root);
-  if (dial) initRingField(dial);
+  const fan = qs<HTMLCanvasElement>('[data-branches]', root);
+  if (fan) initBranches(fan);
+
+  const quotes = qs<HTMLElement>('[data-quotes]', root);
+  if (quotes) initQuotes(quotes);
 
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);

@@ -13,6 +13,7 @@
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content="Foresight Machines" />
     <meta
       property="og:description"
@@ -34,10 +35,11 @@
         </a>
 
         <nav class="site-nav" aria-label="Sections">
-          <a class="site-nav__item" href="#record">Record<sup>01</sup></a>
-          <a class="site-nav__item" href="#machine">Machine<sup>02</sup></a>
-          <a class="site-nav__item" href="#capital">Capital<sup>03</sup></a>
-          <a class="site-nav__item" href="#research">Research<sup>04</sup></a>
+          <a class="site-nav__item" href="#thesis">Thesis<sup>01</sup></a>
+          <a class="site-nav__item" href="#record">Record<sup>02</sup></a>
+          <a class="site-nav__item" href="#machine">Machine<sup>03</sup></a>
+          <a class="site-nav__item" href="#use-cases">Use cases<sup>04</sup></a>
+          <a class="site-nav__item" href="#research">Research<sup>05</sup></a>
         </nav>
 
         <div class="header__actions">
@@ -52,11 +54,11 @@
       <!-- ============ HERO ============ -->
       <section class="hero theme-dark" id="top">
         <div class="hero__dial" aria-hidden="true">
-          <canvas data-ring-field></canvas>
+          <canvas data-branches></canvas>
           <p class="hero__dial-cap hero__dial-cap--tr">
             <span class="hero__live-dot"></span>T&#8320; · live
           </p>
-          <p class="hero__dial-cap hero__dial-cap--br">Futures graduated outward</p>
+          <p class="hero__dial-cap hero__dial-cap--br">One past · many futures</p>
         </div>
 
         <div class="shell hero__head">
@@ -92,65 +94,11 @@
           </div>
       </section>
 
-      <!-- ============ THE DEFINITION ============ -->
-      <section class="band theme-dark definition" id="definition" aria-label="What a foresight machine is">
-        <div class="shell">
-          <p class="definition__beat" data-reveal="rise">
-            Every consequential choice is a bet on a future that hasn&rsquo;t happened yet.
-          </p>
-          <p class="definition__beat" data-reveal="rise">
-            Software learned to answer. It never learned to anticipate.
-          </p>
-
-          <div class="spacer-md"></div>
-
-          <h2 class="definition__title" data-lines>
-            A foresight machine is a new kind of computational object.
-          </h2>
-
-          <div class="spacer-sm"></div>
-
-          <ol class="definition__props">
-            <li data-reveal="fade">
-              <span class="definition__ord">01</span>
-              <span class="definition__term">State</span>
-              <span class="definition__desc">A persistent, time-indexed belief about what is true now.</span>
-            </li>
-            <li data-reveal="fade">
-              <span class="definition__ord">02</span>
-              <span class="definition__term">Transition</span>
-              <span class="definition__desc">A model of how that state can change.</span>
-            </li>
-            <li data-reveal="fade">
-              <span class="definition__ord">03</span>
-              <span class="definition__term">Intervention</span>
-              <span class="definition__desc">An action, an assumption, or a shock — introduced by you.</span>
-            </li>
-            <li data-reveal="fade">
-              <span class="definition__ord">04</span>
-              <span class="definition__term">Distribution</span>
-              <span class="definition__desc">Many futures, weighted. Never one answer.</span>
-            </li>
-            <li data-reveal="fade">
-              <span class="definition__ord">05</span>
-              <span class="definition__term">Resolution</span>
-              <span class="definition__desc">Claims committed before the outcome. The machine learns from what reality does.</span>
-            </li>
-          </ol>
-
-          <div class="spacer-md"></div>
-
-          <p class="definition__claim" data-reveal="rise">
-            Foresight Machines builds <em>foresight machines.</em>
-          </p>
-        </div>
-      </section>
-
-      <!-- ============ ONE DECISION, DECOMPOSED ============ -->
-      <section class="band band--chapter theme-dark" id="decision">
+      <!-- ============ 01 · THESIS ============ -->
+      <section class="band band--chapter theme-dark" id="thesis">
         <div class="shell">
           <div class="head">
-            <span class="t-label">One decision</span>
+            <span class="t-label">Thesis<sup class="head__no">01</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -161,52 +109,89 @@
           <p class="t-lead" data-reveal="fade" style="max-width: 58ch">
             An investment memo, a credit file, an underwriting book, a board strategy — each is a
             model of a world that does not exist yet. Today that model is static: it disappears
-            into prose, spreadsheets and committee judgment.
+            into prose, spreadsheets and committee judgment. Software learned to answer. It never
+            learned to anticipate.
           </p>
 
           <div class="spacer-md"></div>
 
-          <div class="specimen" data-reveal="fade">
-            <p class="specimen__label">The decision</p>
-            <p class="specimen__q">Acquire a 1.8&nbsp;GW data-center portfolio at $1.8B?</p>
+          <div class="thesis">
+            <div class="specimen" data-reveal="fade">
+              <p class="specimen__label">The decision</p>
+              <p class="specimen__q">Acquire a 1.8&nbsp;GW data-center portfolio at $1.8B?</p>
 
-            <div class="specimen__rule"></div>
+              <div class="specimen__rule"></div>
 
-            <p class="specimen__label">What it is quietly betting on</p>
-            <ul class="specimen__bets">
-              <li>Power availability</li>
-              <li>Financing conditions</li>
-              <li>Hyperscaler capex</li>
-              <li>AI utilization</li>
-              <li>Construction completion</li>
-              <li>Local permitting</li>
-              <li>Natural gas prices</li>
-              <li>Grid additions</li>
-              <li>Lease renewal rates</li>
-              <li>Terminal cap rates</li>
-            </ul>
+              <p class="specimen__label">What it is quietly betting on</p>
+              <ul class="specimen__bets">
+                <li>Power availability</li>
+                <li>Financing conditions</li>
+                <li>Hyperscaler capex</li>
+                <li>AI utilization</li>
+                <li>Construction completion</li>
+                <li>Local permitting</li>
+                <li>Natural gas prices</li>
+                <li>Grid additions</li>
+                <li>Lease renewal rates</li>
+                <li>Terminal cap rates</li>
+              </ul>
 
-            <div class="specimen__rule"></div>
+              <div class="specimen__rule"></div>
 
-            <p class="specimen__machine">
-              A handful of these carry most of the downside. The machine&rsquo;s job is to find
-              which — put a number on each, and commit those numbers <em>before you sign.</em>
-            </p>
+              <p class="specimen__machine">
+                A handful of these carry most of the downside. The machine&rsquo;s job is to
+                find which — put a number on each, and commit those numbers
+                <em>before you sign.</em>
+              </p>
+            </div>
+
+            <div class="thesis__side">
+              <p class="thesis__bridge" data-reveal="fade">
+                So we build a different kind of computational object — <b>a foresight
+                machine</b> — with five properties:
+              </p>
+
+              <ol class="definition__props">
+                <li data-reveal="fade">
+                  <span class="definition__ord">01</span>
+                  <span class="definition__term">State</span>
+                  <span class="definition__desc">A persistent, time-indexed belief about what is true now.</span>
+                </li>
+                <li data-reveal="fade">
+                  <span class="definition__ord">02</span>
+                  <span class="definition__term">Transition</span>
+                  <span class="definition__desc">A model of how that state can change.</span>
+                </li>
+                <li data-reveal="fade">
+                  <span class="definition__ord">03</span>
+                  <span class="definition__term">Intervention</span>
+                  <span class="definition__desc">An action, an assumption, or a shock — introduced by you.</span>
+                </li>
+                <li data-reveal="fade">
+                  <span class="definition__ord">04</span>
+                  <span class="definition__term">Distribution</span>
+                  <span class="definition__desc">Many futures, weighted. Never one answer.</span>
+                </li>
+                <li data-reveal="fade">
+                  <span class="definition__ord">05</span>
+                  <span class="definition__term">Resolution</span>
+                  <span class="definition__desc">Claims committed before the outcome. The machine learns from what reality does.</span>
+                </li>
+              </ol>
+
+              <p class="definition__claim" data-reveal="rise">
+                Foresight Machines builds <em>foresight machines.</em>
+              </p>
+            </div>
           </div>
-
-          <div class="spacer-sm"></div>
-          <p class="axiom" data-reveal="fade">
-            Foresight Machines makes the implied future explicit, live, probabilistic —
-            <em>and testable.</em>
-          </p>
         </div>
       </section>
 
-      <!-- ============ 01 · THE RECORD (resolved evidence: light) ============ -->
+      <!-- ============ 02 · THE RECORD (resolved evidence: light) ============ -->
       <section class="band band--chapter band--paper" id="record">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Record<sup class="head__no">01</sup></span>
+            <span class="t-label">The Record<sup class="head__no">02</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -221,9 +206,13 @@
               </h2>
               <div class="spacer-sm"></div>
               <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
-                Every claim the Machine commits is sealed before the outcome exists — hashed,
-                timestamped, anchored beyond quiet edits. When reality resolves it, the seal
-                opens, the score posts, and the Machine learns.
+                Every claim the Machine commits is cryptographically sealed before the outcome is
+                known — hashed, timestamped, anchored beyond quiet edits. When reality resolves
+                it, the seal opens, the score posts, and the Machine learns.
+              </p>
+              <p class="t-body" data-reveal="fade" style="max-width: 46ch">
+                The bar is calibration: when the Machine says 70%, about 70% of those events
+                should happen. The Record is where anyone can check.
               </p>
               <div class="spacer-sm"></div>
               <div class="spec spec--slim" data-record-spec></div>
@@ -237,114 +226,96 @@
         </div>
       </section>
 
-      <!-- ============ 02 · THE MACHINE ============ -->
+      <!-- ============ 03 · THE MACHINE ============ -->
       <section class="band band--chapter theme-dark" id="machine">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Machine<sup class="head__no">02</sup></span>
+            <span class="t-label">The Machine<sup class="head__no">03</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <h2 class="t-d1" data-lines style="max-width: 16ch">
-            The next token is not the next state.
-          </h2>
-          <div class="spacer-sm"></div>
-          <p class="t-lead" data-reveal="fade" style="max-width: 54ch">
-            A language model continues a sequence. A foresight machine advances a state — under
-            the action you are contemplating, against the evidence it can see.
-          </p>
-
-          <div class="spacer-md"></div>
-
-          <div class="machine">
-            <div class="machine__side">
-              <div class="expr" data-reveal="fade">
-                <p class="expr__row">
-                  <span class="expr__who">A language model</span>
-                  <code>P(&nbsp;token<sub>t+1</sub>&nbsp;|&nbsp;tokens&nbsp;)</code>
-                </p>
-                <p class="expr__row expr__row--fm">
-                  <span class="expr__who">A foresight machine</span>
-                  <code>P(&nbsp;S<sub>t+1…t+n</sub>&nbsp;|&nbsp;S<sub>t</sub>,&nbsp;A,&nbsp;E&nbsp;)</code>
-                </p>
-                <p class="expr__legend">
-                  S — world state&ensp;·&ensp;A — contemplated action&ensp;·&ensp;E — evidence
-                </p>
-              </div>
+          <div class="machine__top">
+            <div>
+              <h2 class="t-d1" data-lines style="max-width: 16ch">
+                The next token is not the next state.
+              </h2>
               <div class="spacer-sm"></div>
-              <p class="t-body" data-reveal="fade" style="max-width: 44ch">
-                One loop, run continuously. Each pass carries a decision through the state,
-                weighs the worlds that follow, and waits for reality to grade it. Then the state
-                updates, and the machine runs again.
+              <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
+                A language model continues a sequence. A foresight machine advances a state —
+                under the action you are contemplating, against the evidence it can see.
               </p>
             </div>
 
-            <div class="instrument" data-instrument>
-              <div class="instrument__figure" data-instrument-figure aria-hidden="true"></div>
+            <div class="expr" data-reveal="fade">
+              <p class="expr__row">
+                <span class="expr__who">A language model</span>
+                <code>P(&nbsp;token<sub>t+1</sub>&nbsp;|&nbsp;tokens&nbsp;)</code>
+              </p>
+              <p class="expr__row expr__row--fm">
+                <span class="expr__who">A foresight machine</span>
+                <code>P(&nbsp;S<sub>t+1…t+n</sub>&nbsp;|&nbsp;S<sub>t</sub>,&nbsp;A,&nbsp;E&nbsp;)</code>
+              </p>
+              <p class="expr__legend">
+                S — world state&ensp;·&ensp;A — contemplated action&ensp;·&ensp;E — evidence
+              </p>
             </div>
+          </div>
+
+          <div class="spacer-md"></div>
+
+          <div class="instrument" data-instrument>
+            <div class="instrument__figure" data-instrument-figure aria-hidden="true"></div>
           </div>
         </div>
       </section>
 
-      <!-- ============ 03 · CAPITAL ============ -->
-      <section class="band band--chapter theme-dark" id="capital">
+      <!-- ============ 04 · USE CASES ============ -->
+      <section class="band band--chapter theme-dark" id="use-cases">
         <div class="shell">
           <div class="head">
-            <span class="t-label">Capital<sup class="head__no">03</sup></span>
+            <span class="t-label">Use cases<sup class="head__no">04</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <h2 class="t-d1" data-lines>Built first for capital.</h2>
+          <h2 class="t-d1" data-lines>Decisions you can run.</h2>
           <div class="spacer-sm"></div>
           <p class="t-lead" data-reveal="fade" style="max-width: 54ch">
-            We start where uncertainty becomes capital allocation — where the bets are explicit,
-            the horizons are dated, and being wrong is priced.
+            Fifteen questions from five domains — each one a decision, an assumption, and a
+            horizon. Bring your own.
           </p>
 
           <div class="spacer-md"></div>
 
-          <ol class="flows">
-            <li class="flows__row" data-reveal="fade">
-              <span class="flows__ord">01</span>
-              <div>
-                <h3 class="flows__name">Underwriting</h3>
-                <p class="flows__line">Run the thesis before the capital is committed.</p>
-              </div>
-            </li>
-            <li class="flows__row" data-reveal="fade">
-              <span class="flows__ord">02</span>
-              <div>
-                <h3 class="flows__name">Portfolio &amp; liquidity</h3>
-                <p class="flows__line">See how a changing world propagates through your exposures.</p>
-              </div>
-            </li>
-            <li class="flows__row" data-reveal="fade">
-              <span class="flows__ord">03</span>
-              <div>
-                <h3 class="flows__name">Programmable capital</h3>
-                <p class="flows__line">Machine-readable probabilities become machine-readable decisions.</p>
-              </div>
-            </li>
-          </ol>
+          <div class="qstage" data-quotes tabindex="0" role="group" aria-label="Runnable questions" data-reveal="fade">
+            <div class="qstage__meter">
+              <span class="qstage__index" data-quote-index>01 / 15</span>
+              <span class="qstage__track"><span class="qstage__bar" data-quote-bar></span></span>
+            </div>
+            <blockquote class="qstage__quote">
+              <p class="qstage__text" data-quote-text></p>
+              <footer class="qstage__role" data-quote-role></footer>
+            </blockquote>
+          </div>
 
-          <div class="spacer-sm"></div>
-          <p class="capital__ext" data-reveal="fade">
-            The same architecture extends to insurance, real assets, energy and national
-            security.
+          <div class="spacer-md"></div>
+          <p class="t-small" data-reveal="fade" style="max-width: 56ch">
+            We start where uncertainty becomes capital allocation. The same machine extends to
+            insurance, real assets, energy and national security.
           </p>
         </div>
       </section>
 
-      <!-- ============ 04 · RESEARCH (resolved methods: light) ============ -->
+      <!-- ============ 05 · RESEARCH (resolved methods: light) ============ -->
       <section class="band band--chapter band--paper" id="research">
         <div class="shell">
           <div class="head">
-            <span class="t-label">Research<sup class="head__no">04</sup></span>
+            <span class="t-label">Research<sup class="head__no">05</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
           <div class="p1654__intro">
             <div class="stack-col">
+              <p class="fellowship__project" aria-hidden="true">Project</p>
               <p class="fellowship__number" aria-hidden="true">1654</p>
               <h2 class="t-d1" data-lines>Systems that learn from time.</h2>
             </div>
@@ -455,9 +426,10 @@
           <div>
             <p class="footer-col__title">Site</p>
             <div class="footer-col__list">
+              <a href="#thesis">Thesis</a>
               <a href="#record">Record</a>
               <a href="#machine">Machine</a>
-              <a href="#capital">Capital</a>
+              <a href="#use-cases">Use cases</a>
               <a href="#research">Research</a>
             </div>
           </div>
@@ -475,6 +447,13 @@
           <span>© 2026 Foresight Machines</span>
           <span>Made before the answer was known</span>
         </div>
+      </div>
+
+      <div class="shell">
+        <p class="footer-wordmark" aria-hidden="true">
+          <span class="footer-wordmark__l1">Foresight</span>
+          <span class="footer-wordmark__l2">Machines</span>
+        </p>
       </div>
     </footer>
   </body>

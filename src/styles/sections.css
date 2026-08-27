@@ -54,16 +54,16 @@
   stroke-linecap: round;
 }
 
-.instrument__figure [data-arrow='red'] {
+.instrument__figure [data-arrow='amber'] {
   stroke: var(--signal);
-}
-
-.instrument__figure [data-arrow='ink'] {
-  stroke: var(--ink);
 }
 
 .instrument__figure [data-arrow='grey'] {
   stroke: #a4abb3;
+}
+
+.instrument__figure .ins__dot {
+  fill: var(--ink);
 }
 
 /* The chevron that ends each conduit. */
@@ -110,16 +110,16 @@
   letter-spacing: -0.012em;
 }
 
-.instrument__figure .ins__label--red {
+.instrument__figure .ins__label--amber {
   fill: var(--signal);
 }
 
-.instrument__figure .ins__label--ink {
-  fill: var(--ink);
+.instrument__figure .ins__name--sm {
+  font-size: 21px;
 }
 
-.instrument__figure .ins__label--grey {
-  fill: #8b939c;
+.instrument__figure .ins__sub--sm {
+  font-size: 11.5px;
 }
 
 /* The time symbols that open each station. */
@@ -133,33 +133,38 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23eef1f4' stroke-opacity='.08' stroke-dasharray='3 5'/%3E%3C/svg%3E");
 }
 
-/* --- the definition ------------------------------------------------------ */
+/* --- 01 · thesis: the specimen beside the definition --------------------- */
 
-.definition .shell {
-  max-width: 1180px;
+.thesis {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
 }
 
-.definition__beat {
-  max-width: 30ch;
-  font-size: clamp(1.4375rem, 2.6vw, 2.25rem);
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.028em;
-  color: var(--ink);
-  text-wrap: balance;
+@media (min-width: 1100px) {
+  .thesis {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+
+  .thesis__side {
+    position: sticky;
+    top: calc(var(--header-h) + 2.5rem);
+  }
 }
 
-.definition__beat + .definition__beat {
-  margin-top: clamp(1.25rem, 2.6vw, 2.25rem);
+.thesis__bridge {
+  font-size: var(--t-d4);
+  line-height: 1.45;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 40ch;
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.75rem);
 }
 
-.definition__title {
-  font-size: var(--t-d2);
+.thesis__bridge b {
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  max-width: 24ch;
-  text-wrap: balance;
+  color: var(--ink);
 }
 
 .definition__props {
@@ -212,7 +217,8 @@
 }
 
 .definition__claim {
-  font-size: clamp(1.6rem, 3.1vw, 2.75rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -225,11 +231,10 @@
 /* --- one decision, decomposed -------------------------------------------- */
 
 .specimen {
-  max-width: 880px;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   background: color-mix(in srgb, var(--panel) 72%, transparent);
   border: 1px solid var(--edge-soft);
-  border-radius: 14px;
+  border-radius: 3px;
 }
 
 .specimen__label {
@@ -262,9 +267,9 @@
   gap: 0.6rem 2rem;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 620px) {
   .specimen__bets {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -301,7 +306,85 @@
   color: var(--signal);
 }
 
-/* --- 03 · the record ----------------------------------------------------- */
+/* --- 04 · use cases: one question at a time ------------------------------ */
+
+.qstage {
+  max-width: 980px;
+  cursor: pointer;
+}
+
+.qstage:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 6px;
+}
+
+.qstage__meter {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.qstage__index {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.qstage__track {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: var(--edge-soft);
+}
+
+.qstage__bar {
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.qstage__quote {
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
+}
+
+.qstage.is-swapping .qstage__quote {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+}
+
+.qstage__text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.375rem, 2.6vw, 2.375rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  text-wrap: balance;
+  min-height: 5.3em;
+}
+
+.qstage__role {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qstage__quote {
+    transition: none;
+  }
+}
+
+/* --- 02 · the record ----------------------------------------------------- */
 
 .record {
   display: grid;
@@ -391,6 +474,15 @@
   }
 }
 
+.fellowship__project {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
 .fellowship__number {
   font-family: var(--mono);
   font-size: clamp(2.75rem, 7vw, 5rem);
@@ -406,31 +498,30 @@
   font-size: var(--t-d4);
 }
 
-/* --- 02 · the machine: layout, expressions ------------------------------- */
+/* --- 03 · the machine: layout, expressions ------------------------------- */
 
-.machine {
+.machine__top {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: end;
 }
 
 @media (min-width: 1000px) {
-  .machine {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  .machine__top {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 }
 
-.machine .instrument {
-  width: 100%;
+.instrument__figure {
   max-width: 560px;
   margin-inline: auto;
 }
 
-@media (min-width: 1000px) {
-  .machine__side {
-    position: sticky;
-    top: calc(var(--header-h) + 3rem);
+@media (min-width: 760px) {
+  .instrument__figure {
+    max-width: none;
+    margin-inline: 0;
   }
 }
 

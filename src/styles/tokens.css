@@ -1,8 +1,8 @@
 /* ==========================================================================
    Foresight Machines — design tokens
-   Ink-first with chart-paper interludes, and one accent: crimson, which is
-   also the deep end of the probability ramp. Colour means probability and
-   machine state — nothing else. One scope flips the whole scale per band.
+   Ink-first with chart-paper interludes, and one accent: instrument amber,
+   the deep end of the probability ramp. Colour means probability and machine
+   state — nothing else. One scope flips the whole scale per band.
    ========================================================================== */
 
 :root {
@@ -21,11 +21,11 @@
   --faint: #99a1aa;
 
   /* --- the signal -------------------------------------------------------- */
-  /* One accent: the mark's own crimson. The ramp runs faint ink to crimson;
-     the deep end is the accent itself. */
-  --signal: #b91f2e;
-  --signal-hi: #d43a49;
-  --signal-dim: #f6e0e2;
+  /* One accent: instrument amber — the lamp on a machine that is running.
+     Used only for probability, state, and the live parts of the page. */
+  --signal: #9a7118;
+  --signal-hi: #b8891f;
+  --signal-dim: #f3ead4;
 
   /* --- type -------------------------------------------------------------- */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -93,9 +93,9 @@
   --mute: #828a93;
   --faint: #565e67;
 
-  --signal: #e2606b;
-  --signal-hi: #ef838c;
-  --signal-dim: #3b151a;
+  --signal: #dfaf52;
+  --signal-hi: #ecc478;
+  --signal-dim: #35290f;
 
   background: var(--ground);
   color: var(--ink);

@@ -23,19 +23,50 @@ const DRAW_MS = 900;
 type Station = { sym: string; name: string; sub: string };
 
 const STATIONS: Station[] = [
-  { sym: 'T&#8320;', name: 'State', sub: 'What appears to be true now' },
-  { sym: '&#916;', name: 'Intervention', sub: 'What you are considering changing' },
-  { sym: 'T&#8321;&#8230;T&#8345;', name: 'Futures', sub: 'The worlds that follow, weighted' },
-  { sym: 'U', name: 'Consequence', sub: 'What each world means for the decision' },
+  { sym: 'T&#8320;', name: 'State', sub: 'What is true now' },
+  { sym: '&#916;', name: 'Intervention', sub: 'The move on the table' },
+  { sym: 'T&#8321;&#8230;T&#8345;', name: 'Futures', sub: 'Worlds that follow, weighted' },
+  { sym: 'U', name: 'Consequence', sub: 'What each world means' },
   { sym: 'R', name: 'Resolution', sub: 'What actually happened' },
   { sym: 'T&#8320;&#8242;', name: 'Learning', sub: 'The state updates' },
 ];
 
-const ROW0 = 90;
-const STEP = 196;
-const CX = 360;
+/** Desktop: the loop as a transit line, reading left to right and back. */
+function landscape(): string {
+  const XS = [96, 306, 516, 726, 936, 1146];
+  const Y = 196;
 
-function figure(): string {
+  const stations = STATIONS.map((s, i) => {
+    const x = XS[i]!;
+    return `
+    <rect class="ins__dot" x="${x - 3.5}" y="${Y - 3.5}" width="7" height="7" />
+    <text class="ins__name ins__name--sm" x="${x}" y="${Y - 40}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
+    <text class="ins__sub ins__sub--sm" x="${x}" y="${Y + 38}" text-anchor="middle">${s.sub}</text>`;
+  }).join('\n');
+
+  const conduits = XS.slice(0, -1)
+    .map((x, i) => `<path data-arrow="grey" d="M ${x + 18} ${Y} H ${XS[i + 1]! - 18}" />`)
+    .join('\n');
+
+  const last = XS[XS.length - 1]!;
+  const first = XS[0]!;
+  const ret = `<path data-arrow="amber" d="M ${last} ${Y + 58} V 296 Q ${last} 320 ${last - 24} 320 H ${first + 24} Q ${first} 320 ${first} 296 V ${Y + 18}" />`;
+
+  return `
+  <svg viewBox="0 0 1240 372" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    ${conduits}
+    ${ret}
+    ${stations}
+    <text class="ins__label ins__label--amber" x="621" y="356" text-anchor="middle">The machine runs again</text>
+  </svg>`;
+}
+
+/** Narrow screens: the same loop, standing. */
+function portrait(): string {
+  const ROW0 = 80;
+  const STEP = 168;
+  const CX = 360;
+
   const stations = STATIONS.map((s, i) => {
     const y = ROW0 + i * STEP;
     return `
@@ -45,22 +76,22 @@ function figure(): string {
 
   const conduits = STATIONS.slice(0, -1)
     .map((_, i) => {
-      const from = ROW0 + i * STEP + 60;
-      const to = ROW0 + (i + 1) * STEP - 46;
+      const from = ROW0 + i * STEP + 56;
+      const to = ROW0 + (i + 1) * STEP - 44;
       return `<path data-arrow="grey" d="M ${CX} ${from} V ${to}" />`;
     })
     .join('\n');
 
   const lastY = ROW0 + (STATIONS.length - 1) * STEP;
-  const ret = `<path data-arrow="red" d="M 226 ${lastY - 6} H 106 Q 82 ${lastY - 6} 82 ${lastY - 30} V ${ROW0 + 18} Q 82 ${ROW0 - 6} 106 ${ROW0 - 6} H 244" />`;
+  const ret = `<path data-arrow="amber" d="M 232 ${lastY - 6} H 106 Q 82 ${lastY - 6} 82 ${lastY - 30} V ${ROW0 + 18} Q 82 ${ROW0 - 6} 106 ${ROW0 - 6} H 248" />`;
   const mid = Math.round((ROW0 + lastY) / 2);
 
   return `
-  <svg viewBox="0 0 640 ${lastY + 70}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <svg viewBox="0 0 640 ${lastY + 64}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${conduits}
     ${ret}
     ${stations}
-    <text class="ins__label ins__label--red" x="58" y="${mid}" transform="rotate(-90 58 ${mid})" text-anchor="middle">The machine runs again</text>
+    <text class="ins__label ins__label--amber" x="58" y="${mid}" transform="rotate(-90 58 ${mid})" text-anchor="middle">The machine runs again</text>
   </svg>`;
 }
 
@@ -69,6 +100,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
   if (!fig) return { destroy: () => undefined };
 
   const reduced = prefersReducedMotion();
+  const narrow = window.matchMedia('(max-width: 759px)');
   let arrows: Arrow[] = [];
   let played = false;
   let visible = false;
@@ -137,14 +169,25 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
     );
   };
 
-  clearFlows();
-  fig.innerHTML = figure();
-  arrows = Array.from(fig.querySelectorAll<SVGPathElement>('[data-arrow]')).map((path) => ({
-    path,
-  }));
-  if (reduced) {
-    for (const a of arrows) addHead(a);
-  }
+  const build = (): void => {
+    clearFlows();
+    fig.innerHTML = narrow.matches ? portrait() : landscape();
+    arrows = Array.from(fig.querySelectorAll<SVGPathElement>('[data-arrow]')).map((path) => ({
+      path,
+    }));
+    if (reduced || played) {
+      for (const a of arrows) {
+        a.path.style.strokeDasharray = '';
+        a.path.style.strokeDashoffset = '';
+        addHead(a);
+      }
+      if (played && visible && !reduced) for (const a of arrows) startFlow(a);
+    }
+  };
+
+  build();
+  const onBreak = (): void => build();
+  narrow.addEventListener('change', onBreak);
 
   const io = new IntersectionObserver(
     (entries) => {
@@ -167,6 +210,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
     destroy: () => {
       io.disconnect();
       clearFlows();
+      narrow.removeEventListener('change', onBreak);
     },
   };
 }

@@ -267,7 +267,8 @@
   left: 0.24em;
   top: 0.08em;
   white-space: nowrap;
-  color: #fff;
+  /* The band's ground on the amber slot: dark on the lamp. */
+  color: var(--ground);
   font-weight: 500;
   transition:
     transform var(--dur-2) var(--ease-out),

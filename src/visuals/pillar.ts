@@ -1,8 +1,8 @@
 /**
  * The Record pillar: a classical column set from tiny digits — the ledger as
- * architecture. Most glyphs are pale ink; a scattering stand crimson for the
+ * architecture. Most glyphs are pale ink; a scattering stand amber for the
  * claims still open. Every few seconds one open claim resolves: its glyph
- * settles from crimson to pale, the way a dashed line becomes solid.
+ * settles from amber to pale, the way a dashed line becomes solid.
  */
 
 import { seeded } from '../lib/math';
@@ -36,8 +36,8 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
   // The pillar takes the ink of the band it stands on.
   const dark = Boolean(canvas.closest('.theme-dark'));
   const INK = dark ? '214, 219, 226' : '14, 17, 22';
-  const OPEN = dark ? '226, 96, 107' : '185, 31, 46';
-  const GOLD = dark ? '180, 150, 96' : '160, 124, 42';
+  const OPEN = dark ? '223, 175, 82' : '154, 113, 24';
+  const GOLD = dark ? '136, 144, 154' : '104, 112, 121';
 
   const paintCell = (c: Cell): void => {
     ctx.clearRect(c.px - font * 0.6, c.py - font * 0.6, font * 1.2, font * 1.2);

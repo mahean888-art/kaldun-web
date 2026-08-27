@@ -167,7 +167,9 @@
 
 .btn:hover,
 .btn:focus-visible {
-  color: #fff;
+  /* The band's ground on amber: dark text on the lamp in ink bands, paper
+     text on deep amber in light ones. */
+  color: var(--ground);
   border-color: var(--signal);
 }
 
@@ -247,12 +249,12 @@
   /* Paints the footer's own black below the last pixel of the page without
      adding height, so any overscroll gap is black rather than white. */
   box-shadow: 0 50vh 0 var(--ground);
-  padding-block: clamp(3.5rem, 8vw, 7rem) clamp(1.75rem, 3vw, 2.75rem);
+  padding-block: clamp(3rem, 6vw, 5rem) 0;
 }
 
 /* The statement: one line, one action row — the Prime posture. */
 .site-footer__statement {
-  margin-bottom: clamp(3rem, 7vw, 6rem);
+  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
 }
 
 .site-footer__line {
@@ -278,9 +280,9 @@
 
 .site-footer__grid {
   display: grid;
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
   grid-template-columns: 1fr;
-  padding-top: clamp(1.75rem, 4vw, 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
   border-top: var(--hairline-soft);
 }
 
@@ -323,7 +325,7 @@
 }
 
 .site-footer__base {
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
   padding-top: 1.25rem;
   border-top: var(--hairline-soft);
   display: flex;
@@ -338,3 +340,30 @@
   color: var(--faint);
 }
 
+/* --- the giant wordmark: the page's last pixels ------------------------- */
+
+.footer-wordmark {
+  overflow: hidden;
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  user-select: none;
+}
+
+.footer-wordmark span {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Two lines, each sized by the viewport so both fill the shell with no
+   measuring script and no jump when the fonts land. */
+.footer-wordmark__l1 {
+  font-size: min(15.4vw, 232px);
+}
+
+.footer-wordmark__l2 {
+  font-size: min(16.5vw, 248px);
+}

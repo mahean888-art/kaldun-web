@@ -12,6 +12,8 @@ export type Domain = {
   /** One line on why commitments outrun certainty here. */
   tagline: string;
   questions: string[];
+  /** What a run in this domain hands back, before the ink is dry. */
+  outcome: string;
 };
 
 export const DOMAINS: Domain[] = [
@@ -24,6 +26,8 @@ export const DOMAINS: Domain[] = [
       'If the Fed cuts 150bp over twelve months, which combinations of deposit behavior, spreads and refinancing windows become plausible — and which of our three allocation options holds across them?',
       'Our thesis assumes AI capex keeps compounding. What sequence of evidence would tell us it’s breaking — early enough to act?',
     ],
+    outcome:
+      'The paths where the commitment clears, the price at which it survives most of them, and a sealed claim the Record will grade.',
   },
   {
     ordinal: '02',
@@ -34,6 +38,8 @@ export const DOMAINS: Domain[] = [
       'A subsidized competitor lands at 30% under our price. Which responses hold share across the widest range of demand paths?',
       'Which of these four expansion markets stays attractive across rate, currency and policy futures — not just in the base case?',
     ],
+    outcome:
+      'The futures in which the market stays worth entering — not just the base case — and the assumptions doing the most work.',
   },
   {
     ordinal: '03',
@@ -44,6 +50,8 @@ export const DOMAINS: Domain[] = [
       'If inference costs fall another 10× in twenty-four months, which of our bets get stronger, which get commoditized, and in what order?',
       'Ship the platform in March, or wait for the standard to settle? Which choice survives more futures of the standards fight?',
     ],
+    outcome:
+      'Where the roadmap breaks first, the order in which bets strengthen or commoditize, and the earliest evidence of each.',
   },
   {
     ordinal: '04',
@@ -54,6 +62,8 @@ export const DOMAINS: Domain[] = [
       'Which three concentrations in our supplier network drive most of the modeled downside?',
       'A major counterparty fails on a Friday. What do the next two weeks look like across funding, collateral and customer behavior — and what should already be in place?',
     ],
+    outcome:
+      'The sequences behind the modeled downside, and which pre-commitments blunt the most of them.',
   },
   {
     ordinal: '05',
@@ -64,5 +74,7 @@ export const DOMAINS: Domain[] = [
       'Which escalation paths matter to our operations, what are their leading indicators, and which contingencies stay useful across most of them?',
       'A new tariff schedule lands mid-year. Which pricing, sourcing and siting responses are robust before the final numbers are known?',
     ],
+    outcome:
+      'Where flows and prices migrate under each rule change, and the contingencies that stay useful across most paths.',
   },
 ];

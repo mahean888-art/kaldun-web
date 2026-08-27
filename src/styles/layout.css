@@ -39,6 +39,12 @@
   border-bottom: var(--hairline-soft);
 }
 
+/* A chart-paper interlude in the ink-first page. */
+.band--paper {
+  background: var(--ground);
+  color: var(--ink);
+}
+
 .band--panel {
   background: linear-gradient(180deg, var(--ground-2), var(--panel) 60%, var(--ground-2));
 }

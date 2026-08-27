@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sections — the Instrument, the domains, the Record, Project 1654, the
+   Sections — the Machine, the use cases, the Record, Project 1654, the
    close, and the decision moment. The page is one scroll; each band is one
    clear move.
    ========================================================================== */
@@ -20,12 +20,19 @@
   transform-origin: left center;
 }
 
+.head__no {
+  font-size: 0.82em;
+  letter-spacing: 0;
+  margin-left: 0.6em;
+  color: var(--signal);
+}
+
 /* A chapter opens with more air above it than an ordinary band. */
 .band--chapter {
   padding-block-start: clamp(5rem, 14vh, 10rem);
 }
 
-/* --- the instrument ----------------------------------------------------- */
+/* --- 01 · the machine --------------------------------------------------- */
 
 .instrument {
   position: relative;
@@ -59,6 +66,14 @@
   stroke: #a4abb3;
 }
 
+/* The chevron that ends each conduit. */
+.instrument__figure .ins__head {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* The pale pulse that travels each conduit. */
 .instrument__figure .ins__pulse {
   fill: none;
@@ -87,11 +102,6 @@
   fill: var(--mute);
 }
 
-.instrument__figure [data-word].is-live {
-  fill: var(--signal);
-  transition: fill var(--dur-1) var(--ease-out);
-}
-
 /* Conduit labels, written in the conduit's own colour. */
 .instrument__figure .ins__label {
   font-family: var(--sans);
@@ -112,80 +122,66 @@
   fill: #8b939c;
 }
 
-.instrument__controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+/* --- 02 · use cases ------------------------------------------------------ */
+
+.usecases {
+  overflow: hidden;
 }
 
-.instrument__controls-label {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-right: 0.5rem;
-}
-
-.instrument__mode {
-  padding: 0.55em 0.95em;
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out),
-    background-color var(--dur-1) var(--ease-out);
-}
-
-.instrument__mode:hover {
-  color: var(--ink);
-  border-color: var(--mute);
-}
-
-.instrument__mode[aria-pressed='true'] {
-  background: var(--signal);
-  border-color: var(--signal);
-  color: #fff;
-}
-
-.instrument__stamp {
+/* The horizon: a planet's limb rising into the band from below. */
+.usecases__arc {
   position: absolute;
-  top: 0;
+  left: 0;
   right: 0;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.1em;
-  color: var(--mute);
-  font-variant-numeric: tabular-nums;
+  bottom: 0;
+  width: 100%;
+  height: min(58vh, 540px);
+  pointer-events: none;
 }
 
-.instrument__stamp [data-state-version] {
+.usecases__shell {
+  position: relative;
+  z-index: 1;
+}
+
+.usecases__head {
+  text-align: center;
+  margin-inline: auto;
+  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
+  max-width: 62ch;
+}
+
+.usecases__title {
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  line-height: 1.12;
+}
+
+.usecases__title em {
+  font-style: normal;
   color: var(--signal);
 }
 
-/* On desktop the control cluster sits bottom-left, clear of the figure's own
-   labels — the operator's corner of the instrument. */
-@media (min-width: 760px) {
-  .instrument__controls {
-    position: absolute;
-    left: 0;
-    bottom: 3%;
-    margin-top: 0;
-  }
+.usecases__sub {
+  margin-top: 1rem;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--mute);
+  max-width: 52ch;
+  margin-inline: auto;
 }
 
-/* --- domains: one card at a time, behind a segmented bar ----------------- */
-
+/* The pill bar. */
 .tabbar {
   display: flex;
-  gap: clamp(1.25rem, 3vw, 2.75rem);
-  border-bottom: 1px solid var(--edge);
+  gap: 0.3rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 0.3rem;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -195,77 +191,53 @@
 }
 
 .tabbar__tab {
-  position: relative;
   flex-shrink: 0;
-  padding: 0.9em 0.1em 1.1em;
+  padding: 0.6em 1.05em;
+  border: 1px solid transparent;
+  border-radius: 999px;
   font-family: var(--mono);
   font-size: var(--t-label);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--mute);
-  transition: color var(--dur-1) var(--ease-out);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 
 .tabbar__tab:hover {
   color: var(--ink);
 }
 
-.tabbar__ord {
-  margin-right: 0.7em;
-  color: var(--faint);
-}
-
-.tabbar__tab[aria-selected='true'] .tabbar__ord {
-  color: var(--signal);
-}
-
-.tabbar__tab::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--signal);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--dur-2) var(--ease-out);
-}
-
 .tabbar__tab[aria-selected='true'] {
   color: var(--ink);
+  border-color: var(--edge);
+  background: var(--ground-2);
 }
 
-.tabbar__tab[aria-selected='true']::after {
-  transform: none;
-}
-
-.dcard[hidden] {
+/* The case card. */
+.ucard[hidden] {
   display: none;
 }
 
-.dcard {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  padding-top: clamp(1.75rem, 3.5vw, 3rem);
+.ucard {
+  display: block;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  margin-inline: auto;
+  max-width: 1080px;
+  padding: clamp(1.5rem, 3.2vw, 2.75rem);
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+  border: 1px solid var(--edge-soft);
+  border-radius: 18px;
+  backdrop-filter: blur(2px);
 }
 
-@media (min-width: 960px) {
-  .dcard {
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
-    column-gap: clamp(2.5rem, 5vw, 5rem);
-  }
+.ucard:not([hidden]) {
+  animation: ucard-in var(--dur-2) var(--ease-out) both;
 }
 
-/* Selection is a state change, so the card is allowed one quiet entrance. */
-.dcard:not([hidden]) {
-  animation: dcard-in var(--dur-3, 0.45s) var(--ease-out) both;
-}
-
-@keyframes dcard-in {
+@keyframes ucard-in {
   from {
     opacity: 0;
     transform: translate3d(0, 10px, 0);
@@ -277,106 +249,137 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dcard:not([hidden]) {
+  .ucard:not([hidden]) {
     animation: none;
   }
 }
 
-.dcard__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-
-.dcard__head > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  min-width: 0;
-}
-
-.dcard__ord {
+.ucard__scenario {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  color: var(--mute);
-}
-
-.dcard__title {
-  font-size: var(--t-d3);
   font-weight: 600;
-  letter-spacing: -0.022em;
-  line-height: 1.1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: clamp(1.25rem, 2.4vw, 2rem);
 }
 
-.dcard__tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: var(--t-d3);
-  line-height: 1.35;
+.ucard__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 900px) {
+  .ucard__cols {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: 0;
+  }
+
+  .ucard__col--run {
+    border-left: 1px solid var(--edge-soft);
+    padding-left: clamp(1.75rem, 3.2vw, 3rem);
+    margin-left: clamp(1.75rem, 3.2vw, 3rem);
+  }
+}
+
+.ucard__key {
+  display: block;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.85rem;
+}
+
+.ucard__key--run {
+  color: var(--signal);
+}
+
+.ucard__bet {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.32;
   color: var(--ink-2);
-  max-width: 26ch;
+  max-width: 24ch;
+  text-wrap: balance;
 }
 
-.dcard__glyph {
-  flex: 0 0 auto;
-  width: clamp(88px, 12vw, 130px);
-  height: 46px;
-  margin-top: 0.35rem;
-}
-
-.dcard__questions {
+.ucard__questions {
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
-.dcard__questions li {
-  position: relative;
-  padding: clamp(0.85rem, 1.6vw, 1.2rem) 0 clamp(0.85rem, 1.6vw, 1.2rem) 1.5rem;
+.ucard__questions li {
+  padding-block: clamp(0.7rem, 1.4vw, 0.95rem);
   border-bottom: 1px solid var(--edge-soft);
   font-size: var(--t-body);
   line-height: 1.58;
-  color: var(--ink-2);
-  max-width: 62ch;
+  color: var(--ink);
+  max-width: 60ch;
 }
 
-.dcard__questions li:first-child {
-  padding-top: 0.35rem;
+.ucard__questions li:first-child {
+  padding-top: 0;
 }
 
-.dcard__questions li:first-child::before {
-  top: 0.95em;
-}
-
-.dcard__questions li:last-child {
+.ucard__questions li:last-child {
   border-bottom: 0;
+  padding-bottom: 0;
 }
 
-.dcard__questions li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 1.55em;
-  width: 8px;
-  height: 1px;
-  background: var(--signal);
+.ucard__outcome {
+  display: grid;
+  gap: 0.35rem 2rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--edge-soft);
 }
 
-/* --- the record --------------------------------------------------------- */
+.ucard__outcome .ucard__key {
+  margin-bottom: 0;
+}
+
+.ucard__outcome p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 72ch;
+}
+
+@media (min-width: 760px) {
+  .ucard__outcome {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* --- 03 · the record ----------------------------------------------------- */
 
 .record {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: start;
+  gap: clamp(2rem, 4.5vw, 4.5rem);
+  align-items: center;
 }
 
 @media (min-width: 1000px) {
   .record {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
   }
+}
+
+.record__pillar {
+  width: min(72vw, 300px);
+  height: clamp(360px, 54vh, 540px);
+  margin-inline: auto;
+}
+
+.record__pillar canvas {
+  width: 100%;
+  height: 100%;
 }
 
 .record__title {
@@ -390,6 +393,10 @@
 .spec {
   border: var(--hairline);
   background: var(--ground);
+}
+
+.spec--slim {
+  max-width: 58ch;
 }
 
 .spec__row {
@@ -406,7 +413,7 @@
 
 @media (min-width: 620px) {
   .spec__row {
-    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
     align-items: baseline;
   }
 }
@@ -424,56 +431,30 @@
   color: var(--ink-2);
 }
 
-/* The grammar, stated: open is dashed, resolved is solid. */
-.record__legend {
-  position: relative;
-  padding-left: 3.2rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.record__legend::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.35em;
-  width: 2.4rem;
-  height: 0;
-  border-top: 1px dashed var(--mute);
-}
-
-.record__legend em {
-  font-style: normal;
-  color: var(--signal);
-}
-
-/* --- project 1654 ------------------------------------------------------- */
+/* --- 04 · project 1654 --------------------------------------------------- */
 
 .p1654__intro {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
+  gap: clamp(1.75rem, 4vw, 4.5rem);
   align-items: start;
 }
 
 @media (min-width: 960px) {
   .p1654__intro {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   }
 }
 
 .fellowship__number {
   font-family: var(--mono);
-  font-size: clamp(3.5rem, 11vw, 8rem);
+  font-size: clamp(2.75rem, 7vw, 5rem);
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--signal);
   user-select: none;
-  margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+  margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
 }
 
 .axiom--sm {
@@ -526,7 +507,7 @@
 }
 
 .decision::backdrop {
-  background: rgba(14, 17, 22, 0.55);
+  background: rgba(5, 6, 8, 0.62);
 }
 
 .decision__form {

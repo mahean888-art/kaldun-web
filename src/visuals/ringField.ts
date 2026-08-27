@@ -25,22 +25,22 @@ type Ring = {
 };
 
 const RINGS: Ring[] = [
-  { r: 0.2, kind: 'solid', alpha: 0.22, spin: 0, tone: 'cream' },
-  { r: 0.32, kind: 'graduated', alpha: 0.3, spin: 0.0000075, tone: 'cream' },
-  { r: 0.44, kind: 'hatched', alpha: 0.17, spin: -0.0000041, tone: 'cream' },
-  { r: 0.54, kind: 'dotted', alpha: 0.42, spin: -0.0000052, tone: 'gold' },
-  { r: 0.62, kind: 'ticked', alpha: 0.26, spin: 0.0000034, tone: 'cream' },
-  { r: 0.74, kind: 'hatched', alpha: 0.13, spin: 0.0000022, tone: 'cream' },
-  { r: 0.86, kind: 'graduated', alpha: 0.22, spin: -0.0000026, tone: 'cream' },
-  { r: 0.97, kind: 'dotted', alpha: 0.3, spin: 0.0000019, tone: 'gold' },
-  { r: 1.06, kind: 'solid', alpha: 0.14, spin: 0, tone: 'cream' },
+  { r: 0.2, kind: 'solid', alpha: 0.26, spin: 0, tone: 'cream' },
+  { r: 0.32, kind: 'graduated', alpha: 0.34, spin: 0.000042, tone: 'cream' },
+  { r: 0.44, kind: 'hatched', alpha: 0.2, spin: -0.000018, tone: 'cream' },
+  { r: 0.54, kind: 'dotted', alpha: 0.46, spin: -0.00003, tone: 'gold' },
+  { r: 0.62, kind: 'ticked', alpha: 0.3, spin: 0.000052, tone: 'cream' },
+  { r: 0.74, kind: 'hatched', alpha: 0.15, spin: 0.000012, tone: 'cream' },
+  { r: 0.86, kind: 'graduated', alpha: 0.26, spin: -0.0000085, tone: 'cream' },
+  { r: 0.97, kind: 'dotted', alpha: 0.34, spin: 0.0000065, tone: 'gold' },
+  { r: 1.06, kind: 'solid', alpha: 0.16, spin: 0, tone: 'cream' },
 ];
 
-/* Ink ruling with signal bearings: an instrument engraved on chart-paper. */
+/* Light ruling on the ink ground, with crimson bearings. */
 const TONES: Record<Ring['tone'], [number, number, number]> = {
-  cream: [30, 33, 40],
-  gold: [104, 112, 121],
-  crimson: [185, 31, 46],
+  cream: [214, 219, 226],
+  gold: [136, 144, 154],
+  crimson: [226, 96, 107],
 };
 
 export type RingHandle = { destroy: () => void };
@@ -185,10 +185,51 @@ export function initRingField(canvas: HTMLCanvasElement): RingHandle {
 
     for (const ring of RINGS) drawRing(ring, time);
 
-    // The present: a single crimson square at the centre of the dial.
+    // The sweep: a crimson hand carried by real time — one revolution per
+    // minute, with a fading trail. The dial is a clock of the present.
+    const now = new Date();
+    const secs = now.getUTCSeconds() + now.getUTCMilliseconds() / 1000;
+    const hand = (secs / 60) * Math.PI * 2 - Math.PI / 2;
+    if (!reduced) {
+      for (let k = 1; k <= 14; k++) {
+        const trail = hand - k * 0.024;
+        ctx.strokeStyle = stroke('crimson', 0.26 * (1 - k / 15));
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, base * 0.985, trail - 0.012, trail + 0.012);
+        ctx.stroke();
+      }
+    }
+    ctx.strokeStyle = stroke('crimson', reduced ? 0.5 : 0.75);
+    ctx.lineWidth = 1.25;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(hand) * base * 0.17, cy + Math.sin(hand) * base * 0.17);
+    ctx.lineTo(cx + Math.cos(hand) * base * 0.985, cy + Math.sin(hand) * base * 0.985);
+    ctx.stroke();
+
+    // A slower hand carries the minutes.
+    const mins = now.getUTCMinutes() + secs / 60;
+    const mHand = (mins / 60) * Math.PI * 2 - Math.PI / 2;
+    ctx.strokeStyle = stroke('gold', 0.55);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(mHand) * base * 0.17, cy + Math.sin(mHand) * base * 0.17);
+    ctx.lineTo(cx + Math.cos(mHand) * base * 0.6, cy + Math.sin(mHand) * base * 0.6);
+    ctx.stroke();
+
+    // The present: a crimson square, and the moment it stands for.
     const beat = reduced ? 1 : 0.7 + Math.sin(time * 0.0014) * 0.3;
-    ctx.fillStyle = `rgba(185, 31, 46, ${(0.55 + 0.45 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(226, 96, 107, ${(0.6 + 0.4 * beat).toFixed(3)})`;
     ctx.fillRect(cx - 2.5, cy - 2.5, 5, 5);
+
+    const hh = String(now.getUTCHours()).padStart(2, '0');
+    const mm = String(now.getUTCMinutes()).padStart(2, '0');
+    const ss = String(now.getUTCSeconds()).padStart(2, '0');
+    ctx.font = '500 11px "Geist Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = stroke('gold', 0.85);
+    ctx.fillText(`${hh}:${mm}:${ss} UTC`, cx, cy + 12);
 
     ctx.strokeStyle = stroke('crimson', 0.22 * beat);
     ctx.beginPath();

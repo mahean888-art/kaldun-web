@@ -1,12 +1,10 @@
 /**
- * The domain tabs: a horizontal segmented bar, one card at a time — the Aaru
- * pattern. Each card carries the domain's tagline, its three runnable
- * questions, and a small live distribution glyph. Selection is by click and
- * by keyboard.
+ * The use cases: a centred pill bar, one dark case card at a time. Each card
+ * opens on the domain's bet, sets the three runnable questions against it,
+ * and closes on what a run hands back. Selection is by click and by keyboard.
  */
 
 import { el, qs } from '../lib/dom';
-import { initGlyph, type GlyphHandle } from '../visuals/glyphs';
 import type { Domain } from '../data/domains';
 
 type Options = {
@@ -33,57 +31,48 @@ export function initTabs({ root, items, label }: Options): void {
         'aria-selected': String(i === 0),
         tabindex: i === 0 ? '0' : '-1',
       },
-      [el('span', { class: 'tabbar__ord', 'aria-hidden': 'true' }, [item.ordinal]), item.label],
+      [item.label],
     ),
   );
 
-  const glyphs: HTMLCanvasElement[] = [];
-  const cards = items.map((item, i) => {
-    const glyph = el('canvas', { class: 'dcard__glyph' }) as unknown as HTMLCanvasElement;
-    glyphs.push(glyph);
-    return el(
+  const cards = items.map((item, i) =>
+    el(
       'article',
       {
-        class: 'dcard',
+        class: 'ucard',
         role: 'tabpanel',
         id: `card-${item.ordinal}`,
         'aria-labelledby': `tab-${item.ordinal}`,
         hidden: i !== 0,
       },
       [
-        el('div', { class: 'dcard__head' }, [
-          el('div', {}, [
-            el('span', { class: 'dcard__ord' }, [item.ordinal]),
-            el('h3', { class: 'dcard__title' }, [item.label]),
-            el('p', { class: 'dcard__tagline' }, [item.tagline]),
+        el('p', { class: 'ucard__scenario' }, [`${item.ordinal} — ${item.label}`]),
+        el('div', { class: 'ucard__cols' }, [
+          el('div', { class: 'ucard__col' }, [
+            el('span', { class: 'ucard__key' }, ['The bet']),
+            el('p', { class: 'ucard__bet' }, [item.tagline]),
           ]),
-          glyph,
+          el('div', { class: 'ucard__col ucard__col--run' }, [
+            el('span', { class: 'ucard__key ucard__key--run' }, ['Run it']),
+            el(
+              'ul',
+              { class: 'ucard__questions' },
+              item.questions.map((q) => el('li', {}, [q])),
+            ),
+          ]),
         ]),
-        el(
-          'ul',
-          { class: 'dcard__questions' },
-          item.questions.map((q) => el('li', {}, [q])),
-        ),
+        el('div', { class: 'ucard__outcome' }, [
+          el('span', { class: 'ucard__key' }, ['What comes back']),
+          el('p', {}, [item.outcome]),
+        ]),
       ],
-    );
-  });
+    ),
+  );
 
   barHost.setAttribute('role', 'tablist');
   barHost.setAttribute('aria-label', label);
   barHost.replaceChildren(...tabs);
   panelHost.replaceChildren(...cards);
-
-  /** One live glyph at a time; a hidden panel has no box to measure. */
-  let live: GlyphHandle | null = null;
-  let liveIndex = -1;
-
-  const activate = (index: number): void => {
-    if (liveIndex === index) return;
-    live?.destroy();
-    const canvas = glyphs[index];
-    if (canvas) live = initGlyph(canvas, (index + 1) * 733);
-    liveIndex = index;
-  };
 
   const select = (index: number, focus = false): void => {
     tabs.forEach((tab, i) => {
@@ -93,7 +82,6 @@ export function initTabs({ root, items, label }: Options): void {
     cards.forEach((card, i) => {
       card.hidden = i !== index;
     });
-    activate(index);
     if (focus) tabs[index]?.focus();
   };
 

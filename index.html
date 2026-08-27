@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kaldun — Machine Foresight</title>
+    <title>Foresight Machines</title>
     <meta
       name="description"
-      content="Kaldun is a machine that maintains what is true now, runs what could happen next, and learns from what actually does. Run the world forward before you decide."
+      content="Foresight Machines builds a machine that maintains what is true now, runs what could happen next, and learns from what actually does. Run the world forward before you decide."
     />
-    <meta name="theme-color" content="#fafbfc" />
+    <meta name="theme-color" content="#0b0d10" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <meta property="og:title" content="Kaldun — Machine Foresight" />
+    <meta property="og:title" content="Foresight Machines" />
     <meta
       property="og:description"
       content="A machine that maintains what is true now, runs what could happen next, and learns from what actually does."
@@ -25,13 +25,20 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- ==================== HEADER: mark left, one action right ==================== -->
-    <header class="site-header" data-header>
+    <!-- ============ HEADER: mark, numbered index, one action ============ -->
+    <header class="site-header theme-dark" data-header>
       <div class="site-header__inner">
-        <a class="wordmark" href="#top" aria-label="Kaldun — top of page">
-          <span data-mark="42"></span>
-          <span class="wordmark__type">Kaldun</span>
+        <a class="wordmark" href="#top" aria-label="Foresight Machines — top of page">
+          <span data-mark="22"></span>
+          <span class="wordmark__type">Foresight Machines</span>
         </a>
+
+        <nav class="site-nav" aria-label="Sections">
+          <a class="site-nav__item" href="#machine">Machine<sup>01</sup></a>
+          <a class="site-nav__item" href="#use-cases">Use cases<sup>02</sup></a>
+          <a class="site-nav__item" href="#record">Record<sup>03</sup></a>
+          <a class="site-nav__item" href="#project-1654">1654<sup>04</sup></a>
+        </nav>
 
         <div class="header__actions">
           <a class="btn btn--sm" data-book href="#close">
@@ -42,10 +49,14 @@
     </header>
 
     <main id="main">
-      <!-- ==================== HERO ==================== -->
-      <section class="hero" id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero theme-dark" id="top">
         <div class="hero__dial" aria-hidden="true">
           <canvas data-ring-field></canvas>
+          <p class="hero__dial-cap hero__dial-cap--tr">
+            <span class="hero__live-dot"></span>T&#8320; · live
+          </p>
+          <p class="hero__dial-cap hero__dial-cap--br">Futures graduated outward</p>
         </div>
 
         <div class="shell hero__head">
@@ -59,8 +70,8 @@
 
         <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 420ms">
             <p class="hero__ledger">
-              <span>State <b>T₀</b></span>
-              <span>Futures <b>T₁ → Tₙ</b></span>
+              <span>State <b>T&#8320;</b></span>
+              <span>Futures <b>T&#8321; &rarr; T&#8345;</b></span>
             </p>
             <p class="hero__brief-body">
               A continuously trained world model that turns live signals into calibrated futures —
@@ -73,8 +84,8 @@
               <a class="btn" data-book href="#close">
                 Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
               </a>
-              <a class="link-under" href="#instrument">
-                See the instrument <span aria-hidden="true">↓</span>
+              <a class="link-under" href="#machine">
+                See the machine <span aria-hidden="true">↓</span>
               </a>
             </div>
             <p class="hero__note">* The future, as an input.</p>
@@ -82,7 +93,7 @@
       </section>
 
       <!-- The manifesto: five short beats, one tight column. -->
-      <section class="manifesto band theme-dark" id="manifesto" aria-label="What Kaldun believes">
+      <section class="manifesto band theme-dark" id="manifesto" aria-label="What we believe">
           <div class="shell">
             <p class="manifesto__beat" data-reveal="rise">
               Every consequential choice is a bet on a future that hasn&rsquo;t happened yet.
@@ -95,8 +106,8 @@
               Software learned to answer. It never learned to anticipate.
             </p>
             <p class="manifesto__beat" data-reveal="rise">
-              We built Kaldun to hold a belief about the world, run it forward under the choices in
-              front of you, and let reality grade the result.
+              We built Foresight Machines to hold a belief about the world, run it forward under
+              the choices in front of you, and let reality grade the result.
             </p>
             <p class="manifesto__beat manifesto__beat--last" data-reveal="rise">
               The next token is not the next state.
@@ -104,108 +115,96 @@
           </div>
       </section>
 
-      <!-- ==================== THE INSTRUMENT ==================== -->
-      <section class="band band--chapter" id="instrument">
+      <!-- ============ 01 · THE MACHINE ============ -->
+      <section class="band band--chapter band--paper" id="machine">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Instrument</span>
+            <span class="t-label">The Machine<sup class="head__no">01</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
           <h2 class="t-d1" data-lines style="max-width: 18ch">
-            Run the world forward.
+            One loop, run continuously.
           </h2>
           <div class="spacer-sm"></div>
           <p class="t-lead" data-reveal="fade" style="max-width: 56ch">
-            Kaldun turns a changing world into distributions over what could happen next — and lets
-            you change the assumptions, actions and shocks that shape them.
+            The Machine turns a changing world into distributions over what could happen next —
+            and lets you change the assumptions, actions and shocks that shape them.
           </p>
 
           <div class="spacer-md"></div>
 
           <div class="instrument" data-instrument>
             <div class="instrument__figure" data-instrument-figure aria-hidden="true"></div>
-            <div class="instrument__controls" role="group" aria-label="Counterfactual — the same world, run differently">
-              <span class="instrument__controls-label">Counterfactual</span>
-              <button type="button" class="instrument__mode" data-mode="assumption" aria-pressed="false">Assumption</button>
-              <button type="button" class="instrument__mode" data-mode="action" aria-pressed="true">Action</button>
-              <button type="button" class="instrument__mode" data-mode="shock" aria-pressed="false">Shock</button>
-            </div>
-            <p class="instrument__stamp" aria-live="off">STATE · <span data-state-version>v.0317</span></p>
           </div>
-
-          <div class="spacer-sm"></div>
-          <p class="t-small" data-reveal="fade" style="max-width: 52ch">
-            The crimson arms ask — run forward, what if, perturb. The grey arms ground every run
-            in the live state. The single ink arm decides.
-          </p>
         </div>
       </section>
 
-      <!-- ==================== DOMAINS: decisions you can run ==================== -->
-      <section class="band" id="domains">
-        <div class="shell">
+      <!-- ============ 02 · USE CASES ============ -->
+      <section class="band band--chapter theme-dark usecases" id="use-cases">
+        <canvas class="usecases__arc" data-arc aria-hidden="true"></canvas>
+        <div class="shell usecases__shell">
           <div class="head">
-            <span class="t-label">Domains</span>
+            <span class="t-label">Use cases<sup class="head__no">02</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <h2 class="t-d1" data-lines>Decisions you can run.</h2>
-          <div class="spacer-sm"></div>
-          <p class="t-lead" data-reveal="fade">Five places where commitments outrun certainty.</p>
+          <div class="usecases__head">
+            <h2 class="usecases__title" data-lines>
+              Ask, and you get an answer.<br /><em>Run, and you get futures.</em>
+            </h2>
+            <p class="usecases__sub" data-reveal="fade">
+              Five places where commitments outrun certainty — and what the Machine hands back
+              before the ink is dry.
+            </p>
+          </div>
 
-          <div class="spacer-md"></div>
           <div data-domain-tabs>
             <div class="tabbar" data-tabbar></div>
-            <div class="spacer-sm" style="height: 1.25rem"></div>
             <div data-tab-panel></div>
           </div>
         </div>
       </section>
 
-      <!-- ==================== THE RECORD ==================== -->
-      <section class="band theme-dark" id="record">
+      <!-- ============ 03 · THE RECORD ============ -->
+      <section class="band band--chapter theme-dark" id="record">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Record</span>
+            <span class="t-label">The Record<sup class="head__no">03</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
           <div class="record">
+            <div class="record__pillar" aria-hidden="true">
+              <canvas data-pillar></canvas>
+            </div>
+
             <div class="stack-col">
               <h2 class="record__title" data-lines>
                 Made before<br />the answer was known.
               </h2>
               <div class="spacer-sm"></div>
-              <p class="t-lead" data-reveal="fade">
-                Every claim Kaldun commits is sealed before the outcome exists — hashed,
-                timestamped, and anchored where Kaldun cannot quietly edit it. When reality
-                resolves the claim, the seal opens, the score posts, and the model learns.
+              <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
+                Every claim the Machine commits is sealed before the outcome exists — hashed,
+                timestamped, anchored beyond quiet edits. When reality resolves it, the seal
+                opens, the score posts, and the Machine learns.
               </p>
+              <div class="spacer-sm"></div>
+              <div class="spec spec--slim" data-record-spec></div>
               <div class="spacer-sm"></div>
               <p class="axiom" data-reveal="fade">
                 The Record is not a trust badge.<br /><em>It is the training loop.</em>
-              </p>
-            </div>
-
-            <div class="stack-col">
-              <span class="t-label">What a sealed commitment carries</span>
-              <div class="spacer-sm" style="height: 1rem"></div>
-              <div class="spec" data-record-spec></div>
-              <div class="spacer-sm" style="height: 1rem"></div>
-              <p class="record__legend" data-reveal="fade">
-                Open claims are dashed. <em>Resolution makes them solid.</em>
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ==================== PROJECT 1654 ==================== -->
-      <section class="band" id="project-1654">
+      <!-- ============ 04 · PROJECT 1654 ============ -->
+      <section class="band band--chapter band--paper" id="project-1654">
         <div class="shell">
           <div class="head">
-            <span class="t-label">Project 1654</span>
+            <span class="t-label">Project 1654<sup class="head__no">04</sup></span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -213,47 +212,33 @@
             <div class="stack-col">
               <p class="fellowship__number" aria-hidden="true">1654</p>
               <h2 class="t-d1" data-lines>Systems that learn from time.</h2>
-              <div class="spacer-sm"></div>
+            </div>
+
+            <div class="stack-col">
               <p class="t-lead" data-reveal="fade">
-                In 1654, Pascal and Fermat traded letters about how to divide the stakes of an
-                unfinished game — and began the mathematics of probability. The unfinished game is
-                now the world.
+                In 1654, Pascal and Fermat traded letters about dividing the stakes of an
+                unfinished game — and began the mathematics of probability. The unfinished game
+                is now the world.
               </p>
               <p class="t-body" data-reveal="fade">
-                Project 1654 is Kaldun&rsquo;s fellowship for researchers building machines whose
-                claims time can test.
+                Project 1654 is our fellowship for researchers and builders whose machines make
+                claims that time can test. Fellows get a salary, compute, and the live state and
+                the Record as experimental infrastructure — and every project commits at least
+                one claim.
               </p>
-              <div class="spacer-sm"></div>
+              <p class="axiom axiom--sm" data-reveal="fade">
+                <em>Nothing at Foresight Machines goes ungraded.</em>
+              </p>
+              <div class="spacer-sm" style="height: 0.5rem"></div>
               <a class="btn btn--ghost" data-book href="#close">
                 Apply to Project 1654 <span class="btn__arrow" aria-hidden="true">↗</span>
               </a>
             </div>
-
-            <div class="stack-col">
-              <span class="t-label">Who it is for</span>
-              <p class="t-body" data-reveal="fade">
-                Researchers and builders who want their work scored by reality rather than by
-                reviewers alone.
-              </p>
-              <div class="spacer-sm" style="height: 0.5rem"></div>
-              <span class="t-label">What fellows receive</span>
-              <p class="t-body" data-reveal="fade">
-                A salary or stipend; a compute budget; access to Kaldun&rsquo;s live state and the
-                Record as experimental infrastructure; publication of the work; a direct path to
-                the founding research team.
-              </p>
-              <div class="spacer-sm" style="height: 0.5rem"></div>
-              <p class="axiom axiom--sm" data-reveal="fade">
-                Every fellow&rsquo;s project must commit at least one claim to the Record.
-                <em>Nothing at Kaldun goes ungraded.</em>
-              </p>
-            </div>
           </div>
-
         </div>
       </section>
 
-      <!-- ==================== CLOSE ==================== -->
+      <!-- ============ CLOSE ============ -->
       <section class="band band--chapter theme-dark" id="close">
         <div class="shell">
           <div class="cta">
@@ -270,7 +255,7 @@
       </section>
     </main>
 
-    <!-- ==================== THE DECISION MOMENT ==================== -->
+    <!-- ============ THE DECISION MOMENT ============ -->
     <dialog class="decision" data-decision>
       <form class="decision__form" method="dialog" data-decision-form>
         <div class="decision__head">
@@ -306,16 +291,25 @@
       </form>
     </dialog>
 
-    <!-- ==================== FOOTER ==================== -->
+    <!-- ============ FOOTER ============ -->
     <footer class="site-footer theme-dark">
       <div class="shell">
-        <div class="site-footer__grid">
-          <div>
-            <a class="wordmark" href="#top">
-              <span data-mark="38"></span>
-              <span class="wordmark__type">Kaldun</span>
+        <div class="site-footer__statement">
+          <p class="site-footer__line" data-lines>Run the world forward<em>.</em></p>
+          <div class="site-footer__cta">
+            <a class="btn" data-book href="#close">
+              Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
             </a>
-            <div class="spacer-sm" style="height: 1rem"></div>
+            <a class="btn btn--ghost" data-email href="#"></a>
+          </div>
+        </div>
+
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <a class="wordmark" href="#top">
+              <span data-mark="20"></span>
+              <span class="wordmark__type">Foresight Machines</span>
+            </a>
             <p class="t-small" style="max-width: 34ch">
               A machine that maintains what is true now, runs what could happen next, and learns
               from what actually does.
@@ -323,24 +317,28 @@
           </div>
 
           <div>
-            <p class="footer-col__title">Index</p>
+            <p class="footer-col__title">Site</p>
             <div class="footer-col__list">
+              <a href="#machine">Machine</a>
+              <a href="#use-cases">Use cases</a>
               <a href="#record">Record</a>
               <a href="#project-1654">Project 1654</a>
+            </div>
+          </div>
+
+          <div>
+            <p class="footer-col__title">Contact</p>
+            <div class="footer-col__list">
               <a data-book href="#close">Run a decision</a>
-              <a data-email href="#">hello@kaldun.ai</a>
+              <a data-email href="#"></a>
             </div>
           </div>
         </div>
 
         <div class="site-footer__base">
-          <span>© 2026 Kaldun</span>
+          <span>© 2026 Foresight Machines</span>
           <span>Made before the answer was known</span>
         </div>
-      </div>
-
-      <div class="shell">
-        <p class="footer-wordmark" aria-hidden="true">Kaldun</p>
       </div>
     </footer>
   </body>

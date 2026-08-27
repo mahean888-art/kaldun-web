@@ -1,6 +1,6 @@
 /* ==========================================================================
    Foresight Machines — design tokens
-   Ink-first with chart-paper interludes, and one accent: instrument amber,
+   Chart-paper first, ink type, and one accent: instrument amber,
    the deep end of the probability ramp. Colour means probability and machine
    state — nothing else. One scope flips the whole scale per band.
    ========================================================================== */
@@ -23,8 +23,8 @@
   /* --- the signal -------------------------------------------------------- */
   /* One accent: instrument amber — the lamp on a machine that is running.
      Used only for probability, state, and the live parts of the page. */
-  --signal: #9a7118;
-  --signal-hi: #b8891f;
+  --signal: #8a6413;
+  --signal-hi: #a67a18;
   --signal-dim: #f3ead4;
 
   /* --- type -------------------------------------------------------------- */

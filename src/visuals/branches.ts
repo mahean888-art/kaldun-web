@@ -4,8 +4,7 @@
  * One line — everything that has already happened — arrives at the present
  * and branches into many futures, each drawn at the weight the machine gives
  * it. On a steady beat a pulse of evidence runs the trunk; when it lands at
- * T₀ the fan re-weights: paths deepen, fade, and the leading future moves.
- * Drawn in ink on chart paper; the lamp is deep amber.
+ * T₀ the fan re-weights: paths brighten, fade, and the leading future moves.
  * Nothing else animates. State change is the only motion.
  */
 
@@ -93,7 +92,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ];
     for (const [fx, label] of marks) {
       const x = w * fx;
-      ctx.strokeStyle = 'rgba(14, 17, 22, 0.08)';
+      ctx.strokeStyle = 'rgba(214, 219, 226, 0.07)';
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 6]);
       ctx.beginPath();
@@ -101,7 +100,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.lineTo(x, h - 8);
       ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = 'rgba(104, 112, 121, 0.85)';
+      ctx.fillStyle = 'rgba(130, 138, 147, 0.75)';
       ctx.fillText(label, x, 28);
     }
 
@@ -119,20 +118,20 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     for (let i = 0; i < N; i++) {
       if (i === lead) continue;
       const wt = current[i]!;
-      ctx.strokeStyle = `rgba(14, 17, 22, ${(0.05 + wt * 0.3).toFixed(3)})`;
+      ctx.strokeStyle = `rgba(214, 219, 226, ${(0.05 + wt * 0.34).toFixed(3)})`;
       ctx.lineWidth = wt > 0.72 ? 1.4 : 1;
       ctx.beginPath();
       path(i);
       ctx.stroke();
     }
-    ctx.strokeStyle = 'rgba(138, 100, 19, 0.95)';
+    ctx.strokeStyle = 'rgba(223, 175, 82, 0.92)';
     ctx.lineWidth = 1.6;
     ctx.beginPath();
     path(lead);
     ctx.stroke();
 
     // Everything that has already happened: one line, no width to argue about.
-    ctx.strokeStyle = 'rgba(14, 17, 22, 0.55)';
+    ctx.strokeStyle = 'rgba(214, 219, 226, 0.65)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(-2, ny);
@@ -151,7 +150,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       } else if (phase < PULSE_MS) {
         const p = phase / PULSE_MS;
         const px = p * nx;
-        ctx.strokeStyle = 'rgba(166, 122, 24, 0.95)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(Math.max(0, px - 14), ny);
@@ -162,12 +161,12 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
 
     // The present.
     const beat = reduced ? 1 : 0.75 + Math.sin(time * 0.0016) * 0.25;
-    ctx.fillStyle = `rgba(138, 100, 19, ${(0.65 + 0.35 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(223, 175, 82, ${(0.65 + 0.35 * beat).toFixed(3)})`;
     ctx.fillRect(nx - 2.5, ny - 2.5, 5, 5);
     ctx.font = '500 11px "Geist Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillStyle = 'rgba(138, 100, 19, 0.9)';
+    ctx.fillStyle = 'rgba(223, 175, 82, 0.9)';
     ctx.fillText('T₀', nx, ny + 12);
   };
 

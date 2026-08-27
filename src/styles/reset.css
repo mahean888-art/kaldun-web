@@ -28,7 +28,9 @@ html {
 
 body {
   min-height: 100%;
-  background: var(--ground);
+  /* The page opens and closes on ink; the paper bands paint their own ground.
+     Ink here keeps overscroll at either end dark. */
+  background: #0b0d10;
   color: var(--ink);
   font-family: var(--sans);
   font-size: var(--t-body);

@@ -43,7 +43,7 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
     ctx.clearRect(c.px - font * 0.6, c.py - font * 0.6, font * 1.2, font * 1.2);
     if (c.tone === 'open') ctx.fillStyle = `rgba(${OPEN}, ${(0.85 * c.alpha).toFixed(3)})`;
     else if (c.tone === 'gold') ctx.fillStyle = `rgba(${GOLD}, ${(0.7 * c.alpha).toFixed(3)})`;
-    else ctx.fillStyle = `rgba(${INK}, ${((dark ? 0.6 : 0.62) * c.alpha).toFixed(3)})`;
+    else ctx.fillStyle = `rgba(${INK}, ${((dark ? 0.6 : 0.5) * c.alpha).toFixed(3)})`;
     ctx.fillText(c.glyph, c.px, c.py);
   };
 

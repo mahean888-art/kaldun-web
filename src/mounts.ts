@@ -9,11 +9,8 @@ import { mountMarks } from './visuals/mark';
 import { initRingField } from './visuals/ringField';
 import { initInstrument } from './visuals/instrument';
 import { initPillar } from './visuals/pillar';
-import { initArc } from './visuals/arc';
 import { initRotor } from './components/rotor';
 import { initDecision } from './components/decision';
-import { initTabs } from './sections/tabs';
-import { DOMAINS } from './data/domains';
 import { EMAIL, RECORD_FIELDS } from './data/site';
 
 function wireEmail(root: ParentNode): void {
@@ -37,12 +34,6 @@ export function mountHome(root: ParentNode = document): void {
 
   const pillar = qs<HTMLCanvasElement>('[data-pillar]', root);
   if (pillar) initPillar(pillar);
-
-  const arc = qs<HTMLCanvasElement>('[data-arc]', root);
-  if (arc) initArc(arc);
-
-  const tabsRoot = qs<HTMLElement>('[data-domain-tabs]', root);
-  if (tabsRoot) initTabs({ root: tabsRoot, items: DOMAINS, label: 'Use cases' });
 
   const spec = qs('[data-record-spec]', root);
   if (spec) {

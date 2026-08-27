@@ -33,11 +33,17 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
   let cells: Cell[] = [];
   let font = 10;
 
+  // The pillar takes the ink of the band it stands on.
+  const dark = Boolean(canvas.closest('.theme-dark'));
+  const INK = dark ? '214, 219, 226' : '14, 17, 22';
+  const OPEN = dark ? '226, 96, 107' : '185, 31, 46';
+  const GOLD = dark ? '180, 150, 96' : '160, 124, 42';
+
   const paintCell = (c: Cell): void => {
     ctx.clearRect(c.px - font * 0.6, c.py - font * 0.6, font * 1.2, font * 1.2);
-    if (c.tone === 'open') ctx.fillStyle = `rgba(226, 96, 107, ${(0.85 * c.alpha).toFixed(3)})`;
-    else if (c.tone === 'gold') ctx.fillStyle = `rgba(180, 150, 96, ${(0.7 * c.alpha).toFixed(3)})`;
-    else ctx.fillStyle = `rgba(214, 219, 226, ${(0.6 * c.alpha).toFixed(3)})`;
+    if (c.tone === 'open') ctx.fillStyle = `rgba(${OPEN}, ${(0.85 * c.alpha).toFixed(3)})`;
+    else if (c.tone === 'gold') ctx.fillStyle = `rgba(${GOLD}, ${(0.7 * c.alpha).toFixed(3)})`;
+    else ctx.fillStyle = `rgba(${INK}, ${((dark ? 0.6 : 0.5) * c.alpha).toFixed(3)})`;
     ctx.fillText(c.glyph, c.px, c.py);
   };
 

@@ -32,6 +32,13 @@ export function initDecision(root: ParentNode = document): void {
   });
 
   form.addEventListener('submit', () => {
+    // The site's grammar, in the first interaction anyone has with it.
+    const stamp = qs<HTMLElement>('[data-committed]', dialog);
+    if (stamp) {
+      const now = new Date();
+      const pad = (n: number): string => String(n).padStart(2, '0');
+      stamp.textContent = `COMMITTED ${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
+    }
     const data = new FormData(form);
     const body = [
       `What decision:`,

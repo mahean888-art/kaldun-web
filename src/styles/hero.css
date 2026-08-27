@@ -295,36 +295,3 @@
     transition: none;
   }
 }
-
-/* ==========================================================================
-   The manifesto: five short beats in one tight column. Plain display sans,
-   no ornament — conviction set the way a lab writes, not a brochure.
-   ========================================================================== */
-
-.manifesto .shell {
-  max-width: 1180px;
-}
-
-.manifesto__beat {
-  max-width: 30ch;
-  font-size: clamp(1.4375rem, 2.6vw, 2.25rem);
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.028em;
-  color: var(--ink);
-  text-wrap: balance;
-}
-
-.manifesto__beat + .manifesto__beat {
-  margin-top: clamp(1.75rem, 3.4vw, 3rem);
-}
-
-/* The last line closes the chapter in the accent. */
-.manifesto__beat--last {
-  max-width: 22ch;
-  margin-top: clamp(2.25rem, 4.5vw, 4rem);
-  font-size: clamp(1.6rem, 3.1vw, 2.75rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--signal);
-}

@@ -1,12 +1,11 @@
 /**
- * The Machine: the loop drawn as a wiring diagram.
+ * The Machine: the loop, written as a run log.
  *
- * Five stations joined by thick rounded conduits, in the manner of a lab
- * schematic: crimson arms ask (run forward, what if, perturb), grey arms
- * ground every run in the live state, the single ink arm decides. Each
- * conduit is drawn in once when the figure enters the viewport, gains an
- * arrowhead so its direction is never in doubt, then carries a pale pulse
- * that travels its length for as long as the figure is on screen.
+ * Six stations in time notation — T₀ state, Δ intervention, T₁…Tₙ futures,
+ * U consequence, R resolution, T₀′ learning — joined by grey conduits, with
+ * one crimson return arm closing the loop: the machine runs again. Each
+ * conduit is drawn in when the figure enters the viewport, gains an
+ * arrowhead, then carries a pale pulse for as long as it is on screen.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
@@ -19,81 +18,57 @@ type Arrow = {
   pulseEl?: SVGPathElement | undefined;
 };
 
-const DRAW_MS = 1100;
+const DRAW_MS = 900;
 
-function landscape(): string {
+type Station = { sym: string; name: string; sub: string };
+
+const STATIONS: Station[] = [
+  { sym: 'T&#8320;', name: 'State', sub: 'What appears to be true now' },
+  { sym: '&#916;', name: 'Intervention', sub: 'What you are considering changing' },
+  { sym: 'T&#8321;&#8230;T&#8345;', name: 'Futures', sub: 'The worlds that follow, weighted' },
+  { sym: 'U', name: 'Consequence', sub: 'What each world means for the decision' },
+  { sym: 'R', name: 'Resolution', sub: 'What actually happened' },
+  { sym: 'T&#8320;&#8242;', name: 'Learning', sub: 'The state updates' },
+];
+
+const ROW0 = 90;
+const STEP = 196;
+const CX = 360;
+
+function figure(): string {
+  const stations = STATIONS.map((s, i) => {
+    const y = ROW0 + i * STEP;
+    return `
+    <text class="ins__name" x="${CX}" y="${y}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
+    <text class="ins__sub" x="${CX}" y="${y + 32}" text-anchor="middle">${s.sub}</text>`;
+  }).join('\n');
+
+  const conduits = STATIONS.slice(0, -1)
+    .map((_, i) => {
+      const from = ROW0 + i * STEP + 60;
+      const to = ROW0 + (i + 1) * STEP - 46;
+      return `<path data-arrow="grey" d="M ${CX} ${from} V ${to}" />`;
+    })
+    .join('\n');
+
+  const lastY = ROW0 + (STATIONS.length - 1) * STEP;
+  const ret = `<path data-arrow="red" d="M 226 ${lastY - 6} H 106 Q 82 ${lastY - 6} 82 ${lastY - 30} V ${ROW0 + 18} Q 82 ${ROW0 - 6} 106 ${ROW0 - 6} H 244" />`;
+  const mid = Math.round((ROW0 + lastY) / 2);
+
   return `
-  <svg viewBox="0 0 1240 640" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    <path data-arrow="grey" d="M 1116 348 H 1046" />
-    <path data-arrow="grey" d="M 942 300 V 142 Q 942 118 918 118 H 786" />
-    <path data-arrow="grey" d="M 884 348 H 478" />
-    <path data-arrow="red"  d="M 262 300 V 142 Q 262 118 286 118 H 560" />
-    <path data-arrow="ink"  d="M 700 152 V 300 Q 700 324 676 324 H 486" />
-    <path data-arrow="red"  d="M 262 400 V 522 Q 262 546 286 546 H 506" />
-    <path data-arrow="red"  d="M 818 562 H 934 Q 958 562 958 538 V 420" />
-
-    <text class="ins__name" x="300" y="356" text-anchor="middle">The decision</text>
-    <text class="ins__sub"  x="300" y="384" text-anchor="middle">what is on the table</text>
-
-    <text class="ins__name" x="656" y="106" text-anchor="middle">Futures</text>
-    <text class="ins__sub"  x="656" y="134" text-anchor="middle">T&#8321; &#8594; T&#8345;</text>
-
-    <text class="ins__name" x="660" y="568" text-anchor="middle">Counterfactuals</text>
-    <text class="ins__sub"  x="660" y="596" text-anchor="middle">assumption &#183; action &#183; shock</text>
-
-    <text class="ins__name" x="966" y="356" text-anchor="middle">Live state</text>
-    <text class="ins__sub"  x="966" y="384" text-anchor="middle">T&#8320; &#183; what is true now</text>
-
-    <text class="ins__name" x="1178" y="356" text-anchor="middle">Signals</text>
-
-    <text class="ins__label ins__label--red"  x="330" y="98">Run forward</text>
-    <text class="ins__label ins__label--ink"  x="718" y="244">Decide</text>
-    <text class="ins__label ins__label--grey" x="928" y="98" text-anchor="end">Futures run from now</text>
-    <text class="ins__label ins__label--grey" x="648" y="392" text-anchor="middle">The decision reads the state</text>
-    <text class="ins__label ins__label--red"  x="330" y="528">What if</text>
-    <text class="ins__label ins__label--red"  x="876" y="544" text-anchor="middle">Perturb</text>
-  </svg>`;
-}
-
-function portrait(): string {
-  return `
-  <svg viewBox="0 0 640 1100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    <path data-arrow="grey" d="M 320 88 V 152" />
-    <path data-arrow="grey" d="M 320 250 V 334" />
-    <path data-arrow="ink"  d="M 320 440 V 524" />
-    <path data-arrow="red"  d="M 222 566 H 84 Q 60 566 60 542 V 410 Q 60 386 84 386 H 218" />
-    <path data-arrow="red"  d="M 320 630 V 714" />
-    <path data-arrow="red"  d="M 432 756 H 556 Q 580 756 580 732 V 220 Q 580 196 556 196 H 442" />
-
-    <text class="ins__name" x="320" y="66" text-anchor="middle">Signals</text>
-
-    <text class="ins__name" x="320" y="200" text-anchor="middle">Live state</text>
-    <text class="ins__sub"  x="320" y="228" text-anchor="middle">T&#8320; &#183; what is true now</text>
-
-    <text class="ins__name" x="320" y="382" text-anchor="middle">Futures</text>
-    <text class="ins__sub"  x="320" y="410" text-anchor="middle">T&#8321; &#8594; T&#8345;</text>
-
-    <text class="ins__name" x="320" y="572" text-anchor="middle">The decision</text>
-    <text class="ins__sub"  x="320" y="600" text-anchor="middle">what is on the table</text>
-
-    <text class="ins__name" x="320" y="762" text-anchor="middle">Counterfactuals</text>
-    <text class="ins__sub"  x="320" y="790" text-anchor="middle">assumption &#183; action &#183; shock</text>
-
-    <text class="ins__label ins__label--grey" x="336" y="300">Runs from now</text>
-    <text class="ins__label ins__label--ink"  x="336" y="490">Decide</text>
-    <text class="ins__label ins__label--red"  x="336" y="680">What if</text>
-    <text class="ins__label ins__label--red"  x="40" y="480" transform="rotate(-90 40 480)" text-anchor="middle">Run forward</text>
-    <text class="ins__label ins__label--red"  x="602" y="480" transform="rotate(90 602 480)" text-anchor="middle">Perturb</text>
+  <svg viewBox="0 0 640 ${lastY + 70}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    ${conduits}
+    ${ret}
+    ${stations}
+    <text class="ins__label ins__label--red" x="58" y="${mid}" transform="rotate(-90 58 ${mid})" text-anchor="middle">The machine runs again</text>
   </svg>`;
 }
 
 export function initInstrument(host: HTMLElement): InstrumentHandle {
-  const figure = host.querySelector<HTMLElement>('[data-instrument-figure]');
-  if (!figure) return { destroy: () => undefined };
+  const fig = host.querySelector<HTMLElement>('[data-instrument-figure]');
+  if (!fig) return { destroy: () => undefined };
 
   const reduced = prefersReducedMotion();
-  const narrow = window.matchMedia('(max-width: 759px)');
-
   let arrows: Arrow[] = [];
   let played = false;
   let visible = false;
@@ -114,7 +89,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
     const back = a.path.getPointAtLength(Math.max(0, len - 6));
     const angle = (Math.atan2(tip.y - back.y, tip.x - back.x) * 180) / Math.PI;
     const head = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    head.setAttribute('d', 'M -11 -8.5 L 4 0 L -11 8.5');
+    head.setAttribute('d', 'M -10 -7.5 L 3.5 0 L -10 7.5');
     head.setAttribute('class', 'ins__head');
     head.setAttribute('transform', `translate(${tip.x} ${tip.y}) rotate(${angle.toFixed(1)})`);
     head.style.stroke = getComputedStyle(a.path).stroke;
@@ -124,7 +99,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
   const startFlow = (a: Arrow): void => {
     if (reduced || typeof a.path.animate !== 'function') return;
     const length = a.path.getTotalLength();
-    const pulse = Math.min(120, Math.max(56, length * 0.18));
+    const pulse = Math.min(110, Math.max(44, length * 0.2));
     const from = length + pulse;
     const flow = a.path.cloneNode(false) as SVGPathElement;
     flow.removeAttribute('data-arrow');
@@ -134,10 +109,10 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
     a.path.parentNode?.insertBefore(flow, a.path.nextSibling);
     a.pulseEl = flow;
     a.flow = flow.animate([{ strokeDashoffset: from }, { strokeDashoffset: 0 }], {
-      duration: Math.max(2400, length * 4.2),
+      duration: Math.max(2000, length * 4),
       iterations: Infinity,
       easing: 'linear',
-      delay: Math.random() * 900,
+      delay: Math.random() * 800,
     });
   };
 
@@ -148,7 +123,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
       a.path.style.strokeDasharray = `${length}`;
       a.path.style.strokeDashoffset = `${length}`;
       a.path.getBoundingClientRect();
-      a.path.style.transition = `stroke-dashoffset ${DRAW_MS}ms ${90 * i}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+      a.path.style.transition = `stroke-dashoffset ${DRAW_MS}ms ${110 * i}ms cubic-bezier(0.4, 0, 0.2, 1)`;
       a.path.style.strokeDashoffset = '0';
     });
     window.setTimeout(
@@ -158,34 +133,18 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
           startFlow(a);
         }
       },
-      DRAW_MS * 0.72,
+      DRAW_MS * 0.8,
     );
   };
 
-  const build = (): void => {
-    clearFlows();
-    figure.innerHTML = narrow.matches ? portrait() : landscape();
-    arrows = Array.from(figure.querySelectorAll<SVGPathElement>('[data-arrow]')).map((path) => ({
-      path,
-    }));
-    if (reduced || played) {
-      for (const a of arrows) {
-        a.path.style.strokeDasharray = '';
-        a.path.style.strokeDashoffset = '';
-        addHead(a);
-      }
-      if (played && visible) for (const a of arrows) startFlow(a);
-    }
-  };
-
-  const setFlowsRunning = (run: boolean): void => {
-    for (const a of arrows) {
-      if (run) a.flow?.play();
-      else a.flow?.pause();
-    }
-  };
-
-  build();
+  clearFlows();
+  fig.innerHTML = figure();
+  arrows = Array.from(fig.querySelectorAll<SVGPathElement>('[data-arrow]')).map((path) => ({
+    path,
+  }));
+  if (reduced) {
+    for (const a of arrows) addHead(a);
+  }
 
   const io = new IntersectionObserver(
     (entries) => {
@@ -194,21 +153,20 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
         played = true;
         if (!reduced) drawIn();
       } else {
-        setFlowsRunning(visible);
+        for (const a of arrows) {
+          if (visible) a.flow?.play();
+          else a.flow?.pause();
+        }
       }
     },
-    { threshold: 0.2 },
+    { threshold: 0.12 },
   );
-  io.observe(figure);
-
-  const onBreak = (): void => build();
-  narrow.addEventListener('change', onBreak);
+  io.observe(fig);
 
   return {
     destroy: () => {
       io.disconnect();
       clearFlows();
-      narrow.removeEventListener('change', onBreak);
     },
   };
 }

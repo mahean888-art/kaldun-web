@@ -1,7 +1,7 @@
 /**
- * The use cases: a centred pill bar, one dark case card at a time. Each card
- * opens on the domain's bet, sets the three runnable questions against it,
- * and closes on what a run hands back. Selection is by click and by keyboard.
+ * The use cases: a centred pill bar, one case card at a time. Each card opens
+ * on the domain's bet and sets its three runnable questions beneath it.
+ * Selection is by click and by keyboard.
  */
 
 import { el, qs } from '../lib/dom';
@@ -47,24 +47,12 @@ export function initTabs({ root, items, label }: Options): void {
       },
       [
         el('p', { class: 'ucard__scenario' }, [`${item.ordinal} — ${item.label}`]),
-        el('div', { class: 'ucard__cols' }, [
-          el('div', { class: 'ucard__col' }, [
-            el('span', { class: 'ucard__key' }, ['The bet']),
-            el('p', { class: 'ucard__bet' }, [item.tagline]),
-          ]),
-          el('div', { class: 'ucard__col ucard__col--run' }, [
-            el('span', { class: 'ucard__key ucard__key--run' }, ['Run it']),
-            el(
-              'ul',
-              { class: 'ucard__questions' },
-              item.questions.map((q) => el('li', {}, [q])),
-            ),
-          ]),
-        ]),
-        el('div', { class: 'ucard__outcome' }, [
-          el('span', { class: 'ucard__key' }, ['What comes back']),
-          el('p', {}, [item.outcome]),
-        ]),
+        el('p', { class: 'ucard__tag' }, [item.tagline]),
+        el(
+          'ul',
+          { class: 'ucard__questions' },
+          item.questions.map((q) => el('li', {}, [q])),
+        ),
       ],
     ),
   );

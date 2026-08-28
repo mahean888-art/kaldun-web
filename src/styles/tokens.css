@@ -81,21 +81,22 @@
 /* The footer sits on cool ink. Everything inside is written in tokens, so one
    scope flips the whole band. */
 .theme-dark {
-  --ground: #0b0d10;
-  --ground-2: #101317;
-  --panel: #14181d;
-  --panel-2: #191e24;
-  --edge: #262c33;
-  --edge-soft: #1b2026;
+  /* Warm black and antique gold — engraving on a dark plate. */
+  --ground: #0c0b09;
+  --ground-2: #12100c;
+  --panel: #171410;
+  --panel-2: #1c1813;
+  --edge: #2b2620;
+  --edge-soft: #1d1a15;
 
-  --ink: #eef1f4;
-  --ink-2: #aeb5bd;
-  --mute: #828a93;
-  --faint: #565e67;
+  --ink: #f2ede3;
+  --ink-2: #b5ac9c;
+  --mute: #8a8172;
+  --faint: #5b544a;
 
-  --signal: #dfaf52;
-  --signal-hi: #ecc478;
-  --signal-dim: #35290f;
+  --signal: #c9a35c;
+  --signal-hi: #e2c07f;
+  --signal-dim: #33290f;
 
   background: var(--ground);
   color: var(--ink);

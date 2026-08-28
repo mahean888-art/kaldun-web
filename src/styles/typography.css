@@ -2,11 +2,13 @@
    Typography — one scale. Tight tracking only at display sizes; prose gets air.
    ========================================================================== */
 
+/* Chapter headlines are set in the serif — the renaissance register. */
 .t-d1 {
+  font-family: var(--serif);
   font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 

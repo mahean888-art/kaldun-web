@@ -81,7 +81,7 @@
 }
 
 .instrument__figure [data-arrow='grey'] {
-  stroke: #a4abb3;
+  stroke: #7f766a;
 }
 
 .instrument__figure .ins__dot {
@@ -155,76 +155,60 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23eef1f4' stroke-opacity='.08' stroke-dasharray='3 5'/%3E%3C/svg%3E");
 }
 
-/* --- 01 · thesis: the specimen beside the definition --------------------- */
+/* --- 01 · premise: the five properties, engraved -------------------------- */
 
-.thesis {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
-}
-
-@media (min-width: 1100px) {
-  .thesis {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  }
-
-  .thesis__side {
-    position: sticky;
-    top: calc(var(--header-h) + 2.5rem);
-  }
-}
-
-.thesis__bridge {
+.premise__bridge {
   font-size: var(--t-d4);
   line-height: 1.45;
   letter-spacing: -0.012em;
   color: var(--ink-2);
-  max-width: 40ch;
-  margin-bottom: clamp(1.25rem, 2.4vw, 1.75rem);
+  max-width: 44ch;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.thesis__bridge b {
+.premise__bridge b {
   font-weight: 600;
   color: var(--ink);
 }
 
-.definition__props {
+.props {
   display: flex;
   flex-direction: column;
-  max-width: 880px;
+  max-width: 1020px;
   border-top: 1px solid var(--edge);
 }
 
-.definition__props li {
+.props li {
   display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr);
-  gap: 0.25rem 1.25rem;
-  padding-block: clamp(0.9rem, 1.8vw, 1.3rem);
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: 0.35rem 1.5rem;
+  padding-block: clamp(1.1rem, 2.2vw, 1.7rem);
   border-bottom: 1px solid var(--edge-soft);
   align-items: baseline;
 }
 
-@media (min-width: 620px) {
-  .definition__props li {
-    grid-template-columns: 2.6rem minmax(0, 10.5rem) minmax(0, 1fr);
+@media (min-width: 680px) {
+  .props li {
+    grid-template-columns: 3.5rem minmax(0, 13rem) minmax(0, 1fr);
   }
 }
 
-.definition__ord {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
+/* Roman numerals, in the serif — 1654's own arithmetic. */
+.props__no {
+  font-family: var(--serif);
+  font-size: var(--t-d3);
+  font-weight: 500;
   color: var(--signal);
 }
 
-.definition__term {
-  font-size: var(--t-d4);
-  font-weight: 600;
-  letter-spacing: -0.015em;
+.props__term {
+  font-family: var(--serif);
+  font-size: var(--t-d3);
+  font-weight: 500;
+  letter-spacing: -0.008em;
 }
 
-.definition__desc {
+.props__desc {
   grid-column: 2;
   font-size: var(--t-body);
   line-height: 1.55;
@@ -232,98 +216,19 @@
   max-width: 52ch;
 }
 
-@media (min-width: 620px) {
-  .definition__desc {
+@media (min-width: 680px) {
+  .props__desc {
     grid-column: auto;
   }
 }
 
 .definition__claim {
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
   font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 600;
   letter-spacing: -0.03em;
 }
 
 .definition__claim em {
-  font-style: normal;
-  color: var(--signal);
-}
-
-/* --- one decision, decomposed -------------------------------------------- */
-
-.specimen {
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  background: color-mix(in srgb, var(--panel) 72%, transparent);
-  border: 1px solid var(--edge-soft);
-  border-radius: 3px;
-}
-
-.specimen__label {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 0.85rem;
-}
-
-.specimen__q {
-  font-size: var(--t-d3);
-  font-weight: 600;
-  letter-spacing: -0.022em;
-  line-height: 1.2;
-  max-width: 30ch;
-}
-
-.specimen__rule {
-  height: 1px;
-  background: var(--edge-soft);
-  margin-block: clamp(1.25rem, 2.4vw, 1.75rem);
-}
-
-.specimen__bets {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem 2rem;
-}
-
-@media (min-width: 620px) {
-  .specimen__bets {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.specimen__bets li {
-  position: relative;
-  padding-left: 1.25rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1.45;
-  color: var(--ink-2);
-}
-
-.specimen__bets li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 8px;
-  height: 1px;
-  background: var(--signal);
-}
-
-.specimen__machine {
-  font-size: var(--t-lead);
-  line-height: 1.55;
-  color: var(--ink);
-  max-width: 54ch;
-}
-
-.specimen__machine em {
   font-style: normal;
   color: var(--signal);
 }
@@ -411,12 +316,11 @@
   display: block;
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
   margin-inline: auto;
-  max-width: 1080px;
+  max-width: 900px;
   padding: clamp(1.5rem, 3.2vw, 2.75rem);
   background: color-mix(in srgb, var(--panel) 72%, transparent);
   border: 1px solid var(--edge-soft);
-  border-radius: 18px;
-  backdrop-filter: blur(2px);
+  border-radius: 3px;
 }
 
 .ucard:not([hidden]) {
@@ -447,99 +351,40 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: clamp(1.25rem, 2.4vw, 2rem);
+  margin-bottom: 1rem;
 }
 
-.ucard__cols {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-@media (min-width: 900px) {
-  .ucard__cols {
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-    gap: 0;
-  }
-
-  .ucard__col--run {
-    border-left: 1px solid var(--edge-soft);
-    padding-left: clamp(1.75rem, 3.2vw, 3rem);
-    margin-left: clamp(1.75rem, 3.2vw, 3rem);
-  }
-}
-
-.ucard__key {
-  display: block;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 0.85rem;
-}
-
-.ucard__key--run {
-  color: var(--signal);
-}
-
-.ucard__bet {
-  font-size: clamp(1.25rem, 2vw, 1.625rem);
+/* The domain's bet, in the serif. */
+.ucard__tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.375rem, 2.4vw, 2rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.32;
-  color: var(--ink-2);
-  max-width: 24ch;
-  text-wrap: balance;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  max-width: 26ch;
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.75rem);
 }
 
 .ucard__questions {
   display: flex;
   flex-direction: column;
+  border-top: 1px solid var(--edge-soft);
 }
 
 .ucard__questions li {
-  padding-block: clamp(0.7rem, 1.4vw, 0.95rem);
+  padding-block: clamp(0.8rem, 1.6vw, 1.05rem);
   border-bottom: 1px solid var(--edge-soft);
   font-size: var(--t-body);
   line-height: 1.58;
-  color: var(--ink);
-  max-width: 60ch;
-}
-
-.ucard__questions li:first-child {
-  padding-top: 0;
+  color: var(--ink-2);
+  max-width: 66ch;
 }
 
 .ucard__questions li:last-child {
   border-bottom: 0;
   padding-bottom: 0;
-}
-
-.ucard__outcome {
-  display: grid;
-  gap: 0.35rem 2rem;
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
-  padding-top: clamp(1rem, 2vw, 1.5rem);
-  border-top: 1px solid var(--edge-soft);
-}
-
-.ucard__outcome .ucard__key {
-  margin-bottom: 0;
-}
-
-.ucard__outcome p {
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 72ch;
-}
-
-@media (min-width: 760px) {
-  .ucard__outcome {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: baseline;
-  }
 }
 
 /* --- 02 · the record ----------------------------------------------------- */

@@ -130,7 +130,7 @@
   line-height: 0;
   vertical-align: baseline;
   letter-spacing: 0;
-  color: var(--ink);
+  color: var(--signal);
 }
 
 /* --- the standing sub-deck --------------------------------------------- */
@@ -174,7 +174,7 @@
   line-height: 1.58;
   letter-spacing: -0.012em;
   color: var(--ink-2);
-  border-top: 1px solid var(--edge);
+  border-top: 1px solid color-mix(in srgb, var(--signal) 30%, var(--edge));
 }
 
 .hero__brief-body::before {
@@ -239,6 +239,11 @@
   color: var(--faint);
 }
 
+.hero__note b {
+  font-weight: 500;
+  color: var(--signal);
+}
+
 /* --- the promise, with its changing verb ------------------------------- */
 
 .hero__promise {
@@ -278,7 +283,7 @@
   position: absolute;
   inset: -0.1em -0.02em -0.14em -0.02em;
   overflow: hidden;
-  border-bottom: 2px solid var(--signal);
+  border-bottom: 1.5px solid var(--signal-hi);
 }
 
 .rotor__word {

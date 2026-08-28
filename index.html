@@ -43,6 +43,7 @@
         </nav>
 
         <div class="header__actions">
+          <span class="header__clock" data-utc aria-hidden="true"></span>
           <a class="btn btn--sm" data-book href="#close">
             Run a decision <span class="btn__arrow" aria-hidden="true">↗</span>
           </a>
@@ -86,7 +87,7 @@
                 See the machine <span aria-hidden="true">↓</span>
               </a>
             </div>
-            <p class="hero__note">* The future, as an input.</p>
+            <p class="hero__note"><b>*</b> The future, as an input.</p>
           </div>
       </section>
 
@@ -115,30 +116,35 @@
           </p>
 
           <ol class="props">
-            <li data-reveal="fade">
+            <li data-reveal="fade" style="--reveal-delay: 0ms">
               <span class="props__no">I</span>
               <span class="props__term">State</span>
               <span class="props__desc">A persistent, time-indexed belief about what is true now.</span>
+              <span class="props__sym">S&#8348;</span>
             </li>
-            <li data-reveal="fade">
+            <li data-reveal="fade" style="--reveal-delay: 70ms">
               <span class="props__no">II</span>
               <span class="props__term">Transition</span>
               <span class="props__desc">A model of how that state can change.</span>
+              <span class="props__sym">S&#8348; &#8594; S&#8348;&#8330;&#8321;</span>
             </li>
-            <li data-reveal="fade">
+            <li data-reveal="fade" style="--reveal-delay: 140ms">
               <span class="props__no">III</span>
               <span class="props__term">Intervention</span>
               <span class="props__desc">An action, an assumption, or a shock — introduced by you.</span>
+              <span class="props__sym">+ A</span>
             </li>
-            <li data-reveal="fade">
+            <li data-reveal="fade" style="--reveal-delay: 210ms">
               <span class="props__no">IV</span>
               <span class="props__term">Distribution</span>
               <span class="props__desc">Many futures, weighted. Never one answer.</span>
+              <span class="props__sym">P(T&#8321;&#8230;T&#8345;)</span>
             </li>
-            <li data-reveal="fade">
+            <li data-reveal="fade" style="--reveal-delay: 280ms">
               <span class="props__no">V</span>
               <span class="props__term">Resolution</span>
               <span class="props__desc">Claims committed before the outcome. The machine learns from what reality does.</span>
+              <span class="props__sym">R</span>
             </li>
           </ol>
 
@@ -324,7 +330,7 @@
     </main>
 
     <!-- ============ THE DECISION MOMENT ============ -->
-    <dialog class="decision" data-decision>
+    <dialog class="decision theme-dark" data-decision>
       <form class="decision__form" method="dialog" data-decision-form>
         <div class="decision__head">
           <span class="t-label">Run a decision</span>

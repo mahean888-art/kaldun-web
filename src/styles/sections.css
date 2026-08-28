@@ -16,7 +16,8 @@
 .head__rule {
   flex: 1;
   height: 1px;
-  background: var(--edge);
+  /* A short gold graduation opens the rule, then it runs in hairline. */
+  background: linear-gradient(90deg, var(--signal) 0 2rem, var(--edge) 2rem);
   transform-origin: left center;
 }
 
@@ -44,7 +45,11 @@
 }
 
 .figno {
-  font-style: normal;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--signal);
   margin-right: 0.9em;
 }
@@ -88,6 +93,11 @@
   fill: var(--ink);
 }
 
+/* The state stations — where the loop begins and begins again — in gold. */
+.instrument__figure .ins__dot--t {
+  fill: var(--signal);
+}
+
 /* The chevron that ends each conduit. */
 .instrument__figure .ins__head {
   fill: none;
@@ -99,7 +109,7 @@
 /* The pale pulse that travels each conduit. */
 .instrument__figure .ins__pulse {
   fill: none;
-  stroke: #fff;
+  stroke: #fff4de;
   stroke-opacity: 0.9;
   stroke-width: 4.5;
   stroke-linecap: round;
@@ -133,6 +143,9 @@
 }
 
 .instrument__figure .ins__label--amber {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
   fill: var(--signal);
 }
 
@@ -152,7 +165,7 @@
 
 /* On ink, the chart paper is ruled in light. */
 .theme-dark .instrument {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23eef1f4' stroke-opacity='.08' stroke-dasharray='3 5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f2ede3' stroke-opacity='.07' stroke-dasharray='3 5'/%3E%3C/svg%3E");
 }
 
 /* --- 01 · premise: the five properties, engraved -------------------------- */
@@ -180,16 +193,27 @@
 
 .props li {
   display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr);
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
   gap: 0.35rem 1.5rem;
   padding-block: clamp(1.1rem, 2.2vw, 1.7rem);
+  padding-inline: 0.75rem;
+  margin-inline: -0.75rem;
   border-bottom: 1px solid var(--edge-soft);
   align-items: baseline;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+.props li:hover {
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+}
+
+.props li:hover .props__no {
+  color: var(--signal-hi);
 }
 
 @media (min-width: 680px) {
   .props li {
-    grid-template-columns: 3.5rem minmax(0, 13rem) minmax(0, 1fr);
+    grid-template-columns: 3.5rem minmax(0, 13rem) minmax(0, 1fr) auto;
   }
 }
 
@@ -199,6 +223,24 @@
   font-size: var(--t-d3);
   font-weight: 500;
   color: var(--signal);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+/* Each property closes on its notation — the machine's own shorthand. */
+.props__sym {
+  display: none;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.04em;
+  color: var(--signal-2);
+  white-space: nowrap;
+  justify-self: end;
+}
+
+@media (min-width: 680px) {
+  .props__sym {
+    display: inline;
+  }
 }
 
 .props__term {
@@ -243,10 +285,11 @@
 }
 
 .usecases__title {
-  font-size: clamp(1.75rem, 3.6vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.032em;
-  line-height: 1.12;
+  font-family: var(--serif);
+  font-size: clamp(1.875rem, 3.8vw, 3.25rem);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
 }
 
 .usecases__title em {
@@ -303,7 +346,7 @@
 
 .tabbar__tab[aria-selected='true'] {
   color: var(--ink);
-  border-color: var(--edge);
+  border-color: color-mix(in srgb, var(--signal) 45%, var(--edge));
   background: var(--ground-2);
 }
 
@@ -374,12 +417,23 @@
 }
 
 .ucard__questions li {
-  padding-block: clamp(0.8rem, 1.6vw, 1.05rem);
+  position: relative;
+  padding: clamp(0.8rem, 1.6vw, 1.05rem) 0 clamp(0.8rem, 1.6vw, 1.05rem) 1.4rem;
   border-bottom: 1px solid var(--edge-soft);
   font-size: var(--t-body);
   line-height: 1.58;
   color: var(--ink-2);
   max-width: 66ch;
+}
+
+.ucard__questions li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.62em;
+  width: 8px;
+  height: 1px;
+  background: var(--signal);
 }
 
 .ucard__questions li:last-child {
@@ -414,16 +468,18 @@
 }
 
 .record__title {
+  font-family: var(--serif);
   font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
 .spec {
   border: var(--hairline);
-  background: var(--ground);
+  border-top: 1px solid color-mix(in srgb, var(--signal) 45%, var(--edge));
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
 }
 
 .spec--slim {
@@ -487,11 +543,11 @@
 }
 
 .fellowship__number {
-  font-family: var(--mono);
-  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-family: var(--serif);
+  font-size: clamp(3.25rem, 8.5vw, 6rem);
   font-weight: 500;
   line-height: 0.9;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   color: var(--signal);
   user-select: none;
   margin-bottom: clamp(0.5rem, 1.5vw, 1rem);

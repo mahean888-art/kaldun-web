@@ -128,4 +128,22 @@ hr {
   transform: translate(-50%, 0);
 }
 
+/* The scrollbar keeps to the plate. */
+html {
+  scrollbar-color: #2b2620 #0c0b09;
+  scrollbar-width: thin;
+}
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0b09;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b2620;
+  border-radius: 5px;
+  border: 2px solid #0c0b09;
+}

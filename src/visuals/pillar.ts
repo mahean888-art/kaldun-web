@@ -35,9 +35,9 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
 
   // The pillar takes the ink of the band it stands on.
   const dark = Boolean(canvas.closest('.theme-dark'));
-  const INK = dark ? '214, 219, 226' : '14, 17, 22';
-  const OPEN = dark ? '223, 175, 82' : '154, 113, 24';
-  const GOLD = dark ? '136, 144, 154' : '104, 112, 121';
+  const INK = dark ? '242, 237, 227' : '14, 17, 22';
+  const OPEN = dark ? '226, 192, 127' : '138, 100, 19';
+  const GOLD = dark ? '154, 122, 69' : '122, 95, 42';
 
   const paintCell = (c: Cell): void => {
     ctx.clearRect(c.px - font * 0.6, c.py - font * 0.6, font * 1.2, font * 1.2);

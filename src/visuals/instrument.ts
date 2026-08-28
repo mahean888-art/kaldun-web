@@ -38,8 +38,9 @@ function landscape(): string {
 
   const stations = STATIONS.map((s, i) => {
     const x = XS[i]!;
+    const dot = i === 0 || i === STATIONS.length - 1 ? 'ins__dot ins__dot--t' : 'ins__dot';
     return `
-    <rect class="ins__dot" x="${x - 3.5}" y="${Y - 3.5}" width="7" height="7" />
+    <rect class="${dot}" x="${x - 3.5}" y="${Y - 3.5}" width="7" height="7" />
     <text class="ins__name ins__name--sm" x="${x}" y="${Y - 40}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
     <text class="ins__sub ins__sub--sm" x="${x}" y="${Y + 38}" text-anchor="middle">${s.sub}</text>`;
   }).join('\n');

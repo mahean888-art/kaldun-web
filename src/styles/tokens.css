@@ -23,8 +23,9 @@
   /* --- the signal -------------------------------------------------------- */
   /* One accent: instrument amber — the lamp on a machine that is running.
      Used only for probability, state, and the live parts of the page. */
-  --signal: #9a7118;
-  --signal-hi: #b8891f;
+  --signal: #8a6413;
+  --signal-hi: #a67a18;
+  --signal-2: #7a5f2a;
   --signal-dim: #f3ead4;
 
   /* --- type -------------------------------------------------------------- */
@@ -96,6 +97,7 @@
 
   --signal: #c9a35c;
   --signal-hi: #e2c07f;
+  --signal-2: #9a7a45;
   --signal-dim: #33290f;
 
   background: var(--ground);

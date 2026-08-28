@@ -10,6 +10,7 @@ import { initBranches } from './visuals/branches';
 import { initInstrument } from './visuals/instrument';
 import { initPillar } from './visuals/pillar';
 import { initRotor } from './components/rotor';
+import { initClock } from './components/clock';
 import { initTabs } from './sections/tabs';
 import { initDecision } from './components/decision';
 import { DOMAINS } from './data/domains';
@@ -25,6 +26,7 @@ function wireEmail(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
+  initClock(root);
   wireEmail(root);
   initDecision(root);
 

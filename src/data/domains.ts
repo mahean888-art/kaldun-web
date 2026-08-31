@@ -1,68 +1,73 @@
 /**
- * Decisions you can run.
+ * The five domains of machine foresight, and what runs in each.
  *
- * Five domains for the question index. Every question is runnable — it
- * contains a decision, a shock or assumption, and a horizon, phrased the way
- * the owner of the decision would say it out loud.
+ * Each domain gets a plain description in the machine's grammar — state,
+ * action, futures — and its use cases: noun-led, concrete, the way the desk
+ * that owns the decision would file them.
  */
 
 export type Domain = {
   ordinal: string;
   label: string;
-  /** One line on why decisions outrun certainty here. */
-  tagline: string;
-  questions: string[];
+  /** Two lines on why decisions outrun certainty here. */
+  description: string;
+  cases: string[];
 };
 
 export const DOMAINS: Domain[] = [
   {
     ordinal: '01',
     label: 'Capital & treasury',
-    tagline: 'Money moves before the world that repays it exists.',
-    questions: [
-      'We’re underwriting a $1.8B data-center portfolio at 6.2% financing. Under which power, demand and rate paths does it clear — and at what price does it survive most of them?',
-      'Our treasury rule is code — it rebalances the moment a threshold trips. Run the rule itself against rate and liquidity futures, before it runs live money.',
-      'If the Fed cuts 150bp over twelve months, which of our three allocation options holds across the deposit, spread and refinancing paths that follow?',
+    description:
+      'Decisions that are already code. Treasury rules, mandates and tokenized funds act the moment a threshold trips — at machine speed, on yesterday’s assumptions.',
+    cases: [
+      'Run a treasury or rebalancing rule against rate and liquidity futures before it runs live money.',
+      'Test a financing or an allocation against the demand, rate and refinancing paths it must survive.',
+      'Find the early evidence that the assumption behind a position is breaking.',
     ],
   },
   {
     ordinal: '02',
-    label: 'Market entry',
-    tagline: 'Crossing into a jurisdiction is a bet on how it behaves.',
-    questions: [
-      'Entering Japan assumes approval inside nine months and a stable yen corridor. How do the futures re-weight if either slips?',
-      'A subsidized competitor lands at 30% under our price. Which responses hold share across the widest range of demand paths?',
-      'Which of these four expansion markets stays attractive across rate, currency and policy futures — not just in the base case?',
+    label: 'Insurance',
+    description:
+      'A policy is a priced future. Underwriting, reserving and reinsurance stand or fall on how well tomorrow’s losses were imagined today.',
+    cases: [
+      'Run a book of catastrophe cover against climate and exposure futures before renewal terms are set.',
+      'Test reserves against the loss paths a new liability theory or a changing climate opens.',
+      'Price a risk class with no loss history by running the worlds that would produce one.',
     ],
   },
   {
     ordinal: '03',
-    label: 'Product & technology',
-    tagline: 'Roadmaps are forecasts wearing Gantt charts.',
-    questions: [
-      'Backing this silicon roadmap bets on packaging capacity and export rules holding. Run both the other way: where does it break, and when would we know?',
-      'If inference costs fall another 10× in twenty-four months, which of our bets get stronger, which get commoditized, and in what order?',
-      'Ship the platform in March, or wait for the standard to settle? Which choice survives more futures of the standards fight?',
+    label: 'Real assets',
+    description:
+      'Power, land, infrastructure: capital that cannot move once placed, in a world that keeps moving.',
+    cases: [
+      'Site a data center against power, water, transmission and demand futures — before the land is bought.',
+      'Run a twenty-year power purchase against fuel, policy and grid paths.',
+      'Test a port, pipeline or plant against the trade flows that must exist for it to pay.',
     ],
   },
   {
     ordinal: '04',
-    label: 'Risk & resilience',
-    tagline: 'The expensive failures are sequences, not events.',
-    questions: [
-      'Port capacity falls 35% for ninety days. What sequence of inventory, pricing, substitution and policy response follows — and which preparations blunt it?',
-      'A major counterparty fails on a Friday. What do the next two weeks look like across funding, collateral and customer behavior — and what should already be in place?',
-      'Which three concentrations in our supplier network drive most of the modeled downside?',
+    label: 'Defense & national resilience',
+    description:
+      'Adversaries, alliances and supply chains answer back. The state that runs the futures first holds the initiative.',
+    cases: [
+      'Keep escalation paths under watch, with their leading indicators and the contingencies that hold across most of them.',
+      'Run a procurement bet against the industrial-base and technology futures it assumes.',
+      'Sequence a supply shock — what follows a strait closing or a fab going dark, and what should already be in place.',
     ],
   },
   {
     ordinal: '05',
     label: 'Policy & geopolitics',
-    tagline: 'Rules change the board while the game is being played.',
-    questions: [
-      'Export controls tighten one more notch. Where do flows, prices and capacity actually migrate over eighteen months?',
-      'A new tariff schedule lands mid-year. Which pricing, sourcing and siting responses are robust before the final numbers are known?',
-      'Which escalation paths matter to our operations, what are their leading indicators, and which contingencies stay useful across most of them?',
+    description:
+      'Rules change the board while the game is being played. A tariff line or an export control redraws flows for a decade.',
+    cases: [
+      'Run a rule change through to where flows, prices and capacity actually migrate.',
+      'Test a policy package against the responses of the actors it binds.',
+      'Hold a position across the widest range of regulatory and competitive futures.',
     ],
   },
 ];

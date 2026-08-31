@@ -1,8 +1,7 @@
 /**
- * The question index: five numbered rows, one open at a time. Each row is a
- * domain — its name in the serif, its bet in italic, its runnable questions
- * beneath. Height animates through the grid-rows trick in CSS, so opening a
- * row never measures anything and never jumps.
+ * The domain stack: five domains laid out in full — ordinal, name,
+ * description, then the use cases that run there. Nothing folds, nothing is
+ * clicked; the reader scrolls a single editorial column.
  */
 
 import { el } from '../lib/dom';
@@ -11,73 +10,30 @@ import type { Domain } from '../data/domains';
 type Options = {
   root: HTMLElement;
   items: Domain[];
-  /** Accessible name for the index. */
+  /** Accessible name for the stack. */
   label: string;
 };
 
-export function initDomainIndex({ root, items, label }: Options): void {
+export function initDomainStack({ root, items, label }: Options): void {
   if (items.length === 0) return;
   root.setAttribute('role', 'list');
   root.setAttribute('aria-label', label);
 
-  const rows = items.map((item, i) => {
-    const head = el(
-      'button',
-      {
-        type: 'button',
-        class: 'dindex__head',
-        id: `dindex-head-${item.ordinal}`,
-        'aria-controls': `dindex-panel-${item.ordinal}`,
-        'aria-expanded': String(i === 0),
-      },
-      [
-        el('span', { class: 'dindex__no' }, [item.ordinal]),
-        el('span', { class: 'dindex__name' }, [item.label]),
-        el('span', { class: 'dindex__mark', 'aria-hidden': 'true' }, ['+']),
-      ],
+  for (const item of items) {
+    root.append(
+      el('div', { class: 'dstack__row', role: 'listitem', 'data-reveal': 'fade' }, [
+        el('span', { class: 'dstack__no' }, [item.ordinal]),
+        el('div', { class: 'dstack__body' }, [
+          el('h3', { class: 'dstack__name' }, [item.label]),
+          el('p', { class: 'dstack__desc' }, [item.description]),
+          el('p', { class: 'dstack__caselabel' }, ['Use cases']),
+          el(
+            'ul',
+            { class: 'dstack__cases' },
+            item.cases.map((c) => el('li', {}, [c])),
+          ),
+        ]),
+      ]),
     );
-
-    const body = el('div', { class: 'dindex__body' }, [
-      el('p', { class: 'dindex__tagline' }, [item.tagline]),
-      el(
-        'ul',
-        { class: 'dindex__qs' },
-        item.questions.map((q) => el('li', {}, [q])),
-      ),
-    ]);
-
-    const panel = el(
-      'div',
-      {
-        class: 'dindex__panel',
-        id: `dindex-panel-${item.ordinal}`,
-        role: 'region',
-        'aria-labelledby': `dindex-head-${item.ordinal}`,
-      },
-      [el('div', { class: 'dindex__clip' }, [body])],
-    );
-
-    const row = el('div', { class: i === 0 ? 'dindex__row is-open' : 'dindex__row', role: 'listitem' }, [
-      head,
-      panel,
-    ]);
-    return { row, head };
-  });
-
-  const openRow = (index: number): void => {
-    rows.forEach(({ row, head }, i) => {
-      const open = i === index;
-      row.classList.toggle('is-open', open);
-      head.setAttribute('aria-expanded', String(open));
-    });
-  };
-
-  rows.forEach(({ row, head }, i) => {
-    head.addEventListener('click', () => {
-      // Re-clicking the open row leaves it open: the index always shows one
-      // domain, the way the page always shows one live thing.
-      openRow(i);
-    });
-    root.append(row);
-  });
+  }
 }

@@ -4,30 +4,12 @@
    clear move.
    ========================================================================== */
 
-/* --- section head ------------------------------------------------------ */
+/* --- section label ------------------------------------------------------ */
 
-.head {
-  display: flex;
-  align-items: baseline;
-  gap: clamp(1rem, 3vw, 2.5rem);
+/* Each movement opens with one quiet word; the grain seams carry the rest. */
+.band__label {
+  color: var(--mute);
   margin-bottom: clamp(1.75rem, 4vw, 3rem);
-}
-
-.head__rule {
-  position: relative;
-  flex: 1;
-  height: 1px;
-  background: var(--edge);
-  transform-origin: left center;
-}
-
-/* A short white graduation opens the rule — no gradient, one crisp step. */
-.head__rule::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2rem;
-  background: var(--signal);
 }
 
 /* A chapter opens with more air above it than an ordinary band. */
@@ -187,139 +169,100 @@
   line-height: 1.7;
 }
 
-/* --- the question index --------------------------------------------------
-   Five numbered rows, one open at a time. The height animates through the
-   grid-rows trick, so nothing is measured and nothing jumps. */
+/* --- the domain stack -----------------------------------------------------
+   Five domains laid out in full: ordinal, name, description, use cases.
+   Nothing folds; hairlines only between rows, never as ornament. */
 
-.dindex {
+.dstack {
   max-width: 1100px;
   margin-inline: auto;
+}
+
+.dstack__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem 0;
+  padding-block: clamp(2rem, 4.5vw, 3.5rem);
+}
+
+.dstack__row + .dstack__row {
   border-top: var(--hairline);
 }
 
-.dindex__row {
-  border-bottom: var(--hairline);
+@media (min-width: 760px) {
+  .dstack__row {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0 clamp(1rem, 2.5vw, 2rem);
+  }
 }
 
-.dindex__head {
-  display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: clamp(0.75rem, 2vw, 1.5rem);
-  width: 100%;
-  padding-block: clamp(1.15rem, 2.4vw, 1.7rem);
-  text-align: left;
-  cursor: pointer;
-}
-
-.dindex__no {
+.dstack__no {
   font-family: var(--mono);
   font-size: var(--t-data);
   letter-spacing: 0.08em;
   color: var(--faint);
-  transition: color var(--dur-1) var(--ease-out);
+  padding-top: 0.55em;
 }
 
-.dindex__name {
+.dstack__name {
   font-family: var(--serif);
-  font-size: clamp(1.4rem, 2.6vw, 2.25rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.1;
-  color: var(--mute);
-  transition: color var(--dur-2) var(--ease-out);
-}
-
-.dindex__head:hover .dindex__name,
-.dindex__row.is-open .dindex__name {
   color: var(--ink);
+  margin-bottom: clamp(0.7rem, 1.4vw, 1rem);
 }
 
-.dindex__row.is-open .dindex__no {
-  color: var(--mute);
-}
-
-.dindex__mark {
-  font-family: var(--mono);
-  font-size: 1.1rem;
-  font-weight: 400;
-  line-height: 1;
-  color: var(--mute);
-  transition: transform var(--dur-2) var(--ease-out), color var(--dur-1) var(--ease-out);
-}
-
-.dindex__row.is-open .dindex__mark {
-  transform: rotate(45deg);
-  color: var(--ink);
-}
-
-.dindex__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-2) var(--ease-glide);
-}
-
-.dindex__row.is-open .dindex__panel {
-  grid-template-rows: 1fr;
-}
-
-.dindex__clip {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.dindex__body {
-  padding: 0 0 clamp(1.5rem, 3vw, 2.25rem) 0;
-}
-
-@media (min-width: 760px) {
-  .dindex__body {
-    padding-left: calc(3.25rem + clamp(0.75rem, 2vw, 1.5rem));
-  }
-}
-
-/* The domain's bet, in the serif's own voice. */
-.dindex__tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.125rem, 1.7vw, 1.4375rem);
-  font-weight: 500;
-  letter-spacing: -0.005em;
+.dstack__desc {
+  font-size: var(--t-body);
+  line-height: 1.62;
   color: var(--ink-2);
-  max-width: 34ch;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  max-width: 58ch;
+  margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem);
 }
 
-.dindex__qs {
+.dstack__caselabel {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 0.5rem;
+}
+
+.dstack__cases {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--edge-soft);
+  max-width: 72ch;
 }
 
-.dindex__qs li {
+.dstack__cases li {
   position: relative;
-  padding: clamp(0.8rem, 1.6vw, 1.05rem) 0 clamp(0.8rem, 1.6vw, 1.05rem) 1.4rem;
+  padding: clamp(0.7rem, 1.4vw, 0.95rem) 0 clamp(0.7rem, 1.4vw, 0.95rem) 1.4rem;
   border-bottom: 1px solid var(--edge-soft);
   font-size: var(--t-body);
   line-height: 1.58;
   color: var(--ink-2);
-  max-width: 68ch;
 }
 
-.dindex__qs li::before {
+.dstack__cases li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 1.62em;
+  top: 1.55em;
   width: 8px;
   height: 1px;
   background: var(--signal);
 }
 
-.dindex__qs li:last-child {
+.dstack__cases li:last-child {
   border-bottom: 0;
   padding-bottom: 0;
 }
+
 
 /* The closing pair under the index. */
 .usecases__every {
@@ -355,19 +298,6 @@
 
 /* --- the record ----------------------------------------------------------- */
 
-.record {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 5.5rem);
-  align-items: center;
-}
-
-@media (min-width: 1000px) {
-  .record {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  }
-}
-
 .record__lede {
   display: flex;
   flex-direction: column;
@@ -383,55 +313,53 @@
   text-wrap: balance;
 }
 
-/* Three standing pillars: sealed, graded, learned. */
-.pillars {
+/* Four claim pillars, the Pramaana way: tall quiet panels, a claim and its
+   support, nothing animated. The proportions do the standing. */
+.rpillars {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2.4vw, 2.25rem);
-  align-items: end;
-  max-width: 560px;
-  margin-inline: auto;
-  width: 100%;
+  grid-template-columns: 1fr;
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+  align-items: stretch;
 }
 
-.pillarcard {
+@media (min-width: 620px) {
+  .rpillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .rpillars {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.rpillar {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  min-width: 0;
+  gap: 0.85rem;
+  min-height: clamp(220px, 30vh, 320px);
+  padding: clamp(1.4rem, 2.4vw, 2rem) clamp(1.2rem, 2vw, 1.6rem);
+  border: 1px solid var(--edge-soft);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 40%, var(--edge));
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
 }
 
-.pillarcard canvas {
-  width: 100%;
-  height: clamp(220px, 34vh, 400px);
-}
-
-/* The middle pillar stands a step taller — a colonnade, not a bar chart. */
-.pillarcard:nth-child(2) canvas {
-  height: clamp(250px, 38vh, 448px);
-}
-
-.pillarcard figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  border-top: 1px solid var(--edge-soft);
-  padding-top: 0.85rem;
-}
-
-.pillarcard b {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.rpillar h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.7vw, 1.5625rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   color: var(--ink);
+  max-width: 12ch;
 }
 
-.pillarcard span {
+.rpillar p {
   font-size: var(--t-small);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--mute);
+  max-width: 30ch;
 }
 
 /* --- research ------------------------------------------------------------- */

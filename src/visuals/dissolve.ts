@@ -33,7 +33,9 @@ export function initDissolve(host: HTMLElement): DissolveHandle {
   const to = toLight ? LIGHT : DARK;
 
   const draw = (): void => {
-    const rect = host.getBoundingClientRect();
+    // The canvas bleeds past the host (see CSS), so size from its own box —
+    // the painted grain must cover every pixel the element can occupy.
+    const rect = canvas.getBoundingClientRect();
     if (rect.width < 8 || rect.height < 8) return;
     const ratio = dpr(2);
     canvas.width = Math.round(rect.width * ratio);

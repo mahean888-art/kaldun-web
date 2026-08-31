@@ -288,11 +288,16 @@
   pointer-events: none;
 }
 
+/* The canvas bleeds a hair past its host, so no fractional-pixel rounding on
+   any display can ever open a seam line between the grain and its neighbours. */
 .dissolve canvas {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -2px;
+  bottom: -2px;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 4px);
   display: block;
 }
 

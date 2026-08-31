@@ -49,14 +49,14 @@
   order: 1;
 }
 
-/* The Augustus manner: the discipline named in the serif, its asterisk
-   resolving in a footnote at the hero's foot. */
+/* The Augustus manner: the discipline named big, heavy, and uppercase in the
+   site's own sans, its asterisk resolving in a footnote at the hero's foot. */
 .hero__eyebrow {
-  font-family: var(--serif);
-  font-size: clamp(1.375rem, 2vw, 2rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  font-size: clamp(1.75rem, 2.9vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 0.95;
+  text-transform: uppercase;
   color: var(--ink);
   margin-bottom: clamp(1rem, 2.4vh, 1.75rem);
 }

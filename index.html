@@ -35,7 +35,7 @@
           <a class="site-nav__item" href="#machine">Machine<sup>01</sup></a>
           <a class="site-nav__item" href="#use-cases">Use cases<sup>02</sup></a>
           <a class="site-nav__item" href="#record">Record<sup>03</sup></a>
-          <a class="site-nav__item" href="#project-1654">1654<sup>04</sup></a>
+          <a class="site-nav__item" href="#research">Research<sup>04</sup></a>
         </nav>
 
         <div class="header__actions">
@@ -54,7 +54,9 @@
         </div>
 
         <div class="shell hero__head">
-          <p class="hero__eyebrow" data-reveal="rise">Machine Foresight</p>
+          <p class="hero__eyebrow" data-reveal="rise">
+            Machine Foresight<span class="hero__eyebrow-star" aria-hidden="true">*</span>
+          </p>
           <h1 class="hero__title" data-reveal="rise" style="--reveal-delay: 120ms">
             Run the future of <span class="rotor" data-rotor>a decision</span><br />before
             you make it.
@@ -81,7 +83,7 @@
               See the machine <span aria-hidden="true">↓</span>
             </a>
           </div>
-          <p class="hero__exit" data-reveal="fade">A forecast is not a decision.</p>
+          <p class="hero__note" data-reveal="fade">* The future, as an input.</p>
         </div>
       </section>
 
@@ -89,7 +91,7 @@
       <section class="band band--chapter" id="machine">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Machine<sup class="head__no">01</sup></span>
+            <span class="t-label">The Machine</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -130,11 +132,15 @@
         </div>
       </section>
 
+      <div class="dissolve" aria-hidden="true" data-dissolve="dark-light">
+        <canvas></canvas>
+      </div>
+
       <!-- ============ 02 · USE CASES ============ -->
-      <section class="band band--chapter" id="use-cases">
+      <section class="band band--chapter theme-light" id="use-cases">
         <div class="shell">
           <div class="head">
-            <span class="t-label">Use cases<sup class="head__no">02</sup></span>
+            <span class="t-label">Use cases</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
@@ -144,12 +150,12 @@
             </h2>
           </div>
 
-          <div data-domain-tabs>
-            <div class="tabbar" data-tabbar></div>
-            <div data-tab-panel></div>
-          </div>
+          <div class="dindex" data-domain-index></div>
 
           <div class="spacer-md"></div>
+          <p class="usecases__every" data-reveal="fade">
+            One machine, run across every domain where the future is expensive.
+          </p>
           <p class="t-small usecases__wedge" data-reveal="fade">
             We begin with programmable capital and treasury — decisions that are already code.
             Insurance, real assets and national resilience run on the same machine.
@@ -157,57 +163,94 @@
         </div>
       </section>
 
+      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
+        <canvas></canvas>
+      </div>
+
       <!-- ============ 03 · THE RECORD ============ -->
       <section class="band band--chapter" id="record">
         <div class="shell">
           <div class="head">
-            <span class="t-label">The Record<sup class="head__no">03</sup></span>
+            <span class="t-label">The Record</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
           <div class="record">
-            <div class="record__pillar" aria-hidden="true">
-              <canvas data-pillar></canvas>
-            </div>
-
-            <div class="stack-col">
+            <div class="record__lede">
               <h2 class="record__title" data-lines>
                 Made before<br />the answer was known.
               </h2>
               <div class="spacer-sm"></div>
-              <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
-                Every claim the machine commits is cryptographically sealed before the outcome is
-                known — hashed, timestamped, anchored beyond quiet edits. When reality resolves
-                it, the seal opens, the score posts, and the machine learns.
+              <p class="t-lead" data-reveal="fade" style="max-width: 44ch">
+                Every claim the machine commits is sealed before the outcome is known — written
+                down, timestamped, beyond quiet edits.
               </p>
-              <p class="t-body" data-reveal="fade" style="max-width: 46ch">
+              <p class="t-body" data-reveal="fade" style="max-width: 44ch">
+                When the world answers, the seal opens and the score posts. Then the machine
+                trains on the difference between what it believed and what happened — the loop
+                that makes next quarter&rsquo;s futures better than this one&rsquo;s.
+              </p>
+              <p class="t-body" data-reveal="fade" style="max-width: 44ch">
                 The bar is calibration: when the machine says 70%, about 70% of those events
                 should happen. The Record is where anyone can check.
               </p>
-              <div class="spacer-sm"></div>
-              <div class="spec spec--slim" data-record-spec></div>
-              <div class="spacer-sm"></div>
-              <p class="axiom" data-reveal="fade">
-                A decision should not disappear after it is made.
-              </p>
+            </div>
+
+            <div class="pillars" data-pillars>
+              <figure class="pillarcard">
+                <canvas data-pillar="sealed" aria-hidden="true"></canvas>
+                <figcaption>
+                  <b>Sealed</b>
+                  <span>Every claim, fixed before the outcome.</span>
+                </figcaption>
+              </figure>
+              <figure class="pillarcard">
+                <canvas data-pillar="graded" aria-hidden="true"></canvas>
+                <figcaption>
+                  <b>Graded</b>
+                  <span>Reality resolves it; the score posts.</span>
+                </figcaption>
+              </figure>
+              <figure class="pillarcard">
+                <canvas data-pillar="learned" aria-hidden="true"></canvas>
+                <figcaption>
+                  <b>Learned</b>
+                  <span>The machine trains on the difference.</span>
+                </figcaption>
+              </figure>
             </div>
           </div>
+
+          <div class="spacer-md"></div>
+          <p class="axiom" data-reveal="fade">
+            A decision should not disappear after it is made.
+          </p>
         </div>
       </section>
 
-      <!-- ============ 04 · PROJECT 1654 ============ -->
-      <section class="band band--chapter" id="project-1654">
+      <div class="dissolve" aria-hidden="true" data-dissolve="dark-light">
+        <canvas></canvas>
+      </div>
+
+      <!-- ============ 04 · RESEARCH ============ -->
+      <section class="band band--chapter theme-light" id="research">
         <div class="shell">
           <div class="head">
-            <span class="t-label">Research<sup class="head__no">04</sup></span>
+            <span class="t-label">Research</span>
             <span class="head__rule" data-reveal="draw"></span>
           </div>
 
-          <div class="p1654__intro">
+          <h2 class="research__statement" data-lines>
+            The hardest decisions are not unknowable.<br /><em>They are unrun.</em>
+          </h2>
+
+          <div class="spacer-md"></div>
+
+          <div class="research__grid">
             <div class="stack-col">
-              <p class="fellowship__project" aria-hidden="true">Project</p>
+              <p class="fellowship__project" aria-hidden="true">Research residency</p>
               <p class="fellowship__number" aria-hidden="true">1654</p>
-              <h2 class="t-d1" data-lines>Systems that learn from time.</h2>
+              <h3 class="research__sub" data-lines>Systems that learn from time.</h3>
             </div>
 
             <div class="stack-col">
@@ -226,13 +269,22 @@
                 <em>Nothing at Foresight Machines goes ungraded.</em>
               </p>
               <div class="spacer-sm" style="height: 0.5rem"></div>
-              <a class="btn btn--ghost" data-book href="#horizon">
-                Apply to Project 1654 <span class="btn__arrow" aria-hidden="true">↗</span>
-              </a>
+              <div class="research__actions">
+                <a class="btn btn--ghost" data-book href="#horizon">
+                  Bring us a decision <span class="btn__arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="btn btn--ghost" data-book href="#horizon">
+                  Apply to Project 1654 <span class="btn__arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
+        <canvas></canvas>
+      </div>
     </main>
 
     <!-- ============ THE DECISION MOMENT ============ -->
@@ -275,10 +327,6 @@
     <!-- ============ THE HORIZON ============ -->
     <footer class="horizon" id="horizon">
       <div class="shell horizon__inner">
-        <p class="horizon__statement" data-lines>
-          The future will become the past.<br />Your decisions should learn from it.
-        </p>
-
         <div class="horizon__field" aria-hidden="true"></div>
 
         <div class="horizon__floor">
@@ -290,7 +338,7 @@
               <a href="#machine">Machine</a>
               <a href="#use-cases">Use cases</a>
               <a href="#record">Record</a>
-              <a href="#project-1654">1654</a>
+              <a href="#research">Research</a>
               <a data-book href="#horizon">Run a decision</a>
             </nav>
 

@@ -49,23 +49,20 @@
   order: 1;
 }
 
+/* The Augustus manner: the discipline named big and bold, its asterisk
+   resolving in a footnote at the hero's foot. */
 .hero__eyebrow {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.2em;
+  font-size: clamp(0.9375rem, 1.35vw, 1.3125rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--ink);
   margin-bottom: clamp(1rem, 2.4vh, 1.75rem);
 }
 
-.hero__eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 2rem;
-  height: 1px;
-  background: var(--signal);
-  vertical-align: middle;
-  margin-right: 1rem;
+.hero__eyebrow-star {
+  color: var(--signal);
+  margin-left: 0.1em;
 }
 
 /* Sentence case, not shouted: the line is doing the work. */
@@ -147,11 +144,13 @@
   gap: 1.25rem;
 }
 
-.hero__exit {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1rem, 1.2vw, 1.1875rem);
-  color: var(--mute);
+/* The asterisk's answer. */
+.hero__note {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
 }
 
 /* --- the rolling noun ---------------------------------------------------- */

@@ -31,46 +31,66 @@ const STATIONS: Station[] = [
   { sym: 'T&#8320;&#8242;', name: 'Learning', sub: 'The state updates' },
 ];
 
-/** Desktop: the loop as a transit line, reading left to right and back. */
+/** One station: run index above, name, register dot, sub beneath. */
+function station(s: Station, i: number, x: number, y: number, terminal: boolean): string {
+  const dot = terminal ? 'ins__dot ins__dot--t' : 'ins__dot';
+  return `
+    <text class="ins__idx" x="${x}" y="${y - 68}" text-anchor="middle">${i + 1} / ${STATIONS.length}</text>
+    <text class="ins__name ins__name--sm" x="${x}" y="${y - 38}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
+    <rect class="${dot}" x="${x - 3.5}" y="${y - 3.5}" width="7" height="7" />
+    <text class="ins__sub ins__sub--sm" x="${x}" y="${y + 38}" text-anchor="middle">${s.sub}</text>`;
+}
+
+/**
+ * Desktop: the loop as a circuit — three stations across, a bend down the
+ * right edge, three back, and the white return closing the loop up the left.
+ * The bends run outside the text columns, so no conduit ever crosses a label.
+ */
 function landscape(): string {
-  const XS = [96, 306, 516, 726, 936, 1146];
-  const Y = 196;
+  const XS = [176, 620, 1064];
+  const TOP = 152;
+  const BOT = 396;
+  const GAP = 18;
 
-  const stations = STATIONS.map((s, i) => {
-    const x = XS[i]!;
-    const dot = i === 0 || i === STATIONS.length - 1 ? 'ins__dot ins__dot--t' : 'ins__dot';
-    return `
-    <rect class="${dot}" x="${x - 3.5}" y="${Y - 3.5}" width="7" height="7" />
-    <text class="ins__name ins__name--sm" x="${x}" y="${Y - 40}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
-    <text class="ins__sub ins__sub--sm" x="${x}" y="${Y + 38}" text-anchor="middle">${s.sub}</text>`;
-  }).join('\n');
+  const stations = [
+    ...XS.map((x, i) => station(STATIONS[i]!, i, x, TOP, i === 0)),
+    ...XS.map((_, i) =>
+      station(STATIONS[3 + i]!, 3 + i, XS[XS.length - 1 - i]!, BOT, 3 + i === STATIONS.length - 1),
+    ),
+  ].join('\n');
 
-  const conduits = XS.slice(0, -1)
-    .map((x, i) => `<path data-arrow="grey" d="M ${x + 18} ${Y} H ${XS[i + 1]! - 18}" />`)
-    .join('\n');
+  const forward = [
+    `<path data-arrow="grey" d="M ${XS[0]! + GAP} ${TOP} H ${XS[1]! - GAP}" />`,
+    `<path data-arrow="grey" d="M ${XS[1]! + GAP} ${TOP} H ${XS[2]! - GAP}" />`,
+    // Down the right edge, outside the futures/consequence columns.
+    `<path data-arrow="grey" d="M ${XS[2]! + GAP} ${TOP} H 1156 Q 1180 ${TOP} 1180 ${TOP + 24} V ${BOT - 24} Q 1180 ${BOT} 1156 ${BOT} H ${XS[2]! + GAP}" />`,
+    `<path data-arrow="grey" d="M ${XS[2]! - GAP} ${BOT} H ${XS[1]! + GAP}" />`,
+    `<path data-arrow="grey" d="M ${XS[1]! - GAP} ${BOT} H ${XS[0]! + GAP}" />`,
+  ].join('\n');
 
-  const last = XS[XS.length - 1]!;
-  const first = XS[0]!;
-  const ret = `<path data-arrow="amber" d="M ${last} ${Y + 58} V 296 Q ${last} 320 ${last - 24} 320 H ${first + 24} Q ${first} 320 ${first} 296 V ${Y + 18}" />`;
+  // The learning arm: up the left edge, back into T₀ — the machine runs again.
+  const ret = `<path data-arrow="amber" d="M ${XS[0]! - GAP} ${BOT} H 84 Q 60 ${BOT} 60 ${BOT - 24} V ${TOP + 24} Q 60 ${TOP} 84 ${TOP} H ${XS[0]! - GAP}" />`;
+  const mid = Math.round((TOP + BOT) / 2);
 
   return `
-  <svg viewBox="0 0 1240 372" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    ${conduits}
+  <svg viewBox="0 0 1240 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    ${forward}
     ${ret}
     ${stations}
-    <text class="ins__label ins__label--amber" x="621" y="356" text-anchor="middle">The machine runs again</text>
+    <text class="ins__label ins__label--amber" x="34" y="${mid}" transform="rotate(-90 34 ${mid})" text-anchor="middle">The machine runs again</text>
   </svg>`;
 }
 
 /** Narrow screens: the same loop, standing. */
 function portrait(): string {
-  const ROW0 = 80;
-  const STEP = 168;
+  const ROW0 = 104;
+  const STEP = 182;
   const CX = 360;
 
   const stations = STATIONS.map((s, i) => {
     const y = ROW0 + i * STEP;
     return `
+    <text class="ins__idx" x="${CX}" y="${y - 30}" text-anchor="middle">${i + 1} / ${STATIONS.length}</text>
     <text class="ins__name" x="${CX}" y="${y}" text-anchor="middle"><tspan class="ins__sym">${s.sym}</tspan><tspan> — ${s.name}</tspan></text>
     <text class="ins__sub" x="${CX}" y="${y + 32}" text-anchor="middle">${s.sub}</text>`;
   }).join('\n');
@@ -78,7 +98,7 @@ function portrait(): string {
   const conduits = STATIONS.slice(0, -1)
     .map((_, i) => {
       const from = ROW0 + i * STEP + 56;
-      const to = ROW0 + (i + 1) * STEP - 44;
+      const to = ROW0 + (i + 1) * STEP - 58;
       return `<path data-arrow="grey" d="M ${CX} ${from} V ${to}" />`;
     })
     .join('\n');

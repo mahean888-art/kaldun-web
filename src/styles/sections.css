@@ -30,13 +30,6 @@
   background: var(--signal);
 }
 
-.head__no {
-  font-size: 0.82em;
-  letter-spacing: 0;
-  margin-left: 0.6em;
-  color: var(--signal);
-}
-
 /* A chapter opens with more air above it than an ordinary band. */
 .band--chapter {
   padding-block-start: clamp(5rem, 14vh, 10rem);
@@ -146,6 +139,14 @@
   fill: var(--signal);
 }
 
+/* The run index above each station — 1 / 6 through 6 / 6. */
+.instrument__figure .ins__idx {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  fill: var(--faint);
+}
+
 /* --- 04 · use cases: pill bar, one case card at a time ------------------- */
 
 .usecases__head {
@@ -186,127 +187,126 @@
   line-height: 1.7;
 }
 
-/* The pill bar. */
-.tabbar {
-  display: flex;
-  gap: 0.3rem;
-  width: fit-content;
-  max-width: 100%;
+/* --- the question index --------------------------------------------------
+   Five numbered rows, one open at a time. The height animates through the
+   grid-rows trick, so nothing is measured and nothing jumps. */
+
+.dindex {
+  max-width: 1100px;
   margin-inline: auto;
-  padding: 0.3rem;
-  border: 1px solid var(--edge);
-  border-radius: 999px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  border-top: var(--hairline);
 }
 
-.tabbar::-webkit-scrollbar {
-  display: none;
+.dindex__row {
+  border-bottom: var(--hairline);
 }
 
-.tabbar__tab {
-  flex-shrink: 0;
-  padding: 0.6em 1.05em;
-  border: 1px solid transparent;
-  border-radius: 999px;
+.dindex__head {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  width: 100%;
+  padding-block: clamp(1.15rem, 2.4vw, 1.7rem);
+  text-align: left;
+  cursor: pointer;
+}
+
+.dindex__no {
   font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--mute);
-  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out),
-    background-color var(--dur-1) var(--ease-out);
+  font-size: var(--t-data);
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  transition: color var(--dur-1) var(--ease-out);
 }
 
-.tabbar__tab:hover {
+.dindex__name {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.6vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--mute);
+  transition: color var(--dur-2) var(--ease-out);
+}
+
+.dindex__head:hover .dindex__name,
+.dindex__row.is-open .dindex__name {
   color: var(--ink);
 }
 
-.tabbar__tab[aria-selected='true'] {
-  color: var(--ink);
-  border-color: color-mix(in srgb, var(--signal) 45%, var(--edge));
-  background: var(--ground-2);
-}
-
-/* The case card. */
-.ucard[hidden] {
-  display: none;
-}
-
-.ucard {
-  display: block;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  margin-inline: auto;
-  max-width: 900px;
-  padding: clamp(1.5rem, 3.2vw, 2.75rem);
-  background: color-mix(in srgb, var(--panel) 72%, transparent);
-  border: 1px solid var(--edge-soft);
-  border-radius: 3px;
-}
-
-.ucard:not([hidden]) {
-  animation: ucard-in var(--dur-2) var(--ease-out) both;
-}
-
-@keyframes ucard-in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 10px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ucard:not([hidden]) {
-    animation: none;
-  }
-}
-
-.ucard__scenario {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.dindex__row.is-open .dindex__no {
   color: var(--mute);
-  margin-bottom: 1rem;
 }
 
-/* The domain's bet, in the serif. */
-.ucard__tag {
+.dindex__mark {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--mute);
+  transition: transform var(--dur-2) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+
+.dindex__row.is-open .dindex__mark {
+  transform: rotate(45deg);
+  color: var(--ink);
+}
+
+.dindex__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-2) var(--ease-glide);
+}
+
+.dindex__row.is-open .dindex__panel {
+  grid-template-rows: 1fr;
+}
+
+.dindex__clip {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.dindex__body {
+  padding: 0 0 clamp(1.5rem, 3vw, 2.25rem) 0;
+}
+
+@media (min-width: 760px) {
+  .dindex__body {
+    padding-left: calc(3.25rem + clamp(0.75rem, 2vw, 1.5rem));
+  }
+}
+
+/* The domain's bet, in the serif's own voice. */
+.dindex__tagline {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.375rem, 2.4vw, 2rem);
+  font-size: clamp(1.125rem, 1.7vw, 1.4375rem);
   font-weight: 500;
-  line-height: 1.25;
   letter-spacing: -0.005em;
-  color: var(--ink);
-  max-width: 26ch;
-  margin-bottom: clamp(1.25rem, 2.4vw, 1.75rem);
+  color: var(--ink-2);
+  max-width: 34ch;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
-.ucard__questions {
+.dindex__qs {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--edge-soft);
 }
 
-.ucard__questions li {
+.dindex__qs li {
   position: relative;
   padding: clamp(0.8rem, 1.6vw, 1.05rem) 0 clamp(0.8rem, 1.6vw, 1.05rem) 1.4rem;
   border-bottom: 1px solid var(--edge-soft);
   font-size: var(--t-body);
   line-height: 1.58;
   color: var(--ink-2);
-  max-width: 66ch;
+  max-width: 68ch;
 }
 
-.ucard__questions li::before {
+.dindex__qs li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -316,35 +316,62 @@
   background: var(--signal);
 }
 
-.ucard__questions li:last-child {
+.dindex__qs li:last-child {
   border-bottom: 0;
   padding-bottom: 0;
 }
 
-/* --- 02 · the record ----------------------------------------------------- */
+/* The closing pair under the index. */
+.usecases__every {
+  text-align: center;
+  margin-inline: auto;
+  max-width: 34ch;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+
+/* --- the grain dissolves -------------------------------------------------
+   The seams between dark and light, crossed the Aaru way: a stochastic
+   dither painted on canvas, never a hard cut and never a CSS gradient. */
+
+.dissolve {
+  position: relative;
+  height: clamp(200px, 38vh, 420px);
+  pointer-events: none;
+}
+
+.dissolve canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- the record ----------------------------------------------------------- */
 
 .record {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2rem, 4.5vw, 4.5rem);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
   align-items: center;
 }
 
 @media (min-width: 1000px) {
   .record {
-    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   }
 }
 
-.record__pillar {
-  width: min(72vw, 300px);
-  height: clamp(360px, 54vh, 540px);
-  margin-inline: auto;
-}
-
-.record__pillar canvas {
-  width: 100%;
-  height: 100%;
+.record__lede {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
 .record__title {
@@ -356,51 +383,76 @@
   text-wrap: balance;
 }
 
-.spec {
-  border: var(--hairline);
-  border-top: 1px solid color-mix(in srgb, var(--signal) 45%, var(--edge));
-  background: color-mix(in srgb, var(--panel) 45%, transparent);
-}
-
-.spec--slim {
-  max-width: 58ch;
-}
-
-.spec__row {
+/* Three standing pillars: sealed, graded, learned. */
+.pillars {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.2rem 1.5rem;
-  padding: 0.7rem clamp(0.9rem, 1.6vw, 1.25rem);
-  border-bottom: 1px solid var(--edge-soft);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.25rem);
+  align-items: end;
+  max-width: 560px;
+  margin-inline: auto;
+  width: 100%;
 }
 
-.spec__row:last-child {
-  border-bottom: 0;
+.pillarcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
 }
 
-@media (min-width: 620px) {
-  .spec__row {
-    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
-    align-items: baseline;
-  }
+.pillarcard canvas {
+  width: 100%;
+  height: clamp(220px, 34vh, 400px);
 }
 
-.spec__key {
+/* The middle pillar stands a step taller — a colonnade, not a bar chart. */
+.pillarcard:nth-child(2) canvas {
+  height: clamp(250px, 38vh, 448px);
+}
+
+.pillarcard figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid var(--edge-soft);
+  padding-top: 0.85rem;
+}
+
+.pillarcard b {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pillarcard span {
+  font-size: var(--t-small);
+  line-height: 1.5;
   color: var(--mute);
 }
 
-.spec__value {
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: var(--ink-2);
+/* --- research ------------------------------------------------------------- */
+
+.research__statement {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  line-height: 1.08;
+  color: var(--ink);
+  max-width: 24ch;
+  text-wrap: balance;
 }
 
-/* --- 04 · project 1654 --------------------------------------------------- */
+.research__statement em {
+  /* The one colour on the site, spent here. */
+  color: var(--accent, var(--signal));
+}
 
-.p1654__intro {
+.research__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(1.75rem, 4vw, 4.5rem);
@@ -408,9 +460,24 @@
 }
 
 @media (min-width: 960px) {
-  .p1654__intro {
+  .research__grid {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   }
+}
+
+.research__sub {
+  font-family: var(--serif);
+  font-size: var(--t-d3);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.research__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
 }
 
 .fellowship__project {
@@ -428,7 +495,7 @@
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: 0;
-  color: var(--signal);
+  color: var(--accent, var(--signal));
   user-select: none;
   margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
 }

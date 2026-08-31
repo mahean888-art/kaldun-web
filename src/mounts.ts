@@ -3,17 +3,18 @@
  * are driven by data, and points every action at the right destination.
  */
 
-import { el, qs, qsa } from './lib/dom';
+import { qs, qsa } from './lib/dom';
 import { mountMarks } from './visuals/mark';
 import { initBranches } from './visuals/branches';
+import { initDissolve } from './visuals/dissolve';
 import { initInstrument } from './visuals/instrument';
-import { initPillar } from './visuals/pillar';
+import { initPillar, type PillarVariant } from './visuals/pillar';
 import { initRotor } from './components/rotor';
 import { initClock } from './components/clock';
 import { initDecision } from './components/decision';
-import { initTabs } from './sections/tabs';
+import { initDomainIndex } from './sections/domainIndex';
 import { DOMAINS } from './data/domains';
-import { EMAIL, RECORD_FIELDS } from './data/site';
+import { EMAIL } from './data/site';
 
 /** The address is data, not markup — one place to change it. */
 function wireEmail(root: ParentNode): void {
@@ -36,23 +37,16 @@ export function mountHome(root: ParentNode = document): void {
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
 
-  const pillar = qs<HTMLCanvasElement>('canvas[data-pillar]', root);
-  if (pillar) initPillar(pillar);
-
-  const domainTabs = qs<HTMLElement>('[data-domain-tabs]', root);
-  if (domainTabs) {
-    initTabs({ root: domainTabs, items: DOMAINS, label: 'Use cases' });
+  for (const seam of qsa<HTMLElement>('[data-dissolve]', root)) {
+    initDissolve(seam);
   }
 
-  const spec = qs('[data-record-spec]', root);
-  if (spec) {
-    spec.replaceChildren(
-      ...RECORD_FIELDS.map(([key, value]) =>
-        el('div', { class: 'spec__row' }, [
-          el('span', { class: 'spec__key' }, [key]),
-          el('span', { class: 'spec__value' }, [value]),
-        ]),
-      ),
-    );
+  for (const canvas of qsa<HTMLCanvasElement>('canvas[data-pillar]', root)) {
+    initPillar(canvas, (canvas.dataset['pillar'] || 'graded') as PillarVariant);
+  }
+
+  const index = qs<HTMLElement>('[data-domain-index]', root);
+  if (index) {
+    initDomainIndex({ root: index, items: DOMAINS, label: 'Use cases' });
   }
 }

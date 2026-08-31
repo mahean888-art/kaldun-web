@@ -82,3 +82,35 @@
   background: var(--ground);
   color: var(--ink);
 }
+
+/* The light middle: bone rather than clinical white, the same token names so
+   every component inherits without asking. The live mark flips to near-black,
+   and the one colour on the whole site — a sparing terracotta — exists only
+   inside this scope. */
+.theme-light {
+  --ground: #fbfaf7;
+  --ground-2: #f4f2ed;
+  --panel: #efece5;
+  --panel-2: #e9e6de;
+  --edge: #e0dcd2;
+  --edge-soft: #ebe8e0;
+
+  --ink: #141413;
+  --ink-2: #3d4046;
+  --mute: #6b6e66;
+  --faint: #9a9c93;
+
+  --signal: #101013;
+  --signal-hi: #000000;
+  --signal-2: #6b6e66;
+  --signal-dim: #e9e6de;
+
+  --accent: #d95f45;
+
+  --hairline: 1px solid var(--edge);
+  --hairline-soft: 1px solid var(--edge-soft);
+
+  background: var(--ground);
+  color: var(--ink);
+  color-scheme: light;
+}

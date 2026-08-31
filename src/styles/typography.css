@@ -2,11 +2,13 @@
    Typography — one scale. Tight tracking only at display sizes; prose gets air.
    ========================================================================== */
 
+/* Chapter headlines are set in the serif — the renaissance register. */
 .t-d1 {
+  font-family: var(--serif);
   font-size: var(--t-d1);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
@@ -66,8 +68,6 @@
   color: var(--mute);
 }
 
-.t-label--gold { color: var(--gold); }
-.t-label--crimson { color: var(--crimson-hi); }
 
 .t-data {
   font-family: var(--mono);
@@ -78,23 +78,24 @@
 
 /* The short declarative line that closes a section. */
 .axiom {
+  font-family: var(--serif);
   font-size: var(--t-d3);
-  font-weight: 550;
+  font-weight: 500;
   line-height: 1.22;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.012em;
   color: var(--ink);
   text-wrap: balance;
 }
 
 .axiom em {
-  font-style: normal;
-  color: var(--gold-hi);
+  /* Emphasis keeps the serif's italic and takes the one white. */
+  color: var(--signal);
 }
 
 .dim { color: var(--mute); }
 .bright { color: var(--ink); }
-.crimson-text { color: var(--crimson-hi); }
-.gold-text { color: var(--gold-hi); }
+.crimson-text { color: var(--signal-hi); }
+.gold-text { color: var(--signal); }
 
 /* Headline split into deliberate lines; each child is a mask row. */
 .lines { display: block; }
@@ -109,7 +110,7 @@
   will-change: transform;
 }
 
-/* Hairline with a crimson tick at the left. */
+/* Hairline with a signal tick at the left. */
 .rule {
   position: relative;
   height: 1px;
@@ -123,5 +124,5 @@
   top: -2px;
   width: 20px;
   height: 5px;
-  background: var(--crimson);
+  background: var(--signal);
 }

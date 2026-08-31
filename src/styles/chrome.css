@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Chrome — header, drawer, buttons, footer.
+   Chrome — header, buttons, and the Horizon.
    ========================================================================== */
 
 .site-header {
@@ -14,14 +14,14 @@
 }
 
 .site-header::after {
-  /* Reading progress, ruled in gold. */
+  /* Reading progress, one white rule. */
   content: '';
   position: absolute;
   left: 0;
   bottom: -1px;
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  background: var(--signal);
   transform: scaleX(var(--read, 0));
   transform-origin: left center;
 }
@@ -49,8 +49,10 @@
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.7rem;
   flex-shrink: 0;
+  /* The mark is stroked in currentColor and takes the band's ink. */
+  color: var(--ink);
 }
 
 .wordmark .mark {
@@ -60,179 +62,68 @@
 
 .wordmark__type {
   font-family: var(--mono);
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink);
   line-height: 1;
-}
-
-/* --- nav -------------------------------------------------------------- */
-
-.nav {
-  display: none;
-  align-items: center;
-  gap: clamp(0.9rem, 2.2vw, 2.25rem);
-  margin-inline: auto;
-}
-
-.nav__link {
-  position: relative;
-  padding: 0.45rem 0;
-  font-size: 0.9375rem;
-  font-weight: 450;
-  color: var(--ink-2);
-  transition: color var(--dur-1) var(--ease-out);
   white-space: nowrap;
 }
 
-.nav__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  width: 100%;
-  background: var(--crimson);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--dur-2) var(--ease-out);
+/* --- the numbered index ------------------------------------------------ */
+
+.site-nav {
+  display: none;
 }
 
-.nav__link:hover {
+@media (min-width: 960px) {
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 2.4vw, 2.5rem);
+    margin-inline: auto;
+  }
+}
+
+.site-nav__item {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.site-nav__item:hover {
   color: var(--ink);
 }
 
-.nav__link:hover::after,
-.nav__link.is-current::after {
-  transform: scaleX(1);
+.site-nav__item sup {
+  font-size: 0.78em;
+  letter-spacing: 0;
+  margin-left: 0.45em;
+  color: var(--faint);
+  transition: color var(--dur-1) var(--ease-out);
 }
 
-.nav__link.is-current {
-  color: var(--ink);
+.site-nav__item:hover sup {
+  color: var(--signal);
 }
 
 .header__actions {
   margin-inline-start: auto;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: clamp(1rem, 2vw, 1.75rem);
 }
 
-/* On the narrowest screens the wordmark keeps its scale and the call to action
-   lives in the drawer instead of the bar. */
-@media (max-width: 559px) {
-  .header__actions .btn {
+/* On the narrowest screens the mark stands alone and the action keeps its size. */
+@media (max-width: 430px) {
+  .wordmark__type {
     display: none;
   }
-}
-
-@media (min-width: 1040px) {
-  .nav {
-    display: flex;
-  }
-
-  .header__actions {
-    margin-inline-start: 0;
-  }
-}
-
-/* --- drawer ----------------------------------------------------------- */
-
-.drawer-toggle {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 0 8px;
-  align-items: stretch;
-}
-
-.drawer-toggle span {
-  display: block;
-  height: 1px;
-  background: var(--ink);
-  transition: transform var(--dur-2) var(--ease-out), opacity var(--dur-1) linear;
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(1) {
-  transform: translateY(3px) rotate(45deg);
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(2) {
-  opacity: 0;
-}
-
-.drawer-toggle[aria-expanded='true'] span:nth-child(3) {
-  transform: translateY(-3px) rotate(-45deg);
-}
-
-.drawer {
-  position: fixed;
-  inset: var(--header-h) 0 0 0;
-  z-index: 99;
-  background: var(--ground);
-  border-top: var(--hairline-soft);
-  padding: clamp(1.25rem, 5vw, 2.5rem) var(--gutter) 2.5rem;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate3d(0, -8px, 0);
-  transition:
-    opacity var(--dur-2) var(--ease-out),
-    transform var(--dur-2) var(--ease-out),
-    visibility var(--dur-2) linear;
-}
-
-.drawer.is-open {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.drawer__link {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: var(--hairline-soft);
-  font-size: clamp(1.375rem, 6vw, 1.75rem);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-}
-
-.drawer__link span {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-}
-
-.drawer__foot {
-  margin-top: auto;
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-@media (min-width: 1040px) {
-  .drawer-toggle,
-  .drawer {
-    display: none;
-  }
-}
-
-body.is-locked {
-  overflow: hidden;
 }
 
 /* --- buttons ---------------------------------------------------------- */
@@ -252,12 +143,17 @@ body.is-locked {
   font-family: var(--mono);
   font-size: var(--t-label);
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1;
   overflow: hidden;
   isolation: isolate;
-  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-2) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn::before {
@@ -265,7 +161,7 @@ body.is-locked {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--crimson);
+  background: var(--signal);
   transform: translate3d(0, 101%, 0);
   transition: transform var(--dur-2) var(--ease-glide);
 }
@@ -277,8 +173,8 @@ body.is-locked {
 
 .btn:hover,
 .btn:focus-visible {
-  color: #fff;
-  border-color: var(--crimson);
+  color: var(--ground);
+  border-color: var(--signal);
 }
 
 .btn__arrow {
@@ -333,8 +229,8 @@ body.is-locked {
 }
 
 .link-under:hover {
-  color: var(--gold-hi);
-  border-bottom-color: var(--gold);
+  color: var(--signal);
+  border-bottom-color: var(--mute);
 }
 
 .link-under span {
@@ -349,66 +245,170 @@ body.is-locked {
   transform: translateX(3px);
 }
 
-/* --- footer ----------------------------------------------------------- */
+/* --- the Horizon -------------------------------------------------------- */
 
-.site-footer {
-  border-top: var(--hairline);
-  background: var(--ground);
-  /* Paints the footer's own black below the last pixel of the page without
-     adding height, so any gap under the wordmark — an overscroll, a short
-     embedding frame — is black rather than white. */
-  box-shadow: 0 50vh 0 var(--ground);
-  /* No bottom padding: the wordmark band is the page's last pixel. */
-  padding-block: clamp(3rem, 7vw, 6rem) 0;
-}
-
-.site-footer__statement {
-  margin-bottom: clamp(2.5rem, 6vw, 5rem);
-}
-
-.site-footer__grid {
-  display: grid;
-  gap: clamp(2rem, 5vw, 4rem);
-  grid-template-columns: 1fr;
-  padding-top: clamp(1.75rem, 4vw, 3rem);
+/* The site's one gradient: the ground easing up toward a lifted charcoal at
+   the horizon line, then settling back down. Gradual — never toward white. */
+.horizon {
+  position: relative;
   border-top: var(--hairline-soft);
+  background: linear-gradient(
+    180deg,
+    var(--ground) 0%,
+    #121215 44%,
+    #1c1c21 62%,
+    #0c0c0e 100%
+  );
+  /* Paints the Horizon's own end colour below the last pixel of the page
+     without adding height, so any overscroll gap stays dark. */
+  box-shadow: 0 50vh 0 #0c0c0e;
 }
 
-@media (min-width: 760px) {
-  .site-footer__grid {
-    grid-template-columns: 1.6fr repeat(2, minmax(0, 1fr));
+
+.horizon__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: min(80svh, 44rem);
+  padding-block: clamp(3rem, 7vh, 5.5rem) clamp(1.25rem, 3vh, 2rem);
+}
+
+@media (min-width: 1000px) {
+  .horizon__inner {
+    min-height: min(92svh, 56rem);
   }
 }
 
-.footer-col__title {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 1rem;
+.horizon__statement {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 3vw, 2.875rem);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  color: var(--ink);
+  max-width: 34ch;
 }
 
-.footer-col__list {
+/* Open sky between the statement and the floor. */
+.horizon__field {
+  flex: 1;
+  min-height: clamp(3rem, 10vh, 8rem);
+}
+
+/* --- the floor ---------------------------------------------------------- */
+
+.horizon__floor {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  /* The horizon itself: one hairline where the sky meets the floor. */
+  border-top: 1px solid rgba(244, 243, 240, 0.14);
+  padding-top: clamp(2rem, 5vh, 3.5rem);
 }
 
-.footer-col__list a {
-  font-size: 0.9375rem;
-  color: var(--ink-2);
-  transition: color var(--dur-1) var(--ease-out);
-  width: fit-content;
-}
-
-.footer-col__list a:hover {
+/* The name, once, at the full width of the page. */
+.horizon__name {
+  font-family: var(--serif);
+  font-weight: 500;
+  /* Sized from the shell itself: the name runs ~12.4× its font-size, so this
+     fills ~96% of the content width at every viewport, one line, no wrap. */
+  font-size: min(calc((100vw - var(--gutter) * 2) / 12.85), 6.75rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--ink);
 }
 
-.site-footer__base {
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
-  padding-top: 1.25rem;
+.horizon__support {
+  margin-top: clamp(0.9rem, 2vh, 1.4rem);
+  font-size: var(--t-small);
+  color: var(--mute);
+}
+
+.horizon__row {
+  margin-top: clamp(2rem, 4.5vh, 3.25rem);
+  padding-top: 1.15rem;
+  border-top: var(--hairline-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 2.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.horizon__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.horizon__links a {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.horizon__links a:hover {
+  color: var(--ink);
+}
+
+/* Middots between links, never after the last. */
+.horizon__links a + a::before {
+  content: '·';
+  color: var(--faint);
+  margin-inline: 0.9em;
+}
+
+.horizon__state {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.horizon__state b {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.horizon__contacts {
+  margin-top: clamp(1.1rem, 2.5vh, 1.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.5rem;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.04em;
+  color: var(--mute);
+}
+
+.horizon__contacts em {
+  font-family: var(--serif);
+  font-style: italic;
+  letter-spacing: 0;
+  color: var(--ink-2);
+  margin-right: 0.6em;
+}
+
+.horizon__contacts a {
+  color: var(--ink-2);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.horizon__contacts a:hover {
+  color: var(--ink);
+}
+
+.horizon__base {
+  margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
+  padding-top: 1.1rem;
   border-top: var(--hairline-soft);
   display: flex;
   flex-wrap: wrap;
@@ -420,26 +420,4 @@ body.is-locked {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--faint);
-}
-
-/* --- the fitted footer wordmark -------------------------------------- */
-
-.footer-wordmark {
-  display: block;
-  /* The band clips, so the fitter's probe size is never visible. */
-  overflow: hidden;
-  margin-top: clamp(2rem, 5vw, 4rem);
-  font-family: var(--sans);
-  font-weight: 700;
-  line-height: 0.78;
-  /* Tight: the letters stand shoulder to shoulder, so the fitted size runs
-     larger for the same width. */
-  letter-spacing: -0.075em;
-  text-transform: uppercase;
-  color: var(--ink);
-  white-space: nowrap;
-  /* No negative margin here: pulling the band up past the footer's edge lets
-     the page background show through as a light strip under the letters. */
-  margin-bottom: 0;
-  user-select: none;
 }

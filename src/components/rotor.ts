@@ -1,10 +1,11 @@
 /**
- * The changing verb.
+ * The changing noun.
  *
- * "See what could happen before you decide." — the last word steps through the
- * decisions Ulmo is pointed at and comes to rest on the one it started with.
+ * "Run the future of a decision before you make it." — the noun steps through
+ * the kinds of decision the machine is pointed at, and rests where it began.
  * Each word rises into the place the last one left, holds long enough to be
- * read, and the line's width follows it so the full stop never jumps.
+ * read, and the slot's width follows it so the sentence never jumps. The
+ * article travels with its noun, so the grammar holds at every step.
  *
  * The sequence plays once. It is a statement of range, not a loop that nags.
  */
@@ -12,17 +13,14 @@
 import { qsa } from '../lib/dom';
 import { prefersReducedMotion } from '../lib/prefers';
 
-/** Starts and ends on the word already in the markup. */
+/** Starts and ends on the phrase already in the markup. */
 const WORDS = [
-  'decide',
-  'allocate',
-  'invest',
-  'insure',
-  'expand',
-  'deploy',
-  'build',
-  'commit',
-  'decide',
+  'a decision',
+  'an allocation',
+  'an investment',
+  'a policy',
+  'a launch',
+  'a decision',
 ];
 
 /** How long a word stands before the next one takes its place. */
@@ -35,12 +33,17 @@ function mount(host: HTMLElement): void {
   ghost.className = 'rotor__ghost';
   ghost.setAttribute('aria-hidden', 'true');
 
+  // The slot is the highlight, and it clips the roll.
+  const slot = document.createElement('span');
+  slot.className = 'rotor__slot';
+
   let word = document.createElement('span');
   word.className = 'rotor__word is-in';
-  word.textContent = WORDS[0] ?? 'decide';
+  word.textContent = WORDS[0] ?? 'a decision';
 
   ghost.textContent = word.textContent;
-  host.replaceChildren(ghost, word);
+  slot.append(word);
+  host.replaceChildren(ghost, slot);
 
   /** The ghost sits in flow, so it fixes the baseline and gives us a ruler. */
   const measure = (text: string): number => {
@@ -75,7 +78,7 @@ function mount(host: HTMLElement): void {
     const incoming = document.createElement('span');
     incoming.className = 'rotor__word is-below';
     incoming.textContent = next;
-    host.append(incoming);
+    slot.append(incoming);
 
     // The width leads the word by a hair, so the stop settles as it arrives.
     setWidth(next);

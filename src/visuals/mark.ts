@@ -1,24 +1,20 @@
 /**
- * The Ulmo mark, built from coordinates.
+ * The Foresight Machines mark: a medallion.
  *
- * A red vessel with three risers standing out of it, held in a dark disc: the
- * bowl below the horizon, what rises from it above. Drawn rather than shipped as
- * a raster, so it stays exact in the header, the footer and the favicon.
- *
- * The vessel's flat edge sits on the disc's centre line; the outer risers are
- * chamfered on their outer top corner and the centre riser stands tallest.
+ * A thin double ring — the instrument's bezel — around the branching line:
+ * one past arriving at the present and opening into three futures, with the
+ * present marked as a point. Engraved in strokes, in currentColor, so it
+ * takes the ink of whatever band it stands on.
  */
 
 import { svg } from '../lib/dom';
 
-const VESSEL = 'M4.65 24C4.65 34.7 13.3 43.35 24 43.35C34.7 43.35 43.35 34.7 43.35 24Z';
-const RISER_LEFT = 'M11.9 24V15.9L13.9 13.9H17.1V24Z';
-const RISER_CENTRE = 'M21.4 24V8H26.6V24Z';
-const RISER_RIGHT = 'M36.1 24V15.9L34.1 13.9H30.9V24Z';
+const TRUNK = 'M9 24H23.5';
+const MID = 'M23.5 24H38';
+const UP = 'M23.5 24C29 24 33 21.4 36.5 16.5';
+const DOWN = 'M23.5 24C29 24 33 26.6 36.5 31.5';
 
-export function makeMark(size = 34): SVGElement {
-  const red = (d: string): SVGElement => svg('path', { d, fill: 'var(--crimson)' });
-
+export function makeMark(size = 26): SVGElement {
   return svg(
     'svg',
     {
@@ -31,28 +27,30 @@ export function makeMark(size = 34): SVGElement {
       class: 'mark',
     },
     [
-      svg('circle', { cx: 24, cy: 24, r: 23.4, fill: '#0d0d0d' }),
-      // A hairline in the mark's own yellow, so the disc reads on a dark page.
+      svg('circle', { cx: 24, cy: 24, r: 22.6, stroke: 'currentColor', 'stroke-width': 1.5 }),
       svg('circle', {
         cx: 24,
         cy: 24,
-        r: 22.9,
-        fill: 'none',
-        stroke: 'var(--gold)',
-        'stroke-width': 1,
+        r: 19.4,
+        stroke: 'currentColor',
+        'stroke-width': 0.75,
+        opacity: 0.55,
       }),
-      red(VESSEL),
-      red(RISER_LEFT),
-      red(RISER_CENTRE),
-      red(RISER_RIGHT),
+      svg('path', {
+        d: `${TRUNK} ${MID} ${UP} ${DOWN}`,
+        stroke: 'currentColor',
+        'stroke-width': 2.2,
+        'stroke-linecap': 'round',
+      }),
+      svg('circle', { cx: 23.5, cy: 24, r: 2.1, fill: 'currentColor', stroke: 'none' }),
     ],
   );
 }
 
-/** Fill every `[data-mark]` host in the document. */
+/** Replace every [data-mark] placeholder with the drawn mark. */
 export function mountMarks(root: ParentNode = document): void {
-  for (const host of Array.from(root.querySelectorAll<HTMLElement>('[data-mark]'))) {
-    const size = Number(host.dataset.mark || '34');
-    host.replaceChildren(makeMark(Number.isFinite(size) && size > 0 ? size : 34));
+  for (const host of root.querySelectorAll<HTMLElement>('[data-mark]')) {
+    const size = Number(host.dataset.mark) || 26;
+    host.replaceChildren(makeMark(size));
   }
 }

@@ -1,11 +1,12 @@
 /**
- * The record pillar: a classical column set from tiny digits — the ledger as
- * architecture. Drawn once per resize; a handful of glyphs are gold or crimson
- * so the mass reads as a record, not a texture.
+ * The Record pillar: a classical column set from tiny digits — the ledger as
+ * architecture. Most glyphs are pale ink; a scattering stand pure white for the
+ * claims still open. Every few seconds one open claim resolves: its glyph
+ * settles from white to grey, the way a dashed line becomes solid.
  */
 
 import { seeded } from '../lib/math';
-import { dpr } from '../lib/prefers';
+import { dpr, prefersReducedMotion } from '../lib/prefers';
 import { onResize } from '../lib/ticker';
 
 export type PillarHandle = { destroy: () => void };
@@ -22,9 +23,29 @@ function inside(x: number, y: number): boolean {
   return ax < 0.56; // slab
 }
 
+type Cell = { px: number; py: number; glyph: string; tone: 'open' | 'gold' | 'ink'; alpha: number };
+
 export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
   const ctx = canvas.getContext('2d');
   if (!ctx) return { destroy: () => undefined };
+
+  const reduced = prefersReducedMotion();
+  let cells: Cell[] = [];
+  let font = 10;
+
+  // One register: grey settled digits, pure white for the claims still open.
+  const dark = true;
+  const INK = '185, 183, 178';
+  const OPEN = '255, 255, 255';
+  const GOLD = '138, 136, 128';
+
+  const paintCell = (c: Cell): void => {
+    ctx.clearRect(c.px - font * 0.6, c.py - font * 0.6, font * 1.2, font * 1.2);
+    if (c.tone === 'open') ctx.fillStyle = `rgba(${OPEN}, ${(0.85 * c.alpha).toFixed(3)})`;
+    else if (c.tone === 'gold') ctx.fillStyle = `rgba(${GOLD}, ${(0.7 * c.alpha).toFixed(3)})`;
+    else ctx.fillStyle = `rgba(${INK}, ${((dark ? 0.6 : 0.5) * c.alpha).toFixed(3)})`;
+    ctx.fillText(c.glyph, c.px, c.py);
+  };
 
   const draw = (): void => {
     const rect = canvas.getBoundingClientRect();
@@ -38,33 +59,72 @@ export function initPillar(canvas: HTMLCanvasElement): PillarHandle {
     ctx.clearRect(0, 0, w, h);
 
     const rnd = seeded(1654);
-    const cell = Math.max(7, Math.floor(w / 15));
-    const font = Math.floor(cell * 0.92);
+    const cell = Math.max(6, Math.floor(w / 23));
+    font = Math.floor(cell * 0.92);
     ctx.font = `500 ${font}px "Geist Mono", monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
+    cells = [];
     for (let gy = 0; gy < Math.floor(h / cell); gy++) {
-      for (let gx = 0; gx < Math.floor(w / cell); gx++) {
-        const px = (gx + 0.5) * cell;
-        const py = (gy + 0.5) * cell;
-        const nx = (px / w) * 2 - 1;
-        const ny = py / h;
-        if (!inside(nx, ny)) continue;
+      const py = (gy + 0.5) * cell;
+      const ny = py / h;
+      // Find the row's half-width and set its glyphs symmetric about the
+      // axis, so the silhouette's edges are clean rather than grid-jagged.
+      let hw = 0;
+      for (let probe = 1; probe >= 0; probe -= 1 / 64) {
+        if (inside(probe, ny)) {
+          hw = probe;
+          break;
+        }
+      }
+      if (hw === 0) continue;
+      const halfPx = hw * (w / 2);
+      const n = Math.max(1, Math.round((halfPx * 2) / cell));
+      for (let k = 0; k < n; k++) {
+        const px = w / 2 - halfPx + (k + 0.5) * ((halfPx * 2) / n);
         const r = rnd();
-        const glyph = r < 0.82 ? String(Math.floor(rnd() * 10)) : r < 0.94 ? '·' : ['%', '/', '='][Math.floor(rnd() * 3)] ?? '·';
-        const tone = rnd();
-        if (tone < 0.05) ctx.fillStyle = 'rgba(185, 31, 46, 0.85)';
-        else if (tone < 0.13) ctx.fillStyle = 'rgba(168, 124, 16, 0.8)';
-        else ctx.fillStyle = `rgba(16, 16, 16, ${(0.28 + rnd() * 0.4).toFixed(3)})`;
-        ctx.fillText(glyph, px, py);
+        const glyph =
+          r < 0.82 ? String(Math.floor(rnd() * 10)) : r < 0.94 ? '·' : (['%', '/', '='][Math.floor(rnd() * 3)] ?? '·');
+        const t = rnd();
+        const tone: Cell['tone'] = t < 0.055 ? 'open' : t < 0.13 ? 'gold' : 'ink';
+        const c: Cell = { px, py, glyph, tone, alpha: 0.5 + rnd() * 0.5 };
+        cells.push(c);
+        paintCell(c);
       }
     }
   };
 
   draw();
   const stopResize = onResize(draw);
-  if (document.fonts) document.fonts.ready.then(draw).catch(() => undefined);
 
-  return { destroy: () => stopResize() };
+  // Resolution, one claim at a time: an open (crimson) glyph settles to pale
+  // ink and a fresh claim opens elsewhere. State change is the only motion.
+  let timer: ReturnType<typeof setInterval> | null = null;
+  if (!reduced) {
+    timer = setInterval(() => {
+      const open = cells.filter((c) => c.tone === 'open');
+      const closed = cells.filter((c) => c.tone === 'ink');
+      const settle = open[Math.floor(Math.random() * open.length)];
+      const reopen = closed[Math.floor(Math.random() * closed.length)];
+      ctx.font = `500 ${font}px "Geist Mono", monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      if (settle) {
+        settle.tone = 'ink';
+        paintCell(settle);
+      }
+      if (reopen) {
+        reopen.tone = 'open';
+        paintCell(reopen);
+      }
+    }, 1600);
+  }
+
+  return {
+    destroy: () => {
+      stopResize();
+      if (timer) clearInterval(timer);
+    },
+  };
 }

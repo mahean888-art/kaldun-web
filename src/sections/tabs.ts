@@ -1,15 +1,15 @@
 /**
- * The domain tabs: a horizontal segmented bar, one decorated card per domain.
- * Selection is by click and by keyboard; one card at a time, nothing driven by
- * scroll.
+ * The use cases: a centred pill bar, one case card at a time. Each card opens
+ * on the domain's bet and sets its three runnable questions beneath it.
+ * Selection is by click and by keyboard.
  */
 
 import { el, qs } from '../lib/dom';
-import type { StackItem } from './stack';
+import type { Domain } from '../data/domains';
 
 type Options = {
   root: HTMLElement;
-  items: StackItem[];
+  items: Domain[];
   /** Accessible name for the tab list. */
   label: string;
 };
@@ -26,8 +26,8 @@ export function initTabs({ root, items, label }: Options): void {
         type: 'button',
         class: 'tabbar__tab',
         role: 'tab',
-        id: `tab-${item.id}`,
-        'aria-controls': `card-${item.id}`,
+        id: `tab-${item.ordinal}`,
+        'aria-controls': `card-${item.ordinal}`,
         'aria-selected': String(i === 0),
         tabindex: i === 0 ? '0' : '-1',
       },
@@ -39,42 +39,20 @@ export function initTabs({ root, items, label }: Options): void {
     el(
       'article',
       {
-        class: 'dcard',
+        class: 'ucard',
         role: 'tabpanel',
-        id: `card-${item.id}`,
-        'aria-labelledby': `tab-${item.id}`,
+        id: `card-${item.ordinal}`,
+        'aria-labelledby': `tab-${item.ordinal}`,
         hidden: i !== 0,
       },
       [
-        ...(item.note ? [el('p', { class: 'dcard__who' }, [item.note])] : []),
-        el('h3', { class: 'dcard__title' }, [item.title]),
-        el('p', { class: 'dcard__body' }, [item.body]),
-        ...(item.rows
-          ? [
-              el(
-                'div',
-                { class: 'dcard__rows' },
-                item.rows.map(([k, v]) =>
-                  el('div', { class: 'dcard__row' }, [
-                    el('span', { class: 'dcard__key' }, [k]),
-                    el('span', { class: 'dcard__value' }, [v]),
-                  ]),
-                ),
-              ),
-            ]
-          : []),
-        ...(item.chips
-          ? [
-              el('div', { class: 'dcard__chips' }, [
-                el('span', { class: 't-label' }, [item.chipsLabel ?? 'Use cases']),
-                el(
-                  'div',
-                  { class: 'chips' },
-                  item.chips.map((chip) => el('span', { class: 'chip' }, [chip])),
-                ),
-              ]),
-            ]
-          : []),
+        el('p', { class: 'ucard__scenario' }, [`${item.ordinal} — ${item.label}`]),
+        el('p', { class: 'ucard__tag' }, [item.tagline]),
+        el(
+          'ul',
+          { class: 'ucard__questions' },
+          item.questions.map((q) => el('li', {}, [q])),
+        ),
       ],
     ),
   );

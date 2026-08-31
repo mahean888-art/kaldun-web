@@ -1,7 +1,5 @@
 /* ==========================================================================
-   Hero.
-   Display type on the left, the measuring dial on the right. The two never
-   cross: the canvas is inset past the headline and faded at its inner edge.
+   Hero — the sentence, the fan of futures, the ledger, the exit line.
    ========================================================================== */
 
 .hero {
@@ -14,7 +12,7 @@
   overflow: hidden;
 }
 
-/* --- the dial --------------------------------------------------------- */
+/* --- the fan ------------------------------------------------------------ */
 
 .hero__dial {
   position: relative;
@@ -33,18 +31,17 @@
 @media (min-width: 1000px) {
   .hero__dial {
     position: absolute;
-    /* Starts to the right of the headline column, bleeds off the right edge. */
-    inset: calc(var(--header-h) * 0.2) calc(var(--gutter) * -2.5) 0 53%;
+    /* The fan owns the upper right — the full instrument, adjusted to the
+       screen, never cropped — leaving its lower corner to the ledger. */
+    inset: calc(var(--header-h) * 0.9) var(--gutter) 25svh 52%;
     width: auto;
     height: auto;
     margin: 0;
     order: 0;
-    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 100%);
   }
 }
 
-/* --- headline --------------------------------------------------------- */
+/* --- the sentence ------------------------------------------------------- */
 
 .hero__head {
   position: relative;
@@ -52,35 +49,51 @@
   order: 1;
 }
 
+.hero__eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: clamp(1rem, 2.4vh, 1.75rem);
+}
+
+.hero__eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: var(--signal);
+  vertical-align: middle;
+  margin-right: 1rem;
+}
+
+/* Sentence case, not shouted: the line is doing the work. */
 .hero__title {
   font-size: var(--t-hero);
-  font-weight: 700;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.028em;
   color: var(--ink);
+  width: fit-content;
 }
 
-.hero__title sup {
-  font-size: 0.62em;
-  line-height: 0;
-  vertical-align: baseline;
-  letter-spacing: 0;
-  color: var(--ink);
+.hero__sub {
+  margin-top: clamp(1.1rem, 2.6vh, 1.9rem);
+  font-size: var(--t-lead);
+  line-height: 1.58;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 46ch;
 }
 
-/* --- the standing sub-explanation ------------------------------------ */
+/* --- the ledger --------------------------------------------------------- */
 
 .hero__brief {
   position: relative;
   z-index: 2;
-  isolation: isolate;
   order: 2;
   margin-top: clamp(1.5rem, 4vh, 3rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  max-width: 46ch;
 }
 
 .hero__ledger {
@@ -96,71 +109,32 @@
 
 .hero__ledger b {
   font-weight: 500;
-  color: var(--gold-hi);
-}
-
-.hero__brief-body {
-  position: relative;
-  padding-top: 1rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  line-height: 1.75;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-  border-top: 1px solid var(--edge);
-}
-
-.hero__brief-body::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 5px;
-  height: 5px;
-  background: var(--crimson);
+  color: var(--ink);
 }
 
 @media (min-width: 1000px) {
-  .hero__title {
-    /* fit-content so the box hugs the glyphs — the dial is positioned off this
-       edge, and a wider box would let a line cross the type. */
-    width: fit-content;
-    max-width: 11ch;
-  }
-
-  /* The brief sits under the dial's inner edge, clear of the type. */
+  /* The ledger stands under the fan — the caption next to the instrument it
+     captions. */
   .hero__brief {
     position: absolute;
-    top: 50%;
     left: 52%;
     right: var(--gutter);
-    max-width: 42ch;
+    bottom: clamp(3.5rem, 11svh, 7.5rem);
+    /* The shell's width: 100% would push past the right edge from here. */
+    width: auto;
     margin: 0;
-  }
-
-  /* A soft scrim so the mono copy stays crisp over the dial's hatching. */
-  .hero__brief::after {
-    content: '';
-    position: absolute;
-    inset: -1.75rem -2.5rem -1.75rem -1.5rem;
-    z-index: -1;
-    background: radial-gradient(
-      70% 100% at 26% 50%,
-      var(--ground) 0%,
-      color-mix(in srgb, var(--ground) 78%, transparent) 55%,
-      transparent 100%
-    );
+    padding-inline: 0;
   }
 }
 
-/* --- actions and footnote -------------------------------------------- */
+/* --- actions and the exit line ------------------------------------------ */
 
 .hero__foot {
   position: relative;
   z-index: 2;
   order: 4;
-  margin-top: clamp(1.5rem, 4vh, 3rem);
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 4vh, 3rem);
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 3vh, 1.75rem);
@@ -173,63 +147,50 @@
   gap: 1.25rem;
 }
 
-.hero__note {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--faint);
+.hero__exit {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1rem, 1.2vw, 1.1875rem);
+  color: var(--mute);
 }
 
-@media (min-width: 1000px) {
-  .hero__foot {
-    order: 4;
-    margin-top: auto;
-  }
-}
+/* --- the rolling noun ---------------------------------------------------- */
 
-/* --- the promise, with its changing verb ------------------------------- */
-
-.hero__promise {
-  position: relative;
-  z-index: 2;
-  margin-top: clamp(1rem, 2.4vh, 1.75rem);
-  font-size: clamp(1.125rem, 1.9vw, 1.75rem);
-  font-weight: 450;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  color: var(--ink-2);
-  max-width: 22ch;
-}
-
-/* The ghost holds the line's baseline and height; the words ride over it.
-   Width is set in script so the full stop never jumps. */
+/* The ghost sits in flow and fixes the line's baseline and height. The slot
+   clips the roll; no painted box — just a quiet rule under the changing word.
+   Its width is set in script and snaps with the ghost: the line break falls
+   the same way mid-roll as at rest, so the sentence never reflows. */
 .rotor {
   position: relative;
   display: inline-block;
-  /* The word that changes is the one in the accent, so the change is seen. */
-  color: var(--crimson);
-  font-weight: 500;
-  transition: width var(--dur-2) var(--ease-out);
 }
 
 .rotor__ghost {
   visibility: hidden;
+  /* The phrase holds an article and a noun; the ruler must never fold. */
+  white-space: nowrap;
+}
+
+.rotor__slot {
+  position: absolute;
+  inset: -0.1em -0.02em -0.14em -0.02em;
+  overflow: hidden;
+  border-bottom: 1.5px solid var(--signal-hi);
 }
 
 .rotor__word {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 0.02em;
+  top: 0.1em;
   white-space: nowrap;
+  color: var(--ink);
   transition:
     transform var(--dur-2) var(--ease-out),
     opacity var(--dur-2) var(--ease-out);
 }
 
-/* Below, in place, above — the three stations of the roll. */
 .rotor__word.is-below {
-  transform: translate3d(0, 0.55em, 0);
+  transform: translate3d(0, 0.9em, 0);
   opacity: 0;
 }
 
@@ -239,7 +200,7 @@
 }
 
 .rotor__word.is-above {
-  transform: translate3d(0, -0.55em, 0);
+  transform: translate3d(0, -0.9em, 0);
   opacity: 0;
 }
 
@@ -247,12 +208,5 @@
   .rotor,
   .rotor__word {
     transition: none;
-  }
-}
-
-@media (min-width: 1000px) {
-  /* One line, and never wide enough to run under the dial. */
-  .hero__promise {
-    max-width: min(48%, 44ch);
   }
 }

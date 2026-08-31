@@ -1,42 +1,39 @@
 /* ==========================================================================
-   Ulmo — design tokens
-   Palette taken from the mark: crimson and gold on warm paper, with near-black
-   ink. Crimson does the pointing; gold carries structure and measurement.
-   The page is light; two bands (Project 1654 and the footer) invert to the
-   mark's own near-black through the .theme-dark scope below.
+   Foresight Machines — design tokens
+   One dark ground, one ink ramp, no chromatic colour. The only accent is
+   pure white, reserved for the single live thing in any component. Adjacent
+   surfaces differ by one step; the Horizon's gradient is the site's only one.
    ========================================================================== */
 
 :root {
-  /* --- ground: near-white, a whisper of warmth ------------------------- */
-  --ground: #fbfbf9;
-  --ground-2: #f5f5f2;
-  --panel: #f1f0ec;
-  --panel-2: #eaeae5;
-  --edge: #e0dfd8;
-  --edge-soft: #ebeae4;
+  /* --- ground: stepped near-blacks --------------------------------------- */
+  --ground: #0a0a0b;
+  --ground-2: #101012;
+  --panel: #151518;
+  --panel-2: #19191d;
+  --edge: #232326;
+  --edge-soft: #1b1b1e;
 
-  /* --- ink ------------------------------------------------------------ */
-  --ink: #101010;
-  --ink-2: #403f3a;
-  --mute: #6a6962;
-  --faint: #9b9a92;
+  /* --- ink ramp ----------------------------------------------------------- */
+  --ink: #f4f3f0;
+  --ink-2: #b9b7b2;
+  --mute: #8a8880;
+  --faint: #5a5954;
 
-  /* --- accents --------------------------------------------------------- */
-  /* Three colours, taken straight off the mark: deep red, saturated yellow,
-     near-black. On paper the working shades run darker so they read as ink. */
-  --crimson: #b91f2e;
-  --crimson-hi: #971421;
-  --crimson-dim: #e5c6c1;
-  --gold: #a87c10;
-  --gold-hi: #8a650c;
-  --gold-dim: #ddcda2;
+  /* --- the signal: pure white, and nothing else --------------------------- */
+  --signal: #ffffff;
+  --signal-hi: #ffffff;
+  --signal-2: #8a8880;
+  --signal-dim: #1b1b1e;
 
-  /* --- type ------------------------------------------------------------ */
+  /* --- type -------------------------------------------------------------- */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Display scale. The hero is deliberately the largest thing on the site. */
-  --t-hero: clamp(2.9rem, 8.6vw, 9.5rem);
+  /* Display scale. The hero is deliberately the largest thing on the site,
+     until the Horizon's name outdoes it. */
+  --t-hero: clamp(2.4rem, 5.6vw, 5.75rem);
   --t-d1: clamp(2rem, 5vw, 4.25rem);
   --t-d2: clamp(1.6rem, 3.4vw, 2.75rem);
   --t-d3: clamp(1.3rem, 2.3vw, 1.875rem);
@@ -49,13 +46,13 @@
 
   --lh-body: 1.62;
 
-  /* --- space ----------------------------------------------------------- */
+  /* --- space ------------------------------------------------------------- */
   --gutter: clamp(1.25rem, 4.2vw, 4rem);
   --measure: 60ch;
   --shell: 1520px;
   --band: clamp(4.5rem, 10vh, 8.5rem);
 
-  /* --- motion ----------------------------------------------------------- */
+  /* --- motion ------------------------------------------------------------ */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-glide: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -64,13 +61,13 @@
   --dur-3: 0.9s;
   --dur-4: 1.4s;
 
-  /* --- depth ------------------------------------------------------------ */
+  /* --- depth ------------------------------------------------------------- */
   --hairline: 1px solid var(--edge);
   --hairline-soft: 1px solid var(--edge-soft);
   --radius: 1px;
 
   --header-h: 64px;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 @media (min-width: 900px) {
@@ -79,31 +76,9 @@
   }
 }
 
-/* --- the inverted bands ------------------------------------------------ */
-
-/* Project 1654 and the footer sit on the mark's own near-black. Everything
-   inside them is written in tokens, so one scope flips the whole band. */
+/* The page has one register; the scope is kept so components that ask which
+   band they stand on always hear the same answer. */
 .theme-dark {
-  --ground: #0a0a0a;
-  --ground-2: #0e0e0e;
-  --panel: #131313;
-  --panel-2: #181818;
-  --edge: #262626;
-  --edge-soft: #1c1c1c;
-
-  --ink: #ede8de;
-  --ink-2: #b0aca4;
-  --mute: #85837d;
-  --faint: #5b5a56;
-
-  --crimson: #c2313b;
-  --crimson-hi: #e04434;
-  --crimson-dim: #3d1116;
-  --gold: #d9a626;
-  --gold-hi: #edc357;
-  --gold-dim: #3a2c0e;
-
   background: var(--ground);
   color: var(--ink);
-  color-scheme: dark;
 }

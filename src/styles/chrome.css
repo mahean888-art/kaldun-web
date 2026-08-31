@@ -251,7 +251,6 @@
    the horizon line, then settling back down. Gradual — never toward white. */
 .horizon {
   position: relative;
-  border-top: var(--hairline-soft);
   background: linear-gradient(
     180deg,
     var(--ground) 0%,

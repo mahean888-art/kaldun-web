@@ -49,16 +49,17 @@
   order: 1;
 }
 
-/* The Augustus manner: the discipline named big, heavy, and uppercase in the
-   site's own sans, its asterisk resolving in a footnote at the hero's foot. */
+/* The Augustus manner: the discipline IS the display — the biggest, heaviest
+   line on the screen, in the site's own sans, its asterisk resolving in a
+   footnote at the hero's foot. The sentence stands beneath it. */
 .hero__eyebrow {
-  font-size: clamp(1.75rem, 2.9vw, 3rem);
+  font-size: clamp(2.6rem, 6vw, 6.25rem);
   font-weight: 800;
-  letter-spacing: -0.015em;
-  line-height: 0.95;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: clamp(1rem, 2.4vh, 1.75rem);
+  margin-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
 }
 
 .hero__eyebrow-star {
@@ -66,12 +67,12 @@
   margin-left: 0.06em;
 }
 
-/* Sentence case, not shouted: the line is doing the work. */
+/* The promise, one register below the name: sentence case, still strong. */
 .hero__title {
-  font-size: var(--t-hero);
+  font-size: clamp(1.55rem, 3.3vw, 3.25rem);
   font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.028em;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
   color: var(--ink);
   width: fit-content;
 }

@@ -180,7 +180,7 @@
 }
 
 .signal.is-live {
-  height: calc(7 * 60svh);
+  height: calc(6 * 60svh);
 }
 
 .signal.is-live .signal__stick {
@@ -188,27 +188,44 @@
   top: calc(var(--header-h) + 2svh);
 }
 
-/* The gilt: our own molding, drawn — fillet, band, bead row, rosettes. */
+/* The gilt, curved: layered moldings whose bead row follows the corner —
+   a dotted border bends where a border-image cannot. Fillet, band, beads,
+   inner fillet, then the deep bezel and the screen. */
 .tv {
-  max-width: 1180px;
+  max-width: 920px;
   margin-inline: auto;
-  border: clamp(16px, 2.2vw, 30px) solid transparent;
-  border-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2790%27%20height%3D%2790%27%20viewBox%3D%270%200%2090%2090%27%3E%3Crect%20x%3D%271%27%20y%3D%271%27%20width%3D%2788%27%20height%3D%2788%27%20fill%3D%27none%27%20stroke%3D%27%234a3813%27%20stroke-width%3D%272%27%2F%3E%3Crect%20x%3D%276%27%20y%3D%276%27%20width%3D%2778%27%20height%3D%2778%27%20fill%3D%27none%27%20stroke%3D%27%23a8863d%27%20stroke-width%3D%277%27%2F%3E%3Crect%20x%3D%2711%27%20y%3D%2711%27%20width%3D%2768%27%20height%3D%2768%27%20fill%3D%27none%27%20stroke%3D%27%236b4f1d%27%20stroke-width%3D%271.4%27%2F%3E%3Cg%20fill%3D%27%23d3b06a%27%3E%3Ccircle%20cx%3D%276.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%276.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%276.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%276.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2712.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2712.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2712.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2712.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2719.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2719.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2719.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2719.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2725.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2725.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2725.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2725.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2732.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2732.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2732.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2732.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2738.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2738.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2738.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2738.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2745.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2745.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2745.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2745.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2751.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2751.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2751.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2751.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2758.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2758.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2758.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2758.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2764.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2764.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2764.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2764.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2771.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2771.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2771.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2771.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2777.5%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2777.5%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2777.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2777.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2784.0%27%20cy%3D%2715.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2784.0%27%20cy%3D%2774.5%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2715.5%27%20cy%3D%2784.0%27%20r%3D%271.7%27%2F%3E%3Ccircle%20cx%3D%2774.5%27%20cy%3D%2784.0%27%20r%3D%271.7%27%2F%3E%3C%2Fg%3E%3Crect%20x%3D%2720.5%27%20y%3D%2720.5%27%20width%3D%2749%27%20height%3D%2749%27%20fill%3D%27none%27%20stroke%3D%27%23c9a35c%27%20stroke-width%3D%272.4%27%2F%3E%3Crect%20x%3D%2724%27%20y%3D%2724%27%20width%3D%2742%27%20height%3D%2742%27%20fill%3D%27none%27%20stroke%3D%27%234a3813%27%20stroke-width%3D%271%27%2F%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23d3b06a%27%20stroke-width%3D%271.6%27%3E%3Crect%20x%3D%278.5%27%20y%3D%278.5%27%20width%3D%2713%27%20height%3D%2713%27%2F%3E%3Crect%20x%3D%2768.5%27%20y%3D%278.5%27%20width%3D%2713%27%20height%3D%2713%27%2F%3E%3Crect%20x%3D%278.5%27%20y%3D%2768.5%27%20width%3D%2713%27%20height%3D%2713%27%2F%3E%3Crect%20x%3D%2768.5%27%20y%3D%2768.5%27%20width%3D%2713%27%20height%3D%2713%27%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%27%23c9a35c%27%3E%3Cpath%20d%3D%27M15%2010.5%20L19.5%2015%20L15%2019.5%20L10.5%2015%20Z%27%2F%3E%3Cpath%20d%3D%27M75%2010.5%20L79.5%2015%20L75%2019.5%20L70.5%2015%20Z%27%2F%3E%3Cpath%20d%3D%27M15%2070.5%20L19.5%2075%20L15%2079.5%20L10.5%2075%20Z%27%2F%3E%3Cpath%20d%3D%27M75%2070.5%20L79.5%2075%20L75%2079.5%20L70.5%2075%20Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 30 round;
-  background: #141416;
+  background: #4a3813;
+  border-radius: clamp(30px, 3.4vw, 48px);
+  padding: 3px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.tv__band {
+  background: #a8863d;
+  border-radius: clamp(28px, 3.2vw, 45px);
+  padding: clamp(7px, 0.9vw, 11px);
+}
+
+.tv__bead {
+  border: 3px dotted #dfc180;
+  border-radius: clamp(22px, 2.6vw, 36px);
+  padding: 3px;
+  background: #4a3813;
 }
 
 /* The bezel: the Simile posture — deep, rounded, generous. */
 .tv__bezel {
   background: #141416;
-  border-radius: clamp(18px, 2.4vw, 34px);
-  padding: clamp(1rem, 2.2vw, 2.25rem);
+  border-radius: clamp(19px, 2.3vw, 32px);
+  border: 1.5px solid #2a2113;
+  padding: clamp(1rem, 2vw, 1.9rem);
 }
 
 .tv__screen {
   position: relative;
-  height: min(64svh, 620px);
+  height: min(56svh, 520px);
   background: #08080a;
-  border-radius: clamp(12px, 1.6vw, 20px);
+  border-radius: clamp(14px, 1.9vw, 26px);
   overflow: hidden;
 }
 
@@ -229,19 +246,19 @@
 .crawl {
   position: absolute;
   inset: 0;
-  perspective: 430px;
-  perspective-origin: 50% 24%;
+  perspective: 640px;
+  perspective-origin: 50% 18%;
   /* The far end dissolves toward the vanishing point. */
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
 }
 
 .crawl__plane {
   position: absolute;
   left: 50%;
   bottom: -4%;
-  width: min(80%, 660px);
-  transform: translateX(-50%) rotateX(48deg);
+  width: min(86%, 600px);
+  transform: translateX(-50%) rotateX(30deg);
   transform-origin: 50% 100%;
 }
 
@@ -256,10 +273,10 @@
 
 .crawl__para {
   font-family: var(--serif);
-  font-size: clamp(1.375rem, 2.1vw, 1.9375rem);
+  font-size: clamp(1.4375rem, 2.2vw, 1.9375rem);
   font-weight: 500;
   letter-spacing: -0.006em;
-  line-height: 1.5;
+  line-height: 1.52;
   color: var(--ink);
 }
 

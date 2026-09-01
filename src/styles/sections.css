@@ -188,42 +188,41 @@
   top: calc(var(--header-h) + 2svh);
 }
 
-/* The gilt, curved and quiet: a narrow antique trim in relief — catch-light
-   above, shade below, one bright fillet — around a deep bezel. The metal is
-   made by light, not by width. */
+/* The gilt, for real: a drawn renaissance molding — egg-and-dart on the
+   main band, a bead-and-reel cove, corner palmettes, layered fillets —
+   sliced so its own curved corners carry the frame's curve. Inside it, a
+   warm liner and the deep bezel, the way paintings are actually framed. */
 .tv {
   max-width: 880px;
   margin-inline: auto;
-  background: #17130a;
-  border-radius: clamp(34px, 3.6vw, 48px);
-  padding: 2px;
+  border: clamp(24px, 3vw, 34px) solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27120%27%20height%3D%27120%27%20viewBox%3D%270%200%20120%20120%27%3E%3Crect%20x%3D%271.2%27%20y%3D%271.2%27%20width%3D%27117.6%27%20height%3D%27117.6%27%20rx%3D%2731%27%20fill%3D%27none%27%20stroke%3D%27%232b2008%27%20stroke-width%3D%272.2%27%20%2F%3E%3Crect%20x%3D%2710%27%20y%3D%2710%27%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2724%27%20fill%3D%27none%27%20stroke%3D%27%238a6a2c%27%20stroke-width%3D%2713%27%20%2F%3E%3Crect%20x%3D%274.2%27%20y%3D%274.2%27%20width%3D%27111.6%27%20height%3D%27111.6%27%20rx%3D%2729%27%20fill%3D%27none%27%20stroke%3D%27%23ecd9a0%27%20stroke-width%3D%271.1%27%20%2F%3E%3Crect%20x%3D%2716.4%27%20y%3D%2716.4%27%20width%3D%2787.2%27%20height%3D%2787.2%27%20rx%3D%2718%27%20fill%3D%27none%27%20stroke%3D%27%234a3813%27%20stroke-width%3D%271.1%27%20%2F%3E%3Crect%20x%3D%2718.2%27%20y%3D%2718.2%27%20width%3D%2783.6%27%20height%3D%2783.6%27%20rx%3D%2716.5%27%20fill%3D%27none%27%20stroke%3D%27%23ecd9a0%27%20stroke-width%3D%271.5%27%20%2F%3E%3Crect%20x%3D%2724%27%20y%3D%2724%27%20width%3D%2772%27%20height%3D%2772%27%20rx%3D%2712%27%20fill%3D%27none%27%20stroke%3D%27%236b4f1d%27%20stroke-width%3D%277.5%27%20%2F%3E%3Crect%20x%3D%2729.2%27%20y%3D%2729.2%27%20width%3D%2761.6%27%20height%3D%2761.6%27%20rx%3D%278%27%20fill%3D%27none%27%20stroke%3D%27%23ecd9a0%27%20stroke-width%3D%271.5%27%20%2F%3E%3Crect%20x%3D%2731.4%27%20y%3D%2731.4%27%20width%3D%2757.2%27%20height%3D%2757.2%27%20rx%3D%276.5%27%20fill%3D%27none%27%20stroke%3D%27%232b2008%27%20stroke-width%3D%271.6%27%20%2F%3E%3Cellipse%20cx%3D%2745%27%20cy%3D%2710%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2745%27%20cy%3D%279.2%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2755%27%20cy%3D%2710%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2755%27%20cy%3D%279.2%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2765%27%20cy%3D%2710%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2765%27%20cy%3D%279.2%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2775%27%20cy%3D%2710%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2775%27%20cy%3D%279.2%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cpath%20d%3D%27M38.9%205.6%20L41.1%205.6%20L40%2014%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M48.9%205.6%20L51.1%205.6%20L50%2014%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M58.9%205.6%20L61.1%205.6%20L60%2014%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M68.9%205.6%20L71.1%205.6%20L70%2014%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M78.9%205.6%20L81.1%205.6%20L80%2014%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cellipse%20cx%3D%2745%27%20cy%3D%27110%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2745%27%20cy%3D%27110.8%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2755%27%20cy%3D%27110%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2755%27%20cy%3D%27110.8%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2765%27%20cy%3D%27110%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2765%27%20cy%3D%27110.8%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2775%27%20cy%3D%27110%27%20rx%3D%273%27%20ry%3D%274.4%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%2775%27%20cy%3D%27110.8%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cpath%20d%3D%27M38.9%20114.4%20L41.1%20114.4%20L40%20106%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M48.9%20114.4%20L51.1%20114.4%20L50%20106%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M58.9%20114.4%20L61.1%20114.4%20L60%20106%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M68.9%20114.4%20L71.1%20114.4%20L70%20106%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M78.9%20114.4%20L81.1%20114.4%20L80%20106%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cellipse%20cx%3D%2710%27%20cy%3D%2745%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%279.2%27%20cy%3D%2745%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2710%27%20cy%3D%2755%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%279.2%27%20cy%3D%2755%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2710%27%20cy%3D%2765%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%279.2%27%20cy%3D%2765%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%2710%27%20cy%3D%2775%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%279.2%27%20cy%3D%2775%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cpath%20d%3D%27M5.6%2038.9%20L5.6%2041.1%20L14%2040%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M5.6%2048.9%20L5.6%2051.1%20L14%2050%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M5.6%2058.9%20L5.6%2061.1%20L14%2060%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M5.6%2068.9%20L5.6%2071.1%20L14%2070%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M5.6%2078.9%20L5.6%2081.1%20L14%2080%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cellipse%20cx%3D%27110%27%20cy%3D%2745%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%27110.8%27%20cy%3D%2745%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%27110%27%20cy%3D%2755%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%27110.8%27%20cy%3D%2755%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%27110%27%20cy%3D%2765%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%27110.8%27%20cy%3D%2765%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cellipse%20cx%3D%27110%27%20cy%3D%2775%27%20rx%3D%274.4%27%20ry%3D%273%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%27110.8%27%20cy%3D%2775%27%20rx%3D%272.6%27%20ry%3D%271.5%27%20fill%3D%27%23ecd9a0%27%2F%3E%3Cpath%20d%3D%27M114.4%2038.9%20L114.4%2041.1%20L106%2040%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M114.4%2048.9%20L114.4%2051.1%20L106%2050%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M114.4%2058.9%20L114.4%2061.1%20L106%2060%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M114.4%2068.9%20L114.4%2071.1%20L106%2070%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Cpath%20d%3D%27M114.4%2078.9%20L114.4%2081.1%20L106%2080%20Z%27%20fill%3D%27%234a3813%27%2F%3E%3Ccircle%20cx%3D%2742%27%20cy%3D%2724%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2744.9%27%20y%3D%2723.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2724%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2752.9%27%20y%3D%2723.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2758%27%20cy%3D%2724%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2760.9%27%20y%3D%2723.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2766%27%20cy%3D%2724%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2768.9%27%20y%3D%2723.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2774%27%20cy%3D%2724%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2776.9%27%20y%3D%2723.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2742%27%20cy%3D%2796%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2744.9%27%20y%3D%2795.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2796%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2752.9%27%20y%3D%2795.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2758%27%20cy%3D%2796%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2760.9%27%20y%3D%2795.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2766%27%20cy%3D%2796%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2768.9%27%20y%3D%2795.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2774%27%20cy%3D%2796%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2776.9%27%20y%3D%2795.1%27%20width%3D%272.2%27%20height%3D%271.8%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2742%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2744.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2750%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2752.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2758%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2760.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2766%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2768.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2774%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2776.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2796%27%20cy%3D%2742%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2795.1%27%20y%3D%2744.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2796%27%20cy%3D%2750%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2795.1%27%20y%3D%2752.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2796%27%20cy%3D%2758%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2795.1%27%20y%3D%2760.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2796%27%20cy%3D%2766%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2795.1%27%20y%3D%2768.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2796%27%20cy%3D%2774%27%20r%3D%271.8%27%20fill%3D%27%23d9b873%27%2F%3E%3Crect%20x%3D%2795.1%27%20y%3D%2776.9%27%20width%3D%271.8%27%20height%3D%272.2%27%20fill%3D%27%238a6a2c%27%2F%3E%3Ccircle%20cx%3D%2724.6%27%20cy%3D%2732.3%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2726.3%27%20cy%3D%2728.9%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2728.9%27%20cy%3D%2726.3%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2732.3%27%20cy%3D%2724.6%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2787.7%27%20cy%3D%2724.6%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2791.1%27%20cy%3D%2726.3%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2793.7%27%20cy%3D%2728.9%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2795.4%27%20cy%3D%2732.3%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2732.3%27%20cy%3D%2795.4%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2728.9%27%20cy%3D%2793.7%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2726.3%27%20cy%3D%2791.1%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2724.6%27%20cy%3D%2787.7%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2795.4%27%20cy%3D%2787.7%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2793.7%27%20cy%3D%2791.1%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2791.1%27%20cy%3D%2793.7%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Ccircle%20cx%3D%2787.7%27%20cy%3D%2795.4%27%20r%3D%271.7%27%20fill%3D%27%23d9b873%27%2F%3E%3Cg%20transform%3D%27translate(17.2%2017.2)%20rotate(-45)%27%3E%3Ccircle%20r%3D%272.6%27%20fill%3D%27%234a3813%27%2F%3E%3Ccircle%20r%3D%271.5%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(44)%27%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%27translate(102.8%2017.2)%20rotate(45)%27%3E%3Ccircle%20r%3D%272.6%27%20fill%3D%27%234a3813%27%2F%3E%3Ccircle%20r%3D%271.5%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(44)%27%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%27translate(17.2%20102.8)%20rotate(-135)%27%3E%3Ccircle%20r%3D%272.6%27%20fill%3D%27%234a3813%27%2F%3E%3Ccircle%20r%3D%271.5%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(44)%27%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%27translate(102.8%20102.8)%20rotate(135)%27%3E%3Ccircle%20r%3D%272.6%27%20fill%3D%27%234a3813%27%2F%3E%3Ccircle%20r%3D%271.5%27%20fill%3D%27%23c9a35c%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(-22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(0)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(22)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.2%27%20rx%3D%271.7%27%20ry%3D%274.6%27%20fill%3D%27%23c9a35c%27%20transform%3D%27rotate(44)%27%2F%3E%3Cellipse%20cx%3D%270%27%20cy%3D%27-7.6%27%20rx%3D%270.8%27%20ry%3D%272.8%27%20fill%3D%27%23ecd9a0%27%20transform%3D%27rotate(44)%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 40 round;
+  border-radius: clamp(28px, 3.4vw, 40px);
+  background: transparent;
   box-shadow:
     0 40px 110px rgba(0, 0, 0, 0.62),
     0 6px 26px rgba(0, 0, 0, 0.4);
 }
 
+/* The liner: the warm dark mat between gilt and machine. */
 .tv__band {
-  background: #93732f;
-  border-radius: clamp(32px, 3.4vw, 46px);
-  padding: clamp(6px, 0.8vw, 9px);
-  box-shadow:
-    inset 0 2px 0 rgba(240, 213, 150, 0.85),
-    inset 0 -2px 0 rgba(43, 31, 8, 0.9),
-    inset 0 0 0 1px rgba(255, 236, 190, 0.22);
+  background: #241c0d;
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: inset 0 1px 0 rgba(236, 217, 160, 0.28);
 }
 
 .tv__bead {
-  background: #2b1f08;
-  border-radius: clamp(27px, 2.9vw, 39px);
-  padding: 1.5px;
-  box-shadow: inset 0 1px 0 rgba(240, 213, 150, 0.45);
+  background: #3d2f10;
+  border-radius: 10px;
+  padding: 1px;
 }
 
 /* The bezel: the Simile posture — deep, rounded, generous. */
 .tv__bezel {
   background: #131315;
-  border-radius: clamp(25px, 2.7vw, 37px);
-  padding: clamp(1.1rem, 2.2vw, 2rem);
+  border-radius: 9px;
+  padding: clamp(1rem, 2vw, 1.8rem);
   box-shadow:
     inset 0 2px 12px rgba(0, 0, 0, 0.8),
     inset 0 0 0 1px #1d1d20;
@@ -311,14 +310,19 @@
   transform: none;
 }
 
+/* The set's caption: a title card, centered beneath the frame. */
 .manifesto__close {
   font-family: var(--serif);
   font-size: var(--t-d2);
   font-weight: 500;
   letter-spacing: -0.012em;
-  line-height: 1.12;
+  line-height: 1.18;
   color: var(--ink);
-  margin-top: clamp(2.5rem, 6vh, 4rem);
+  text-align: center;
+  max-width: 26ch;
+  margin-inline: auto;
+  margin-top: clamp(3rem, 7vh, 4.5rem);
+  text-wrap: balance;
 }
 
 .manifesto__close em {
@@ -652,10 +656,9 @@
   }
 }
 
+/* The two conditionals, bare on the page — no card, just the mathematics. */
 .expr {
   max-width: 560px;
-  border: 1px solid var(--edge);
-  background: color-mix(in srgb, var(--ground-2) 80%, transparent);
 }
 
 .expr__row {
@@ -664,7 +667,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.35rem 1.5rem;
-  padding: 0.9rem 1.1rem;
+  padding: 0.9rem 0;
   border-bottom: 1px solid var(--edge-soft);
 }
 
@@ -691,7 +694,7 @@
 }
 
 .expr__legend {
-  padding: 0.8rem 1.1rem;
+  padding: 0.8rem 0;
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.08em;
@@ -700,7 +703,7 @@
 
 /* The integrity line: quiet, and non-negotiable. */
 .expr__integrity {
-  padding: 0.9rem 1.1rem 1rem;
+  padding: 0.9rem 0 0;
   border-top: 1px solid var(--edge-soft);
   font-size: var(--t-small);
   line-height: 1.6;

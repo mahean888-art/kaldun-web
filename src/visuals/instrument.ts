@@ -47,30 +47,34 @@ function station(s: Station, i: number, x: number, y: number, terminal: boolean)
  */
 function landscape(): string {
   const XS = [176, 620, 1064];
+  // The return row sits staggered beneath the gaps of the forward row, so
+  // the loop fills its field instead of leaving a hollow corner.
+  const FUT = 842;
+  const RES = 398;
   const TOP = 152;
-  const BOT = 396;
+  const BOT = 372;
   const GAP = 18;
 
   const stations = [
     ...XS.map((x, i) => station(STATIONS[i]!, i, x, TOP, i === 0)),
-    station(STATIONS[3]!, 3, XS[2]!, BOT, false),
-    station(STATIONS[4]!, 4, XS[1]!, BOT, true),
+    station(STATIONS[3]!, 3, FUT, BOT, false),
+    station(STATIONS[4]!, 4, RES, BOT, true),
   ].join('\n');
 
   const forward = [
     `<path data-arrow="grey" d="M ${XS[0]! + GAP} ${TOP} H ${XS[1]! - GAP}" />`,
     `<path data-arrow="grey" d="M ${XS[1]! + GAP} ${TOP} H ${XS[2]! - GAP}" />`,
     // Down the right edge, outside the intervention/futures columns.
-    `<path data-arrow="grey" d="M ${XS[2]! + GAP} ${TOP} H 1172 Q 1196 ${TOP} 1196 ${TOP + 24} V ${BOT - 24} Q 1196 ${BOT} 1172 ${BOT} H ${XS[2]! + GAP}" />`,
-    `<path data-arrow="grey" d="M ${XS[2]! - GAP} ${BOT} H ${XS[1]! + GAP}" />`,
+    `<path data-arrow="grey" d="M ${XS[2]! + GAP} ${TOP} H 1172 Q 1196 ${TOP} 1196 ${TOP + 24} V ${BOT - 24} Q 1196 ${BOT} 1172 ${BOT} H ${FUT + GAP}" />`,
+    `<path data-arrow="grey" d="M ${FUT - GAP} ${BOT} H ${RES + GAP}" />`,
   ].join('\n');
 
   // The learning arm: up the left edge, back into the state — the machine runs again.
-  const ret = `<path data-arrow="amber" d="M ${XS[1]! - GAP} ${BOT} H 84 Q 60 ${BOT} 60 ${BOT - 24} V ${TOP + 24} Q 60 ${TOP} 84 ${TOP} H ${XS[0]! - GAP}" />`;
+  const ret = `<path data-arrow="amber" d="M ${RES - GAP} ${BOT} H 84 Q 60 ${BOT} 60 ${BOT - 24} V ${TOP + 24} Q 60 ${TOP} 84 ${TOP} H ${XS[0]! - GAP}" />`;
   const mid = Math.round((TOP + BOT) / 2);
 
   return `
-  <svg viewBox="0 0 1240 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <svg viewBox="0 0 1240 476" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${forward}
     ${ret}
     ${stations}

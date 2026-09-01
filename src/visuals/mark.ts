@@ -1,16 +1,20 @@
 /**
- * The Foresight Machines sigil: the gate of futures.
+ * The Foresight Machines emblem — the founder's design.
  *
- * An austere, symmetric emblem in straight strokes — from the base line of
- * what has already happened, a central column rises furthest, flanked by two
- * columns that branch from it at right angles: three futures standing off
- * one past. Heraldic, angular, and drawn in currentColor so it takes the
- * ink of whatever band it stands on.
+ * A crimson vessel: the half-disc of what has already happened, carrying
+ * three towers of what may — the center risen furthest to a peak, the two
+ * beside it chamfered toward it — inside a thin gold ring on the dark.
  */
 
 import { svg } from '../lib/dom';
 
-const SIGIL = 'M10 41H38 M24 41V7 M24 29H14V13 M24 29H34V13';
+const RING = '#c9a35c';
+const EMBLEM = '#b13a3a';
+
+const VESSEL = 'M10.5 26 A13.5 13.5 0 0 0 37.5 26 Z';
+const CENTER = 'M21.6 26 V12.2 L24 9.6 L26.4 12.2 V26 Z';
+const LEFT = 'M14.6 26 V17.4 L19.4 14.2 V26 Z';
+const RIGHT = 'M33.4 26 V17.4 L28.6 14.2 V26 Z';
 
 export function makeMark(size = 26): SVGElement {
   return svg(
@@ -25,11 +29,11 @@ export function makeMark(size = 26): SVGElement {
       class: 'mark',
     },
     [
-      svg('path', {
-        d: SIGIL,
-        stroke: 'currentColor',
-        'stroke-width': 3,
-      }),
+      svg('circle', { cx: 24, cy: 24, r: 21.2, stroke: RING, 'stroke-width': 1.4 }),
+      svg('path', { d: VESSEL, fill: EMBLEM }),
+      svg('path', { d: CENTER, fill: EMBLEM }),
+      svg('path', { d: LEFT, fill: EMBLEM }),
+      svg('path', { d: RIGHT, fill: EMBLEM }),
     ],
   );
 }

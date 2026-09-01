@@ -23,12 +23,11 @@ const DRAW_MS = 900;
 type Station = { sym: string; name: string; sub: string };
 
 const STATIONS: Station[] = [
-  { sym: 'T&#8320;', name: 'State', sub: 'What is true now' },
-  { sym: '&#916;', name: 'Intervention', sub: 'The move on the table' },
-  { sym: 'T&#8321;&#8230;T&#8345;', name: 'Futures', sub: 'Worlds that follow, weighted' },
-  { sym: 'U', name: 'Consequence', sub: 'What each world means' },
-  { sym: 'R', name: 'Resolution', sub: 'What actually happened' },
-  { sym: 'T&#8320;&#8242;', name: 'Learning', sub: 'The state updates' },
+  { sym: 'S', name: 'State', sub: 'Known, unknown, changing now' },
+  { sym: 'E', name: 'Evidence', sub: 'Sources, provenance, disagreement' },
+  { sym: '&#916;', name: 'Intervention', sub: 'An action, alternative, or shock' },
+  { sym: 'T&#8321;&#8230;T&#8345;', name: 'Futures', sub: 'Many paths, weighted — and their tails' },
+  { sym: 'R', name: 'Resolution', sub: 'Committed before, evaluated after' },
 ];
 
 /** One station: run index above, name, register dot, sub beneath. */
@@ -54,22 +53,20 @@ function landscape(): string {
 
   const stations = [
     ...XS.map((x, i) => station(STATIONS[i]!, i, x, TOP, i === 0)),
-    ...XS.map((_, i) =>
-      station(STATIONS[3 + i]!, 3 + i, XS[XS.length - 1 - i]!, BOT, 3 + i === STATIONS.length - 1),
-    ),
+    station(STATIONS[3]!, 3, XS[2]!, BOT, false),
+    station(STATIONS[4]!, 4, XS[1]!, BOT, true),
   ].join('\n');
 
   const forward = [
     `<path data-arrow="grey" d="M ${XS[0]! + GAP} ${TOP} H ${XS[1]! - GAP}" />`,
     `<path data-arrow="grey" d="M ${XS[1]! + GAP} ${TOP} H ${XS[2]! - GAP}" />`,
-    // Down the right edge, outside the futures/consequence columns.
-    `<path data-arrow="grey" d="M ${XS[2]! + GAP} ${TOP} H 1156 Q 1180 ${TOP} 1180 ${TOP + 24} V ${BOT - 24} Q 1180 ${BOT} 1156 ${BOT} H ${XS[2]! + GAP}" />`,
+    // Down the right edge, outside the intervention/futures columns.
+    `<path data-arrow="grey" d="M ${XS[2]! + GAP} ${TOP} H 1172 Q 1196 ${TOP} 1196 ${TOP + 24} V ${BOT - 24} Q 1196 ${BOT} 1172 ${BOT} H ${XS[2]! + GAP}" />`,
     `<path data-arrow="grey" d="M ${XS[2]! - GAP} ${BOT} H ${XS[1]! + GAP}" />`,
-    `<path data-arrow="grey" d="M ${XS[1]! - GAP} ${BOT} H ${XS[0]! + GAP}" />`,
   ].join('\n');
 
-  // The learning arm: up the left edge, back into T₀ — the machine runs again.
-  const ret = `<path data-arrow="amber" d="M ${XS[0]! - GAP} ${BOT} H 84 Q 60 ${BOT} 60 ${BOT - 24} V ${TOP + 24} Q 60 ${TOP} 84 ${TOP} H ${XS[0]! - GAP}" />`;
+  // The learning arm: up the left edge, back into the state — the machine runs again.
+  const ret = `<path data-arrow="amber" d="M ${XS[1]! - GAP} ${BOT} H 84 Q 60 ${BOT} 60 ${BOT - 24} V ${TOP + 24} Q 60 ${TOP} 84 ${TOP} H ${XS[0]! - GAP}" />`;
   const mid = Math.round((TOP + BOT) / 2);
 
   return `

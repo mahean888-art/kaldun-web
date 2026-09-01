@@ -37,6 +37,33 @@ function sample(rnd: () => number): number[] {
   return w.map((v) => v / max);
 }
 
+/** The hero verb, answered in the traces. */
+type Mode = 'decide' | 'commit' | 'allocate' | 'build' | 'insure';
+
+/** Shape a base profile to the word in view. */
+function shapeFor(mode: Mode, rnd: () => number): number[] {
+  const base = sample(rnd);
+  if (mode === 'commit' || mode === 'build') {
+    // One path gains weight and carries forward.
+    const lead = base.indexOf(Math.max(...base));
+    return base.map((v, i) => {
+      const d = Math.abs(i - lead) / N;
+      const focus = Math.exp(-(d * d) / 0.0012);
+      return Math.min(1, v * 0.3 + focus);
+    });
+  }
+  if (mode === 'allocate') {
+    // A measured distribution spreads across the paths.
+    return base.map(() => 0.42 + rnd() * 0.3);
+  }
+  if (mode === 'insure') {
+    // A peripheral tail trace becomes visible.
+    const tail = rnd() < 0.5 ? 2 : N - 3;
+    return base.map((v, i) => (Math.abs(i - tail) < 2 ? 0.92 : v * 0.75));
+  }
+  return base; // decide: paths separate modestly
+}
+
 export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   const ctx = canvas.getContext('2d');
   if (!ctx) return { destroy: () => undefined };
@@ -78,6 +105,17 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   let target = current.slice();
   let easeStart = -1;
   let lastBeat = 0;
+  let mode: Mode = 'decide';
+  let modeChanged = false;
+  let hovered = false;
+
+  const onVerb = (event: Event): void => {
+    const verb = (event as CustomEvent<{ verb: string }>).detail?.verb as Mode | undefined;
+    if (!verb || verb === mode) return;
+    mode = verb;
+    modeChanged = true;
+  };
+  document.addEventListener('fm:verb', onVerb);
 
   const resize = (): void => {
     const rect = canvas.getBoundingClientRect();
@@ -149,6 +187,14 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.fillRect(g.u * w, g.v * h, g.s, g.s);
     }
 
+    // The word in view re-draws the futures the moment it changes.
+    if (modeChanged) {
+      modeChanged = false;
+      from = current.slice();
+      target = shapeFor(mode, rnd);
+      easeStart = time;
+    }
+
     // Weights, mid-ease if a re-weight is in flight.
     if (easeStart >= 0) {
       const t = easeOut((time - easeStart) / EASE_MS);
@@ -189,6 +235,22 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.lineWidth = 1.4;
       ctx.beginPath();
       trace(i);
+      ctx.stroke();
+    }
+
+    // `build`: the strongest path lengthens into time — its far reach burns
+    // brighter than the rest of its run.
+    if (mode === 'build') {
+      const lead = order[0]!;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      const [sx, sy] = pointAt(lead, 0.58);
+      ctx.moveTo(sx, sy);
+      for (let t = 0.62; t <= 1.001; t += 0.04) {
+        const [px, py] = pointAt(lead, Math.min(1, t));
+        ctx.lineTo(px, py);
+      }
       ctx.stroke();
     }
 
@@ -233,7 +295,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       if (phase >= BEAT_MS) {
         lastBeat = time - (phase % BEAT_MS);
         from = current.slice();
-        target = sample(rnd);
+        target = shapeFor(mode, rnd);
         easeStart = time + PULSE_MS;
       } else if (phase < PULSE_MS) {
         const p = phase / PULSE_MS;
@@ -267,7 +329,8 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'rgba(185, 183, 178, 0.9)';
-    ctx.fillText('T₀', nx, ny + 18);
+    // On calm hover the present names itself in full.
+    ctx.fillText(hovered ? 'STATE T₀' : 'T₀', nx, ny + 18);
   };
 
   let elapsed = 0;
@@ -281,6 +344,15 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   resize();
   const stopResize = onResize(resize);
   let stopFrame: (() => void) | null = null;
+
+  canvas.addEventListener('pointerenter', () => {
+    hovered = true;
+    if (reduced) draw(0);
+  });
+  canvas.addEventListener('pointerleave', () => {
+    hovered = false;
+    if (reduced) draw(0);
+  });
 
   if (reduced) {
     draw(0);
@@ -303,6 +375,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     destroy: () => {
       stopFrame?.();
       stopResize();
+      document.removeEventListener('fm:verb', onVerb);
     },
   };
 }

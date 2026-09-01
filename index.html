@@ -32,10 +32,11 @@
         </a>
 
         <nav class="site-nav" aria-label="Sections">
-          <a class="site-nav__item" href="#machine">Machine<sup>01</sup></a>
-          <a class="site-nav__item" href="#use-cases">Use cases<sup>02</sup></a>
-          <a class="site-nav__item" href="#record">Record<sup>03</sup></a>
-          <a class="site-nav__item" href="#research">Research<sup>04</sup></a>
+          <a class="site-nav__item" href="#manifesto">Manifesto<sup>01</sup></a>
+          <a class="site-nav__item" href="#machine">Machine<sup>02</sup></a>
+          <a class="site-nav__item" href="#domains">Domains<sup>03</sup></a>
+          <a class="site-nav__item" href="#record">Record<sup>04</sup></a>
+          <a class="site-nav__item" href="#research">Research<sup>05</sup></a>
         </nav>
 
         <div class="header__actions">
@@ -58,12 +59,13 @@
             Machine Foresight<span class="hero__eyebrow-star" aria-hidden="true">*</span>
           </p>
           <h1 class="hero__title" data-reveal="rise" style="--reveal-delay: 120ms">
-            Run the future of <span class="rotor" data-rotor>a decision</span><br />before
-            you make it.
+            Run the world forward<br />before you
+            <span class="rotor" data-rotor>decide</span>.
           </h1>
           <p class="hero__sub" data-reveal="rise" style="--reveal-delay: 300ms">
-            Foresight Machines builds the world a consequential decision depends on, tests the
-            actions available to you, and shows the futures that follow.
+            Foresight Machines runs consequential decisions through possible futures — so
+            institutions can see what changes, what breaks, and what remains sound before they
+            commit.
           </p>
         </div>
 
@@ -87,7 +89,76 @@
         </div>
       </section>
 
-      <!-- ============ 01 · THE MACHINE ============ -->
+      <!-- ============ 01 · MANIFESTO ============ -->
+      <section class="band band--chapter" id="manifesto">
+        <div class="shell">
+          <p class="band__label t-label">Manifesto</p>
+          <h2 class="t-d1" data-lines style="max-width: 18ch">
+            Every decision contains a model of the future.
+          </h2>
+        </div>
+
+        <div class="signal" data-manifesto>
+          <div class="shell signal__stick">
+            <div class="signal__frame">
+              <div class="signal__corners" aria-hidden="true">
+                <span>Manifesto / 01</span>
+                <span data-signal-state>State: incomplete</span>
+              </div>
+              <div class="signal__stage" data-signal-stage>
+                <p class="signal__para" data-chip="Commitment">
+                  An investment memo, a credit file, a board strategy, an operating plan — each
+                  contains a model of a world that does not exist yet.
+                </p>
+                <p class="signal__para" data-chip="Fragmented model">
+                  Today, that model is dispersed. It lives across spreadsheets, slide decks,
+                  analyst notes, market prices, policy assumptions, and individual judgment. It
+                  is revised unevenly, separated from the decision it informs, and rarely
+                  measured after the fact.
+                </p>
+                <p class="signal__para" data-chip="Changing conditions">
+                  The conditions around those decisions are changing faster than the
+                  institutions built to make them. Capital moves across systems continuously.
+                  Supply, energy, information, and policy travel through tighter networks.
+                  Rules fragment across jurisdictions. A change in one system can alter the
+                  conditions of another before the next planning cycle begins.
+                </p>
+                <p class="signal__para" data-chip="Static software">
+                  Software learned to retrieve, summarize, and answer. It did not learn to
+                  maintain a state of the world around a consequential decision — and show how
+                  that state may change when an institution acts.
+                </p>
+                <p class="signal__para signal__para--declare" data-chip="Foresight machines">
+                  We build foresight machines.
+                </p>
+                <p class="signal__para" data-chip="State field">
+                  A foresight machine maintains an explicit state of what is known now. It
+                  advances that state through evidence, time, and possible interventions. It
+                  produces distributions — not declarations. It shows the assumptions that
+                  matter, the tail conditions that break a decision, and the actions that
+                  remain sound across more than one future.
+                </p>
+                <p class="signal__para" data-chip="Committed · 8fa1…c9e4">
+                  It then commits its claims before the outcome is known.
+                </p>
+                <p class="signal__para" data-chip="Resolved">
+                  When reality resolves, the machine is scored. The record remains. The next
+                  decision begins with a better model of the world.
+                </p>
+              </div>
+              <div class="signal__dock" data-signal-dock aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="shell">
+          <p class="manifesto__close" data-lines>
+            Not one future.<br /><em>Better commitments across many.</em>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 02 · THE MACHINE ============ -->
       <section class="band band--chapter" id="machine">
         <div class="shell">
           <p class="band__label t-label">The Machine</p>
@@ -99,10 +170,13 @@
               </h2>
               <div class="spacer-sm"></div>
               <p class="t-lead" data-reveal="fade" style="max-width: 50ch">
-                A capital allocation, a specialty risk, a gigawatt data center, a procurement
-                plan — each is a model of a world that does not exist yet. A language model
-                continues a sequence. A foresight machine advances a state — under the action
-                you are weighing, against the evidence it can see.
+                A language model continues a sequence. A foresight machine advances a state —
+                under the action you are contemplating, against the evidence it can inspect.
+              </p>
+              <p class="t-body" data-reveal="fade" style="max-width: 50ch">
+                It does not offer a single asserted future. It runs the present through
+                possible conditions, makes uncertainty visible, and keeps the chain of
+                evidence and assumptions attached to the result.
               </p>
             </div>
 
@@ -113,10 +187,15 @@
               </p>
               <p class="expr__row expr__row--fm">
                 <span class="expr__who">A foresight machine</span>
-                <code>P(&nbsp;S<sub>t+1…t+n</sub>&nbsp;|&nbsp;S<sub>t</sub>,&nbsp;A,&nbsp;E&nbsp;)</code>
+                <code>P(&nbsp;S<sub>t+1…t+n</sub>&nbsp;|&nbsp;S<sub>t</sub>,&nbsp;A,&nbsp;E,&nbsp;M&nbsp;)</code>
               </p>
               <p class="expr__legend">
-                S — world state&ensp;·&ensp;A — action&ensp;·&ensp;E — evidence
+                S — current state&ensp;·&ensp;A — contemplated action&ensp;·&ensp;E — evidence&ensp;·&ensp;M — mechanism and assumptions
+              </p>
+              <p class="expr__integrity">
+                Conditional futures are not automatically causal estimates. Where causal
+                identification is warranted, the Machine makes its method and uncertainty
+                visible. Where it is not, it shows assumptions, sensitivity, and stress.
               </p>
             </div>
           </div>
@@ -133,27 +212,22 @@
         <canvas></canvas>
       </div>
 
-      <!-- ============ 02 · USE CASES ============ -->
-      <section class="band band--chapter theme-light" id="use-cases">
+      <!-- ============ 03 · DOMAINS ============ -->
+      <section class="band band--chapter theme-light" id="domains">
         <div class="shell">
-          <p class="band__label t-label">Use cases</p>
+          <p class="band__label t-label">Domains</p>
 
           <div class="usecases__head">
             <h2 class="usecases__title" data-lines>
-              Ask, and you get an answer.<br /><em>Run, and you get futures.</em>
+              Commitments that need<br /><em>more than an answer.</em>
             </h2>
+            <p class="usecases__sub" data-reveal="fade">
+              We begin where uncertainty becomes capital allocation. The same discipline
+              applies wherever institutions commit resources into changing systems.
+            </p>
           </div>
 
-          <div class="dstack" data-domain-stack></div>
-
-          <div class="spacer-md"></div>
-          <p class="usecases__every" data-reveal="fade">
-            One machine, run across every domain where the future is expensive.
-          </p>
-          <p class="t-small usecases__wedge" data-reveal="fade">
-            We begin with programmable capital and treasury — decisions already made in code.
-            The same machine runs the rest.
-          </p>
+          <div class="dpanel" data-domain-panel></div>
         </div>
       </section>
 
@@ -161,55 +235,57 @@
         <canvas></canvas>
       </div>
 
-      <!-- ============ 03 · THE RECORD ============ -->
+      <!-- ============ 04 · THE RECORD ============ -->
       <section class="band band--chapter" id="record">
         <div class="shell">
           <p class="band__label t-label">The Record</p>
 
-          <div class="record__lede">
-            <h2 class="record__title" data-lines>
-              Made before<br />the answer was known.
-            </h2>
-            <div class="spacer-sm"></div>
-            <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
-              The Record is the machine&rsquo;s public memory — a permanent, auditable account
-              of every claim it has made.
-            </p>
+          <div class="record2">
+            <div class="record__lede">
+              <h2 class="record__title" data-lines>
+                Made before<br />the answer was known.
+              </h2>
+              <div class="spacer-sm"></div>
+              <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
+                Every claim the Machine makes is committed before the outcome is known: the
+                state snapshot, evidence, assumptions, forecast distribution, and model
+                version are hashed, timestamped, and preserved in an append-only record.
+              </p>
+              <p class="t-body" data-reveal="fade" style="max-width: 46ch">
+                When reality resolves, the claim is evaluated against what happened. The
+                record shows what the Machine knew, what it assumed, what changed, and how
+                the next decision should improve.
+              </p>
+              <p class="axiom axiom--sm" data-reveal="fade">
+                A decision should not disappear after it is made.
+              </p>
+              <p class="record__loop" data-reveal="fade"><em>The Record is the training loop.</em></p>
+            </div>
+
+            <figure class="slip" data-reveal="rise">
+              <div class="slip__rows">
+                <p><span>Record</span><b>/ 00001654</b></p>
+                <p><span>Committed</span><b>31 Aug 2026 · 14:03 UTC</b></p>
+                <p><span>State</span><b>v0.9.4</b></p>
+                <p><span>Evidence</span><b>24 items · 1 disputed assumption</b></p>
+                <p><span>Futures</span><b>5 conditional paths</b></p>
+                <p><span>Tail</span><b>Liquidity + settlement delay</b></p>
+                <p><span>Hash</span><b>8fa1&hellip;c9e4</b></p>
+                <p><span>Status</span><b>Pending resolution</b></p>
+              </div>
+              <button type="button" class="slip__more" data-slip-toggle aria-expanded="false">
+                History <span aria-hidden="true">+</span>
+              </button>
+              <div class="slip__history" data-slip-history hidden>
+                <p>Appended 31 Aug 2026 · 14:03 UTC — claim committed</p>
+                <p>Resolution: pending</p>
+              </div>
+            </figure>
           </div>
 
           <div class="spacer-md"></div>
-
-          <div class="rpillars">
-            <div class="rpillar" data-reveal="rise">
-              <h3>Committed before the outcome</h3>
-              <p>
-                Every claim the machine commits is sealed under a cryptographic hash and
-                timestamped before the world answers. It cannot be quietly edited.
-              </p>
-            </div>
-            <div class="rpillar" data-reveal="rise" style="--reveal-delay: 90ms">
-              <h3>Calibrated, not confident</h3>
-              <p>
-                When the machine says 70%, about 70% of those events happen. That is the bar,
-                and it is measurable.
-              </p>
-            </div>
-            <div class="rpillar" data-reveal="rise" style="--reveal-delay: 180ms">
-              <h3>Scored by reality</h3>
-              <p>When the outcome arrives, the score posts beside the claim. Anyone can check.</p>
-            </div>
-            <div class="rpillar" data-reveal="rise" style="--reveal-delay: 270ms">
-              <h3>Trained on the difference</h3>
-              <p>
-                The gap between what was believed and what happened is the machine&rsquo;s next
-                lesson.
-              </p>
-            </div>
-          </div>
-
-          <div class="spacer-md"></div>
-          <p class="axiom" data-reveal="fade">
-            A decision should not disappear after it is made.
+          <p class="record__quality" data-reveal="fade">
+            <span>Calibration</span><span>Discrimination</span><span>Decision value</span><span>Tail discipline</span>
           </p>
         </div>
       </section>
@@ -218,7 +294,7 @@
         <canvas></canvas>
       </div>
 
-      <!-- ============ 04 · RESEARCH ============ -->
+      <!-- ============ 05 · RESEARCH ============ -->
       <section class="band band--chapter theme-light" id="research">
         <div class="shell">
           <p class="band__label t-label">Research</p>
@@ -238,15 +314,17 @@
 
             <div class="stack-col">
               <p class="t-lead" data-reveal="fade">
-                In 1654, Pascal and Fermat traded letters about dividing the stakes of an
-                unfinished game — and began the mathematics of probability. The unfinished game
-                is now the world.
+                In 1654, Pascal and Fermat began formalizing how to reason about an unfinished
+                game. The unfinished game is now the world: institutions, markets,
+                infrastructure, and decisions evolving before their outcomes are known.
               </p>
               <p class="t-body" data-reveal="fade">
-                Project 1654 is our residency for superforecasters, builders and researchers —
-                anyone advancing the science of predicting future states. Fellows get a salary,
-                compute, and the live state and the Record as experimental infrastructure — and
-                every project seals at least one claim.
+                Project 1654 is Foresight Machines&rsquo; residency for researchers and
+                builders whose systems make claims that time can test.
+              </p>
+              <p class="t-body" data-reveal="fade">
+                Every project must commit a claim before the outcome is known. Every project
+                is evaluated after resolution.
               </p>
               <p class="axiom axiom--sm" data-reveal="fade">
                 <em>Nothing at Foresight Machines goes ungraded.</em>
@@ -310,6 +388,13 @@
     <!-- ============ THE HORIZON ============ -->
     <footer class="horizon" id="horizon">
       <div class="shell horizon__inner">
+        <div class="horizon__invite">
+          <p class="horizon__statement" data-lines>Bring us a decision<br />you have not made yet.</p>
+          <p class="horizon__support-line">
+            A decision worth making should be legible before the outcome is obvious.
+          </p>
+        </div>
+
         <div class="horizon__field" aria-hidden="true"></div>
 
         <div class="horizon__floor">
@@ -318,8 +403,9 @@
 
           <div class="horizon__row">
             <nav class="horizon__links" aria-label="Footer">
+              <a href="#manifesto">Manifesto</a>
               <a href="#machine">Machine</a>
-              <a href="#use-cases">Use cases</a>
+              <a href="#domains">Domains</a>
               <a href="#record">Record</a>
               <a href="#research">Research</a>
               <a data-book href="#horizon">Run a decision</a>
@@ -338,6 +424,7 @@
 
           <p class="horizon__base">
             <span>© 2026 Foresight Machines</span>
+            <span class="horizon__pending" aria-hidden="true">Record · pending resolution</span>
             <span>Made before the answer was known</span>
           </p>
         </div>

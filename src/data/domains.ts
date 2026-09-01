@@ -1,73 +1,72 @@
 /**
- * The five domains of machine foresight, and what runs in each.
- *
- * Each domain gets a plain description in the machine's grammar — state,
- * action, futures — and its use cases: noun-led, concrete, the way the desk
- * that owns the decision would file them.
+ * The five domains: where the same foundational machine matters as it
+ * matures. Each carries one institutional question and one line on what the
+ * Machine returns — scope, not product marketing.
  */
 
 export type Domain = {
   ordinal: string;
   label: string;
-  /** Two lines on why decisions outrun certainty here. */
-  description: string;
-  cases: string[];
+  /** The commitment, asked the way the institution would ask it. */
+  question: string;
+  /** What the Machine returns. */
+  returns: string;
+  /** Tuning for the domain's diagrammatic material. */
+  motif: {
+    /** 0 = weight concentrated on a lead path … 1 = even spread. */
+    spread: number;
+    /** How visible the peripheral tail trace is, 0..1. */
+    tail: number;
+    /** How far the lead path carries into time, 0..1. */
+    reach: number;
+    seed: number;
+  };
 };
 
 export const DOMAINS: Domain[] = [
   {
     ordinal: '01',
-    label: 'Capital & treasury',
-    description:
-      'Decisions that are already code. Treasury rules, mandates and tokenized funds act the moment a threshold trips — at machine speed, on yesterday’s assumptions.',
-    cases: [
-      'Run a treasury or rebalancing rule against rate and liquidity futures before it runs live money.',
-      'Test a financing or an allocation against the demand, rate and refinancing paths it must survive.',
-      'Find the early evidence that the assumption behind a position is breaking.',
-    ],
+    label: 'Capital allocation',
+    question:
+      'Commit, stage, hedge, or preserve optionality when the conditions of capital can change before the commitment settles?',
+    returns:
+      'The Machine returns distributions of outcomes, break conditions, and actions that remain sound across more than one path.',
+    motif: { spread: 0.35, tail: 0.3, reach: 0.6, seed: 1654 },
   },
   {
     ordinal: '02',
     label: 'Insurance',
-    description:
-      'A policy is a priced future. Underwriting, reserving and reinsurance stand or fall on how well tomorrow’s losses were imagined today.',
-    cases: [
-      'Run a book of catastrophe cover against climate and exposure futures before renewal terms are set.',
-      'Test reserves against the loss paths a new liability theory or a changing climate opens.',
-      'Price a risk class with no loss history by running the worlds that would produce one.',
-    ],
+    question:
+      'Which exposures, terms, and accumulations remain acceptable when the loss distribution changes?',
+    returns:
+      'The Machine returns a view beyond the average: concentration, tail conditions, and escalation thresholds.',
+    motif: { spread: 0.5, tail: 1, reach: 0.45, seed: 1755 },
   },
   {
     ordinal: '03',
     label: 'Real assets',
-    description:
-      'Power, land, infrastructure: capital that cannot move once placed, in a world that keeps moving.',
-    cases: [
-      'Site a data center against power, water, transmission and demand futures — before the land is bought.',
-      'Run a twenty-year power purchase against fuel, policy and grid paths.',
-      'Test a port, pipeline or plant against the trade flows that must exist for it to pay.',
-    ],
+    question:
+      'Build, defer, resize, or redesign when demand, financing, policy, supply, and operating constraints move together?',
+    returns:
+      'The Machine returns project futures, leading conditions, and the value of staging a commitment.',
+    motif: { spread: 0.25, tail: 0.25, reach: 1, seed: 1869 },
   },
   {
     ordinal: '04',
-    label: 'Defense & national resilience',
-    description:
-      'Adversaries, alliances and supply chains answer back. The state that runs the futures first holds the initiative.',
-    cases: [
-      'Keep escalation paths under watch, with their leading indicators and the contingencies that hold across most of them.',
-      'Run a procurement bet against the industrial-base and technology futures it assumes.',
-      'Sequence a supply shock — what follows a strait closing or a fab going dark, and what should already be in place.',
-    ],
+    label: 'Energy',
+    question:
+      'How should capital and capacity move when physical networks, prices, regulation, and security conditions interact?',
+    returns:
+      'The Machine returns system states, stress paths, and decision triggers before capital is locked.',
+    motif: { spread: 0.75, tail: 0.5, reach: 0.55, seed: 1882 },
   },
   {
     ordinal: '05',
-    label: 'Policy & geopolitics',
-    description:
-      'Rules change the board while the game is being played. A tariff line or an export control redraws flows for a decade.',
-    cases: [
-      'Run a rule change through to where flows, prices and capacity actually migrate.',
-      'Test a policy package against the responses of the actors it binds.',
-      'Hold a position across the widest range of regulatory and competitive futures.',
-    ],
+    label: 'National resilience',
+    question:
+      'Which capabilities remain reliable when dependencies fail, constraints change, or a shock travels through connected systems?',
+    returns:
+      'The Machine returns scenario paths, fragilities, contingencies, and a record fit for consequential review.',
+    motif: { spread: 0.6, tail: 0.85, reach: 0.5, seed: 1962 },
   },
 ];

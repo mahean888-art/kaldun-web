@@ -11,7 +11,8 @@ import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
 import { initClock } from './components/clock';
 import { initDecision } from './components/decision';
-import { initDomainStack } from './sections/domainIndex';
+import { initManifesto } from './sections/manifesto';
+import { initDomainPanel } from './sections/domainPanel';
 import { DOMAINS } from './data/domains';
 import { EMAIL } from './data/site';
 
@@ -23,15 +24,31 @@ function wireEmail(root: ParentNode): void {
   }
 }
 
+/** The record slip's one calm expansion. */
+function wireSlip(root: ParentNode): void {
+  const toggle = qs<HTMLButtonElement>('[data-slip-toggle]', root);
+  const history = qs<HTMLElement>('[data-slip-history]', root);
+  if (!toggle || !history) return;
+  toggle.addEventListener('click', () => {
+    const open = history.hidden;
+    history.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+}
+
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
   initClock(root);
   wireEmail(root);
   initDecision(root);
+  wireSlip(root);
 
   const branches = qs<HTMLCanvasElement>('canvas[data-branches]', root);
   if (branches) initBranches(branches);
+
+  const manifesto = qs<HTMLElement>('[data-manifesto]', root);
+  if (manifesto) initManifesto(manifesto);
 
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
@@ -40,8 +57,8 @@ export function mountHome(root: ParentNode = document): void {
     initDissolve(seam);
   }
 
-  const stack = qs<HTMLElement>('[data-domain-stack]', root);
-  if (stack) {
-    initDomainStack({ root: stack, items: DOMAINS, label: 'Use cases' });
+  const domains = qs<HTMLElement>('[data-domain-panel]', root);
+  if (domains) {
+    initDomainPanel({ root: domains, items: DOMAINS, label: 'Domains' });
   }
 }

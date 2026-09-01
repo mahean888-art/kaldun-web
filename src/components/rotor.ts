@@ -1,45 +1,39 @@
 /**
- * The changing noun.
+ * The changing verb.
  *
- * "Run the future of a decision before you make it." — the noun steps through
- * the kinds of decision the machine is pointed at, and rests where it began.
- * Each word rises into the place the last one left, holds long enough to be
- * read, and the slot's width follows it so the sentence never jumps. The
- * article travels with its noun, so the grammar holds at every step.
+ * "Run the world forward before you decide." — the verb steps through the
+ * institutional commitments the machine is pointed at. Slow, quiet, and
+ * deliberate: each verb holds long enough to be read, crossfades to the
+ * next, and the slot's width snaps with the ghost so the full stop never
+ * jumps. The cycle pauses while the reader hovers, focuses, or selects, and
+ * never runs at all under reduced motion.
  *
- * The sequence plays once. It is a statement of range, not a loop that nags.
+ * Each change is announced as a `fm:verb` event, so the hero's fan of
+ * futures can answer the word in view.
  */
 
 import { qsa } from '../lib/dom';
 import { prefersReducedMotion } from '../lib/prefers';
 
-/** Starts and ends on the phrase already in the markup. */
-const WORDS = [
-  'a decision',
-  'an allocation',
-  'an investment',
-  'a policy',
-  'a launch',
-  'a decision',
-];
+/** Starts on `decide` and returns to it; five verbs, no more. */
+const VERBS = ['decide', 'commit', 'allocate', 'build', 'insure'];
 
-/** How long a word stands before the next one takes its place. */
-const HOLD = 1400;
-/** Must match the transition in rotor.css. */
-const SWAP = 420;
+/** How long a verb stands before the next takes its place. */
+const HOLD = 3200;
+/** Must match the crossfade in rotor css. */
+const FADE = 320;
 
 function mount(host: HTMLElement): void {
   const ghost = document.createElement('span');
   ghost.className = 'rotor__ghost';
   ghost.setAttribute('aria-hidden', 'true');
 
-  // The slot is the highlight, and it clips the roll.
   const slot = document.createElement('span');
   slot.className = 'rotor__slot';
 
   let word = document.createElement('span');
   word.className = 'rotor__word is-in';
-  word.textContent = WORDS[0] ?? 'a decision';
+  word.textContent = VERBS[0] ?? 'decide';
 
   ghost.textContent = word.textContent;
   slot.append(word);
@@ -64,47 +58,67 @@ function mount(host: HTMLElement): void {
     document.fonts.ready.then(() => setWidth(word.textContent ?? '')).catch(() => undefined);
   }
 
+  const announce = (verb: string): void => {
+    document.dispatchEvent(new CustomEvent('fm:verb', { detail: { verb } }));
+  };
+  announce(VERBS[0] ?? 'decide');
+
   if (prefersReducedMotion()) return;
 
   let index = 0;
+  let paused = false;
+  let hovered = false;
   let timer = 0;
 
+  const schedule = (): void => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(step, HOLD);
+  };
+
   const step = (): void => {
-    index += 1;
-    const next = WORDS[index];
-    if (!next) return;
+    if (paused || hovered || document.hidden) {
+      schedule();
+      return;
+    }
+    // A live selection means someone is reading closely; hold still.
+    const sel = window.getSelection();
+    if (sel && !sel.isCollapsed) {
+      schedule();
+      return;
+    }
+
+    index = (index + 1) % VERBS.length;
+    const next = VERBS[index] ?? 'decide';
 
     const outgoing = word;
     const incoming = document.createElement('span');
-    incoming.className = 'rotor__word is-below';
+    incoming.className = 'rotor__word is-out';
     incoming.textContent = next;
     slot.append(incoming);
 
-    // The width leads the word by a hair, so the stop settles as it arrives.
     setWidth(next);
     ghost.textContent = next;
+    announce(next);
 
-    // Next frame, so the entering word animates from below rather than appearing.
     requestAnimationFrame(() => {
       outgoing.classList.remove('is-in');
-      outgoing.classList.add('is-above');
-      incoming.classList.remove('is-below');
+      outgoing.classList.add('is-out');
+      incoming.classList.remove('is-out');
       incoming.classList.add('is-in');
     });
 
-    window.setTimeout(() => outgoing.remove(), SWAP + 60);
+    window.setTimeout(() => outgoing.remove(), FADE + 60);
     word = incoming;
-
-    if (index < WORDS.length - 1) timer = window.setTimeout(step, HOLD);
+    schedule();
   };
 
-  timer = window.setTimeout(step, HOLD);
+  const title = host.closest('.hero__title') ?? host;
+  title.addEventListener('mouseenter', () => (hovered = true));
+  title.addEventListener('mouseleave', () => (hovered = false));
+  title.addEventListener('focusin', () => (paused = true));
+  title.addEventListener('focusout', () => (paused = false));
 
-  // If the tab is hidden the sequence would play to nobody; hold it instead.
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) window.clearTimeout(timer);
-    else if (index < WORDS.length - 1) timer = window.setTimeout(step, HOLD);
-  });
+  schedule();
 }
 
 export function initRotor(root: ParentNode = document): void {

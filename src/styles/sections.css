@@ -169,113 +169,251 @@
   line-height: 1.7;
 }
 
-/* --- the domain stack -----------------------------------------------------
-   Five domains laid out in full: ordinal, name, description, use cases.
-   Nothing folds; hairlines only between rows, never as ornament. */
+/* --- the signal window ---------------------------------------------------
+   The manifesto advances one proposition at a time inside a framed
+   observation field; completed paragraphs leave state chips docked along
+   the frame's lower edge. Without JS, or under reduced motion, everything
+   simply stands inside the frame. */
 
-.dstack {
-  max-width: 1100px;
+.signal {
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+}
+
+.signal.is-live {
+  /* One beat of runway per paragraph, plus one to settle. */
+  height: calc(var(--signal-steps, 9) * 55svh);
+}
+
+.signal.is-live .signal__stick {
+  position: sticky;
+  top: calc(var(--header-h) + 2svh);
+}
+
+.signal__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  border: var(--hairline);
+  background: color-mix(in srgb, var(--panel) 34%, transparent);
+  padding: clamp(1.25rem, 2.6vw, 2.5rem);
+}
+
+.signal.is-live .signal__frame {
+  height: min(78svh, 760px);
+}
+
+.signal__corners {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.signal__stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-block: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.signal__para {
+  font-family: var(--serif);
+  font-size: clamp(1.1875rem, 1.9vw, 1.6875rem);
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  line-height: 1.48;
+  color: var(--ink);
+  max-width: 30em;
+}
+
+.signal__para--declare {
+  font-size: clamp(1.75rem, 3.2vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.014em;
+  color: var(--signal);
+}
+
+/* Live choreography: one proposition in the foreground at a time. */
+.signal.is-live .signal__para {
+  position: absolute;
+  inset: clamp(1.5rem, 3vh, 2.5rem) 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+  pointer-events: none;
+}
+
+.signal.is-live .signal__para.is-fore {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Completed propositions recede only slightly — back, not away. */
+.signal.is-live .signal__para.is-done {
+  opacity: 0;
+  transform: translate3d(0, -14px, 0) scale(0.985);
+}
+
+.signal__dock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  border-top: 1px solid var(--edge-soft);
+  padding-top: clamp(0.9rem, 1.8vh, 1.25rem);
+  min-height: 3.4rem;
+}
+
+.signal__chip {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  border: 1px solid var(--edge);
+  padding: 0.45em 0.75em;
+  white-space: nowrap;
+}
+
+.signal.is-live .signal__chip {
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+}
+
+.signal.is-live .signal__chip.is-set {
+  opacity: 1;
+  transform: none;
+}
+
+/* The resolution mark closes the run in the one white. */
+.signal__chip:last-child.is-set {
+  color: var(--signal);
+  border-color: var(--mute);
+}
+
+.manifesto__close {
+  font-family: var(--serif);
+  font-size: var(--t-d2);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.12;
+  color: var(--ink);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+
+.manifesto__close em {
+  color: var(--signal);
+}
+
+/* --- the domains: quiet index, one panel -------------------------------- */
+
+.dpanel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 4vw, 4rem);
+  max-width: 1180px;
   margin-inline: auto;
 }
 
-.dstack__row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem 0;
-  padding-block: clamp(2rem, 4.5vw, 3.5rem);
-}
-
-.dstack__row + .dstack__row {
-  border-top: var(--hairline);
-}
-
-@media (min-width: 760px) {
-  .dstack__row {
-    grid-template-columns: 4.5rem minmax(0, 1fr);
-    gap: 0 clamp(1rem, 2.5vw, 2rem);
+@media (min-width: 900px) {
+  .dpanel {
+    grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
+    align-items: start;
   }
 }
 
-.dstack__no {
+.dpanel__index {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--hairline);
+}
+
+.dpanel__tab {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: clamp(0.8rem, 1.6vw, 1.05rem) 0;
+  border-bottom: var(--hairline);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  color: var(--mute);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.dpanel__tab:hover,
+.dpanel__tab[aria-selected='true'] {
+  color: var(--ink);
+}
+
+.dpanel__no {
   font-family: var(--mono);
   font-size: var(--t-data);
   letter-spacing: 0.08em;
   color: var(--faint);
-  padding-top: 0.55em;
 }
 
-.dstack__name {
+.dpanel__tab[aria-selected='true'] .dpanel__no {
+  color: var(--mute);
+}
+
+.dpanel__panel {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+
+.dpanel__panel.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.dpanel__question {
   font-family: var(--serif);
-  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-size: clamp(1.4rem, 2.5vw, 2.25rem);
   font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  letter-spacing: -0.012em;
+  line-height: 1.18;
   color: var(--ink);
-  margin-bottom: clamp(0.7rem, 1.4vw, 1rem);
+  max-width: 26ch;
+  text-wrap: balance;
 }
 
-.dstack__desc {
+.dpanel__returns {
+  margin-top: clamp(0.9rem, 1.8vw, 1.25rem);
   font-size: var(--t-body);
   line-height: 1.62;
   color: var(--ink-2);
-  max-width: 58ch;
-  margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem);
+  max-width: 52ch;
 }
 
-.dstack__caselabel {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 0.5rem;
-}
-
-.dstack__cases {
-  display: flex;
-  flex-direction: column;
+.dpanel__motif {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
   border-top: 1px solid var(--edge-soft);
-  max-width: 72ch;
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  height: clamp(200px, 30vh, 300px);
 }
 
-.dstack__cases li {
-  position: relative;
-  padding: clamp(0.7rem, 1.4vw, 0.95rem) 0 clamp(0.7rem, 1.4vw, 0.95rem) 1.4rem;
-  border-bottom: 1px solid var(--edge-soft);
-  font-size: var(--t-body);
-  line-height: 1.58;
-  color: var(--ink-2);
-}
-
-.dstack__cases li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 1.55em;
-  width: 8px;
-  height: 1px;
-  background: var(--signal);
-}
-
-.dstack__cases li:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-
-/* The closing pair under the index. */
-.usecases__every {
-  text-align: center;
-  margin-inline: auto;
-  max-width: 34ch;
-  font-family: var(--serif);
-  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
-  font-weight: 500;
-  letter-spacing: -0.008em;
-  line-height: 1.3;
-  color: var(--ink);
-  margin-bottom: 0.85rem;
+.dpanel__motif canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* --- the grain dissolves -------------------------------------------------
@@ -318,53 +456,116 @@
   text-wrap: balance;
 }
 
-/* Four claim pillars, the Pramaana way: tall quiet panels, a claim and its
-   support, nothing animated. The proportions do the standing. */
-.rpillars {
+/* The lede and the slip, side by side. */
+.record2 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(0.9rem, 1.8vw, 1.5rem);
-  align-items: stretch;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
 }
 
-@media (min-width: 620px) {
-  .rpillars {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (min-width: 1000px) {
+  .record2 {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   }
 }
 
-@media (min-width: 1080px) {
-  .rpillars {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+.record__loop {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--t-d4);
+  color: var(--ink-2);
 }
 
-.rpillar {
+/* The sample record: a precise institutional slip. */
+.slip {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  border: var(--hairline);
+  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  padding: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+.slip__rows p {
+  display: grid;
+  grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  padding-block: 0.55rem;
+  border-bottom: 1px solid var(--edge-soft);
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.slip__rows b {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.slip__rows p:first-child b {
+  color: var(--ink);
+}
+
+.slip__rows p:last-child b {
+  color: var(--signal);
+}
+
+.slip__more {
+  margin-top: 1.1rem;
+  padding-block: 0.35em;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  border-bottom: 1px solid var(--edge);
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.slip__more:hover {
+  color: var(--ink);
+}
+
+.slip__history {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--edge-soft);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  min-height: clamp(220px, 30vh, 320px);
-  padding: clamp(1.4rem, 2.4vw, 2rem) clamp(1.2rem, 2vw, 1.6rem);
-  border: 1px solid var(--edge-soft);
-  border-top: 1px solid color-mix(in srgb, var(--ink) 40%, var(--edge));
-  background: color-mix(in srgb, var(--panel) 45%, transparent);
-}
-
-.rpillar h3 {
-  font-family: var(--serif);
-  font-size: clamp(1.25rem, 1.7vw, 1.5625rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  color: var(--ink);
-  max-width: 12ch;
-}
-
-.rpillar p {
-  font-size: var(--t-small);
-  line-height: 1.6;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
   color: var(--mute);
-  max-width: 30ch;
+}
+
+.slip__history[hidden] {
+  display: none;
+}
+
+/* Four fine labels; their meaning lives beyond the homepage. */
+.record__quality {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 0;
+  border-top: var(--hairline-soft);
+  padding-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.record__quality span + span::before {
+  content: '·';
+  color: var(--faint);
+  margin-inline: 1.1em;
 }
 
 /* --- research ------------------------------------------------------------- */
@@ -507,6 +708,15 @@
   font-family: var(--mono);
   font-size: var(--t-label);
   letter-spacing: 0.08em;
+  color: var(--mute);
+}
+
+/* The integrity line: quiet, and non-negotiable. */
+.expr__integrity {
+  padding: 0.9rem 1.1rem 1rem;
+  border-top: 1px solid var(--edge-soft);
+  font-size: var(--t-small);
+  line-height: 1.6;
   color: var(--mute);
 }
 

@@ -188,57 +188,55 @@
   top: calc(var(--header-h) + 2svh);
 }
 
-/* The gilt, curved: layered moldings whose bead row follows the corner —
-   a dotted border bends where a border-image cannot. Fillet, band, beads,
-   inner fillet, then the deep bezel and the screen. */
+/* The gilt, curved and quiet: a narrow antique trim in relief — catch-light
+   above, shade below, one bright fillet — around a deep bezel. The metal is
+   made by light, not by width. */
 .tv {
-  max-width: 920px;
+  max-width: 880px;
   margin-inline: auto;
-  background: #4a3813;
-  border-radius: clamp(30px, 3.4vw, 48px);
-  padding: 3px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  background: #17130a;
+  border-radius: clamp(34px, 3.6vw, 48px);
+  padding: 2px;
+  box-shadow:
+    0 40px 110px rgba(0, 0, 0, 0.62),
+    0 6px 26px rgba(0, 0, 0, 0.4);
 }
 
 .tv__band {
-  background: #a8863d;
-  border-radius: clamp(28px, 3.2vw, 45px);
-  padding: clamp(7px, 0.9vw, 11px);
+  background: #93732f;
+  border-radius: clamp(32px, 3.4vw, 46px);
+  padding: clamp(6px, 0.8vw, 9px);
+  box-shadow:
+    inset 0 2px 0 rgba(240, 213, 150, 0.85),
+    inset 0 -2px 0 rgba(43, 31, 8, 0.9),
+    inset 0 0 0 1px rgba(255, 236, 190, 0.22);
 }
 
 .tv__bead {
-  border: 3px dotted #dfc180;
-  border-radius: clamp(22px, 2.6vw, 36px);
-  padding: 3px;
-  background: #4a3813;
+  background: #2b1f08;
+  border-radius: clamp(27px, 2.9vw, 39px);
+  padding: 1.5px;
+  box-shadow: inset 0 1px 0 rgba(240, 213, 150, 0.45);
 }
 
 /* The bezel: the Simile posture — deep, rounded, generous. */
 .tv__bezel {
-  background: #141416;
-  border-radius: clamp(19px, 2.3vw, 32px);
-  border: 1.5px solid #2a2113;
-  padding: clamp(1rem, 2vw, 1.9rem);
+  background: #131315;
+  border-radius: clamp(25px, 2.7vw, 37px);
+  padding: clamp(1.1rem, 2.2vw, 2rem);
+  box-shadow:
+    inset 0 2px 12px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px #1d1d20;
 }
 
 .tv__screen {
   position: relative;
   height: min(56svh, 520px);
   background: #08080a;
-  border-radius: clamp(14px, 1.9vw, 26px);
+  border-radius: clamp(16px, 2vw, 26px);
   overflow: hidden;
-}
-
-.tv__labels {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: clamp(0.7rem, 1.4vw, 1rem);
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
+  /* Glass: a quiet vignette pressed into the tube. */
+  box-shadow: inset 0 0 46px rgba(0, 0, 0, 0.55);
 }
 
 /* --- the crawl ----------------------------------------------------------- */
@@ -246,8 +244,8 @@
 .crawl {
   position: absolute;
   inset: 0;
-  perspective: 640px;
-  perspective-origin: 50% 18%;
+  perspective: 950px;
+  perspective-origin: 50% 14%;
   /* The far end dissolves toward the vanishing point. */
   -webkit-mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
   mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
@@ -257,8 +255,8 @@
   position: absolute;
   left: 50%;
   bottom: -4%;
-  width: min(86%, 600px);
-  transform: translateX(-50%) rotateX(30deg);
+  width: min(82%, 560px);
+  transform: translateX(-50%) rotateX(22deg);
   transform-origin: 50% 100%;
 }
 
@@ -275,8 +273,8 @@
   font-family: var(--serif);
   font-size: clamp(1.4375rem, 2.2vw, 1.9375rem);
   font-weight: 500;
-  letter-spacing: -0.006em;
-  line-height: 1.52;
+  letter-spacing: -0.004em;
+  line-height: 1.58;
   color: var(--ink);
 }
 

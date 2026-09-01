@@ -46,25 +46,19 @@
 
 /* --- wordmark --------------------------------------------------------- */
 
+/* The type is the logo. */
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
   flex-shrink: 0;
-  /* The mark is stroked in currentColor and takes the band's ink. */
   color: var(--ink);
-}
-
-.wordmark .mark {
-  display: block;
-  flex: 0 0 auto;
 }
 
 .wordmark__type {
   font-family: var(--mono);
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
   line-height: 1;
@@ -119,10 +113,11 @@
   gap: clamp(1rem, 2vw, 1.75rem);
 }
 
-/* On the narrowest screens the mark stands alone and the action keeps its size. */
+/* On the narrowest screens the wordmark tightens rather than disappears. */
 @media (max-width: 430px) {
   .wordmark__type {
-    display: none;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
   }
 }
 

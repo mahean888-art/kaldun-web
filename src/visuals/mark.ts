@@ -1,18 +1,16 @@
 /**
- * The Foresight Machines mark: a medallion.
+ * The Foresight Machines sigil: the gate of futures.
  *
- * A thin double ring — the instrument's bezel — around the branching line:
- * one past arriving at the present and opening into three futures, with the
- * present marked as a point. Engraved in strokes, in currentColor, so it
- * takes the ink of whatever band it stands on.
+ * An austere, symmetric emblem in straight strokes — from the base line of
+ * what has already happened, a central column rises furthest, flanked by two
+ * columns that branch from it at right angles: three futures standing off
+ * one past. Heraldic, angular, and drawn in currentColor so it takes the
+ * ink of whatever band it stands on.
  */
 
 import { svg } from '../lib/dom';
 
-const TRUNK = 'M9 24H23.5';
-const MID = 'M23.5 24H38';
-const UP = 'M23.5 24C29 24 33 21.4 36.5 16.5';
-const DOWN = 'M23.5 24C29 24 33 26.6 36.5 31.5';
+const SIGIL = 'M10 41H38 M24 41V7 M24 29H14V13 M24 29H34V13';
 
 export function makeMark(size = 26): SVGElement {
   return svg(
@@ -27,22 +25,11 @@ export function makeMark(size = 26): SVGElement {
       class: 'mark',
     },
     [
-      svg('circle', { cx: 24, cy: 24, r: 22.6, stroke: 'currentColor', 'stroke-width': 1.5 }),
-      svg('circle', {
-        cx: 24,
-        cy: 24,
-        r: 19.4,
-        stroke: 'currentColor',
-        'stroke-width': 0.75,
-        opacity: 0.55,
-      }),
       svg('path', {
-        d: `${TRUNK} ${MID} ${UP} ${DOWN}`,
+        d: SIGIL,
         stroke: 'currentColor',
-        'stroke-width': 2.2,
-        'stroke-linecap': 'round',
+        'stroke-width': 3,
       }),
-      svg('circle', { cx: 23.5, cy: 24, r: 2.1, fill: 'currentColor', stroke: 'none' }),
     ],
   );
 }

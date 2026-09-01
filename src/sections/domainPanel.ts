@@ -1,12 +1,12 @@
 /**
  * The domains: a quiet vertical index of five, and one panel at a time —
- * a large question, one line on what the Machine returns, and one
- * diagrammatic material. Selection by click and keyboard.
+ * the selection names itself, then the large question, then one line on
+ * what the Machine returns. Writing only; the words carry the section.
+ * Selection by click and by keyboard.
  */
 
 import { el } from '../lib/dom';
 import type { Domain } from '../data/domains';
-import { initMotif, type MotifHandle } from '../visuals/motif';
 
 type Options = {
   root: HTMLElement;
@@ -34,28 +34,23 @@ export function initDomainPanel({ root, items, label }: Options): void {
     ),
   );
 
-  const index = el('div', { class: 'dpanel__index', role: 'tablist', 'aria-label': label, 'aria-orientation': 'vertical' }, tabs);
+  const index = el(
+    'div',
+    { class: 'dpanel__index', role: 'tablist', 'aria-label': label, 'aria-orientation': 'vertical' },
+    tabs,
+  );
 
+  const tag = el('p', { class: 'dpanel__tag' }, [`${items[0]!.ordinal} — ${items[0]!.label}`]);
   const question = el('h3', { class: 'dpanel__question' }, [items[0]!.question]);
   const returns = el('p', { class: 'dpanel__returns' }, [items[0]!.returns]);
-  const figure = el('div', { class: 'dpanel__motif' }, []);
-  const canvas = document.createElement('canvas');
-  canvas.setAttribute('aria-hidden', 'true');
-  figure.append(canvas);
 
-  const panel = el('div', { class: 'dpanel__panel', id: 'domain-panel', role: 'tabpanel', 'aria-labelledby': 'domain-tab-01' }, [
-    question,
-    returns,
-    figure,
-  ]);
+  const panel = el(
+    'div',
+    { class: 'dpanel__panel', id: 'domain-panel', role: 'tabpanel', 'aria-labelledby': 'domain-tab-01' },
+    [tag, question, returns],
+  );
 
   root.append(index, panel);
-
-  let motif: MotifHandle | null = null;
-  // The canvas needs layout before its first draw.
-  requestAnimationFrame(() => {
-    motif = initMotif(canvas, items[0]!.motif);
-  });
 
   let active = 0;
   const select = (i: number, focus = false): void => {
@@ -67,9 +62,9 @@ export function initDomainPanel({ root, items, label }: Options): void {
     });
     panel.setAttribute('aria-labelledby', `domain-tab-${item.ordinal}`);
     panel.classList.remove('is-in');
+    tag.textContent = `${item.ordinal} — ${item.label}`;
     question.textContent = item.question;
     returns.textContent = item.returns;
-    motif?.set(item.motif);
     requestAnimationFrame(() => panel.classList.add('is-in'));
     if (focus) tabs[i]?.focus();
   };
@@ -84,6 +79,5 @@ export function initDomainPanel({ root, items, label }: Options): void {
     });
   });
 
-  // First panel settles in without animation jank.
   panel.classList.add('is-in');
 }

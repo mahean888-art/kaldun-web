@@ -267,33 +267,14 @@
 .horizon__inner {
   display: flex;
   flex-direction: column;
-  min-height: min(70svh, 40rem);
+  min-height: min(62svh, 34rem);
   padding-block: clamp(3rem, 7vh, 5.5rem) clamp(1.25rem, 3vh, 2rem);
 }
 
 @media (min-width: 1000px) {
   .horizon__inner {
-    min-height: min(82svh, 50rem);
+    min-height: min(72svh, 44rem);
   }
-}
-
-/* The invitation, alone in the sky. */
-.horizon__statement {
-  font-family: var(--serif);
-  font-size: clamp(1.6rem, 3vw, 2.875rem);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.16;
-  color: var(--ink);
-  max-width: 24ch;
-}
-
-.horizon__support-line {
-  margin-top: clamp(0.9rem, 2vh, 1.4rem);
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--mute);
-  max-width: 44ch;
 }
 
 /* Open sky above the floor. */
@@ -428,12 +409,4 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--faint);
-}
-
-/* One unsealed record at the edge of the page — the signal window's echo. */
-.horizon__pending {
-  border: 1px solid var(--edge-soft);
-  padding: 0.4em 0.7em;
-  color: var(--mute);
-  white-space: nowrap;
 }

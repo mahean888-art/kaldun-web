@@ -90,25 +90,13 @@
   color: inherit;
 }
 
-/* --- 02 · the machine: the loop as a list -------------------------------- */
+/* --- 02 · the machine: shown by a run ------------------------------------
+   Not a description of stages — the document the machine returns for one
+   decision. Stage names down a grey margin, the output in ink, the futures
+   as a weighted distribution drawn in type. Two specimens behind a switch. */
 
-.machine {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-}
-
-@media (min-width: 1000px) {
-  .machine {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(3rem, 8vw, 9rem);
-  }
-
-  .machine__lede {
-    position: sticky;
-    top: calc(var(--header-h) + 2.5rem);
-  }
+.machine__lede {
+  max-width: 62ch;
 }
 
 .machine__lead {
@@ -120,64 +108,205 @@
   max-width: 46ch;
 }
 
-.loop {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: var(--hairline);
+.run {
+  margin-top: clamp(3rem, 6vw, 5.5rem);
+  max-width: 1180px;
 }
 
-.loop__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.35rem 1.5rem;
-  padding-block: clamp(1.1rem, 2.2vw, 1.6rem);
-  border-bottom: var(--hairline-soft);
+.run__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: baseline;
-}
-
-@media (min-width: 640px) {
-  .loop__row {
-    grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto;
-  }
-}
-
-.loop__name {
-  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
-  font-weight: 400;
-  letter-spacing: -0.012em;
-  color: var(--ink);
-}
-
-.loop__line {
-  font-size: var(--t-body);
-  font-weight: 300;
-  line-height: 1.5;
-  color: var(--mute);
-}
-
-.loop__arrow {
-  display: none;
-  color: var(--mute);
-}
-
-@media (min-width: 640px) {
-  .loop__arrow {
-    display: block;
-    justify-self: end;
-  }
-}
-
-/* The loop closes on itself: the last row is the first row's reason. */
-.loop__row--again {
+  gap: 0.75rem 2rem;
+  padding-bottom: 0.9rem;
   border-bottom: var(--hairline);
 }
 
-.loop__row--again .loop__name {
+.run__switch {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.run__tab {
+  padding-block: 0.25em;
+  font-size: var(--t-body);
+  color: var(--mute);
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
+}
+
+.run__tab:hover {
+  color: var(--ink);
+}
+
+.run__tab[aria-selected='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.run__note {
+  font-size: var(--t-small);
+  color: var(--faint);
+}
+
+.run__doc {
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+
+.run__doc.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.run__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4rem 2rem;
+  padding-block: clamp(1.25rem, 2.4vw, 1.9rem);
+  border-bottom: var(--hairline-soft);
+}
+
+@media (min-width: 700px) {
+  .run__stage {
+    grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+  }
+}
+
+.run__stagename {
+  font-size: var(--t-body);
+  color: var(--mute);
+}
+
+.run__body {
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  color: var(--ink);
+  max-width: 64ch;
+}
+
+.run__body a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--edge);
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+
+.run__body a:hover {
+  border-bottom-color: var(--ink);
+}
+
+.run__id,
+.run__hash {
+  font-family: var(--mono);
+  font-size: 0.94em;
+  letter-spacing: 0.04em;
+}
+
+/* The decision reads as the document's title. */
+.run__decision {
   font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
-  color: var(--signal);
+  font-size: clamp(1.375rem, 2vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  max-width: 34ch;
+  text-wrap: balance;
+}
+
+.run__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.run__opt {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.run__key {
+  color: var(--mute);
+}
+
+.run__caption {
+  font-size: var(--t-small);
+  color: var(--mute);
+  margin-bottom: 0.75rem;
+}
+
+/* The distribution, drawn in type: weight, bar, path. */
+.run__paths {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.run__path {
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  grid-template-areas:
+    'w bar'
+    'text text';
+  gap: 0.3rem 1rem;
+  align-items: center;
+}
+
+@media (min-width: 700px) {
+  .run__path {
+    grid-template-columns: 2.8rem minmax(90px, 22%) minmax(0, 1fr) auto;
+    grid-template-areas: 'w bar text tail';
+  }
+}
+
+.run__w {
+  grid-area: w;
+  font-size: var(--t-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.run__bar {
+  grid-area: bar;
+  position: relative;
+  height: 2px;
+  background: var(--edge-soft);
+}
+
+.run__bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--w, 0) / var(--wmax, 1) * 100%);
+  background: var(--ink);
+}
+
+.run__text {
+  grid-area: text;
+  font-size: var(--t-body);
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.run__tail {
+  grid-area: tail;
+  font-size: var(--t-small);
+  color: var(--faint);
+}
+
+.run__path--tail .run__text {
+  color: var(--mute);
+}
+
+.run__path--tail .run__bar i {
+  background: var(--mute);
 }
 
 /* --- 04 · use cases: pill bar, one case card at a time ------------------- */

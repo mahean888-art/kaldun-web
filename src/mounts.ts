@@ -12,7 +12,9 @@ import { initClock } from './components/clock';
 import { initDecision } from './components/decision';
 import { initManifesto } from './sections/manifesto';
 import { initDomainPanel } from './sections/domainPanel';
+import { initRunPanel } from './sections/runPanel';
 import { DOMAINS } from './data/domains';
+import { RUNS } from './data/runs';
 import { EMAIL } from './data/site';
 
 /** The address is data, not markup — one place to change it. */
@@ -52,6 +54,9 @@ export function mountHome(root: ParentNode = document): void {
   for (const seam of qsa<HTMLElement>('[data-dissolve]', root)) {
     initDissolve(seam);
   }
+
+  const run = qs<HTMLElement>('[data-run-panel]', root);
+  if (run) initRunPanel({ root: run, items: RUNS });
 
   const domains = qs<HTMLElement>('[data-domain-panel]', root);
   if (domains) {

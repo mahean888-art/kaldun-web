@@ -13,8 +13,6 @@
   --panel-2: #19191d;
   --edge: #232326;
   --edge-soft: #1b1b1e;
-  /* One lifted slab for the rare card: no border, soft corners. */
-  --surface: #161618;
 
   /* --- ink ramp ----------------------------------------------------------- */
   --ink: #f4f3f0;
@@ -37,10 +35,6 @@
      until the Horizon's name outdoes it. */
   --t-hero: clamp(2.4rem, 5.6vw, 5.75rem);
   --t-d1: clamp(2rem, 5vw, 4.25rem);
-  /* Section headlines below the hero: the Taste register — 32 → 48px, never
-     louder. The hero is the only huge type on the page. */
-  --t-h2: clamp(2rem, 3vw, 3rem);
-  --t-h3: clamp(1.5rem, 2vw, 2rem);
   --t-d2: clamp(1.6rem, 3.4vw, 2.75rem);
   --t-d3: clamp(1.3rem, 2.3vw, 1.875rem);
   --t-d4: clamp(1.0625rem, 1.5vw, 1.3125rem);
@@ -100,7 +94,6 @@
   --panel-2: #e9e6de;
   --edge: #e0dcd2;
   --edge-soft: #ebe8e0;
-  --surface: #f1efe9;
 
   --ink: #141413;
   --ink-2: #3d4046;

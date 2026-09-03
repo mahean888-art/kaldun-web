@@ -12,6 +12,26 @@
   text-wrap: balance;
 }
 
+/* Every section headline below the hero. Quiet, left, one size. */
+.t-h2 {
+  font-family: var(--serif);
+  font-size: var(--t-h2);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+/* Emphasis by tone, not size: the lead phrase in ink, the rest in grey. */
+.two-tone {
+  color: var(--mute);
+}
+
+.two-tone em {
+  font-style: normal;
+  color: var(--ink);
+}
+
 .t-d2 {
   font-size: var(--t-d2);
   font-weight: 600;

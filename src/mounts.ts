@@ -7,7 +7,6 @@ import { qs, qsa } from './lib/dom';
 import { mountMarks } from './visuals/mark';
 import { initBranches } from './visuals/branches';
 import { initDissolve } from './visuals/dissolve';
-import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
 import { initClock } from './components/clock';
 import { initDecision } from './components/decision';
@@ -49,9 +48,6 @@ export function mountHome(root: ParentNode = document): void {
 
   const manifesto = qs<HTMLElement>('[data-manifesto]', root);
   if (manifesto) initManifesto(manifesto);
-
-  const instrument = qs<HTMLElement>('[data-instrument]', root);
-  if (instrument) initInstrument(instrument);
 
   for (const seam of qsa<HTMLElement>('[data-dissolve]', root)) {
     initDissolve(seam);

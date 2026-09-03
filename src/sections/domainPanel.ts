@@ -1,7 +1,7 @@
 /**
  * The domains: a quiet vertical index of five, and one panel at a time —
- * the selection names itself, then the large question, then one line on
- * what the Machine returns. Writing only; the words carry the section.
+ * the question, then one line on what the Machine returns. Writing only;
+ * the words carry the section.
  * Selection by click and by keyboard.
  */
 
@@ -30,7 +30,7 @@ export function initDomainPanel({ root, items, label }: Options): void {
         'aria-selected': String(i === 0),
         tabindex: i === 0 ? '0' : '-1',
       },
-      [el('span', { class: 'dpanel__no' }, [item.ordinal]), el('span', {}, [item.label])],
+      [el('span', {}, [item.label])],
     ),
   );
 
@@ -40,14 +40,13 @@ export function initDomainPanel({ root, items, label }: Options): void {
     tabs,
   );
 
-  const tag = el('p', { class: 'dpanel__tag' }, [`${items[0]!.ordinal} — ${items[0]!.label}`]);
   const question = el('h3', { class: 'dpanel__question' }, [items[0]!.question]);
   const returns = el('p', { class: 'dpanel__returns' }, [items[0]!.returns]);
 
   const panel = el(
     'div',
     { class: 'dpanel__panel', id: 'domain-panel', role: 'tabpanel', 'aria-labelledby': 'domain-tab-01' },
-    [tag, question, returns],
+    [question, returns],
   );
 
   root.append(index, panel);
@@ -62,7 +61,6 @@ export function initDomainPanel({ root, items, label }: Options): void {
     });
     panel.setAttribute('aria-labelledby', `domain-tab-${item.ordinal}`);
     panel.classList.remove('is-in');
-    tag.textContent = `${item.ordinal} — ${item.label}`;
     question.textContent = item.question;
     returns.textContent = item.returns;
     requestAnimationFrame(() => panel.classList.add('is-in'));

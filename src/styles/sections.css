@@ -6,8 +6,11 @@
 
 /* --- section label ------------------------------------------------------ */
 
-/* Each movement opens with one quiet word; the grain seams carry the rest. */
+/* Each movement opens with one quiet word in the body face — sentence case,
+   no numeral, no tracking. The grain seams carry the rest. */
 .band__label {
+  font-size: var(--t-body);
+  font-weight: 400;
   color: var(--mute);
   margin-bottom: clamp(1.75rem, 4vw, 3rem);
 }
@@ -17,133 +20,180 @@
   padding-block-start: clamp(5rem, 14vh, 10rem);
 }
 
-/* --- 01 · the machine --------------------------------------------------- */
+/* --- 01 · the manifesto: a reading column --------------------------------
+   The Taste posture: the headline holds the left, the argument reads down
+   the right in a light grey column. Each paragraph brightens to ink as it
+   crosses the reading line — the reader's own scroll is the only motion. */
 
-.instrument {
-  position: relative;
-  width: 100%;
-  /* Chart paper: a faint dashed grid behind the wiring diagram. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f4f3f0' stroke-opacity='.06' stroke-dasharray='3 5'/%3E%3C/svg%3E");
+.manifesto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
 }
 
-.instrument__figure svg {
-  display: block;
-  width: 100%;
-  height: auto;
+@media (min-width: 900px) {
+  .manifesto {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(3rem, 8vw, 9rem);
+  }
+
+  .manifesto__head {
+    position: sticky;
+    top: calc(var(--header-h) + 2.5rem);
+  }
 }
 
-/* The conduits. */
-.instrument__figure path[data-arrow] {
-  fill: none;
-  stroke-width: 7;
-  stroke-linecap: round;
+.manifesto__column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 2.4vw, 2rem);
+  max-width: 58ch;
 }
 
-.instrument__figure [data-arrow='amber'] {
-  stroke: var(--signal);
+.manifesto__para {
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  color: var(--faint);
+  transition: color 0.55s var(--ease-out);
 }
 
-.instrument__figure [data-arrow='grey'] {
-  stroke: #6f6e68;
+.manifesto__para.is-lit {
+  color: var(--ink);
 }
 
-.instrument__figure .ins__dot {
-  fill: var(--ink);
-}
-
-/* The state stations — where the loop begins and begins again — in gold. */
-.instrument__figure .ins__dot--t {
-  fill: var(--signal);
-}
-
-/* The chevron that ends each conduit. */
-.instrument__figure .ins__head {
-  fill: none;
-  stroke-width: 7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* The pale pulse that travels each conduit. */
-.instrument__figure .ins__pulse {
-  fill: none;
-  stroke: #ffffff;
-  stroke-opacity: 0.9;
-  stroke-width: 4.5;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-/* Station names and their data lines. */
-.instrument__figure .ins__name {
-  font-family: var(--sans);
-  font-size: 27px;
+.manifesto__para--declare {
+  font-family: var(--serif);
+  font-size: var(--t-h3);
   font-weight: 500;
-  letter-spacing: -0.02em;
-  fill: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  padding-block: 0.35em;
 }
 
-.instrument__figure .ins__sub {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: var(--mute);
+.manifesto__para--close {
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: var(--hairline-soft);
 }
 
-/* Conduit labels, written in the conduit's own colour. */
-.instrument__figure .ins__label {
-  font-family: var(--sans);
-  font-size: 19px;
-  font-weight: 500;
+.manifesto__para--close.is-lit {
+  color: var(--mute);
+}
+
+.manifesto__para--close.is-lit em {
+  color: var(--ink);
+}
+
+.manifesto__para--close em {
+  color: inherit;
+}
+
+/* --- 02 · the machine: the loop as a list -------------------------------- */
+
+.machine {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .machine {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(3rem, 8vw, 9rem);
+  }
+
+  .machine__lede {
+    position: sticky;
+    top: calc(var(--header-h) + 2.5rem);
+  }
+}
+
+.machine__lead {
+  margin-top: clamp(1.25rem, 2.4vw, 2rem);
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  max-width: 46ch;
+}
+
+.loop {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--hairline);
+}
+
+.loop__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem 1.5rem;
+  padding-block: clamp(1.1rem, 2.2vw, 1.6rem);
+  border-bottom: var(--hairline-soft);
+  align-items: baseline;
+}
+
+@media (min-width: 640px) {
+  .loop__row {
+    grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto;
+  }
+}
+
+.loop__name {
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+  font-weight: 400;
   letter-spacing: -0.012em;
+  color: var(--ink);
 }
 
-.instrument__figure .ins__label--amber {
+.loop__line {
+  font-size: var(--t-body);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mute);
+}
+
+.loop__arrow {
+  display: none;
+  color: var(--mute);
+}
+
+@media (min-width: 640px) {
+  .loop__arrow {
+    display: block;
+    justify-self: end;
+  }
+}
+
+/* The loop closes on itself: the last row is the first row's reason. */
+.loop__row--again {
+  border-bottom: var(--hairline);
+}
+
+.loop__row--again .loop__name {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 22px;
-  fill: var(--signal);
-}
-
-.instrument__figure .ins__name--sm {
-  font-size: 21px;
-}
-
-.instrument__figure .ins__sub--sm {
-  font-size: 11.5px;
-}
-
-/* The time symbols that open each station. */
-.instrument__figure .ins__sym {
-  font-family: var(--mono);
-  fill: var(--signal);
-}
-
-/* The run index above each station — 1 / 6 through 6 / 6. */
-.instrument__figure .ins__idx {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  fill: var(--faint);
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  color: var(--signal);
 }
 
 /* --- 04 · use cases: pill bar, one case card at a time ------------------- */
 
 .usecases__head {
-  text-align: center;
-  margin-inline: auto;
-  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
   max-width: 62ch;
 }
 
 .usecases__title {
   font-family: var(--serif);
-  font-size: clamp(1.875rem, 3.8vw, 3.25rem);
+  font-size: var(--t-h2);
   font-weight: 500;
   letter-spacing: -0.012em;
-  line-height: 1.1;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .usecases__title em {
@@ -152,12 +202,12 @@
 }
 
 .usecases__sub {
-  margin-top: 1rem;
-  font-size: var(--t-body);
-  line-height: 1.6;
+  margin-top: 1.1rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  font-weight: 300;
+  line-height: 1.5;
   color: var(--mute);
-  max-width: 52ch;
-  margin-inline: auto;
+  max-width: 46ch;
 }
 
 /* The wedge: one quiet line under the cards, where we actually begin. */
@@ -167,143 +217,6 @@
   max-width: 58ch;
   color: var(--mute);
   line-height: 1.7;
-}
-
-/* --- the manifesto: the set and the crawl --------------------------------
-   The Simile posture: one big molded charcoal slab of a television —
-   generous rounded corners, a thick clean bezel, a rounded screen inset —
-   sitting on the dark page. Inside it, the argument crawls into depth,
-   driven only by the reader's own scroll (the --p variable). Without JS,
-   or under reduced motion, the manifesto stands flat inside the screen. */
-
-.signal {
-  margin-top: clamp(1.5rem, 4vh, 3rem);
-}
-
-.signal.is-live {
-  height: calc(6 * 60svh);
-}
-
-.signal.is-live .signal__stick {
-  position: sticky;
-  top: calc(var(--header-h) + 2svh);
-}
-
-/* The set: molded plastic, not ornament. */
-.tv {
-  max-width: min(1040px, 100%);
-  margin-inline: auto;
-  padding: clamp(20px, 2.6vw, 34px);
-  background: #161618;
-  border-radius: clamp(36px, 4.5vw, 56px);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.06),
-    inset 0 -3px 8px rgba(0, 0, 0, 0.55),
-    0 40px 110px rgba(0, 0, 0, 0.62),
-    0 6px 26px rgba(0, 0, 0, 0.4);
-}
-
-.tv__screen {
-  position: relative;
-  height: min(58svh, 560px);
-  background: #08080a;
-  border-radius: clamp(16px, 2vw, 28px);
-  overflow: hidden;
-  /* Glass: a quiet vignette pressed into the tube. */
-  box-shadow:
-    inset 0 0 46px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-}
-
-/* --- the crawl ----------------------------------------------------------- */
-
-.crawl {
-  position: absolute;
-  inset: 0;
-  perspective: 950px;
-  perspective-origin: 50% 14%;
-  /* The far end dissolves toward the vanishing point. */
-  -webkit-mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
-}
-
-.crawl__plane {
-  position: absolute;
-  left: 50%;
-  bottom: -4%;
-  width: min(82%, 560px);
-  transform: translateX(-50%) rotateX(22deg);
-  transform-origin: 50% 100%;
-}
-
-.crawl__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.2em;
-  text-align: center;
-  transform: translate3d(0, calc(94% - var(--p, 0) * 102%), 0);
-  will-change: transform;
-}
-
-.crawl__para {
-  font-family: var(--serif);
-  font-size: clamp(1.4375rem, 2.2vw, 1.9375rem);
-  font-weight: 500;
-  letter-spacing: -0.004em;
-  line-height: 1.58;
-  color: var(--ink);
-}
-
-.crawl__para--declare {
-  font-size: clamp(2rem, 3.4vw, 3.25rem);
-  line-height: 1.1;
-  letter-spacing: -0.014em;
-  color: var(--signal);
-  padding-block: 0.4em;
-}
-
-/* Flat and readable when the choreography is off. */
-.signal:not(.is-live) .tv__screen {
-  height: auto;
-  padding: clamp(1.5rem, 3vw, 3rem);
-}
-
-.signal:not(.is-live) .crawl {
-  position: static;
-  perspective: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.signal:not(.is-live) .crawl__plane {
-  position: static;
-  width: auto;
-  max-width: 620px;
-  margin-inline: auto;
-  transform: none;
-}
-
-.signal:not(.is-live) .crawl__text {
-  transform: none;
-}
-
-/* The set's caption: a title card, centered beneath the frame. */
-.manifesto__close {
-  font-family: var(--serif);
-  font-size: var(--t-d2);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.18;
-  color: var(--ink);
-  text-align: center;
-  max-width: 26ch;
-  margin-inline: auto;
-  margin-top: clamp(3rem, 7vh, 4.5rem);
-  text-wrap: balance;
-}
-
-.manifesto__close em {
-  color: var(--signal);
 }
 
 /* --- the domains: quiet index, one panel -------------------------------- */
@@ -332,33 +245,35 @@
 .dpanel__tab {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: 1rem;
-  padding: clamp(0.8rem, 1.6vw, 1.05rem) 0;
-  border-bottom: var(--hairline);
+  width: 100%;
+  padding: clamp(0.9rem, 1.6vw, 1.15rem) 0;
+  border-bottom: var(--hairline-soft);
   text-align: left;
   cursor: pointer;
-  font-family: var(--serif);
-  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
-  font-weight: 500;
+  font-size: clamp(1rem, 1.25vw, 1.1875rem);
+  font-weight: 400;
   letter-spacing: -0.008em;
   color: var(--mute);
   transition: color var(--dur-1) var(--ease-out);
 }
 
-.dpanel__tab:hover,
-.dpanel__tab[aria-selected='true'] {
+.dpanel__tab::after {
+  content: '→';
+  color: var(--faint);
+  opacity: 0;
+  transition: opacity var(--dur-1) var(--ease-out);
+}
+
+.dpanel__tab[aria-selected='true']::after {
+  opacity: 1;
   color: var(--ink);
 }
 
-.dpanel__no {
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.08em;
-  color: var(--faint);
-}
-
-.dpanel__tab[aria-selected='true'] .dpanel__no {
-  color: var(--mute);
+.dpanel__tab:hover,
+.dpanel__tab[aria-selected='true'] {
+  color: var(--ink);
 }
 
 .dpanel__panel {
@@ -372,33 +287,25 @@
   transform: none;
 }
 
-.dpanel__tag {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
 .dpanel__question {
   font-family: var(--serif);
-  font-size: clamp(1.6rem, 3vw, 2.75rem);
+  font-size: var(--t-h2);
   font-weight: 500;
   letter-spacing: -0.012em;
-  line-height: 1.18;
+  line-height: 1.15;
   color: var(--ink);
-  max-width: 26ch;
+  max-width: 24ch;
   text-wrap: balance;
 }
 
 .dpanel__returns {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
   padding-top: clamp(1.25rem, 2.4vw, 1.75rem);
-  border-top: 1px solid var(--edge-soft);
-  font-size: var(--t-lead);
-  line-height: 1.62;
-  color: var(--ink-2);
+  border-top: var(--hairline-soft);
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--mute);
   max-width: 46ch;
 }
 
@@ -435,9 +342,9 @@
 
 .record__title {
   font-family: var(--serif);
-  font-size: var(--t-d1);
+  font-size: var(--t-h2);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.15;
   letter-spacing: -0.012em;
   text-wrap: balance;
 }
@@ -463,36 +370,37 @@
   color: var(--ink-2);
 }
 
-/* The sample record: a precise institutional slip. */
+/* The sample record: one lifted slab, sentence case, only the hash in mono. */
 .slip {
   width: 100%;
   max-width: 480px;
   margin-inline: auto;
-  border: var(--hairline);
-  background: color-mix(in srgb, var(--panel) 55%, transparent);
+  background: var(--surface);
+  border-radius: 10px;
   padding: clamp(1.5rem, 2.6vw, 2.25rem);
 }
 
 .slip__rows p {
   display: grid;
-  grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 7rem) minmax(0, 1fr);
   gap: 0.5rem 1rem;
-  padding-block: 0.55rem;
-  border-bottom: 1px solid var(--edge-soft);
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--faint);
+  padding-block: 0.7rem;
+  border-bottom: var(--hairline-soft);
+  font-size: var(--t-body);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--mute);
 }
 
 .slip__rows b {
-  font-weight: 500;
-  color: var(--ink-2);
+  font-weight: 400;
+  color: var(--ink);
 }
 
-.slip__rows p:first-child b {
-  color: var(--ink);
+.slip__hash {
+  font-family: var(--mono);
+  font-size: 0.94em;
+  letter-spacing: 0.04em;
 }
 
 .slip__rows p:last-child b {
@@ -501,11 +409,8 @@
 
 .slip__more {
   margin-top: 1.1rem;
-  padding-block: 0.35em;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  padding-block: 0.25em;
+  font-size: var(--t-body);
   color: var(--mute);
   border-bottom: 1px solid var(--edge);
   cursor: pointer;
@@ -519,14 +424,13 @@
 .slip__history {
   margin-top: 1.1rem;
   padding-top: 1.1rem;
-  border-top: 1px solid var(--edge-soft);
+  border-top: var(--hairline-soft);
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: var(--t-body);
+  font-weight: 300;
+  line-height: 1.4;
   color: var(--mute);
 }
 
@@ -534,16 +438,14 @@
   display: none;
 }
 
-
-
 /* --- research ------------------------------------------------------------- */
 
 .research__statement {
   font-family: var(--serif);
-  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  font-size: var(--t-h2);
   font-weight: 500;
-  letter-spacing: -0.014em;
-  line-height: 1.08;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
   color: var(--ink);
   max-width: 24ch;
   text-wrap: balance;
@@ -583,12 +485,9 @@
 }
 
 .fellowship__project {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: var(--t-body);
   color: var(--mute);
+  margin-bottom: 0.35rem;
 }
 
 .fellowship__number {
@@ -604,87 +503,6 @@
 
 .axiom--sm {
   font-size: var(--t-d4);
-}
-
-/* --- 03 · the machine: layout, expressions ------------------------------- */
-
-.machine__top {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: end;
-}
-
-@media (min-width: 1000px) {
-  .machine__top {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  }
-}
-
-.instrument__figure {
-  max-width: 560px;
-  margin-inline: auto;
-}
-
-@media (min-width: 760px) {
-  .instrument__figure {
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
-/* The two conditionals, bare on the page — no card, just the mathematics. */
-.expr {
-  max-width: 560px;
-}
-
-.expr__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.35rem 1.5rem;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--edge-soft);
-}
-
-.expr__who {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.expr code {
-  font-family: var(--mono);
-  font-size: clamp(0.9375rem, 1.2vw, 1.125rem);
-  color: var(--ink);
-}
-
-.expr code sub {
-  font-size: 0.7em;
-}
-
-.expr__row--fm code {
-  color: var(--signal);
-}
-
-.expr__legend {
-  padding: 0.8rem 0;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.08em;
-  color: var(--mute);
-}
-
-/* The integrity line: quiet, and non-negotiable. */
-.expr__integrity {
-  padding: 0.9rem 0 0;
-  border-top: 1px solid var(--edge-soft);
-  font-size: var(--t-small);
-  line-height: 1.6;
-  color: var(--mute);
 }
 
 /* --- 03 · capital -------------------------------------------------------- */

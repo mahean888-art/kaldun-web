@@ -9,7 +9,6 @@ import { initBranches } from './visuals/branches';
 import { initDissolve } from './visuals/dissolve';
 import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
-import { initClock } from './components/clock';
 import { initDecision } from './components/decision';
 import { initManifesto } from './sections/manifesto';
 import { initDomainPanel } from './sections/domainPanel';
@@ -39,7 +38,6 @@ function wireSlip(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
-  initClock(root);
   wireEmail(root);
   initDecision(root);
   wireSlip(root);

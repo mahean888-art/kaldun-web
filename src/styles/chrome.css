@@ -34,23 +34,19 @@
   border-bottom-color: var(--edge-soft);
 }
 
-/* Over the field the bar is the field: no dark band while colour is on screen,
-   and the index reads in cream rather than the dark ground's grey. */
-.site-header.is-stuck.is-on-field {
-  background: var(--field);
-  border-bottom-color: transparent;
-}
-
-.site-header.is-on-field .site-nav__item {
-  color: rgba(243, 236, 223, 0.74);
-}
-
-.site-header.is-on-field .site-nav__item:hover {
-  color: #f3ecdf;
-}
-
-.site-header.is-on-field .site-nav__item sup {
-  color: rgba(243, 236, 223, 0.5);
+/* Over the light hero the bar is light: the wordmark, the index, and the
+   action invert with it, and once stuck it stands on bone. */
+.site-header.is-on-light {
+  --ground: #f7f5f0;
+  --ground-2: #f0ede6;
+  --ink: #141413;
+  --ink-2: #3d4046;
+  --mute: #6b6e66;
+  --faint: #9a9c93;
+  --signal: #101013;
+  --signal-hi: #000000;
+  --edge: #dcd7cc;
+  --edge-soft: #e6e2d9;
 }
 
 .site-header__inner {
@@ -359,23 +355,6 @@
   content: '·';
   color: var(--faint);
   margin-inline: 0.9em;
-}
-
-.horizon__state {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1.5rem;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  font-variant-numeric: tabular-nums;
-}
-
-.horizon__state b {
-  font-weight: 500;
-  color: var(--ink-2);
 }
 
 .horizon__contacts {

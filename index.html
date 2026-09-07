@@ -8,7 +8,7 @@
       name="description"
       content="Run the future of a decision before you make it. Foresight Machines builds the world a consequential decision depends on, tests the actions available to you, and shows the futures that follow."
     />
-    <meta name="theme-color" content="#121214" />
+    <meta name="theme-color" content="#f7f5f0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -48,7 +48,7 @@
 
     <main id="main">
       <!-- ============ HERO ============ -->
-      <section class="hero theme-field" id="top">
+      <section class="hero theme-light" id="top">
         <div class="hero__dial" aria-hidden="true">
           <canvas data-branches></canvas>
         </div>
@@ -71,7 +71,6 @@
         <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 460ms">
           <p class="hero__ledger">
             <span class="hero__mark" aria-hidden="true"></span>
-            <span class="hero__ledger-time"><b data-utc>&mdash;</b></span>
             <span>State <b>T&#8320;</b></span>
             <span>Futures <b>T&#8321; &rarr; T&#8345;</b></span>
           </p>
@@ -92,7 +91,7 @@
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="field-dark">
+      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
         <canvas></canvas>
       </div>
 
@@ -358,11 +357,6 @@
               <a data-book href="#horizon">Run a decision</a>
             </nav>
 
-            <p class="horizon__state">
-              <span>State: open</span>
-              <span>Time: <b data-utc>—</b></span>
-              <span>Next resolution: unknown</span>
-            </p>
           </div>
 
           <div class="horizon__contacts">

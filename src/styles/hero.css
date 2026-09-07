@@ -141,10 +141,6 @@
   color: var(--ink);
 }
 
-.hero__ledger-time b {
-  font-variant-numeric: tabular-nums;
-}
-
 @media (min-width: 1000px) {
   /* The callout in the empty quadrant: top right, under the header, the way
      Augustus notes the time and the place beside its drawing. */

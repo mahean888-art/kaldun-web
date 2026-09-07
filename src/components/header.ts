@@ -14,7 +14,7 @@ export function initHeader(): void {
 
   const hero = qs<HTMLElement>('.hero');
   let stuck = false;
-  let onField = false;
+  let onLight = false;
   let lastRead = -1;
 
   onFrame((frame: Frame) => {
@@ -24,11 +24,11 @@ export function initHeader(): void {
       header.classList.toggle('is-stuck', stuck);
     }
 
-    // While the field is still under the bar, the bar wears the field.
-    const nextOnField = hero ? frame.scrollY < hero.offsetTop + hero.offsetHeight - header.offsetHeight : false;
-    if (nextOnField !== onField) {
-      onField = nextOnField;
-      header.classList.toggle('is-on-field', onField);
+    // While the light hero is still under the bar, the bar reads light.
+    const nextOnLight = hero ? frame.scrollY < hero.offsetTop + hero.offsetHeight - header.offsetHeight : false;
+    if (nextOnLight !== onLight) {
+      onLight = nextOnLight;
+      header.classList.toggle('is-on-light', onLight);
     }
 
     const doc = document.documentElement;

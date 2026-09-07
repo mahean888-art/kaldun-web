@@ -14,7 +14,7 @@
   --edge: #2a2a2e;
   --edge-soft: #222225;
 
-  /* --- the one colour: the field the site opens on ------------------------ */
+  /* --- the one colour: the hero's drawing and the Research accent --------- */
   --field: #d4502a;
 
   /* --- ink ramp ----------------------------------------------------------- */
@@ -116,43 +116,16 @@
 
   --accent: var(--field);
 
+  /* The drawing in the one colour: the fan's inks on bone. */
+  --fan-ink: 212, 80, 42;
+  --fan-ink-2: 200, 76, 40;
+  --fan-mute: 214, 110, 80;
+  --fan-mute-2: 150, 78, 56;
+
   --hairline: 1px solid var(--edge);
   --hairline-soft: 1px solid var(--edge-soft);
 
   background: var(--ground);
   color: var(--ink);
   color-scheme: light;
-}
-
-/* The field: the one colour, spent once, at the door. Cream type on
-   vermilion, the fan drawn in ink so it crosses the letters the way a
-   silhouette crosses a poster's word. */
-.theme-field {
-  --ground: var(--field);
-  --ground-2: #c9492a;
-  --panel: #c0452a;
-  --panel-2: #b8412a;
-  --edge: rgba(243, 236, 223, 0.28);
-  --edge-soft: rgba(243, 236, 223, 0.16);
-
-  --ink: #f3ecdf;
-  --ink-2: rgba(243, 236, 223, 0.84);
-  --mute: rgba(243, 236, 223, 0.64);
-  --faint: rgba(243, 236, 223, 0.44);
-
-  --signal: #f3ecdf;
-  --signal-hi: #f3ecdf;
-  --signal-2: rgba(243, 236, 223, 0.64);
-  --signal-dim: rgba(243, 236, 223, 0.16);
-
-  --fan-ink: 24, 20, 17;
-  --fan-ink-2: 44, 32, 24;
-  --fan-mute: 76, 34, 22;
-  --fan-mute-2: 96, 42, 28;
-
-  --hairline: 1px solid var(--edge);
-  --hairline-soft: 1px solid var(--edge-soft);
-
-  background: var(--ground);
-  color: var(--ink);
 }

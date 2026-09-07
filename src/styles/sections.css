@@ -408,7 +408,8 @@
 
 .dissolve {
   position: relative;
-  height: clamp(200px, 38vh, 420px);
+  /* A horizon, not a region: thin enough to cross in a glance. */
+  height: clamp(72px, 12vh, 132px);
   pointer-events: none;
 }
 

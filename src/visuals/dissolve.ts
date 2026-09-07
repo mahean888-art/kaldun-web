@@ -1,9 +1,10 @@
 /**
  * The seam between dark and light, crossed the Aaru way: a stochastic dither.
- * Each cell of a coarse grid flips to the destination ground with a
- * probability eased over the band's height, so the theme arrives as grain —
- * gradual, granular, and never a gradient. Painted once, repainted only on
- * resize; nothing runs while the page scrolls.
+ * Each cell of a fine grid flips to the destination ground with a probability
+ * eased over the band's height, so the theme arrives as grain — granular,
+ * hard-edged, and never a gradient. Grains are measured in device pixels and
+ * scaled by an exact integer, so nothing is ever resampled. Painted once,
+ * repainted only on resize; nothing runs while the page scrolls.
  */
 
 import { seeded } from '../lib/math';
@@ -15,8 +16,8 @@ export type DissolveHandle = { destroy: () => void };
 const DARK: [number, number, number] = [10, 10, 11]; // --ground (dark)
 const LIGHT: [number, number, number] = [251, 250, 247]; // --ground (light)
 
-/** Grain size in CSS pixels. */
-const CELL = 3;
+/** Grain size in device pixels: one CSS pixel on a 2× screen, two on a 1×. */
+const CELL_DEVICE = 2;
 
 function smoothstep(t: number): number {
   const x = Math.min(1, Math.max(0, t));
@@ -41,8 +42,8 @@ export function initDissolve(host: HTMLElement): DissolveHandle {
     canvas.width = Math.round(rect.width * ratio);
     canvas.height = Math.round(rect.height * ratio);
 
-    const cols = Math.ceil(rect.width / CELL);
-    const rows = Math.ceil(rect.height / CELL);
+    const cols = Math.ceil(canvas.width / CELL_DEVICE);
+    const rows = Math.ceil(canvas.height / CELL_DEVICE);
 
     // Paint at grain resolution, then scale up with smoothing off — one
     // drawImage instead of tens of thousands of rects.
@@ -56,8 +57,9 @@ export function initDissolve(host: HTMLElement): DissolveHandle {
     const rnd = seeded(1654 + rows);
     for (let y = 0; y < rows; y++) {
       // Hold the pure grounds at both edges so the seam meets its neighbours
-      // exactly, and ease the odds between them.
-      const t = smoothstep((y / (rows - 1)) * 1.14 - 0.07);
+      // exactly, and ease the odds between them — twice, so the mixed zone
+      // gathers at the middle of the band and the grounds stay pure longer.
+      const t = smoothstep(smoothstep((y / (rows - 1)) * 1.14 - 0.07));
       for (let x = 0; x < cols; x++) {
         const c = rnd() < t ? to : from;
         const i = (y * cols + x) * 4;

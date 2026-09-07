@@ -34,9 +34,11 @@
 @media (min-width: 1000px) {
   .hero__dial {
     position: absolute;
-    /* The fan owns the upper right — the full instrument, adjusted to the
-       screen, never cropped — leaving its lower corner to the ledger. */
-    inset: calc(var(--header-h) * 0.9) var(--gutter) 25svh 52%;
+    /* The Augustus relation: the drawing sits low and to the right, its
+       bright origin beneath the display's baseline, so only its far, faint
+       strands rise up behind the letters. It bleeds past the hero's foot —
+       cut by the frame, not boxed. */
+    inset: 30svh var(--gutter) -6svh 42%;
     width: auto;
     height: auto;
     margin: 0;
@@ -52,17 +54,42 @@
   order: 1;
 }
 
-/* The Augustus manner: the discipline IS the display — the biggest, heaviest
-   line on the screen, in the site's own sans, its asterisk resolving in a
-   footnote at the hero's foot. The sentence stands beneath it. */
+/* The Augustus manner: the discipline IS the display — two lines, each as
+   tall as the screen allows, set so tight they nearly touch, the second
+   stepped right so the eye reads a diagonal into the drawing. The asterisk
+   belongs to the display and resolves in the footnote at the hero's foot. */
 .hero__eyebrow {
-  font-size: clamp(2.6rem, 6vw, 6.25rem);
+  font-size: clamp(2.4rem, 12vw, 12.5rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 0.92;
+  letter-spacing: -0.035em;
+  line-height: 0.86;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+  margin-bottom: clamp(1rem, 2.6vh, 2rem);
+}
+
+.hero__eyebrow .line:nth-child(2) > span {
+  padding-left: 0.62em;
+}
+
+@media (max-width: 600px) {
+  /* On a phone the display fills the column the way it fills the screen. */
+  .hero__eyebrow {
+    font-size: 13.2vw;
+  }
+
+  .hero__eyebrow .line:nth-child(2) > span {
+    padding-left: 0.3em;
+  }
+}
+
+/* The drafting mark: the small square that turns a label into a callout. */
+.hero__mark {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--signal);
+  margin-bottom: 0.6rem;
 }
 
 .hero__eyebrow-star {
@@ -114,18 +141,33 @@
   color: var(--ink);
 }
 
+.hero__ledger-time b {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (min-width: 1000px) {
-  /* The ledger stands under the fan — the caption next to the instrument it
-     captions. */
+  /* The callout in the empty quadrant: top right, under the header, the way
+     Augustus notes the time and the place beside its drawing. */
   .hero__brief {
     position: absolute;
-    left: 52%;
+    top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
     right: var(--gutter);
-    bottom: clamp(3.5rem, 11svh, 7.5rem);
-    /* The shell's width: 100% would push past the right edge from here. */
+    left: auto;
+    bottom: auto;
     width: auto;
     margin: 0;
     padding-inline: 0;
+    text-align: right;
+  }
+
+  .hero__ledger {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+
+  .hero__ledger .hero__mark {
+    margin-bottom: 0.3rem;
   }
 }
 
@@ -150,6 +192,10 @@
 }
 
 /* The asterisk's answer. */
+.hero__note .hero__mark {
+  margin-bottom: 0.5rem;
+}
+
 .hero__note {
   font-family: var(--mono);
   font-size: var(--t-label);

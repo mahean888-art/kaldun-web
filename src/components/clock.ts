@@ -1,18 +1,19 @@
 /**
- * The state mark's clock: the machine's own T₀, ticking in UTC — the page
- * always knows what time it believes it is.
+ * The machine's own T₀, ticking in UTC wherever the page shows it — the hero's
+ * callout and the Horizon's state mark keep the same time.
  */
 
-import { qs } from '../lib/dom';
+import { qsa } from '../lib/dom';
 
 export function initClock(root: ParentNode = document): void {
-  const host = qs<HTMLElement>('[data-utc]', root);
-  if (!host) return;
+  const hosts = qsa<HTMLElement>('[data-utc]', root);
+  if (hosts.length === 0) return;
 
   const pad = (n: number): string => String(n).padStart(2, '0');
   const tick = (): void => {
     const d = new Date();
-    host.textContent = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`;
+    const now = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`;
+    for (const host of hosts) host.textContent = now;
   };
 
   tick();

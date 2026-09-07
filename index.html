@@ -8,7 +8,7 @@
       name="description"
       content="Run the future of a decision before you make it. Foresight Machines builds the world a consequential decision depends on, tests the actions available to you, and shows the futures that follow."
     />
-    <meta name="theme-color" content="#0a0a0b" />
+    <meta name="theme-color" content="#121214" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -48,7 +48,7 @@
 
     <main id="main">
       <!-- ============ HERO ============ -->
-      <section class="hero" id="top">
+      <section class="hero theme-field" id="top">
         <div class="hero__dial" aria-hidden="true">
           <canvas data-branches></canvas>
         </div>
@@ -91,6 +91,10 @@
           </p>
         </div>
       </section>
+
+      <div class="dissolve" aria-hidden="true" data-dissolve="field-dark">
+        <canvas></canvas>
+      </div>
 
       <!-- ============ 01 · MANIFESTO ============ -->
       <section class="band band--chapter" id="manifesto">
@@ -150,24 +154,6 @@
                 It does not offer a single asserted future. It runs the present through
                 possible conditions, makes uncertainty visible, and keeps the chain of
                 evidence and assumptions attached to the result.
-              </p>
-            </div>
-
-            <div class="expr" data-reveal="fade">
-              <p class="expr__row">
-                <span class="expr__who">A language model</span>
-                <code>P(&nbsp;token<sub>t+1</sub>&nbsp;|&nbsp;tokens&nbsp;)</code>
-              </p>
-              <p class="expr__row expr__row--fm">
-                <span class="expr__who">A foresight machine</span>
-                <code>P(&nbsp;S<sub>t+1…t+n</sub>&nbsp;|&nbsp;S<sub>t</sub>,&nbsp;A,&nbsp;E,&nbsp;M&nbsp;)</code>
-              </p>
-              <p class="expr__legend">
-                S — current state&ensp;·&ensp;A — contemplated action&ensp;·&ensp;E — evidence&ensp;·&ensp;M — mechanism and assumptions
-              </p>
-              <p class="expr__integrity">
-                Where cause can be identified, the Machine shows its method. Where it cannot,
-                it shows its assumptions.
               </p>
             </div>
           </div>

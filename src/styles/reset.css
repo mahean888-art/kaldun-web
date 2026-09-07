@@ -129,7 +129,7 @@ hr {
 
 /* The scrollbar keeps to the plate. */
 html {
-  scrollbar-color: #232326 #0a0a0b;
+  scrollbar-color: #2a2a2e #121214;
   scrollbar-width: thin;
 }
 
@@ -138,11 +138,11 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0b;
+  background: #121214;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #232326;
   border-radius: 5px;
-  border: 2px solid #0a0a0b;
+  border: 2px solid #121214;
 }

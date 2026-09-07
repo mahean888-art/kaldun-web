@@ -13,8 +13,28 @@ import { onResize } from '../lib/ticker';
 
 export type DissolveHandle = { destroy: () => void };
 
-const DARK: [number, number, number] = [10, 10, 11]; // --ground (dark)
-const LIGHT: [number, number, number] = [251, 250, 247]; // --ground (light)
+type RGB = [number, number, number];
+
+const DARK: RGB = [18, 18, 20]; // --ground (dark), the fallback
+const LIGHT: RGB = [247, 245, 240]; // --ground (light), the fallback
+
+/** An opaque colour from a computed background, or nothing. */
+function opaque(value: string): RGB | null {
+  const m = value.match(/rgba?\((\d+), (\d+), (\d+)(?:, ([\d.]+))?\)/);
+  if (!m || (m[4] !== undefined && Number(m[4]) < 0.5)) return null;
+  return [+m[1]!, +m[2]!, +m[3]!];
+}
+
+/** The ground a neighbour actually stands on: its own, or its nearest ancestor's. */
+function groundOf(start: Element | null): RGB | null {
+  let node: Element | null = start;
+  while (node && node !== document.documentElement) {
+    const c = opaque(getComputedStyle(node).backgroundColor);
+    if (c) return c;
+    node = node.parentElement;
+  }
+  return null;
+}
 
 /** Grain size in device pixels: one CSS pixel on a 2× screen, two on a 1×. */
 const CELL_DEVICE = 2;
@@ -29,11 +49,14 @@ export function initDissolve(host: HTMLElement): DissolveHandle {
   const ctx = canvas?.getContext('2d');
   if (!canvas || !ctx) return { destroy: () => undefined };
 
-  const toLight = host.dataset['dissolve'] !== 'light-dark';
-  const from = toLight ? DARK : LIGHT;
-  const to = toLight ? LIGHT : DARK;
+  const toLight = host.dataset['dissolve'] === 'dark-light';
 
   const draw = (): void => {
+    // The two grounds are whatever the seam actually sits between — so a
+    // colour field dissolves into ink exactly as ink dissolves into bone.
+    const from = groundOf(host.previousElementSibling) ?? (toLight ? DARK : LIGHT);
+    const to = groundOf(host.nextElementSibling) ?? (toLight ? LIGHT : DARK);
+
     // The canvas bleeds past the host (see CSS), so size from its own box —
     // the painted grain must cover every pixel the element can occupy.
     const rect = canvas.getBoundingClientRect();

@@ -12,7 +12,9 @@ export function initHeader(): void {
   const header = qs<HTMLElement>('[data-header]');
   if (!header) return;
 
+  const hero = qs<HTMLElement>('.hero');
   let stuck = false;
+  let onField = false;
   let lastRead = -1;
 
   onFrame((frame: Frame) => {
@@ -20,6 +22,13 @@ export function initHeader(): void {
     if (nextStuck !== stuck) {
       stuck = nextStuck;
       header.classList.toggle('is-stuck', stuck);
+    }
+
+    // While the field is still under the bar, the bar wears the field.
+    const nextOnField = hero ? frame.scrollY < hero.offsetTop + hero.offsetHeight - header.offsetHeight : false;
+    if (nextOnField !== onField) {
+      onField = nextOnField;
+      header.classList.toggle('is-on-field', onField);
     }
 
     const doc = document.documentElement;

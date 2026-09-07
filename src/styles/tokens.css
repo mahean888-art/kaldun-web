@@ -7,18 +7,27 @@
 
 :root {
   /* --- ground: stepped near-blacks --------------------------------------- */
-  --ground: #0a0a0b;
-  --ground-2: #101012;
-  --panel: #151518;
-  --panel-2: #19191d;
-  --edge: #232326;
-  --edge-soft: #1b1b1e;
+  --ground: #121214;
+  --ground-2: #17171a;
+  --panel: #1c1c1f;
+  --panel-2: #202024;
+  --edge: #2a2a2e;
+  --edge-soft: #222225;
+
+  /* --- the one colour: the field the site opens on ------------------------ */
+  --field: #d4502a;
 
   /* --- ink ramp ----------------------------------------------------------- */
-  --ink: #f4f3f0;
-  --ink-2: #b9b7b2;
-  --mute: #8a8880;
-  --faint: #5a5954;
+  --ink: #f2f0eb;
+  --ink-2: #b8b5ae;
+  --mute: #8a8780;
+  --faint: #5b5953;
+
+  /* --- the fan's inks, as r, g, b triplets the canvas reads --------------- */
+  --fan-ink: 255, 255, 255;
+  --fan-ink-2: 244, 243, 240;
+  --fan-mute: 185, 183, 178;
+  --fan-mute-2: 138, 136, 128;
 
   /* --- the signal: pure white, and nothing else --------------------------- */
   --signal: #ffffff;
@@ -88,12 +97,12 @@
    and the one colour on the whole site — a sparing terracotta — exists only
    inside this scope. */
 .theme-light {
-  --ground: #fbfaf7;
-  --ground-2: #f4f2ed;
-  --panel: #efece5;
-  --panel-2: #e9e6de;
-  --edge: #e0dcd2;
-  --edge-soft: #ebe8e0;
+  --ground: #f7f5f0;
+  --ground-2: #f0ede6;
+  --panel: #e9e5dc;
+  --panel-2: #e2ded4;
+  --edge: #dcd7cc;
+  --edge-soft: #e6e2d9;
 
   --ink: #141413;
   --ink-2: #3d4046;
@@ -105,7 +114,7 @@
   --signal-2: #6b6e66;
   --signal-dim: #e9e6de;
 
-  --accent: #d95f45;
+  --accent: var(--field);
 
   --hairline: 1px solid var(--edge);
   --hairline-soft: 1px solid var(--edge-soft);
@@ -113,4 +122,37 @@
   background: var(--ground);
   color: var(--ink);
   color-scheme: light;
+}
+
+/* The field: the one colour, spent once, at the door. Cream type on
+   vermilion, the fan drawn in ink so it crosses the letters the way a
+   silhouette crosses a poster's word. */
+.theme-field {
+  --ground: var(--field);
+  --ground-2: #c9492a;
+  --panel: #c0452a;
+  --panel-2: #b8412a;
+  --edge: rgba(243, 236, 223, 0.28);
+  --edge-soft: rgba(243, 236, 223, 0.16);
+
+  --ink: #f3ecdf;
+  --ink-2: rgba(243, 236, 223, 0.84);
+  --mute: rgba(243, 236, 223, 0.64);
+  --faint: rgba(243, 236, 223, 0.44);
+
+  --signal: #f3ecdf;
+  --signal-hi: #f3ecdf;
+  --signal-2: rgba(243, 236, 223, 0.64);
+  --signal-dim: rgba(243, 236, 223, 0.16);
+
+  --fan-ink: 24, 20, 17;
+  --fan-ink-2: 44, 32, 24;
+  --fan-mute: 76, 34, 22;
+  --fan-mute-2: 96, 42, 28;
+
+  --hairline: 1px solid var(--edge);
+  --hairline-soft: 1px solid var(--edge-soft);
+
+  background: var(--ground);
+  color: var(--ink);
 }

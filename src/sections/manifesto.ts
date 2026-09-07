@@ -2,8 +2,8 @@
  * The manifesto crawl: the argument advances into depth inside the gilt TV.
  *
  * Native scroll only. The TV is position: sticky inside a tall wrapper; this
- * module reads scroll progress (rAF-throttled) into one CSS variable, --p,
- * which the crawl plane's transform consumes — nothing else runs per frame,
+ * module reads scroll progress (rAF-throttled) into one CSS variable, --p, on
+ * the band itself — the set's turn-on and the crawl plane's travel both consume it — nothing else runs per frame,
  * and nothing hijacks the scroll. When the crawl completes, the bezel's
  * state mark flips to committed. Under reduced motion, or without JS, the
  * manifesto stands flat and fully readable inside the screen.
@@ -32,7 +32,7 @@ export function initManifesto(host: HTMLElement): ManifestoHandle {
     const rect = host.getBoundingClientRect();
     const runway = rect.height - window.innerHeight;
     const p = runway <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / runway));
-    crawl.style.setProperty('--p', p.toFixed(4));
+    host.style.setProperty('--p', p.toFixed(4));
     const done = p >= 0.96;
     if (done !== committed) {
       committed = done;

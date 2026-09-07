@@ -117,7 +117,23 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   };
   document.addEventListener('fm:verb', onVerb);
 
+  // The fan's inks come from the page: white on the dark ground, ink-black on
+  // the field. Read once per resize, as "r, g, b" triplets.
+  let INK = '255, 255, 255';
+  let INK2 = '244, 243, 240';
+  let MUTE = '185, 183, 178';
+  let MUTE2 = '138, 136, 128';
+  const readInks = (): void => {
+    const cs = getComputedStyle(canvas);
+    const pick = (name: string, fallback: string): string => cs.getPropertyValue(name).trim() || fallback;
+    INK = pick('--fan-ink', INK);
+    INK2 = pick('--fan-ink-2', INK2);
+    MUTE = pick('--fan-mute', MUTE);
+    MUTE2 = pick('--fan-mute-2', MUTE2);
+  };
+
   const resize = (): void => {
+    readInks();
     const rect = canvas.getBoundingClientRect();
     const ratio = dpr(2);
     w = Math.max(rect.width, 1);
@@ -167,7 +183,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ];
     for (const [fx, label] of marks) {
       const x = w * fx;
-      ctx.strokeStyle = 'rgba(244, 243, 240, 0.06)';
+      ctx.strokeStyle = `rgba(${INK2}, 0.06)`;
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 6]);
       ctx.beginPath();
@@ -175,7 +191,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.lineTo(x, h - 8);
       ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = 'rgba(138, 136, 128, 0.9)';
+      ctx.fillStyle = `rgba(${MUTE2}, 0.9)`;
       ctx.fillText(label, x, 28);
     }
 
@@ -183,7 +199,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     for (let k = 0; k < DUST; k++) {
       const g = dust[k]!;
       const tw = reduced ? 1 : 0.75 + 0.25 * Math.sin(time * 0.0008 + g.tw);
-      ctx.fillStyle = `rgba(185, 183, 178, ${(g.a * tw).toFixed(3)})`;
+      ctx.fillStyle = `rgba(${MUTE}, ${(g.a * tw).toFixed(3)})`;
       ctx.fillRect(g.u * w, g.v * h, g.s, g.s);
     }
 
@@ -215,8 +231,8 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       const wt = current[i]!;
       ctx.strokeStyle =
         tones[i] === 'white'
-          ? `rgba(244, 243, 240, ${(0.04 + wt * 0.18).toFixed(3)})`
-          : `rgba(185, 183, 178, ${(0.04 + wt * 0.26).toFixed(3)})`;
+          ? `rgba(${INK2}, ${(0.04 + wt * 0.18).toFixed(3)})`
+          : `rgba(${MUTE}, ${(0.04 + wt * 0.26).toFixed(3)})`;
       ctx.lineWidth = wt > 0.75 ? 1.3 : 1;
       ctx.beginPath();
       trace(i);
@@ -226,12 +242,12 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     // The burnished leads: a wide soft under-stroke, then a bright core.
     for (const i of leadSet) {
       const wt = current[i]!;
-      ctx.strokeStyle = `rgba(255, 255, 255, ${(0.06 + wt * 0.08).toFixed(3)})`;
+      ctx.strokeStyle = `rgba(${INK}, ${(0.06 + wt * 0.08).toFixed(3)})`;
       ctx.lineWidth = 4.5;
       ctx.beginPath();
       trace(i);
       ctx.stroke();
-      ctx.strokeStyle = `rgba(255, 255, 255, ${(0.42 + wt * 0.5).toFixed(3)})`;
+      ctx.strokeStyle = `rgba(${INK}, ${(0.42 + wt * 0.5).toFixed(3)})`;
       ctx.lineWidth = 1.4;
       ctx.beginPath();
       trace(i);
@@ -242,7 +258,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     // brighter than the rest of its run.
     if (mode === 'build') {
       const lead = order[0]!;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.strokeStyle = `rgba(${INK}, 0.85)`;
       ctx.lineWidth = 1.8;
       ctx.beginPath();
       const [sx, sy] = pointAt(lead, 0.58);
@@ -264,7 +280,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
         const [ax, ay] = pointAt(path, Math.max(0, t0 - 0.045));
         const [bx, by] = pointAt(path, t0);
         const fade = t0 > 0.85 ? (1 - t0) / 0.15 : 1;
-        ctx.strokeStyle = `rgba(255, 255, 255, ${(0.72 * fade).toFixed(3)})`;
+        ctx.strokeStyle = `rgba(${INK}, ${(0.72 * fade).toFixed(3)})`;
         ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(ax, ay);
@@ -274,13 +290,13 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     }
 
     // Everything that has already happened: one measured line, graduated.
-    ctx.strokeStyle = 'rgba(244, 243, 240, 0.5)';
+    ctx.strokeStyle = `rgba(${INK2}, 0.5)`;
     ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(-2, ny);
     ctx.lineTo(nx, ny);
     ctx.stroke();
-    ctx.strokeStyle = 'rgba(244, 243, 240, 0.26)';
+    ctx.strokeStyle = `rgba(${INK2}, 0.26)`;
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let gx = nx - 26; gx > 8; gx -= 26) {
@@ -300,7 +316,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       } else if (phase < PULSE_MS) {
         const p = phase / PULSE_MS;
         const px = p * nx;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+        ctx.strokeStyle = `rgba(${INK}, 0.95)`;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(Math.max(0, px - 16), ny);
@@ -311,7 +327,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
 
     // The present: a small sunburst, engraved.
     const beat = reduced ? 1 : 0.8 + Math.sin(time * 0.0015) * 0.2;
-    ctx.strokeStyle = `rgba(244, 243, 240, ${(0.4 * beat).toFixed(3)})`;
+    ctx.strokeStyle = `rgba(${INK2}, ${(0.4 * beat).toFixed(3)})`;
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let r = 0; r < 12; r++) {
@@ -320,7 +336,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.lineTo(nx + Math.cos(a) * (r % 3 === 0 ? 13 : 10), ny + Math.sin(a) * (r % 3 === 0 ? 13 : 10));
     }
     ctx.stroke();
-    ctx.fillStyle = `rgba(255, 255, 255, ${(0.7 + 0.3 * beat).toFixed(3)})`;
+    ctx.fillStyle = `rgba(${INK}, ${(0.7 + 0.3 * beat).toFixed(3)})`;
     ctx.beginPath();
     ctx.arc(nx, ny, 2.6, 0, Math.PI * 2);
     ctx.fill();
@@ -328,7 +344,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ctx.font = '500 11px "Geist Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillStyle = 'rgba(185, 183, 178, 0.9)';
+    ctx.fillStyle = `rgba(${MUTE}, 0.9)`;
     // On calm hover the present names itself in full.
     ctx.fillText(hovered ? 'STATE T₀' : 'T₀', nx, ny + 18);
   };

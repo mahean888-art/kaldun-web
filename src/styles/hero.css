@@ -88,12 +88,12 @@
   display: block;
   width: 6px;
   height: 6px;
-  background: var(--signal);
+  background: var(--accent);
   margin-bottom: 0.6rem;
 }
 
 .hero__eyebrow-star {
-  color: var(--signal);
+  color: var(--accent);
   margin-left: 0.06em;
 }
 
@@ -221,7 +221,7 @@
   position: absolute;
   inset: -0.1em -0.02em -0.14em -0.02em;
   overflow: hidden;
-  border-bottom: 1.5px solid var(--signal-hi);
+  border-bottom: 1.5px solid var(--accent);
 }
 
 /* A slow crossfade, not a roll: deliberate, never kinetic. */
@@ -230,7 +230,7 @@
   left: 0.02em;
   top: 0.1em;
   white-space: nowrap;
-  color: var(--ink);
+  color: var(--accent);
   transition: opacity 320ms var(--ease-in-out);
 }
 

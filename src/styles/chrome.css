@@ -13,19 +13,6 @@
   transition: background-color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
 }
 
-.site-header::after {
-  /* Reading progress, one white rule. */
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  height: 1px;
-  width: 100%;
-  background: var(--signal);
-  transform: scaleX(var(--read, 0));
-  transform-origin: left center;
-}
-
 .site-header.is-stuck {
   /* Opaque rather than blurred: a backdrop-filter across the full width repaints
      on every scrolled frame and is the single most expensive thing a fixed header

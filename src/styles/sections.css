@@ -40,7 +40,7 @@
 }
 
 .instrument__figure [data-arrow='amber'] {
-  stroke: var(--signal);
+  stroke: var(--accent);
 }
 
 .instrument__figure [data-arrow='grey'] {
@@ -53,7 +53,7 @@
 
 /* The state stations — where the loop begins and begins again — in gold. */
 .instrument__figure .ins__dot--t {
-  fill: var(--signal);
+  fill: var(--accent);
 }
 
 /* The chevron that ends each conduit. */
@@ -104,7 +104,7 @@
   font-family: var(--serif);
   font-style: italic;
   font-size: 22px;
-  fill: var(--signal);
+  fill: var(--accent);
 }
 
 .instrument__figure .ins__name--sm {
@@ -177,11 +177,11 @@
    or under reduced motion, the manifesto stands flat inside the screen. */
 
 .signal {
-  margin-top: clamp(1.5rem, 4vh, 3rem);
+  margin-top: clamp(1rem, 2.5vh, 2rem);
 }
 
 .signal.is-live {
-  height: calc(6 * 60svh);
+  height: calc(5 * 60svh);
 }
 
 .signal.is-live .signal__stick {
@@ -194,8 +194,11 @@
 .tv {
   max-width: min(1040px, 100%);
   margin-inline: auto;
-  transform: scale(calc(0.94 + min(1, var(--p, 0) / 0.12) * 0.06));
-  transform-origin: 50% 60%;
+  /* The whole set opens from a line as it arrives — slab, bezel, and screen
+     together — and settles to size as it seats. */
+  clip-path: inset(calc((1 - var(--open, 0)) * 50%) 0 round clamp(36px, 4.5vw, 56px));
+  transform: scale(calc(0.96 + var(--open, 0) * 0.04));
+  transform-origin: 50% 50%;
   padding: clamp(20px, 2.6vw, 34px);
   background: #161618;
   border-radius: clamp(36px, 4.5vw, 56px);
@@ -212,9 +215,6 @@
   background: #0c0c0e;
   border-radius: clamp(16px, 2vw, 28px);
   overflow: hidden;
-  /* The set turns on: a horizontal sliver that opens vertically over the
-     first stretch of the runway — only then does the crawl begin. */
-  clip-path: inset(calc((1 - min(1, var(--p, 0) / 0.12)) * 50%) 0 round clamp(16px, 2vw, 28px));
   /* Glass: a quiet vignette pressed into the tube. */
   box-shadow:
     inset 0 0 46px rgba(0, 0, 0, 0.55),
@@ -247,7 +247,7 @@
   flex-direction: column;
   gap: 2.2em;
   text-align: center;
-  transform: translate3d(0, calc(94% - max(0, (var(--p, 0) - 0.12) / 0.88) * 102%), 0);
+  transform: translate3d(0, calc(94% - var(--p, 0) * 102%), 0);
   will-change: transform;
 }
 
@@ -271,12 +271,12 @@
 /* Flat and readable when the choreography is off. */
 .signal:not(.is-live) .tv {
   transform: none;
+  clip-path: none;
 }
 
 .signal:not(.is-live) .tv__screen {
   height: auto;
   padding: clamp(1.5rem, 3vw, 3rem);
-  clip-path: none;
 }
 
 .signal:not(.is-live) .crawl {
@@ -296,25 +296,6 @@
 
 .signal:not(.is-live) .crawl__text {
   transform: none;
-}
-
-/* The set's caption: a title card, centered beneath the frame. */
-.manifesto__close {
-  font-family: var(--serif);
-  font-size: var(--t-d2);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.18;
-  color: var(--ink);
-  text-align: center;
-  max-width: 26ch;
-  margin-inline: auto;
-  margin-top: clamp(3rem, 7vh, 4.5rem);
-  text-wrap: balance;
-}
-
-.manifesto__close em {
-  color: var(--signal);
 }
 
 /* --- the domains: quiet index, one panel -------------------------------- */
@@ -506,7 +487,7 @@
 }
 
 .slip__rows p:last-child b {
-  color: var(--signal);
+  color: var(--accent);
 }
 
 .slip__more {

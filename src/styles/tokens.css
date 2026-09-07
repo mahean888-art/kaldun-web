@@ -16,6 +16,7 @@
 
   /* --- the one colour: the hero's drawing and the Research accent --------- */
   --field: #d4502a;
+  --accent: var(--field);
 
   /* --- ink ramp ----------------------------------------------------------- */
   --ink: #f2f0eb;

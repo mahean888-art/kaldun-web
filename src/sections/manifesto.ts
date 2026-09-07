@@ -1,12 +1,13 @@
 /**
- * The manifesto crawl: the argument advances into depth inside the gilt TV.
+ * The manifesto: the set opens as it arrives, then the argument crawls.
  *
- * Native scroll only. The TV is position: sticky inside a tall wrapper; this
- * module reads scroll progress (rAF-throttled) into one CSS variable, --p, on
- * the band itself — the set's turn-on and the crawl plane's travel both consume it — nothing else runs per frame,
- * and nothing hijacks the scroll. When the crawl completes, the bezel's
- * state mark flips to committed. Under reduced motion, or without JS, the
- * manifesto stands flat and fully readable inside the screen.
+ * Native scroll only. The television is position: sticky inside a tall band.
+ * This module writes two numbers on the band, rAF-throttled: --open, which
+ * runs 0 → 1 while the set travels from the bottom of the viewport up to its
+ * seat (the whole slab opens from a line on the approach — never a blank,
+ * pinned frame), and --p, the crawl's progress along the pinned runway.
+ * Nothing else runs per frame, and nothing hijacks the scroll. Under reduced
+ * motion, or without JS, the manifesto stands flat and fully readable.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
@@ -25,12 +26,19 @@ export function initManifesto(host: HTMLElement): ManifestoHandle {
 
   host.classList.add('is-live');
 
+  const stick = host.querySelector<HTMLElement>('.signal__stick');
   let committed = false;
   let ticking = false;
   const read = (): void => {
     ticking = false;
     const rect = host.getBoundingClientRect();
-    const runway = rect.height - window.innerHeight;
+    const vh = window.innerHeight;
+    // The approach: from the band's top entering at the bottom of the
+    // viewport to its arrival at the sticky seat.
+    const seat = stick ? parseFloat(getComputedStyle(stick).top) || 0 : 0;
+    const open = Math.min(1, Math.max(0, (vh - rect.top) / Math.max(1, vh - seat)));
+    host.style.setProperty('--open', open.toFixed(4));
+    const runway = rect.height - vh;
     const p = runway <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / runway));
     host.style.setProperty('--p', p.toFixed(4));
     const done = p >= 0.96;

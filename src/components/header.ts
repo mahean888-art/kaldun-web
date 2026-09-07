@@ -1,11 +1,10 @@
 /**
  * Header behaviour: no drawn bar on the hero, a thin opaque bar once the page
- * scrolls, and the reading-progress ruling. The markup carries only the mark
- * and one action, so there is no drawer to manage.
+ * scrolls, light while the light hero is under it. The markup carries only
+ * the wordmark, the index, and one action, so there is no drawer to manage.
  */
 
 import { qs } from '../lib/dom';
-import { clamp } from '../lib/math';
 import { onFrame, type Frame } from '../lib/ticker';
 
 export function initHeader(): void {
@@ -15,7 +14,6 @@ export function initHeader(): void {
   const hero = qs<HTMLElement>('.hero');
   let stuck = false;
   let onLight = false;
-  let lastRead = -1;
 
   onFrame((frame: Frame) => {
     const nextStuck = frame.scrollY > 12;
@@ -29,14 +27,6 @@ export function initHeader(): void {
     if (nextOnLight !== onLight) {
       onLight = nextOnLight;
       header.classList.toggle('is-on-light', onLight);
-    }
-
-    const doc = document.documentElement;
-    const span = Math.max(doc.scrollHeight - frame.vh, 1);
-    const read = Math.round(clamp(frame.scrollY / span) * 500) / 500;
-    if (read !== lastRead) {
-      lastRead = read;
-      header.style.setProperty('--read', String(read));
     }
   });
 }

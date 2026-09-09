@@ -187,19 +187,6 @@
   gap: 1.25rem;
 }
 
-/* The asterisk's answer. */
-.hero__note .hero__mark {
-  margin-bottom: 0.5rem;
-}
-
-.hero__note {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
 /* --- the rolling noun ---------------------------------------------------- */
 
 /* The ghost sits in flow and fixes the line's baseline and height. The slot

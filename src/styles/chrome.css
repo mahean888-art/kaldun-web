@@ -355,14 +355,6 @@
   color: var(--mute);
 }
 
-.horizon__contacts em {
-  font-family: var(--serif);
-  font-style: italic;
-  letter-spacing: 0;
-  color: var(--ink-2);
-  margin-right: 0.6em;
-}
-
 .horizon__contacts a {
   color: var(--ink-2);
   transition: color var(--dur-1) var(--ease-out);

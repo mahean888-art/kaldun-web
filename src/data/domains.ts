@@ -1,57 +1,51 @@
 /**
- * The five domains: where the same foundational machine matters as it
- * matures. Each carries one institutional question and one line on what the
- * Machine returns — scope, not product marketing.
+ * The five domains: where machine foresight applies. Each carries a label, a
+ * headline, and one paragraph on what you can model, test, and see.
  */
 
 export type Domain = {
   ordinal: string;
   label: string;
-  /** The commitment, asked the way the institution would ask it. */
+  /** The panel's headline. */
   question: string;
-  /** What the Machine returns. */
+  /** The panel's paragraph. */
   returns: string;
 };
 
 export const DOMAINS: Domain[] = [
   {
     ordinal: '01',
-    label: 'Capital allocation',
-    question:
-      'Commit, stage, hedge, or preserve optionality when the conditions of capital can change before the commitment settles?',
+    label: 'Capital & digital assets',
+    question: 'Decide where capital goes next.',
     returns:
-      'The Machine returns distributions of outcomes, break conditions, and actions that remain sound across more than one path.',
+      'Model assets, liquidity, counterparties, and obligations together. Test a new allocation, loan, or collateral policy and see how it changes the portfolio. Explore tokenized-asset admission, synthetic-dollar strategies, and stablecoin liquidity as market conditions shift.',
   },
   {
     ordinal: '02',
     label: 'Insurance',
-    question:
-      'Which exposures, terms, and accumulations remain acceptable when the loss distribution changes?',
+    question: 'Price the risk. See the whole exposure.',
     returns:
-      'The Machine returns a view beyond the average: concentration, tail conditions, and escalation thresholds.',
+      'Model individual risks and the dependencies that connect them. Test pricing, coverage, and limits against changing loss conditions. See how a new policy affects the wider portfolio, where losses could accumulate, and when underwriting terms should change.',
   },
   {
     ordinal: '03',
     label: 'Real assets',
-    question:
-      'Build, defer, resize, or redesign when demand, financing, policy, supply, and operating constraints move together?',
+    question: 'Test the project before you build.',
     returns:
-      'The Machine returns project futures, leading conditions, and the value of staging a commitment.',
+      'Bring demand, financing, permits, construction, and supply into one model. Compare where to build, how much to commit, and when to proceed. See how delays or changing conditions affect the project, and which choices preserve room to adapt.',
   },
   {
     ordinal: '04',
     label: 'Energy',
-    question:
-      'How should capital and capacity move when physical networks, prices, regulation, and security conditions interact?',
+    question: 'Plan capacity for a changing system.',
     returns:
-      'The Machine returns system states, stress paths, and decision triggers before capital is locked.',
+      'Model demand, generation, storage, and network constraints together. Test capacity investments, operating plans, and supply contracts against changing prices, weather, and outages. See where shortages could emerge and which actions improve reliability.',
   },
   {
     ordinal: '05',
     label: 'National resilience',
-    question:
-      'Which capabilities remain reliable when dependencies fail, constraints change, or a shock travels through connected systems?',
+    question: 'See how disruption spreads. Prepare where it matters.',
     returns:
-      'The Machine returns scenario paths, fragilities, contingencies, and a record fit for consequential review.',
+      'Model the dependencies between critical infrastructure, supply chains, and essential services. Test how a disruption could spread, which capabilities remain available, and where intervention has the greatest effect. Compare preparedness investments and recovery plans before they are needed.',
   },
 ];

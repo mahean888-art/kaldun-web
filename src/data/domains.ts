@@ -10,15 +10,18 @@ export type Domain = {
   question: string;
   /** The panel's paragraph. */
   returns: string;
+  /** Who it is for — one quiet line beneath the paragraph, where it helps. */
+  audience?: string;
 };
 
 export const DOMAINS: Domain[] = [
   {
     ordinal: '01',
-    label: 'Capital & digital assets',
+    label: 'Capital allocation',
     question: 'Decide where capital goes next.',
     returns:
-      'Model assets, liquidity, counterparties, and obligations together. Test a new allocation, loan, or collateral policy and see how it changes the portfolio. Explore tokenized-asset admission, synthetic-dollar strategies, and stablecoin liquidity as market conditions shift.',
+      'Model portfolios, balance sheets, and the markets around them. Test lending, investment, funding, and collateral decisions against changing conditions. See how each choice affects returns, liquidity, and exposure, and when to change course.',
+    audience: 'For banks, asset managers, and institutions across traditional and digital finance.',
   },
   {
     ordinal: '02',

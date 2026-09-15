@@ -390,6 +390,18 @@
   text-wrap: balance;
 }
 
+.dpanel__for {
+  margin-top: 1rem;
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--mute);
+  max-width: 46ch;
+}
+
+.dpanel__for[hidden] {
+  display: none;
+}
+
 .dpanel__returns {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
   font-size: var(--t-lead);

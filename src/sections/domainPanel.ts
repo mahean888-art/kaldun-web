@@ -43,11 +43,13 @@ export function initDomainPanel({ root, items, label }: Options): void {
   const tag = el('p', { class: 'dpanel__tag' }, [`${items[0]!.ordinal} — ${items[0]!.label}`]);
   const question = el('h3', { class: 'dpanel__question' }, [items[0]!.question]);
   const returns = el('p', { class: 'dpanel__returns' }, [items[0]!.returns]);
+  const audience = el('p', { class: 'dpanel__for' }, [items[0]!.audience ?? '']);
+  audience.hidden = !items[0]!.audience;
 
   const panel = el(
     'div',
     { class: 'dpanel__panel', id: 'domain-panel', role: 'tabpanel', 'aria-labelledby': 'domain-tab-01' },
-    [tag, question, returns],
+    [tag, question, returns, audience],
   );
 
   root.append(index, panel);
@@ -65,6 +67,8 @@ export function initDomainPanel({ root, items, label }: Options): void {
     tag.textContent = `${item.ordinal} — ${item.label}`;
     question.textContent = item.question;
     returns.textContent = item.returns;
+    audience.textContent = item.audience ?? '';
+    audience.hidden = !item.audience;
     requestAnimationFrame(() => panel.classList.add('is-in'));
     if (focus) tabs[i]?.focus();
   };

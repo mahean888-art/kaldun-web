@@ -114,6 +114,7 @@
   letter-spacing: -0.012em;
   color: var(--ink-2);
   max-width: 46ch;
+  text-wrap: pretty;
 }
 
 /* --- the ledger --------------------------------------------------------- */

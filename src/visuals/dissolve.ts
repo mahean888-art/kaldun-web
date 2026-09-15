@@ -1,13 +1,14 @@
 /**
- * The seam between dark and light, crossed the Aaru way: a stochastic dither.
- * Each cell of a fine grid flips to the destination ground with a probability
- * eased over the band's height, so the theme arrives as grain — granular,
- * hard-edged, and never a gradient. Grains are measured in device pixels and
- * scaled by an exact integer, so nothing is ever resampled. Painted once,
- * repainted only on resize; nothing runs while the page scrolls.
+ * The seam between two grounds: a shallow, ordered lattice.
+ *
+ * A halftone of squares on a fixed grid. Each cell holds one square of the
+ * next ground whose side grows linearly down the band — from nothing at the
+ * top to the full cell at the bottom — so the crossing is a regular lattice
+ * that darkens (or lightens) monotonically, never confetti. The two grounds
+ * are read from whatever the seam sits between and painted in device pixels,
+ * so every edge stays hard. Painted once, repainted only on resize.
  */
 
-import { seeded } from '../lib/math';
 import { dpr } from '../lib/prefers';
 import { onResize } from '../lib/ticker';
 
@@ -17,6 +18,9 @@ type RGB = [number, number, number];
 
 const DARK: RGB = [18, 18, 20]; // --ground (dark), the fallback
 const LIGHT: RGB = [247, 245, 240]; // --ground (light), the fallback
+
+/** The lattice pitch in device pixels: one cell, one growing square. */
+const PITCH = 8;
 
 /** An opaque colour from a computed background, or nothing. */
 function opaque(value: string): RGB | null {
@@ -36,14 +40,6 @@ function groundOf(start: Element | null): RGB | null {
   return null;
 }
 
-/** Grain size in device pixels: one CSS pixel on a 2× screen, two on a 1×. */
-const CELL_DEVICE = 2;
-
-function smoothstep(t: number): number {
-  const x = Math.min(1, Math.max(0, t));
-  return x * x * (3 - 2 * x);
-}
-
 export function initDissolve(host: HTMLElement): DissolveHandle {
   const canvas = host.querySelector<HTMLCanvasElement>('canvas');
   const ctx = canvas?.getContext('2d');
@@ -52,51 +48,42 @@ export function initDissolve(host: HTMLElement): DissolveHandle {
   const toLight = host.dataset['dissolve'] === 'dark-light';
 
   const draw = (): void => {
-    // The two grounds are whatever the seam actually sits between — so a
-    // colour field dissolves into ink exactly as ink dissolves into bone.
     const from = groundOf(host.previousElementSibling) ?? (toLight ? DARK : LIGHT);
     const to = groundOf(host.nextElementSibling) ?? (toLight ? LIGHT : DARK);
 
-    // The canvas bleeds past the host (see CSS), so size from its own box —
-    // the painted grain must cover every pixel the element can occupy.
     const rect = canvas.getBoundingClientRect();
     if (rect.width < 8 || rect.height < 8) return;
     const ratio = dpr(2);
     canvas.width = Math.round(rect.width * ratio);
     canvas.height = Math.round(rect.height * ratio);
 
-    const cols = Math.ceil(canvas.width / CELL_DEVICE);
-    const rows = Math.ceil(canvas.height / CELL_DEVICE);
-
-    // Paint at grain resolution, then scale up with smoothing off — one
-    // drawImage instead of tens of thousands of rects.
-    const grain = document.createElement('canvas');
-    grain.width = cols;
-    grain.height = rows;
-    const gctx = grain.getContext('2d');
-    if (!gctx) return;
-
-    const img = gctx.createImageData(cols, rows);
-    const rnd = seeded(1654 + rows);
-    for (let y = 0; y < rows; y++) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const img = ctx.createImageData(W, H);
+    const cellRows = Math.ceil(H / PITCH);
+    for (let cy = 0; cy < cellRows; cy++) {
       // Hold the pure grounds at both edges so the seam meets its neighbours
-      // exactly, and ease the odds between them — twice, so the mixed zone
-      // gathers at the middle of the band and the grounds stay pure longer.
-      const t = smoothstep(smoothstep((y / (rows - 1)) * 1.14 - 0.07));
-      for (let x = 0; x < cols; x++) {
-        const c = rnd() < t ? to : from;
-        const i = (y * cols + x) * 4;
-        img.data[i] = c[0]!;
-        img.data[i + 1] = c[1]!;
-        img.data[i + 2] = c[2]!;
-        img.data[i + 3] = 255;
+      // exactly; the square's side ramps linearly between them.
+      const t = Math.min(1, Math.max(0, ((cy + 0.5) / cellRows) * 1.1 - 0.05));
+      // Even sides only, so every square stays centred in its cell and the
+      // remainder never collects on one edge into a continuous rule.
+      const side = 2 * Math.round((t * PITCH) / 2);
+      const inset = (PITCH - side) / 2;
+      for (let y = cy * PITCH; y < Math.min(H, (cy + 1) * PITCH); y++) {
+        const ly = y - cy * PITCH;
+        const inY = ly >= inset && ly < inset + side;
+        for (let x = 0; x < W; x++) {
+          const lx = x % PITCH;
+          const c = inY && lx >= inset && lx < inset + side ? to : from;
+          const i = (y * W + x) * 4;
+          img.data[i] = c[0]!;
+          img.data[i + 1] = c[1]!;
+          img.data[i + 2] = c[2]!;
+          img.data[i + 3] = 255;
+        }
       }
     }
-    gctx.putImageData(img, 0, 0);
-
-    ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(grain, 0, 0, cols, rows, 0, 0, canvas.width, canvas.height);
+    ctx.putImageData(img, 0, 0);
   };
 
   draw();

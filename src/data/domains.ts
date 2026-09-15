@@ -1,54 +1,58 @@
 /**
- * The five domains: where machine foresight applies. Each carries a label, a
- * headline, and one paragraph on what you can model, test, and see.
+ * The five domains: where foresight goes to work. Each carries who it is
+ * for, a heading, and one paragraph on what you can compare and see.
  */
 
 export type Domain = {
   ordinal: string;
   label: string;
-  /** The panel's headline. */
+  /** Who it is for — the line above the heading. */
+  audience: string;
+  /** The panel's heading. */
   question: string;
   /** The panel's paragraph. */
   returns: string;
-  /** Who it is for — one quiet line beneath the paragraph, where it helps. */
-  audience?: string;
 };
 
 export const DOMAINS: Domain[] = [
   {
     ordinal: '01',
     label: 'Capital allocation',
-    question: 'Decide where capital goes next.',
+    audience: 'Banks / Asset managers / Digital-asset institutions',
+    question: 'Before capital becomes exposure.',
     returns:
-      'Model portfolios, balance sheets, and the markets around them. Test lending, investment, funding, and collateral decisions against changing conditions. See how each choice affects returns, liquidity, and exposure, and when to change course.',
-    audience: 'For banks, asset managers, and institutions across traditional and digital finance.',
+      'Compare a loan, investment, or funding strategy in the context of the whole balance sheet. See how it changes returns, liquidity, and exposure, and when to resize, reprice, hedge, or walk away.',
   },
   {
     ordinal: '02',
     label: 'Insurance',
-    question: 'Price the risk. See the whole exposure.',
+    audience: 'Insurers / Reinsurers / Specialty underwriters',
+    question: 'One policy can change the whole portfolio.',
     returns:
-      'Model individual risks and the dependencies that connect them. Test pricing, coverage, and limits against changing loss conditions. See how a new policy affects the wider portfolio, where losses could accumulate, and when underwriting terms should change.',
+      'Assess a risk alongside everything already insured. Test pricing, coverage, and limits against connected losses. See how the next policy changes concentration, capital at risk, and the need for reinsurance.',
   },
   {
     ordinal: '03',
     label: 'Real assets',
-    question: 'Test the project before you build.',
+    audience: 'Developers / Owners / Infrastructure investors',
+    question: 'Test the project beyond the base case.',
     returns:
-      'Bring demand, financing, permits, construction, and supply into one model. Compare where to build, how much to commit, and when to proceed. See how delays or changing conditions affect the project, and which choices preserve room to adapt.',
+      'Test a development or acquisition against demand, financing, permitting, and construction timelines. See how a delay or change in one assumption affects cash flow, and compare the options to build, phase, refinance, or wait.',
   },
   {
     ordinal: '04',
     label: 'Energy',
-    question: 'Plan capacity for a changing system.',
+    audience: 'Utilities / Energy operators / Large power users',
+    question: 'Plan for the next constraint.',
     returns:
-      'Model demand, generation, storage, and network constraints together. Test capacity investments, operating plans, and supply contracts against changing prices, weather, and outages. See where shortages could emerge and which actions improve reliability.',
+      'Compare investments and operating plans under changing demand, weather, prices, and outages. See where capacity becomes constrained, and whether generation, storage, transmission, or a different operating plan best addresses it.',
   },
   {
     ordinal: '05',
     label: 'National resilience',
-    question: 'See how disruption spreads. Prepare where it matters.',
+    audience: 'Governments / Infrastructure operators / Emergency planners',
+    question: 'See how failure spreads. Find where to intervene.',
     returns:
-      'Model the dependencies between critical infrastructure, supply chains, and essential services. Test how a disruption could spread, which capabilities remain available, and where intervention has the greatest effect. Compare preparedness investments and recovery plans before they are needed.',
+      'Trace how a port closure, power outage, or supply shortage moves through essential services. Compare reserves, redundancies, and recovery plans to see which interventions contain the damage and preserve essential services.',
   },
 ];

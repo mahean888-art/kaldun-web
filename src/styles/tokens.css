@@ -60,7 +60,7 @@
   --gutter: clamp(1.25rem, 4.2vw, 4rem);
   --measure: 60ch;
   --shell: 1520px;
-  --band: clamp(4.5rem, 10vh, 8.5rem);
+  --band: clamp(5rem, 8vw, 7rem);
 
   /* --- motion ------------------------------------------------------------ */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

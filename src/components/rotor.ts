@@ -24,12 +24,19 @@ const HOLD = 3200;
 const FADE = 320;
 
 function mount(host: HTMLElement): void {
+  // The heading's one stable word for assistive technology; the ghost and the
+  // crossfading slot are decoration and never read aloud.
+  const stable = document.createElement('span');
+  stable.className = 'sr-only';
+  stable.textContent = VERBS[0] ?? 'decide';
+
   const ghost = document.createElement('span');
   ghost.className = 'rotor__ghost';
   ghost.setAttribute('aria-hidden', 'true');
 
   const slot = document.createElement('span');
   slot.className = 'rotor__slot';
+  slot.setAttribute('aria-hidden', 'true');
 
   let word = document.createElement('span');
   word.className = 'rotor__word is-in';
@@ -37,7 +44,7 @@ function mount(host: HTMLElement): void {
 
   ghost.textContent = word.textContent;
   slot.append(word);
-  host.replaceChildren(ghost, slot);
+  host.replaceChildren(stable, ghost, slot);
 
   /** The ghost sits in flow, so it fixes the baseline and gives us a ruler. */
   const measure = (text: string): number => {

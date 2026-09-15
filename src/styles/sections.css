@@ -1,29 +1,69 @@
 /* ==========================================================================
-   Sections — the Machine, the use cases, the Record, Project 1654, the
-   close, and the decision moment. The page is one scroll; each band is one
-   clear move.
+   Sections — the manifesto essay, the Machine, the domains, the Record, and
+   Research. The page is one scroll; each band is one clear move.
    ========================================================================== */
 
 /* --- section label ------------------------------------------------------ */
 
-/* Each movement opens with one quiet word; the grain seams carry the rest. */
+/* Each movement opens with one quiet word; the seams carry the rest. */
 .band__label {
   color: var(--mute);
-  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* A chapter opens with more air above it than an ordinary band. */
-.band--chapter {
-  padding-block-start: clamp(5rem, 14vh, 10rem);
+/* --- 01 · the manifesto: a plain essay ----------------------------------- */
+
+.essay {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35em;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.5vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.004em;
+  color: var(--ink-2);
 }
 
-/* --- 01 · the machine --------------------------------------------------- */
+/* The declaration and the conclusion, in the emphasized register. */
+.essay__declare {
+  font-size: clamp(1.75rem, 2.4vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  padding-block: 0.35em;
+}
+
+.essay__declare em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* --- 02 · the machine: the loop, drawn thin ------------------------------ */
+
+.machine__top {
+  max-width: 62ch;
+}
 
 .instrument {
   position: relative;
   width: 100%;
-  /* Chart paper: a faint dashed grid behind the wiring diagram. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f4f3f0' stroke-opacity='.06' stroke-dasharray='3 5'/%3E%3C/svg%3E");
+  /* Chart paper, quiet: a faint dashed grid behind the loop. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f2f0eb' stroke-opacity='.035' stroke-dasharray='3 5'/%3E%3C/svg%3E");
+}
+
+.instrument__figure {
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+@media (min-width: 760px) {
+  .instrument__figure {
+    max-width: none;
+    margin-inline: 0;
+  }
 }
 
 .instrument__figure svg {
@@ -32,10 +72,10 @@
   height: auto;
 }
 
-/* The conduits. */
+/* The conduits: fine, not heavy. */
 .instrument__figure path[data-arrow] {
   fill: none;
-  stroke-width: 7;
+  stroke-width: 2;
   stroke-linecap: round;
 }
 
@@ -44,279 +84,112 @@
 }
 
 .instrument__figure [data-arrow='grey'] {
-  stroke: #6f6e68;
+  stroke: var(--faint);
 }
 
 .instrument__figure .ins__dot {
   fill: var(--ink);
 }
 
-/* The state stations — where the loop begins and begins again — in gold. */
 .instrument__figure .ins__dot--t {
   fill: var(--accent);
 }
 
-/* The chevron that ends each conduit. */
 .instrument__figure .ins__head {
   fill: none;
-  stroke-width: 7;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-/* The pale pulse that travels each conduit. */
 .instrument__figure .ins__pulse {
   fill: none;
   stroke: #ffffff;
-  stroke-opacity: 0.9;
-  stroke-width: 4.5;
+  stroke-opacity: 0.8;
+  stroke-width: 1.5;
   stroke-linecap: round;
   pointer-events: none;
 }
 
-/* Station names and their data lines. */
+/* The words are primary. */
 .instrument__figure .ins__name {
   font-family: var(--sans);
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 500;
   letter-spacing: -0.02em;
   fill: var(--ink);
 }
 
 .instrument__figure .ins__sub {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
   fill: var(--mute);
 }
 
-/* Conduit labels, written in the conduit's own colour. */
-.instrument__figure .ins__label {
-  font-family: var(--sans);
-  font-size: 19px;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-}
-
 .instrument__figure .ins__label--amber {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 22px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   fill: var(--accent);
 }
 
-.instrument__figure .ins__name--sm {
-  font-size: 21px;
+/* A plain ground behind each name, so the grid never runs through text. */
+.instrument__figure .ins__plate {
+  fill: var(--ground);
 }
 
-.instrument__figure .ins__sub--sm {
-  font-size: 11.5px;
+/* The commitment marker: the point past which the claim cannot change. */
+.instrument__figure .ins__marker {
+  fill: var(--accent);
+  stroke: var(--ground);
+  stroke-width: 3;
 }
 
-/* The time symbols that open each station. */
-.instrument__figure .ins__sym {
-  font-family: var(--mono);
-  fill: var(--signal);
-}
-
-/* The run index above each station — 1 / 6 through 6 / 6. */
-.instrument__figure .ins__idx {
-  font-family: var(--mono);
+.instrument__figure .ins__marker-label {
+  font-family: var(--sans);
   font-size: 11px;
-  letter-spacing: 0.12em;
-  fill: var(--faint);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  fill: var(--mute);
 }
 
-/* --- 04 · use cases: pill bar, one case card at a time ------------------- */
+/* The faint cell field beside Futures — beneath the paths' contrast. */
+.instrument__figure .ins__field {
+  opacity: 0.08;
+}
+
+.instrument__figure .ins__cell {
+  fill: var(--ink);
+}
+
+/* --- 03 · the domains: heading left, a third of tabs, two of panel ------- */
 
 .usecases__head {
-  text-align: center;
-  margin-inline: auto;
-  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
   max-width: 62ch;
 }
 
 .usecases__title {
   font-family: var(--serif);
-  font-size: clamp(1.875rem, 3.8vw, 3.25rem);
+  font-size: var(--t-d1);
   font-weight: 500;
   letter-spacing: -0.012em;
-  line-height: 1.1;
+  line-height: 1.05;
+  text-wrap: balance;
 }
-
-.usecases__title em {
-  /* The second line keeps the serif's italic and takes the one white. */
-  color: var(--signal);
-}
-
-.usecases__sub {
-  margin-top: 1rem;
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--mute);
-  max-width: 52ch;
-  margin-inline: auto;
-}
-
-/* The wedge: one quiet line under the cards, where we actually begin. */
-.usecases__wedge {
-  text-align: center;
-  margin-inline: auto;
-  max-width: 58ch;
-  color: var(--mute);
-  line-height: 1.7;
-}
-
-/* --- the manifesto: the set and the crawl --------------------------------
-   The Simile posture: one big molded charcoal slab of a television —
-   generous rounded corners, a thick clean bezel, a rounded screen inset —
-   sitting on the dark page. Inside it, the argument crawls into depth,
-   driven only by the reader's own scroll (the --p variable). Without JS,
-   or under reduced motion, the manifesto stands flat inside the screen. */
-
-.signal {
-  margin-top: clamp(1rem, 2.5vh, 2rem);
-}
-
-.signal.is-live {
-  height: calc(5 * 60svh);
-}
-
-.signal.is-live .signal__stick {
-  position: sticky;
-  top: calc(var(--header-h) + 2svh);
-}
-
-/* The set: molded plastic, not ornament. It arrives at rest and grows to
-   size as it turns on. */
-.tv {
-  max-width: min(1040px, 100%);
-  margin-inline: auto;
-  /* The whole set opens from a line as it arrives — slab, bezel, and screen
-     together — and settles to size as it seats. */
-  clip-path: inset(calc((1 - var(--open, 0)) * 50%) 0 round clamp(36px, 4.5vw, 56px));
-  transform: scale(calc(0.96 + var(--open, 0) * 0.04));
-  transform-origin: 50% 50%;
-  padding: clamp(20px, 2.6vw, 34px);
-  background: #161618;
-  border-radius: clamp(36px, 4.5vw, 56px);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.06),
-    inset 0 -3px 8px rgba(0, 0, 0, 0.55),
-    0 40px 110px rgba(0, 0, 0, 0.62),
-    0 6px 26px rgba(0, 0, 0, 0.4);
-}
-
-.tv__screen {
-  position: relative;
-  height: min(58svh, 560px);
-  background: #0c0c0e;
-  border-radius: clamp(16px, 2vw, 28px);
-  overflow: hidden;
-  /* Glass: a quiet vignette pressed into the tube. */
-  box-shadow:
-    inset 0 0 46px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-}
-
-/* --- the crawl ----------------------------------------------------------- */
-
-.crawl {
-  position: absolute;
-  inset: 0;
-  perspective: 950px;
-  perspective-origin: 50% 14%;
-  /* The far end dissolves toward the vanishing point. */
-  -webkit-mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 2%, #000 30%, #000 100%);
-}
-
-.crawl__plane {
-  position: absolute;
-  left: 50%;
-  bottom: -4%;
-  width: min(82%, 560px);
-  transform: translateX(-50%) rotateX(22deg);
-  transform-origin: 50% 100%;
-}
-
-.crawl__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.2em;
-  text-align: center;
-  transform: translate3d(0, calc(94% - var(--p, 0) * 102%), 0);
-  will-change: transform;
-}
-
-.crawl__para {
-  font-family: var(--serif);
-  font-size: clamp(1.4375rem, 2.2vw, 1.9375rem);
-  font-weight: 500;
-  letter-spacing: -0.004em;
-  line-height: 1.58;
-  color: var(--ink);
-}
-
-.crawl__para--declare {
-  font-size: clamp(2rem, 3.4vw, 3.25rem);
-  line-height: 1.1;
-  letter-spacing: -0.014em;
-  color: var(--signal);
-  padding-block: 0.4em;
-}
-
-/* The manifesto closes on the sentence Research opens with, in the hue. */
-.crawl__para--declare em {
-  font-style: normal;
-  color: var(--accent);
-}
-
-/* Flat and readable when the choreography is off. */
-.signal:not(.is-live) .tv {
-  transform: none;
-  clip-path: none;
-}
-
-.signal:not(.is-live) .tv__screen {
-  height: auto;
-  padding: clamp(1.5rem, 3vw, 3rem);
-}
-
-.signal:not(.is-live) .crawl {
-  position: static;
-  perspective: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.signal:not(.is-live) .crawl__plane {
-  position: static;
-  width: auto;
-  max-width: 620px;
-  margin-inline: auto;
-  transform: none;
-}
-
-.signal:not(.is-live) .crawl__text {
-  transform: none;
-}
-
-/* --- the domains: quiet index, one panel -------------------------------- */
 
 .dpanel {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4rem);
-  max-width: 1180px;
-  margin-inline: auto;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
 }
 
 @media (min-width: 900px) {
   .dpanel {
-    grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 56px;
     align-items: start;
   }
 }
@@ -348,6 +221,11 @@
   color: var(--ink);
 }
 
+.dpanel__tab:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
 .dpanel__no {
   font-family: var(--mono);
   font-size: var(--t-data);
@@ -359,10 +237,22 @@
   color: var(--mute);
 }
 
+/* Every panel is rendered and stacked in one cell, so the section's height
+   is the tallest panel and never jumps on selection. */
+.dpanel__stack {
+  display: grid;
+}
+
 .dpanel__panel {
+  grid-area: 1 / 1;
   opacity: 0;
   transform: translate3d(0, 8px, 0);
   transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+
+.dpanel__panel[aria-hidden='true'] {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .dpanel__panel.is-in {
@@ -370,10 +260,11 @@
   transform: none;
 }
 
-.dpanel__tag {
+/* Who it is for, where the eyebrow was. */
+.dpanel__aud {
   font-family: var(--mono);
   font-size: var(--t-label);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mute);
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
@@ -390,39 +281,22 @@
   text-wrap: balance;
 }
 
-.dpanel__for {
-  margin-top: 1rem;
-  font-size: var(--t-small);
-  line-height: 1.55;
-  color: var(--mute);
-  max-width: 46ch;
-}
-
-.dpanel__for[hidden] {
-  display: none;
-}
-
 .dpanel__returns {
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  margin-top: clamp(1.25rem, 2.4vw, 1.75rem);
   font-size: var(--t-lead);
   line-height: 1.62;
   color: var(--ink-2);
-  max-width: 46ch;
+  max-width: 48ch;
 }
 
-/* --- the grain dissolves -------------------------------------------------
-   The seams between dark and light, crossed the Aaru way: a stochastic
-   dither painted on canvas, never a hard cut and never a CSS gradient. */
+/* --- the seams: shallow ordered lattices --------------------------------- */
 
 .dissolve {
   position: relative;
-  /* A horizon, not a region: thin enough to cross in a glance. */
-  height: clamp(72px, 12vh, 132px);
+  height: clamp(24px, 3vh, 40px);
   pointer-events: none;
 }
 
-/* The canvas bleeds a hair past its host, so no fractional-pixel rounding on
-   any display can ever open a seam line between the grain and its neighbours. */
 .dissolve canvas {
   position: absolute;
   left: 0;
@@ -434,7 +308,7 @@
   display: block;
 }
 
-/* --- the record ----------------------------------------------------------- */
+/* --- 04 · the record: the lede and the ledger ----------------------------- */
 
 .record__lede {
   display: flex;
@@ -451,116 +325,115 @@
   text-wrap: balance;
 }
 
-/* The lede and the slip, side by side. */
 .record2 {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(2.5rem, 5vw, 5.5rem);
-  align-items: center;
+  align-items: start;
 }
 
 @media (min-width: 1000px) {
   .record2 {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   }
 }
 
-.record__loop {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: var(--t-d4);
-  color: var(--ink-2);
-}
-
-/* The sample record: a precise institutional slip. */
-.slip {
-  width: 100%;
-  max-width: 480px;
-  margin-inline: auto;
-  border: var(--hairline);
-  background: color-mix(in srgb, var(--panel) 55%, transparent);
-  padding: clamp(1.5rem, 2.6vw, 2.25rem);
-}
-
-.slip__rows p {
+/* One frame, two columns, shared rules. Precise and still. */
+.ledger {
   display: grid;
-  grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
-  gap: 0.5rem 1rem;
-  padding-block: 0.55rem;
-  border-bottom: 1px solid var(--edge-soft);
+  grid-template-columns: 1fr;
+  background: var(--surface);
+  border-radius: 10px;
+  padding: clamp(1.25rem, 2.4vw, 2rem) clamp(1.25rem, 2.6vw, 2.25rem);
+}
+
+.ledger__head,
+.ledger__foot {
   font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-.slip__rows b {
-  font-weight: 500;
-  color: var(--ink-2);
-}
-
-.slip__rows p:first-child b {
-  color: var(--ink);
-}
-
-.slip__rows p:last-child b {
-  color: var(--accent);
-}
-
-.slip__more {
-  margin-top: 1.1rem;
-  padding-block: 0.35em;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mute);
-  border-bottom: 1px solid var(--edge);
-  cursor: pointer;
-  transition: color var(--dur-1) var(--ease-out);
 }
 
-.slip__more:hover {
-  color: var(--ink);
+.ledger__head {
+  padding-bottom: 0.9rem;
 }
 
-.slip__history {
-  margin-top: 1.1rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--edge-soft);
+.ledger__foot {
+  padding-top: 0.9rem;
+  border-top: var(--hairline);
+}
+
+.ledger__cell {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--mute);
+  gap: 0.35rem;
+  padding: 1rem 0;
+  border-top: var(--hairline);
 }
 
-.slip__history[hidden] {
-  display: none;
+.ledger__cell b {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
+.ledger__cell span {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 34ch;
+}
 
+/* Narrow: chronological — everything before, then everything after. */
+.ledger__head--before { order: 0; }
+.ledger__cell--before { order: 1; }
+.ledger__foot--before { order: 2; }
+.ledger__head--after { order: 3; padding-top: 1.75rem; }
+.ledger__cell--after { order: 4; }
+.ledger__foot--after { order: 5; }
 
-/* --- research ------------------------------------------------------------- */
+@media (min-width: 700px) {
+  .ledger {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ledger__head,
+  .ledger__cell,
+  .ledger__foot {
+    order: 0;
+  }
+
+  .ledger__head--after {
+    padding-top: 0;
+  }
+
+  .ledger__cell--before,
+  .ledger__head--before,
+  .ledger__foot--before {
+    padding-right: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .ledger__cell--after,
+  .ledger__head--after,
+  .ledger__foot--after {
+    padding-left: clamp(1rem, 2vw, 1.75rem);
+  }
+}
+
+/* --- 05 · research -------------------------------------------------------- */
 
 .research__statement {
   font-family: var(--serif);
-  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  font-size: var(--t-d1);
   font-weight: 500;
-  letter-spacing: -0.014em;
-  line-height: 1.08;
+  letter-spacing: -0.012em;
+  line-height: 1.05;
   color: var(--ink);
-  max-width: 24ch;
+  max-width: 20ch;
   text-wrap: balance;
-}
-
-.research__statement em {
-  /* The one colour on the site, spent here. */
-  color: var(--accent, var(--signal));
 }
 
 .research__grid {
@@ -613,182 +486,4 @@
 
 .axiom--sm {
   font-size: var(--t-d4);
-}
-
-/* --- 03 · the machine: layout, expressions ------------------------------- */
-
-.machine__top {
-  max-width: 62ch;
-}
-
-.instrument__figure {
-  max-width: 560px;
-  margin-inline: auto;
-}
-
-@media (min-width: 760px) {
-  .instrument__figure {
-    max-width: none;
-    margin-inline: 0;
-  }
-}
-
-/* --- 03 · capital -------------------------------------------------------- */
-
-.flows {
-  display: flex;
-  flex-direction: column;
-  max-width: 880px;
-  border-top: 1px solid var(--edge);
-}
-
-.flows__row {
-  display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr);
-  gap: 1.25rem;
-  padding-block: clamp(1.1rem, 2.2vw, 1.6rem);
-  border-bottom: 1px solid var(--edge-soft);
-  align-items: baseline;
-}
-
-.flows__ord {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  color: var(--signal);
-}
-
-.flows__name {
-  font-size: var(--t-d3);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.flows__line {
-  margin-top: 0.35rem;
-  font-size: var(--t-body);
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 52ch;
-}
-
-.capital__ext {
-  font-size: var(--t-body);
-  color: var(--mute);
-  max-width: 56ch;
-}
-
-/* --- the close ---------------------------------------------------------- */
-
-.cta {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 3vw, 3rem);
-  align-items: end;
-}
-
-@media (min-width: 860px) {
-  .cta {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-}
-
-.cta__title {
-  font-family: var(--serif);
-  font-size: var(--t-d1);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  max-width: 22ch;
-  text-wrap: balance;
-}
-
-.cta__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-/* --- the decision moment ------------------------------------------------ */
-
-.decision {
-  /* The reset removes every default margin; a dialog centres itself with
-     margin auto, so it comes back here. */
-  margin: auto;
-  width: min(560px, calc(100vw - 2 * var(--gutter)));
-  border: 1px solid var(--edge);
-  border-radius: 2px;
-  padding: 0;
-  background: var(--ground);
-  color: var(--ink);
-}
-
-.decision::backdrop {
-  background: rgba(5, 6, 8, 0.62);
-}
-
-.decision__form {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1rem, 2vw, 1.35rem);
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.decision__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.decision__close {
-  width: 36px;
-  height: 36px;
-  font-size: 1.4rem;
-  line-height: 1;
-  color: var(--mute);
-  transition: color var(--dur-1) var(--ease-out);
-}
-
-.decision__close:hover {
-  color: var(--ink);
-}
-
-.decision__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.decision__field span {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.decision__field input,
-.decision__field textarea {
-  padding: 0.7em 0.85em;
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  background: var(--ground-2);
-  font-size: var(--t-body);
-  line-height: 1.5;
-  resize: vertical;
-}
-
-.decision__field input:focus-visible,
-.decision__field textarea:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 0;
-}
-
-.decision__actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 0.25rem;
 }

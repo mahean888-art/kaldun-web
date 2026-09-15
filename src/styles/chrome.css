@@ -274,10 +274,52 @@
   }
 }
 
-/* Open sky above the floor. */
-.horizon__field {
-  flex: 1;
-  min-height: clamp(3rem, 10vh, 8rem);
+/* The invitation: the sky is where the ask lives. */
+.horizon__invite {
+  padding-block: clamp(1rem, 3vh, 2rem) clamp(3rem, 8vh, 6rem);
+  max-width: 44ch;
+}
+
+.horizon__ask {
+  font-family: var(--serif);
+  font-size: var(--t-d1);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.horizon__tell {
+  margin-top: clamp(1rem, 2.5vh, 1.5rem);
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  letter-spacing: -0.006em;
+  color: var(--ink-2);
+  max-width: 42ch;
+}
+
+.horizon__cta {
+  margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+.horizon__mail {
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  padding-block: 0.3em;
+  border-bottom: 1px solid var(--edge);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
+}
+
+.horizon__mail:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
 }
 
 /* --- the floor ---------------------------------------------------------- */
@@ -342,26 +384,6 @@
   content: '·';
   color: var(--faint);
   margin-inline: 0.9em;
-}
-
-.horizon__contacts {
-  margin-top: clamp(1.1rem, 2.5vh, 1.75rem);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 2.5rem;
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.04em;
-  color: var(--mute);
-}
-
-.horizon__contacts a {
-  color: var(--ink-2);
-  transition: color var(--dur-1) var(--ease-out);
-}
-
-.horizon__contacts a:hover {
-  color: var(--ink);
 }
 
 .horizon__base {

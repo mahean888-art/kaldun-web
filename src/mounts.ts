@@ -9,44 +9,33 @@ import { initBranches } from './visuals/branches';
 import { initDissolve } from './visuals/dissolve';
 import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
-import { initDecision } from './components/decision';
-import { initManifesto } from './sections/manifesto';
 import { initDomainPanel } from './sections/domainPanel';
 import { DOMAINS } from './data/domains';
 import { EMAIL } from './data/site';
 
-/** The address is data, not markup — one place to change it. */
+/**
+ * The address is data, not markup — one place to change it. `[data-email]`
+ * shows and links the address; `[data-mail="Subject"]` composes a mail with
+ * that subject, so a decision and a residency application arrive distinctly.
+ */
 function wireEmail(root: ParentNode): void {
   for (const node of qsa<HTMLAnchorElement>('[data-email]', root)) {
     node.href = `mailto:${EMAIL}`;
     if (!node.textContent?.trim()) node.textContent = EMAIL;
   }
-}
-
-/** The record slip's one calm expansion. */
-function wireSlip(root: ParentNode): void {
-  const toggle = qs<HTMLButtonElement>('[data-slip-toggle]', root);
-  const history = qs<HTMLElement>('[data-slip-history]', root);
-  if (!toggle || !history) return;
-  toggle.addEventListener('click', () => {
-    const open = history.hidden;
-    history.hidden = !open;
-    toggle.setAttribute('aria-expanded', String(open));
-  });
+  for (const node of qsa<HTMLAnchorElement>('[data-mail]', root)) {
+    const subject = node.dataset['mail'] ?? '';
+    node.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`;
+  }
 }
 
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
   wireEmail(root);
-  initDecision(root);
-  wireSlip(root);
 
   const branches = qs<HTMLCanvasElement>('canvas[data-branches]', root);
   if (branches) initBranches(branches);
-
-  const manifesto = qs<HTMLElement>('[data-manifesto]', root);
-  if (manifesto) initManifesto(manifesto);
 
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);

@@ -34,11 +34,11 @@
 @media (min-width: 1000px) {
   .hero__dial {
     position: absolute;
-    /* The Augustus relation: the drawing sits low and to the right, its
-       bright origin beneath the display's baseline, so only its far, faint
-       strands rise up behind the letters. It bleeds past the hero's foot —
-       cut by the frame, not boxed. */
-    inset: 30svh var(--gutter) -6svh 42%;
+    /* The drawing spans the hero's lower half. Its origin is not fixed here:
+       the script roots it at the end of the sentence, so the thread leaves
+       the changing verb; only the far, faint strands rise behind the letters.
+       The foot sits on the actions' line, where the T-marks are ruled. */
+    inset: 30svh var(--gutter) clamp(1.25rem, 3vh, 2rem) 0;
     width: auto;
     height: auto;
     margin: 0;

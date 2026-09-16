@@ -76,6 +76,55 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   let nx = 0;
   let ny = 0;
 
+  // The present is rooted at the end of the sentence — just past the verb
+  // and its full stop — when that point falls inside the drawing. It moves
+  // with the verb's width, easing rather than jumping, so the thread always
+  // leaves the word in view. Off the page's wide layout the origin falls back
+  // to a fixed seat and the trunk of the past is drawn.
+  let anchored = false;
+  let tx = 0;
+  let ty = 0;
+  let fx = 0;
+  let fy = 0;
+  let originEase = -1;
+  let seated = false;
+  let published = '';
+  const hero = canvas.closest<HTMLElement>('.hero');
+  const rotor = hero?.querySelector<HTMLElement>('.rotor') ?? null;
+  const title = hero?.querySelector<HTMLElement>('.hero__title') ?? null;
+  let gap = 18;
+
+  const offsetIn = (el: HTMLElement, root: HTMLElement): [number, number] => {
+    let x = 0;
+    let y = 0;
+    let n: HTMLElement | null = el;
+    while (n && n !== root) {
+      x += n.offsetLeft;
+      y += n.offsetTop;
+      n = n.offsetParent as HTMLElement | null;
+    }
+    return [x, y];
+  };
+
+  /**
+   * Where the origin wants to be, in canvas space. Sets the target and says
+   * whether the sentence's end is on the drawing, and whether it moved.
+   */
+  const measure = (): { inside: boolean; moved: boolean } => {
+    if (!hero || !rotor) return { inside: false, moved: false };
+    const [rx, ry] = offsetIn(rotor, hero);
+    const [cx, cy] = offsetIn(canvas, hero);
+    const x = rx + rotor.offsetWidth + gap - cx;
+    const y = ry + rotor.offsetHeight * 0.5 - cy;
+    const inside = x > 24 && x < w - 24 && y > 24 && y < h - 24;
+    const wantX = inside ? x : w * 0.3;
+    const wantY = inside ? y : h * 0.5;
+    const moved = Math.abs(wantX - tx) > 0.5 || Math.abs(wantY - ty) > 0.5;
+    tx = wantX;
+    ty = wantY;
+    return { inside, moved };
+  };
+
   /** Endpoint spread across the right edge, fixed for the life of the page. */
   const lanes = Array.from({ length: N }, (_, i) => {
     const u = i / (N - 1);
@@ -141,8 +190,13 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     canvas.width = Math.round(w * ratio);
     canvas.height = Math.round(h * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    nx = w * 0.3;
-    ny = h * 0.5;
+    gap = title ? parseFloat(getComputedStyle(title).fontSize) * 0.55 : 18;
+    anchored = measure().inside;
+    // A resize seats the origin at once; only a verb change eases it.
+    nx = tx;
+    ny = ty;
+    originEase = -1;
+    seated = true;
   };
 
   /** Control points of path i, for both stroking and light positions. */
@@ -171,36 +225,66 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   const draw = (time: number): void => {
     ctx.clearRect(0, 0, w, h);
 
-    // Horizon graduations: T₁ … Tₙ, ruled faintly across the field.
+    // The origin follows the sentence. When the verb's width changes, the
+    // present slides to the new end of the line.
+    const { inside, moved } = measure();
+    anchored = inside;
+    if (moved && seated && !reduced) {
+      fx = nx;
+      fy = ny;
+      originEase = time;
+    } else if (moved) {
+      nx = tx;
+      ny = ty;
+    }
+    if (originEase >= 0) {
+      const t = easeOut((time - originEase) / EASE_MS);
+      nx = fx + (tx - fx) * t;
+      ny = fy + (ty - fy) * t;
+      if (t >= 1) originEase = -1;
+    }
+
+    // Horizon graduations: T₁ … Tₙ. Rooted at the sentence, they are ruled
+    // along the foot of the drawing, clear of every letter; in the fallback
+    // they head the field as before.
     ctx.font = '500 10px "Geist Mono", monospace';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
     const marks: Array<[number, string]> = [
-      [0.46, 'T₁'],
-      [0.62, 'T₂'],
-      [0.78, 'T₃'],
-      [0.94, 'Tₙ'],
+      [0.2, 'T₁'],
+      [0.46, 'T₂'],
+      [0.72, 'T₃'],
+      [0.96, 'Tₙ'],
     ];
-    for (const [fx, label] of marks) {
-      const x = w * fx;
+    const markXs: number[] = [];
+    for (const [f, label] of marks) {
+      const x = anchored ? nx + (w - nx) * f : w * (0.26 + f * 0.7);
+      markXs.push(x);
       ctx.strokeStyle = `rgba(${INK2}, 0.06)`;
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 6]);
       ctx.beginPath();
-      ctx.moveTo(x, 44);
-      ctx.lineTo(x, h - 8);
+      if (anchored) {
+        ctx.moveTo(x, ny + 28);
+        ctx.lineTo(x, h - 24);
+      } else {
+        ctx.moveTo(x, 44);
+        ctx.lineTo(x, h - 8);
+      }
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = `rgba(${MUTE2}, 0.9)`;
-      ctx.fillText(label, x, 28);
+      ctx.textBaseline = anchored ? 'bottom' : 'top';
+      ctx.fillText(label, x, anchored ? h - 6 : 28);
     }
 
-    // Gold dust in the field, a few grains breathing.
+    // Gold dust in the field, a few grains breathing — never on the prose.
+    const lo = anchored ? nx / w + 0.04 : 0.34;
     for (let k = 0; k < DUST; k++) {
       const g = dust[k]!;
       const tw = reduced ? 1 : 0.75 + 0.25 * Math.sin(time * 0.0008 + g.tw);
+      const un = (g.u - 0.34) / 0.64;
       ctx.fillStyle = `rgba(${MUTE}, ${(g.a * tw).toFixed(3)})`;
-      ctx.fillRect(g.u * w, g.v * h, g.s, g.s);
+      ctx.fillRect(w * (lo + un * (0.98 - lo)), g.v * h, g.s, g.s);
     }
 
     // The word in view re-draws the futures the moment it changes.
@@ -289,23 +373,28 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       }
     }
 
-    // Everything that has already happened: one measured line, graduated.
-    ctx.strokeStyle = `rgba(${INK2}, 0.5)`;
-    ctx.lineWidth = 1.4;
-    ctx.beginPath();
-    ctx.moveTo(-2, ny);
-    ctx.lineTo(nx, ny);
-    ctx.stroke();
-    ctx.strokeStyle = `rgba(${INK2}, 0.26)`;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    for (let gx = nx - 26; gx > 8; gx -= 26) {
-      ctx.moveTo(gx, ny - 4);
-      ctx.lineTo(gx, ny + 4);
+    // Everything that has already happened. Rooted at the sentence, the
+    // sentence is the past; otherwise one measured line, graduated.
+    if (!anchored) {
+      ctx.strokeStyle = `rgba(${INK2}, 0.5)`;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(-2, ny);
+      ctx.lineTo(nx, ny);
+      ctx.stroke();
+      ctx.strokeStyle = `rgba(${INK2}, 0.26)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let gx = nx - 26; gx > 8; gx -= 26) {
+        ctx.moveTo(gx, ny - 4);
+        ctx.lineTo(gx, ny + 4);
+      }
+      ctx.stroke();
     }
-    ctx.stroke();
 
-    // Evidence arriving: a pulse runs the trunk; on landing the fan re-weights.
+    // Evidence arriving: on the beat the fan re-weights. Along the trunk a
+    // pulse runs in; at the sentence the present flares instead.
+    let flare = 1;
     if (!reduced) {
       const phase = time - lastBeat;
       if (phase >= BEAT_MS) {
@@ -315,13 +404,17 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
         easeStart = time + PULSE_MS;
       } else if (phase < PULSE_MS) {
         const p = phase / PULSE_MS;
-        const px = p * nx;
-        ctx.strokeStyle = `rgba(${INK}, 0.95)`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(Math.max(0, px - 16), ny);
-        ctx.lineTo(px, ny);
-        ctx.stroke();
+        if (anchored) {
+          flare = 1 + 0.35 * (1 - p);
+        } else {
+          const px = p * nx;
+          ctx.strokeStyle = `rgba(${INK}, 0.95)`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(Math.max(0, px - 16), ny);
+          ctx.lineTo(px, ny);
+          ctx.stroke();
+        }
       }
     }
 
@@ -332,8 +425,10 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ctx.beginPath();
     for (let r = 0; r < 12; r++) {
       const a = (r / 12) * Math.PI * 2;
-      ctx.moveTo(nx + Math.cos(a) * 7, ny + Math.sin(a) * 7);
-      ctx.lineTo(nx + Math.cos(a) * (r % 3 === 0 ? 13 : 10), ny + Math.sin(a) * (r % 3 === 0 ? 13 : 10));
+      const inner = 7 * flare;
+      const outer = (r % 3 === 0 ? 13 : 10) * flare;
+      ctx.moveTo(nx + Math.cos(a) * inner, ny + Math.sin(a) * inner);
+      ctx.lineTo(nx + Math.cos(a) * outer, ny + Math.sin(a) * outer);
     }
     ctx.stroke();
     ctx.fillStyle = `rgba(${INK}, ${(0.7 + 0.3 * beat).toFixed(3)})`;
@@ -347,6 +442,19 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ctx.fillStyle = `rgba(${MUTE}, 0.9)`;
     // On calm hover the present names itself in full.
     ctx.fillText(hovered ? 'STATE T₀' : 'T₀', nx, ny + 18);
+
+    // Where things landed, in page space, once the origin has settled.
+    if (originEase < 0) {
+      const r = canvas.getBoundingClientRect();
+      const next = `${(r.left + nx + window.scrollX).toFixed(1)},${(r.top + ny + window.scrollY).toFixed(1)}`;
+      if (next !== published) {
+        published = next;
+        canvas.dataset['origin'] = next;
+        canvas.dataset['anchored'] = String(anchored);
+        const my = anchored ? h - 6 : 28 + 10;
+        canvas.dataset['marks'] = `${markXs.map((x) => (r.left + x + window.scrollX).toFixed(1)).join(',')}|${(r.top + my + window.scrollY).toFixed(1)}`;
+      }
+    }
   };
 
   let elapsed = 0;
@@ -359,6 +467,8 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
 
   resize();
   const stopResize = onResize(resize);
+  // Fonts settle the sentence's width; seat the origin again when they land.
+  document.fonts?.ready.then(() => resize()).catch(() => undefined);
   let stopFrame: (() => void) | null = null;
 
   canvas.addEventListener('pointerenter', () => {

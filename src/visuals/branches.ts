@@ -92,7 +92,11 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   const hero = canvas.closest<HTMLElement>('.hero');
   const rotor = hero?.querySelector<HTMLElement>('.rotor') ?? null;
   const title = hero?.querySelector<HTMLElement>('.hero__title') ?? null;
+  const eyebrow = hero?.querySelector<HTMLElement>('.hero__eyebrow') ?? null;
+  const dial = canvas.parentElement;
   let gap = 18;
+  /** The measured past: from the end of the sentence to the present. */
+  let trunk = 150;
 
   const offsetIn = (el: HTMLElement, root: HTMLElement): [number, number] => {
     let x = 0;
@@ -114,9 +118,9 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     if (!hero || !rotor) return { inside: false, moved: false };
     const [rx, ry] = offsetIn(rotor, hero);
     const [cx, cy] = offsetIn(canvas, hero);
-    const x = rx + rotor.offsetWidth + gap - cx;
+    const x = rx + rotor.offsetWidth + gap + trunk - cx;
     const y = ry + rotor.offsetHeight * 0.5 - cy;
-    const inside = x > 24 && x < w - 24 && y > 24 && y < h - 24;
+    const inside = x > trunk && x < w - 24 && y > 24 && y < h - 24;
     const wantX = inside ? x : w * 0.3;
     const wantY = inside ? y : h * 0.5;
     const moved = Math.abs(wantX - tx) > 0.5 || Math.abs(wantY - ty) > 0.5;
@@ -183,6 +187,14 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
 
   const resize = (): void => {
     readInks();
+    // On the wide layout the drawing's head sits just under the display, so
+    // the horizon marks at its top never meet the letters.
+    if (dial && hero && eyebrow && window.matchMedia('(min-width: 1000px)').matches) {
+      const [, ey] = offsetIn(eyebrow, hero);
+      dial.style.top = `${Math.round(ey + eyebrow.offsetHeight + 6)}px`;
+    } else if (dial) {
+      dial.style.top = '';
+    }
     const rect = canvas.getBoundingClientRect();
     const ratio = dpr(2);
     w = Math.max(rect.width, 1);
@@ -191,6 +203,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     canvas.height = Math.round(h * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     gap = title ? parseFloat(getComputedStyle(title).fontSize) * 0.55 : 18;
+    trunk = Math.max(110, Math.min(200, w * 0.1));
     anchored = measure().inside;
     // A resize seats the origin at once; only a verb change eases it.
     nx = tx;
@@ -244,11 +257,11 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       if (t >= 1) originEase = -1;
     }
 
-    // Horizon graduations: T₁ … Tₙ. Rooted at the sentence, they are ruled
-    // along the foot of the drawing, clear of every letter; in the fallback
-    // they head the field as before.
+    // Horizon graduations: T₁ … Tₙ, ruled faintly across the field from the
+    // head of the drawing, spaced out from the present.
     ctx.font = '500 10px "Geist Mono", monospace';
     ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
     const marks: Array<[number, string]> = [
       [0.2, 'T₁'],
       [0.46, 'T₂'],
@@ -263,18 +276,12 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 6]);
       ctx.beginPath();
-      if (anchored) {
-        ctx.moveTo(x, ny + 28);
-        ctx.lineTo(x, h - 24);
-      } else {
-        ctx.moveTo(x, 44);
-        ctx.lineTo(x, h - 8);
-      }
+      ctx.moveTo(x, 44);
+      ctx.lineTo(x, h - 8);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = `rgba(${MUTE2}, 0.9)`;
-      ctx.textBaseline = anchored ? 'bottom' : 'top';
-      ctx.fillText(label, x, anchored ? h - 6 : 28);
+      ctx.fillText(label, x, 28);
     }
 
     // Gold dust in the field, a few grains breathing — never on the prose.
@@ -373,28 +380,26 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       }
     }
 
-    // Everything that has already happened. Rooted at the sentence, the
-    // sentence is the past; otherwise one measured line, graduated.
-    if (!anchored) {
-      ctx.strokeStyle = `rgba(${INK2}, 0.5)`;
-      ctx.lineWidth = 1.4;
-      ctx.beginPath();
-      ctx.moveTo(-2, ny);
-      ctx.lineTo(nx, ny);
-      ctx.stroke();
-      ctx.strokeStyle = `rgba(${INK2}, 0.26)`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (let gx = nx - 26; gx > 8; gx -= 26) {
-        ctx.moveTo(gx, ny - 4);
-        ctx.lineTo(gx, ny + 4);
-      }
-      ctx.stroke();
+    // Everything that has already happened: one measured line, graduated.
+    // Rooted at the sentence it begins just past the verb; otherwise it
+    // enters from the edge of the drawing.
+    const x0 = anchored ? nx - trunk : -2;
+    ctx.strokeStyle = `rgba(${INK2}, 0.5)`;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(x0, ny);
+    ctx.lineTo(nx, ny);
+    ctx.stroke();
+    ctx.strokeStyle = `rgba(${INK2}, 0.26)`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let gx = nx - 26; gx > x0 + 8; gx -= 26) {
+      ctx.moveTo(gx, ny - 4);
+      ctx.lineTo(gx, ny + 4);
     }
+    ctx.stroke();
 
-    // Evidence arriving: on the beat the fan re-weights. Along the trunk a
-    // pulse runs in; at the sentence the present flares instead.
-    let flare = 1;
+    // Evidence arriving: a pulse runs the trunk; on landing the fan re-weights.
     if (!reduced) {
       const phase = time - lastBeat;
       if (phase >= BEAT_MS) {
@@ -404,17 +409,13 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
         easeStart = time + PULSE_MS;
       } else if (phase < PULSE_MS) {
         const p = phase / PULSE_MS;
-        if (anchored) {
-          flare = 1 + 0.35 * (1 - p);
-        } else {
-          const px = p * nx;
-          ctx.strokeStyle = `rgba(${INK}, 0.95)`;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(Math.max(0, px - 16), ny);
-          ctx.lineTo(px, ny);
-          ctx.stroke();
-        }
+        const px = Math.max(0, x0) + p * (nx - Math.max(0, x0));
+        ctx.strokeStyle = `rgba(${INK}, 0.95)`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(Math.max(x0, px - 16), ny);
+        ctx.lineTo(px, ny);
+        ctx.stroke();
       }
     }
 
@@ -425,10 +426,8 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     ctx.beginPath();
     for (let r = 0; r < 12; r++) {
       const a = (r / 12) * Math.PI * 2;
-      const inner = 7 * flare;
-      const outer = (r % 3 === 0 ? 13 : 10) * flare;
-      ctx.moveTo(nx + Math.cos(a) * inner, ny + Math.sin(a) * inner);
-      ctx.lineTo(nx + Math.cos(a) * outer, ny + Math.sin(a) * outer);
+      ctx.moveTo(nx + Math.cos(a) * 7, ny + Math.sin(a) * 7);
+      ctx.lineTo(nx + Math.cos(a) * (r % 3 === 0 ? 13 : 10), ny + Math.sin(a) * (r % 3 === 0 ? 13 : 10));
     }
     ctx.stroke();
     ctx.fillStyle = `rgba(${INK}, ${(0.7 + 0.3 * beat).toFixed(3)})`;
@@ -451,8 +450,8 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
         published = next;
         canvas.dataset['origin'] = next;
         canvas.dataset['anchored'] = String(anchored);
-        const my = anchored ? h - 6 : 28 + 10;
-        canvas.dataset['marks'] = `${markXs.map((x) => (r.left + x + window.scrollX).toFixed(1)).join(',')}|${(r.top + my + window.scrollY).toFixed(1)}`;
+        canvas.dataset['thread'] = `${(r.left + (anchored ? nx - trunk : 0) + window.scrollX).toFixed(1)},${(r.top + ny + window.scrollY).toFixed(1)}`;
+        canvas.dataset['marks'] = `${markXs.map((x) => (r.left + x + window.scrollX).toFixed(1)).join(',')}|${(r.top + 28 + window.scrollY).toFixed(1)}`;
       }
     }
   };

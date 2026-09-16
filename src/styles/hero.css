@@ -34,11 +34,11 @@
 @media (min-width: 1000px) {
   .hero__dial {
     position: absolute;
-    /* The drawing spans the hero's lower half. Its origin is not fixed here:
-       the script roots it at the end of the sentence, so the thread leaves
-       the changing verb; only the far, faint strands rise behind the letters.
-       The foot sits on the actions' line, where the T-marks are ruled. */
-    inset: 30svh var(--gutter) clamp(1.25rem, 3vh, 2rem) 0;
+    /* The drawing's head is seated by script just under the display, so the
+       horizon marks at its top never meet the letters; its origin is rooted
+       at the end of the sentence, so the measured line begins at the verb.
+       It bleeds past the hero's foot — cut by the frame, not boxed. */
+    inset: 30svh var(--gutter) -6svh 0;
     width: auto;
     height: auto;
     margin: 0;

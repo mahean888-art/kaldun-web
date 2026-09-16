@@ -3,10 +3,10 @@
  * Every panel is rendered once and stacked in the same cell, so the section
  * keeps the height of its tallest panel and never shifts on selection. Each
  * panel opens with who it is for, then the heading, then one paragraph.
- * Selection by click and by keyboard.
  */
 
 import { el } from '../lib/dom';
+import { wireTabs } from '../lib/tabs';
 import type { Domain } from '../data/domains';
 
 type Options = {
@@ -45,7 +45,7 @@ export function initDomainPanel({ root, items, label }: Options): void {
     el(
       'div',
       {
-        class: i === 0 ? 'dpanel__panel is-in' : 'dpanel__panel',
+        class: 'dpanel__panel',
         id: `domain-panel-${item.ordinal}`,
         role: 'tabpanel',
         'aria-labelledby': `domain-tab-${item.ordinal}`,
@@ -59,35 +59,6 @@ export function initDomainPanel({ root, items, label }: Options): void {
     ),
   );
 
-  const stack = el('div', { class: 'dpanel__stack' }, panels);
-  root.append(index, stack);
-
-  let active = 0;
-  const select = (i: number, focus = false): void => {
-    active = i;
-    tabs.forEach((tab, k) => {
-      tab.setAttribute('aria-selected', String(k === i));
-      tab.tabIndex = k === i ? 0 : -1;
-    });
-    panels.forEach((panel, k) => {
-      panel.setAttribute('aria-hidden', String(k !== i));
-      panel.classList.toggle('is-in', k === i);
-    });
-    if (focus) tabs[i]?.focus();
-  };
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => select(i));
-    tab.addEventListener('keydown', (event) => {
-      const delta =
-        event.key === 'ArrowDown' || event.key === 'ArrowRight'
-          ? 1
-          : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
-            ? -1
-            : 0;
-      if (delta === 0) return;
-      event.preventDefault();
-      select((active + delta + items.length) % items.length, true);
-    });
-  });
+  root.append(index, el('div', { class: 'dpanel__stack' }, panels));
+  wireTabs({ tabs, panels });
 }

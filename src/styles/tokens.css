@@ -14,13 +14,12 @@
   --edge: #2a2a2e;
   --edge-soft: #222225;
 
-  /* --- the one colour: the hero's drawing and the Research accent --------- */
-  --field: #d4502a;
-  --accent: var(--field);
+  /* --- the one colour: copper, lighter on charcoal so it reads without a glow */
+  --accent: #df8a65;
 
   /* --- ink ramp ----------------------------------------------------------- */
   --ink: #f2f0eb;
-  --ink-2: #b8b5ae;
+  --ink-2: #aaa79f;
   --mute: #8a8780;
   --faint: #5b5953;
 
@@ -106,7 +105,7 @@
   --edge-soft: #e6e2d9;
 
   --ink: #141413;
-  --ink-2: #3d4046;
+  --ink-2: #67645d;
   --mute: #6b6e66;
   --faint: #9a9c93;
 
@@ -115,13 +114,13 @@
   --signal-2: #6b6e66;
   --signal-dim: #e9e6de;
 
-  --accent: var(--field);
+  --accent: #b54a2c;
 
-  /* The drawing in the one colour: the fan's inks on bone. */
-  --fan-ink: 212, 80, 42;
-  --fan-ink-2: 200, 76, 40;
-  --fan-mute: 214, 110, 80;
-  --fan-mute-2: 150, 78, 56;
+  /* The drawing in the one colour: the fan's inks on paper. */
+  --fan-ink: 181, 74, 44;
+  --fan-ink-2: 170, 68, 40;
+  --fan-mute: 190, 104, 78;
+  --fan-mute-2: 140, 62, 40;
 
   --hairline: 1px solid var(--edge);
   --hairline-soft: 1px solid var(--edge-soft);

@@ -41,6 +41,250 @@
   color: var(--accent);
 }
 
+/* The two ways in: the set, and the plain text. */
+.manifesto__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+button.link-under {
+  background: none;
+  border-top: 0;
+  border-inline: 0;
+  border-radius: 0;
+  padding-inline: 0;
+  cursor: pointer;
+}
+
+/* Collapsed until asked for; visible without scripting. */
+.js .manifesto__text:not(.is-open) {
+  display: none;
+}
+
+/* --- the reader: a set you enter --------------------------------------- */
+
+.tvr {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+.tvr[open] {
+  display: grid;
+  place-items: center;
+}
+
+.tvr::backdrop {
+  background: rgba(18, 18, 20, 0.6);
+}
+
+html.is-reading {
+  overflow: hidden;
+}
+
+main {
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    filter var(--dur-2) var(--ease-out);
+}
+
+html.is-reading main {
+  transform: scale(0.985);
+  filter: brightness(0.55);
+}
+
+/* The set: matte charcoal, softly rounded, one small copper lamp. It opens
+   from a line at its own centre and settles; it closes the same way. */
+.tvr__set {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(920px, 100vw - 2 * var(--gutter));
+  height: min(78svh, 760px);
+  padding: 46px clamp(14px, 1.8vw, 22px) 30px;
+  background: #161618;
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px #202024,
+    0 30px 80px rgba(0, 0, 0, 0.5);
+  clip-path: inset(calc(50% - 1px) 0 round 18px);
+  transition: clip-path 0.46s var(--ease-out);
+}
+
+.tvr.is-on .tvr__set {
+  clip-path: inset(0 0 round 18px);
+}
+
+.tvr.is-closing .tvr__set {
+  clip-path: inset(calc(50% - 1px) 0 round 18px);
+  transition-duration: 0.24s;
+}
+
+.tvr__close {
+  position: absolute;
+  top: 14px;
+  right: clamp(14px, 1.8vw, 22px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.35em 0.2em;
+  background: none;
+  border: 0;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.tvr__close:hover,
+.tvr__close:focus-visible {
+  color: var(--ink);
+}
+
+.tvr__close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tvr__lamp {
+  position: absolute;
+  left: clamp(18px, 2vw, 26px);
+  bottom: 12px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+
+.tvr__frame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* The screen: the reading surface. Powers on from black, then holds. */
+.tvr__screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #000;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  outline: none;
+  transition: background 0.2s ease 0.34s;
+}
+
+.tvr.is-on .tvr__screen {
+  background: #0f0f11;
+}
+
+/* Glass: one quiet reflection across the upper corner, and the power-on
+   line at the centre. Neither takes the pointer. */
+.tvr__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(
+    152deg,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(255, 255, 255, 0.012) 22%,
+    rgba(255, 255, 255, 0) 38%
+  );
+}
+
+.tvr__glass::before {
+  content: '';
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 50%;
+  height: 1px;
+  background: #fff;
+  opacity: 0;
+}
+
+.tvr.is-on:not(.is-instant) .tvr__glass::before {
+  animation: tvr-on 0.32s ease-out 0.3s 1;
+}
+
+@keyframes tvr-on {
+  0% { opacity: 0; }
+  30% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+.tvr__page {
+  max-width: 640px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vh, 3.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(3rem, 7vh, 4.5rem);
+  opacity: 0;
+  transition: opacity 0.2s ease 0.52s;
+}
+
+.tvr.is-on .tvr__page {
+  opacity: 1;
+}
+
+.tvr__title {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.tvr__essay {
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1.65;
+}
+
+/* Reduced motion: no aperture, no lift, no flash — the reader is simply there. */
+.tvr.is-instant .tvr__set,
+.tvr.is-instant .tvr__screen,
+.tvr.is-instant .tvr__page {
+  transition: none;
+}
+
+.tvr.is-instant .tvr__set {
+  clip-path: none;
+}
+
+.tvr.is-instant .tvr__screen {
+  background: #0f0f11;
+}
+
+.tvr.is-instant .tvr__page {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main,
+  html.is-reading main {
+    transition: none;
+    transform: none;
+    filter: none;
+  }
+}
+
 /* --- 02 · the machine: the loop, drawn thin ------------------------------ */
 
 .machine__top {
@@ -230,7 +474,7 @@
   font-family: var(--mono);
   font-size: var(--t-data);
   letter-spacing: 0.08em;
-  color: var(--faint);
+  color: var(--mute);
 }
 
 .dpanel__tab[aria-selected='true'] .dpanel__no {
@@ -291,24 +535,61 @@
 
 /* --- the seams: shallow ordered lattices --------------------------------- */
 
-.dissolve {
+/* --- the seams: one surface changing tone ----------------------------------
+   A smooth progression between paper and charcoal on an eased curve, so the
+   middle greys pass quickly and neither ground plateaus. The band overlaps
+   its neighbours' padding — never their text — so it lives inside the
+   section rhythm rather than adding an empty movement. Deepest entering the
+   manifesto and approaching the invitation. */
+
+.seam {
+  --seam: clamp(64px, 9vw, 120px);
   position: relative;
-  height: clamp(24px, 3vh, 40px);
+  z-index: 1;
+  height: var(--seam);
+  margin-block: calc(var(--seam) * -0.4);
   pointer-events: none;
 }
 
-.dissolve canvas {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -2px;
-  bottom: -2px;
-  width: 100%;
-  height: calc(100% + 4px);
-  display: block;
+.seam--deep {
+  --seam: clamp(96px, 12vw, 180px);
 }
 
-/* --- 04 · the record: the lede and the ledger ----------------------------- */
+.seam--flush-top {
+  margin-top: 0;
+}
+
+.seam--flush-bottom {
+  margin-bottom: 0;
+}
+
+.seam--to-dark {
+  background: linear-gradient(
+    180deg,
+    #f7f5f0 0%,
+    #e9e7e3 15%,
+    #c6c4c1 30%,
+    #858482 50%,
+    #444344 70%,
+    #202021 85%,
+    #121214 100%
+  );
+}
+
+.seam--to-light {
+  background: linear-gradient(
+    180deg,
+    #121214 0%,
+    #202021 15%,
+    #444344 30%,
+    #858482 50%,
+    #c6c4c1 70%,
+    #e9e7e3 85%,
+    #f7f5f0 100%
+  );
+}
+
+/* --- 04 · the record: the lede and the pillar ----------------------------- */
 
 .record__lede {
   display: flex;
@@ -338,89 +619,150 @@
   }
 }
 
-/* One frame, two columns, shared rules. Precise and still. */
-.ledger {
+/* One object: the pillar and, beside it, the explanation of the selected
+   band. The bands are equal, connected, and still; selection changes the
+   light on one of them. Each explanation is offset to sit level with its
+   band, all four stacked in one cell so the height never moves. */
+.inspect {
+  --pillar-band: clamp(96px, 14vh, 132px);
   display: grid;
-  grid-template-columns: 1fr;
-  background: var(--surface);
-  border-radius: 10px;
-  padding: clamp(1.25rem, 2.4vw, 2rem) clamp(1.25rem, 2.6vw, 2.25rem);
+  grid-template-columns: clamp(96px, 12vw, 176px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
 }
 
-.ledger__head,
-.ledger__foot {
+.pillar {
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1d;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px #232327;
+  overflow: hidden;
+}
+
+.pillar__band {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: var(--pillar-band);
+  padding: 12px 14px 11px;
+  border: 0;
+  background: transparent;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+/* Engraved detail: fine rules in the band's right half. */
+.pillar__band::after {
+  content: '';
+  position: absolute;
+  inset: 14px 14px 14px 58%;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0 1px,
+    transparent 1px 6px
+  );
+  pointer-events: none;
+}
+
+/* The groove between bands. */
+.pillar__band + .pillar__band {
+  border-top: 1px solid #0b0b0d;
+  box-shadow: inset 0 1px 0 #27272b;
+}
+
+.pillar__name {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-2);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.pillar__band[aria-selected='true'] {
+  background: #222226;
+  color: var(--accent);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.pillar__band + .pillar__band[aria-selected='true'] {
+  box-shadow:
+    inset 2px 0 0 var(--accent),
+    inset 0 1px 0 #27272b;
+}
+
+.pillar__band[aria-selected='true'] .pillar__name {
+  color: var(--ink);
+}
+
+.pillar__band:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -5px;
+}
+
+.inspect__stack {
+  display: grid;
+}
+
+.inspect__panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: calc(var(--i, 0) * var(--pillar-band) + 12px);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+
+.inspect__panel.is-in {
+  opacity: 1;
+}
+
+.inspect__panel[aria-hidden='true'] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.inspect__label {
   font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--mute);
 }
 
-.ledger__head {
-  padding-bottom: 0.9rem;
-}
-
-.ledger__foot {
-  padding-top: 0.9rem;
-  border-top: var(--hairline);
-}
-
-.ledger__cell {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 1rem 0;
-  border-top: var(--hairline);
-}
-
-.ledger__cell b {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+.inspect__claim {
+  font-family: var(--sans);
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
   color: var(--ink);
 }
 
-.ledger__cell span {
-  font-size: 0.9375rem;
-  line-height: 1.5;
+.inspect__body {
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--ink-2);
-  max-width: 34ch;
-}
-
-/* Narrow: chronological — everything before, then everything after. */
-.ledger__head--before { order: 0; }
-.ledger__cell--before { order: 1; }
-.ledger__foot--before { order: 2; }
-.ledger__head--after { order: 3; padding-top: 1.75rem; }
-.ledger__cell--after { order: 4; }
-.ledger__foot--after { order: 5; }
-
-@media (min-width: 700px) {
-  .ledger {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .ledger__head,
-  .ledger__cell,
-  .ledger__foot {
-    order: 0;
-  }
-
-  .ledger__head--after {
-    padding-top: 0;
-  }
-
-  .ledger__cell--before,
-  .ledger__head--before,
-  .ledger__foot--before {
-    padding-right: clamp(1rem, 2vw, 1.75rem);
-  }
-
-  .ledger__cell--after,
-  .ledger__head--after,
-  .ledger__foot--after {
-    padding-left: clamp(1rem, 2vw, 1.75rem);
-  }
+  max-width: 40ch;
 }
 
 /* --- 05 · research -------------------------------------------------------- */

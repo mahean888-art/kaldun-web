@@ -6,11 +6,13 @@
 import { qs, qsa } from './lib/dom';
 import { mountMarks } from './visuals/mark';
 import { initBranches } from './visuals/branches';
-import { initDissolve } from './visuals/dissolve';
 import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
+import { initTvReader } from './components/tvReader';
 import { initDomainPanel } from './sections/domainPanel';
+import { initPillar } from './sections/pillar';
 import { DOMAINS } from './data/domains';
+import { RECORD_BANDS } from './data/record';
 import { EMAIL } from './data/site';
 
 /**
@@ -33,6 +35,7 @@ export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
   wireEmail(root);
+  initTvReader(root);
 
   const branches = qs<HTMLCanvasElement>('canvas[data-branches]', root);
   if (branches) initBranches(branches);
@@ -40,12 +43,11 @@ export function mountHome(root: ParentNode = document): void {
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
 
-  for (const seam of qsa<HTMLElement>('[data-dissolve]', root)) {
-    initDissolve(seam);
-  }
-
   const domains = qs<HTMLElement>('[data-domain-panel]', root);
   if (domains) {
     initDomainPanel({ root: domains, items: DOMAINS, label: 'Domains' });
   }
+
+  const pillar = qs<HTMLElement>('[data-pillar]', root);
+  if (pillar) initPillar({ root: pillar, bands: RECORD_BANDS });
 }

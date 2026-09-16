@@ -6,7 +6,7 @@
     <title>Foresight Machines</title>
     <meta
       name="description"
-      content="Foresight Machines builds a self-learning foresight engine: simulations of markets, infrastructure, and institutions that predict the next best action, learn from outcomes, and improve with use. Test an investment, a policy, or a plan, and see what it could set in motion."
+      content="Foresight Machines builds a self-learning foresight engine for markets, infrastructure, and institutions. Run simulations to predict consequences, find your next best action, and learn from real-world outcomes."
     />
     <meta name="theme-color" content="#f7f5f0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -63,10 +63,9 @@
             <span class="rotor" data-rotor>decide</span>.
           </h1>
           <p class="hero__sub" data-reveal="rise" style="--reveal-delay: 300ms">
-            Foresight Machines builds a self-learning foresight engine: simulations of
-            markets, infrastructure, and institutions that predict the next best action,
-            learn from outcomes, and improve with use. Test an investment, a policy, or a
-            plan, and see what it could set in motion.
+            Foresight Machines builds a self-learning foresight engine for markets,
+            infrastructure, and institutions. Run simulations to predict consequences, find
+            your next best action, and learn from real-world outcomes.
           </p>
         </div>
 
@@ -90,9 +89,7 @@
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
-        <canvas></canvas>
-      </div>
+      <div class="seam seam--to-dark seam--deep seam--flush-top" aria-hidden="true"></div>
 
       <!-- ============ 01 · MANIFESTO ============ -->
       <section class="band" id="manifesto">
@@ -102,7 +99,22 @@
             Every decision contains a model of the future.
           </h2>
 
-          <div class="essay">
+          <div class="manifesto__actions">
+            <button type="button" class="btn" data-tv-open>
+              Read the manifesto <span class="btn__arrow" aria-hidden="true">↗</span>
+            </button>
+            <button
+              type="button"
+              class="link-under"
+              data-text-toggle
+              aria-expanded="false"
+              aria-controls="manifesto-text"
+            >
+              Read as text
+            </button>
+          </div>
+
+          <div class="essay manifesto__text" id="manifesto-text">
             <p>An investment memo, a credit file, a board strategy, an operating plan — each contains a model of a world that does not exist yet.</p>
             <p>Today, that model is dispersed. It lives across spreadsheets, slide decks, analyst notes, market prices, policy assumptions, and individual judgment. It is revised unevenly, separated from the decision it informs, and rarely measured after the fact.</p>
             <p>The conditions around those decisions are changing faster than the institutions built to make them. Capital moves across systems continuously. Supply, energy, information, and policy travel through tighter networks. Rules fragment across jurisdictions. A change in one system can alter the conditions of another before the next planning cycle begins.</p>
@@ -145,9 +157,7 @@
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="dark-light">
-        <canvas></canvas>
-      </div>
+      <div class="seam seam--to-light" aria-hidden="true"></div>
 
       <!-- ============ 03 · DOMAINS ============ -->
       <section class="band theme-light" id="domains">
@@ -162,9 +172,7 @@
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
-        <canvas></canvas>
-      </div>
+      <div class="seam seam--to-dark" aria-hidden="true"></div>
 
       <!-- ============ 04 · THE RECORD ============ -->
       <section class="band" id="record">
@@ -174,47 +182,26 @@
           <div class="record2">
             <div class="record__lede">
               <h2 class="record__title" data-lines>
-                Made before<br />the answer was known.
+                The machine learns.<br />The record holds.
               </h2>
               <div class="spacer-sm"></div>
               <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
-                Every forecast starts a record. Its evidence, assumptions, and model version
-                are bound to a timestamped cryptographic commitment before the outcome is
-                known.
+                Every run preserves the model state, evidence, assumptions, actions tested,
+                and projected consequences in a timestamped cryptographic record.
               </p>
               <p class="t-body" data-reveal="fade" style="max-width: 46ch">
-                As events unfold, we add the outcome and evaluate the original forecast. The
-                record preserves both successes and errors, creating the evidence from which
-                the next model learns.
-              </p>
-              <p class="axiom axiom--sm" data-reveal="fade">
-                The claim stays fixed. The model keeps learning.
+                As new evidence and outcomes arrive, the record grows. The original remains
+                verifiable: what the engine knew, what it considered, and how its judgment
+                changed.
               </p>
             </div>
 
-            <div class="ledger" data-reveal="rise" role="table" aria-label="What a record holds">
-              <span class="ledger__head ledger__head--before" role="columnheader">Before the outcome</span>
-              <span class="ledger__head ledger__head--after" role="columnheader">After the outcome</span>
-
-              <div class="ledger__cell ledger__cell--before" role="cell"><b>The forecast</b><span>What is expected, by when, and with what probability.</span></div>
-              <div class="ledger__cell ledger__cell--after" role="cell"><b>The outcome</b><span>What occurred, and the evidence used to establish it.</span></div>
-
-              <div class="ledger__cell ledger__cell--before" role="cell"><b>The context</b><span>The state, evidence, and assumptions available at the time.</span></div>
-              <div class="ledger__cell ledger__cell--after" role="cell"><b>The evaluation</b><span>How the forecast performed against its stated target.</span></div>
-
-              <div class="ledger__cell ledger__cell--before" role="cell"><b>The commitment</b><span>The model version, cryptographic commitment, and verifiable timestamp.</span></div>
-              <div class="ledger__cell ledger__cell--after" role="cell"><b>The learning</b><span>Findings carried into the next model and decision.</span></div>
-
-              <span class="ledger__foot ledger__foot--before" role="cell">Original preserved</span>
-              <span class="ledger__foot ledger__foot--after" role="cell">Results appended</span>
-            </div>
+            <div class="inspect" data-pillar></div>
           </div>
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="dark-light">
-        <canvas></canvas>
-      </div>
+      <div class="seam seam--to-light" aria-hidden="true"></div>
 
       <!-- ============ 05 · RESEARCH ============ -->
       <section class="band theme-light" id="research">
@@ -263,10 +250,28 @@
         </div>
       </section>
 
-      <div class="dissolve" aria-hidden="true" data-dissolve="light-dark">
-        <canvas></canvas>
-      </div>
+      <div class="seam seam--to-dark seam--deep seam--flush-bottom" aria-hidden="true"></div>
     </main>
+
+    <!-- The manifesto reader: a set you enter to read. -->
+    <dialog class="tvr" data-tv-reader aria-labelledby="tvr-title">
+      <div class="tvr__set">
+        <button type="button" class="tvr__close" data-tv-close>
+          Close <span aria-hidden="true">✕</span>
+        </button>
+        <div class="tvr__frame">
+          <div class="tvr__screen" tabindex="-1" data-tv-screen>
+            <div class="tvr__page">
+              <p class="t-label tvr__label">Manifesto</p>
+              <h2 class="tvr__title" id="tvr-title">Every decision contains a model of the future.</h2>
+              <div class="essay tvr__essay" data-tv-essay></div>
+            </div>
+          </div>
+          <div class="tvr__glass" aria-hidden="true"></div>
+        </div>
+        <span class="tvr__lamp" aria-hidden="true"></span>
+      </div>
+    </dialog>
 
     <!-- ============ THE HORIZON ============ -->
     <footer class="horizon" id="horizon">

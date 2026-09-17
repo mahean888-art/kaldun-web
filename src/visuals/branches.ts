@@ -238,6 +238,13 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
   const draw = (time: number): void => {
     ctx.clearRect(0, 0, w, h);
 
+    // Whatever the clock did while the tab was away — a restart, a very long
+    // gap — every held timestamp is brought back to now, so no phase runs
+    // negative and nothing is drawn where it should not be.
+    if (time < lastBeat || time - lastBeat > BEAT_MS * 4) lastBeat = time;
+    if (easeStart > time + PULSE_MS) easeStart = time;
+    if (originEase > time) originEase = time;
+
     // The origin follows the sentence. When the verb's width changes, the
     // present slides to the new end of the line.
     const { inside, moved } = measure();
@@ -408,7 +415,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
         target = shapeFor(mode, rnd);
         easeStart = time + PULSE_MS;
       } else if (phase < PULSE_MS) {
-        const p = phase / PULSE_MS;
+        const p = Math.min(1, Math.max(0, phase / PULSE_MS));
         const px = Math.max(0, x0) + p * (nx - Math.max(0, x0));
         ctx.strokeStyle = `rgba(${INK}, 0.95)`;
         ctx.lineWidth = 2;
@@ -478,6 +485,10 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     hovered = false;
     if (reduced) draw(0);
   });
+  const onVisibility = (): void => {
+    if (document.hidden) hovered = false;
+  };
+  document.addEventListener('visibilitychange', onVisibility);
 
   if (reduced) {
     draw(0);
@@ -501,6 +512,7 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       stopFrame?.();
       stopResize();
       document.removeEventListener('fm:verb', onVerb);
+      document.removeEventListener('visibilitychange', onVisibility);
     },
   };
 }

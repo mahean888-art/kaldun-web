@@ -28,7 +28,9 @@ const tasks = new Set<Task>();
 let running = false;
 let raf = 0;
 let last = 0;
-let started = 0;
+/** Set once: the clock keeps counting across a hidden tab, so nothing that
+    holds a timestamp ever sees time run backwards. */
+let started = -1;
 let velocity = 0;
 let prevScroll = 0;
 
@@ -79,7 +81,7 @@ function start(): void {
   if (running) return;
   running = true;
   last = performance.now();
-  started = last;
+  if (started < 0) started = last;
   prevScroll = window.scrollY;
   measureViewport();
   raf = requestAnimationFrame(loop);

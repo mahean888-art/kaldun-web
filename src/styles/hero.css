@@ -107,13 +107,15 @@
   width: fit-content;
 }
 
+/* One register below the promise: smaller, wider, and given room, so the
+   sentence reads as a note under the line rather than a second heading. */
 .hero__sub {
-  margin-top: clamp(1.1rem, 2.6vh, 1.9rem);
-  font-size: var(--t-lead);
-  line-height: 1.58;
-  letter-spacing: -0.012em;
+  margin-top: clamp(1.4rem, 3.4vh, 2.4rem);
+  font-size: clamp(0.9375rem, 1.08vw, 1.125rem);
+  line-height: 1.55;
+  letter-spacing: -0.004em;
   color: var(--ink-2);
-  max-width: 46ch;
+  max-width: 52ch;
   text-wrap: pretty;
 }
 

@@ -248,6 +248,7 @@
    the horizon line, then settling back down. Gradual — never toward white. */
 .horizon {
   position: relative;
+  overflow: hidden;
   background: linear-gradient(
     180deg,
     var(--ground) 0%,
@@ -265,7 +266,7 @@
   display: flex;
   flex-direction: column;
   min-height: min(62svh, 34rem);
-  padding-block: clamp(3rem, 7vh, 5.5rem) clamp(1.25rem, 3vh, 2rem);
+  padding-block: clamp(3rem, 7vh, 5.5rem) 0;
 }
 
 @media (min-width: 1000px) {
@@ -324,79 +325,115 @@
 
 /* --- the floor ---------------------------------------------------------- */
 
+/* The mark, tone on tone, and the site's two columns; then the mission, a
+   rule, the base line, and the name at the full width of the page, cut by
+   the page's own edge. Quiet, wide, and still. */
 .horizon__floor {
   display: flex;
   flex-direction: column;
   padding-top: clamp(2rem, 5vh, 3.5rem);
 }
 
-/* The name, once, at the full width of the page. */
-.horizon__name {
-  font-family: var(--serif);
-  font-weight: 500;
-  /* Sized from the shell itself: the name runs ~12.4× its font-size, so this
-     fills ~96% of the content width at every viewport, one line, no wrap. */
-  font-size: min(calc((100vw - var(--gutter) * 2) / 12.85), 6.75rem);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--ink);
+.horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vh, 4rem) 2rem;
+  align-items: start;
 }
 
-.horizon__support {
-  margin-top: clamp(0.9rem, 2vh, 1.4rem);
-  font-size: var(--t-small);
+@media (min-width: 760px) {
+  .horizon__grid {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.horizon__glyph {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(7rem, 13vw, 13.5rem);
+  font-weight: 800;
+  line-height: 0.7;
+  letter-spacing: -0.03em;
+  color: #2a2a2f;
+  user-select: none;
+}
+
+.horizon__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, auto));
+  gap: 1rem clamp(2.5rem, 5vw, 5rem);
+}
+
+.horizon__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.horizon__colhead {
+  margin-bottom: 1.1rem;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--mute);
 }
 
-.horizon__row {
-  margin-top: clamp(2rem, 4.5vh, 3.25rem);
-  padding-top: 1.15rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 2.5rem;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.horizon__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-}
-
-.horizon__links a {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+.horizon__col a {
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.95;
+  color: var(--ink);
+  white-space: nowrap;
   transition: color var(--dur-1) var(--ease-out);
 }
 
-.horizon__links a:hover {
-  color: var(--ink);
+.horizon__col a:hover {
+  color: var(--ink-2);
 }
 
-/* Middots between links, never after the last. */
-.horizon__links a + a::before {
-  content: '·';
-  color: var(--faint);
-  margin-inline: 0.9em;
+.horizon__support {
+  margin-top: clamp(4rem, 12vh, 9rem);
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--edge);
+  font-size: var(--t-small);
+  color: var(--mute);
+  max-width: 60ch;
+}
+
+@media (min-width: 760px) {
+  .horizon__support {
+    max-width: none;
+  }
 }
 
 .horizon__base {
-  margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
   padding-top: 1.1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 2rem;
   align-items: center;
   justify-content: space-between;
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: var(--t-small);
   color: var(--mute);
+}
+
+/* The name, once, at the full width of the page, cropped by the page's
+   own edge. Tone on tone: read, never shouted. */
+.horizon__name {
+  margin-top: clamp(1.5rem, 4vh, 2.75rem);
+  margin-bottom: -0.3em;
+  font-family: var(--serif);
+  font-weight: 500;
+  /* Sized from the shell itself: the name runs ~12.4× its font-size, so this
+     fills ~96% of the content width at every viewport, one line, no wrap. */
+  font-size: calc((min(100vw, var(--shell)) - var(--gutter) * 2) / 12.85);
+  letter-spacing: 0.02em;
+  line-height: 0.82;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #2a2a2f;
+  user-select: none;
 }

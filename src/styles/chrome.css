@@ -33,7 +33,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1360px) {
   .header__read {
     display: block;
   }

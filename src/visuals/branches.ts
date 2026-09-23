@@ -38,28 +38,43 @@ function sample(rnd: () => number): number[] {
 }
 
 /** The hero verb, answered in the traces. */
-type Mode = 'decide' | 'commit' | 'allocate' | 'build' | 'insure';
+type Mode = 'decide' | 'allocate' | 'underwrite' | 'hedge' | 'procure' | 'intervene';
 
 /** Shape a base profile to the word in view. */
 function shapeFor(mode: Mode, rnd: () => number): number[] {
   const base = sample(rnd);
-  if (mode === 'commit' || mode === 'build') {
-    // One path gains weight and carries forward.
-    const lead = base.indexOf(Math.max(...base));
-    return base.map((v, i) => {
-      const d = Math.abs(i - lead) / N;
-      const focus = Math.exp(-(d * d) / 0.0012);
-      return Math.min(1, v * 0.3 + focus);
-    });
-  }
   if (mode === 'allocate') {
     // A measured distribution spreads across the paths.
     return base.map(() => 0.42 + rnd() * 0.3);
   }
-  if (mode === 'insure') {
-    // A peripheral tail trace becomes visible.
+  if (mode === 'underwrite') {
+    // The tail is what is priced: a peripheral trace becomes visible.
     const tail = rnd() < 0.5 ? 2 : N - 3;
     return base.map((v, i) => (Math.abs(i - tail) < 2 ? 0.92 : v * 0.75));
+  }
+  if (mode === 'hedge') {
+    // Two paths held against each other: the lead, and its opposite.
+    const lead = base.indexOf(Math.max(...base));
+    const mirror = N - 1 - lead;
+    return base.map((v, i) => {
+      const d = Math.min(Math.abs(i - lead), Math.abs(i - mirror)) / N;
+      return Math.min(1, v * 0.3 + Math.exp(-(d * d) / 0.0012));
+    });
+  }
+  if (mode === 'procure') {
+    // One path gains weight and carries forward: the supply that holds.
+    const lead = base.indexOf(Math.max(...base));
+    return base.map((v, i) => {
+      const d = Math.abs(i - lead) / N;
+      return Math.min(1, v * 0.3 + Math.exp(-(d * d) / 0.0012));
+    });
+  }
+  if (mode === 'intervene') {
+    // The centre is cut and the weight moves to the sides: contained.
+    return base.map((v, i) => {
+      const u = i / (N - 1);
+      return Math.abs(u - 0.5) < 0.16 ? v * 0.2 : Math.min(1, v * 0.6 + 0.3);
+    });
   }
   return base; // decide: paths separate modestly
 }
@@ -352,9 +367,9 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
       ctx.stroke();
     }
 
-    // `build`: the strongest path lengthens into time — its far reach burns
-    // brighter than the rest of its run.
-    if (mode === 'build') {
+    // `procure`: the strongest path lengthens into time — its far reach
+    // burns brighter than the rest of its run.
+    if (mode === 'procure') {
       const lead = order[0]!;
       ctx.strokeStyle = `rgba(${INK}, 0.85)`;
       ctx.lineWidth = 1.8;

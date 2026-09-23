@@ -386,8 +386,14 @@
   letter-spacing: -0.012em;
   line-height: 1.95;
   color: var(--ink);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
   transition: color var(--dur-1) var(--ease-out);
+}
+
+@media (min-width: 760px) {
+  .horizon__col a {
+    white-space: nowrap;
+  }
 }
 
 .horizon__col a:hover {

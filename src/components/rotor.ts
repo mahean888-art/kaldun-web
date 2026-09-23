@@ -15,8 +15,8 @@
 import { qsa } from '../lib/dom';
 import { prefersReducedMotion } from '../lib/prefers';
 
-/** Starts on `decide` and returns to it; five verbs, no more. */
-const VERBS = ['decide', 'commit', 'allocate', 'build', 'insure'];
+/** Starts on `decide` and returns to it; then the five actions, in order. */
+const VERBS = ['decide', 'allocate', 'underwrite', 'hedge', 'procure', 'intervene'];
 
 /** How long a verb stands before the next takes its place. */
 const HOLD = 3200;

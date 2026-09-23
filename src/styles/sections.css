@@ -1,291 +1,529 @@
 /* ==========================================================================
-   Sections — the manifesto essay, the Machine, the domains, the Record, and
-   Research. The page is one scroll; each band is one clear move.
+   Sections — the launch essay and its plates, the actions ledger, Project
+   1654. One column of prose on paper, drawn on a drafting grid; the figures
+   are charcoal plates set into it. Every part of the kit is drawn once here
+   and reused.
    ========================================================================== */
 
-/* --- section label ------------------------------------------------------ */
+/* --- the kit --------------------------------------------------------------- */
 
-/* Each movement opens with one quiet word; the seams carry the rest. */
-.band__label {
-  color: var(--mute);
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
-/* --- 01 · the manifesto: a plain essay ----------------------------------- */
-
-.essay {
-  margin-top: clamp(2rem, 4vw, 3.5rem);
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.35em;
-  font-family: var(--serif);
-  font-size: clamp(1.25rem, 1.5vw, 1.375rem);
-  font-weight: 500;
-  line-height: 1.6;
-  letter-spacing: -0.004em;
-  color: var(--ink-2);
-}
-
-/* The declaration and the conclusion, in the emphasized register. */
-.essay__declare {
-  font-size: clamp(1.75rem, 2.4vw, 2rem);
-  line-height: 1.2;
-  letter-spacing: -0.012em;
-  color: var(--ink);
-  padding-block: 0.35em;
-}
-
-.essay__declare em {
-  font-style: normal;
-  color: var(--accent);
-}
-
-/* The two ways in: the set, and the plain text. */
-.manifesto__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: clamp(1.75rem, 3.5vw, 3rem);
-}
-
-button.link-under {
-  background: none;
-  border-top: 0;
-  border-inline: 0;
-  border-radius: 0;
-  padding-inline: 0;
-  cursor: pointer;
-}
-
-/* Collapsed until asked for; visible without scripting. */
-.js .manifesto__text:not(.is-open) {
-  display: none;
-}
-
-/* --- the reader: a set you enter --------------------------------------- */
-
-.tvr {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-}
-
-.tvr[open] {
-  display: grid;
-  place-items: center;
-}
-
-.tvr::backdrop {
-  background: rgba(18, 18, 20, 0.6);
-}
-
-html.is-reading {
-  overflow: hidden;
-}
-
-main {
-  transition:
-    transform var(--dur-2) var(--ease-out),
-    filter var(--dur-2) var(--ease-out);
-}
-
-html.is-reading main {
-  transform: scale(0.985);
-  filter: brightness(0.55);
-}
-
-/* The set: matte charcoal, softly rounded, one small copper lamp. It opens
-   from a line at its own centre and settles; it closes the same way. */
-.tvr__set {
+/* A registration cross: two hairlines, 12px. */
+.kit__cross {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  width: min(920px, 100vw - 2 * var(--gutter));
-  height: min(78svh, 760px);
-  padding: 46px clamp(14px, 1.8vw, 22px) 30px;
-  background: #161618;
-  border-radius: 18px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    inset 0 0 0 1px #202024,
-    0 30px 80px rgba(0, 0, 0, 0.5);
-  clip-path: inset(calc(50% - 1px) 0 round 18px);
-  transition: clip-path 0.46s var(--ease-out);
+  display: block;
+  width: 12px;
+  height: 12px;
 }
 
-.tvr.is-on .tvr__set {
-  clip-path: inset(0 0 round 18px);
-}
-
-.tvr.is-closing .tvr__set {
-  clip-path: inset(calc(50% - 1px) 0 round 18px);
-  transition-duration: 0.24s;
-}
-
-.tvr__close {
+.kit__cross::before,
+.kit__cross::after {
+  content: '';
   position: absolute;
-  top: 14px;
-  right: clamp(14px, 1.8vw, 22px);
-  display: inline-flex;
+  background: var(--mute);
+}
+
+.kit__cross::before {
+  left: 0;
+  right: 0;
+  top: 5.5px;
+  height: 1px;
+}
+
+.kit__cross::after {
+  top: 0;
+  bottom: 0;
+  left: 5.5px;
+  width: 1px;
+}
+
+/* A bracket corner, 16px, one hairline each way. */
+.kit__corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--mute);
+  pointer-events: none;
+}
+
+.kit__corner--tl { top: 8px; left: 8px; border-top-width: 1px; border-left-width: 1px; }
+.kit__corner--tr { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
+.kit__corner--bl { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
+.kit__corner--br { bottom: 8px; right: 8px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* A graduated ruler down the plate's left edge: a tick every 8px, a major
+   every 40. Drawn with two repeating gradients, no image. */
+.kit__ruler {
+  position: absolute;
+  top: 30px;
+  bottom: 30px;
+  left: 8px;
+  width: 10px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, var(--edge) 0 1px, transparent 1px 40px) 0 0 / 10px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--edge) 0 1px, transparent 1px 8px) 0 0 / 5px 100% no-repeat;
+  opacity: 0.9;
+}
+
+/* A hairline with end caps. */
+.kit__rule {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--edge);
+}
+
+.kit__rule::before,
+.kit__rule::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: var(--mute);
+}
+
+.kit__rule::before { left: 0; }
+.kit__rule::after { right: 0; }
+
+/* --- the drafting grid on paper ------------------------------------------- */
+
+.launch,
+.actions,
+.research {
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(var(--grid-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-ink) 1px, transparent 1px);
+  background-size: 96px 96px;
+  background-position: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter))) 0;
+}
+
+.theme-light {
+  --grid-ink: rgba(20, 20, 19, 0.045);
+}
+
+/* --- the movement: rail + column ------------------------------------------- */
+
+.move {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem 0;
+  padding-block: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.move__rail {
+  display: flex;
   align-items: center;
-  gap: 0.6em;
-  padding: 0.35em 0.2em;
-  background: none;
-  border: 0;
+  gap: 0.75rem;
+}
+
+.move__code {
   font-family: var(--mono);
   font-size: var(--t-label);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--mute);
-  cursor: pointer;
-  transition: color var(--dur-1) var(--ease-out);
 }
 
-.tvr__close:hover,
-.tvr__close:focus-visible {
-  color: var(--ink);
+.move__body {
+  max-width: 660px;
+  min-width: 0;
 }
 
-.tvr__close:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+.move__body--wide {
+  max-width: 900px;
 }
 
-.tvr__lamp {
-  position: absolute;
-  left: clamp(18px, 2vw, 26px);
-  bottom: 12px;
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-}
+@media (min-width: 1000px) {
+  .move {
+    grid-template-columns: minmax(0, 3fr) 660px minmax(0, 3fr);
+    gap: 0 clamp(1.5rem, 3vw, 3rem);
+  }
 
-.tvr__frame {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
+  .move__rail {
+    grid-column: 1;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+  }
 
-/* The screen: the reading surface. Powers on from black, then holds. */
-.tvr__screen {
-  position: absolute;
-  inset: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  background: #000;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-  outline: none;
-  transition: background 0.2s ease 0.34s;
-}
+  .move__body {
+    grid-column: 2;
+  }
 
-.tvr.is-on .tvr__screen {
-  background: #0f0f11;
-}
-
-/* Glass: one quiet reflection across the upper corner, and the power-on
-   line at the centre. Neither takes the pointer. */
-.tvr__glass {
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  pointer-events: none;
-  overflow: hidden;
-  background: linear-gradient(
-    152deg,
-    rgba(255, 255, 255, 0.035) 0%,
-    rgba(255, 255, 255, 0.012) 22%,
-    rgba(255, 255, 255, 0) 38%
-  );
-}
-
-.tvr__glass::before {
-  content: '';
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  top: 50%;
-  height: 1px;
-  background: #fff;
-  opacity: 0;
-}
-
-.tvr.is-on:not(.is-instant) .tvr__glass::before {
-  animation: tvr-on 0.32s ease-out 0.3s 1;
-}
-
-@keyframes tvr-on {
-  0% { opacity: 0; }
-  30% { opacity: 0.5; }
-  100% { opacity: 0; }
-}
-
-.tvr__page {
-  max-width: 640px;
-  margin-inline: auto;
-  padding: clamp(2rem, 5vh, 3.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(3rem, 7vh, 4.5rem);
-  opacity: 0;
-  transition: opacity 0.2s ease 0.52s;
-}
-
-.tvr.is-on .tvr__page {
-  opacity: 1;
-}
-
-.tvr__title {
-  margin-top: clamp(1rem, 2vw, 1.5rem);
-  font-family: var(--serif);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.012em;
-  text-wrap: balance;
-}
-
-.tvr__essay {
-  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
-  line-height: 1.65;
-}
-
-/* Reduced motion: no aperture, no lift, no flash — the reader is simply there. */
-.tvr.is-instant .tvr__set,
-.tvr.is-instant .tvr__screen,
-.tvr.is-instant .tvr__page {
-  transition: none;
-}
-
-.tvr.is-instant .tvr__set {
-  clip-path: none;
-}
-
-.tvr.is-instant .tvr__screen {
-  background: #0f0f11;
-}
-
-.tvr.is-instant .tvr__page {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  main,
-  html.is-reading main {
-    transition: none;
-    transform: none;
-    filter: none;
+  .move__body--wide {
+    grid-column: 2 / 4;
+    max-width: none;
   }
 }
 
-/* --- 02 · the machine: the loop, drawn thin ------------------------------ */
+/* --- the masthead ------------------------------------------------------------ */
+
+.masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem 0;
+  padding-block: 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.masthead__rail {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.masthead__body {
+  max-width: 660px;
+}
+
+@media (min-width: 1000px) {
+  .masthead {
+    grid-template-columns: minmax(0, 3fr) 660px minmax(0, 3fr);
+    gap: 0 clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .masthead__rail {
+    grid-column: 1;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    align-self: start;
+    padding-top: 0.35rem;
+  }
+
+  .masthead__body {
+    grid-column: 2;
+  }
+}
+
+.masthead__kicker {
+  color: var(--accent);
+}
+
+.masthead__title {
+  margin-top: clamp(0.9rem, 1.6vw, 1.25rem);
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.masthead__body .kit__rule {
+  margin-top: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+/* --- the essay ---------------------------------------------------------------- */
+
+.essay__h {
+  margin-top: 0.5rem;
+  margin-bottom: 1.1rem;
+  font-family: var(--sans);
+  font-size: clamp(1.375rem, 1.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.essay__p {
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1.25vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.62;
+  letter-spacing: -0.002em;
+  color: var(--ink);
+}
+
+.essay__p + .essay__p,
+.essay__note + .essay__p,
+.plate + .essay__p {
+  margin-top: 1.5rem;
+}
+
+.essay__p--lead {
+  font-size: clamp(1.1875rem, 1.45vw, 1.3125rem);
+  line-height: 1.55;
+}
+
+.essay__p--set {
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.essay__p em {
+  font-style: italic;
+}
+
+/* Margin notes: factual definitions in the right rail on wide screens,
+   set-in notes below the paragraph everywhere else. */
+.essay__note {
+  margin-top: 1rem;
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--edge);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--mute);
+  max-width: 34ch;
+}
+
+@media (min-width: 1200px) {
+  .move__body {
+    position: relative;
+  }
+
+  .essay__note {
+    position: absolute;
+    left: calc(660px + clamp(1.5rem, 3vw, 3rem));
+    width: min(24ch, 18vw);
+    margin-top: 0;
+    padding-left: 0.85rem;
+    transform: translateY(calc(-1 * (1.62em * 3)));
+  }
+}
+
+.essay__close {
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.essay__close em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.essay__cta {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* --- the plates: charcoal screens set into the paper ------------------------- */
+
+.plate {
+  position: relative;
+  margin-block: clamp(1.75rem, 3vw, 2.5rem);
+  padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 2.4vw, 2rem) clamp(1.25rem, 2.4vw, 2rem) clamp(2rem, 3vw, 2.75rem);
+  background-color: #121214;
+  background-image:
+    linear-gradient(rgba(242, 240, 235, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 240, 235, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: #f2f0eb;
+  --ground: #121214;
+  --ground-2: #17171a;
+  --ink: #f2f0eb;
+  --ink-2: #aaa79f;
+  --mute: #8a8780;
+  --faint: #5b5953;
+  --edge: #2a2a2e;
+  --edge-soft: #222225;
+  --accent: #df8a65;
+  --signal: #ffffff;
+}
+
+.plate__cap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em 1.25em;
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.plate__cap span:first-child {
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* At the wide layout the machine plate escapes the column into the right
+   rail, never past the shell's edge. */
+@media (min-width: 1200px) {
+  .plate--machine {
+    width: calc(100% + clamp(1.5rem, 3vw, 3rem) + min(18vw, 22rem));
+  }
+}
+
+/* The decision entry. */
+.decision__label {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.decision__ask {
+  margin-top: 0.9rem;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  max-width: 30ch;
+}
+
+.decision__returns {
+  margin-top: clamp(1.5rem, 2.4vw, 2rem);
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--edge);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.decision__returns div {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem 1.25rem;
+  min-width: 0;
+}
+
+.decision__returns dt,
+.decision__returns dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 560px) {
+  .decision__returns div {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  }
+}
+
+.decision__returns dt {
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.decision__returns dd {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* --- the actions ledger ------------------------------------------------------ */
+
+.actions__title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 16ch;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.ledger {
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.ledger__row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  grid-template-areas:
+    'no verb'
+    'no object'
+    'no line';
+  gap: 0.25rem 0.75rem;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--edge);
+}
+
+@media (min-width: 760px) {
+  .ledger__row {
+    grid-template-columns: 3.5rem 13rem 9rem minmax(0, 1fr);
+    grid-template-areas: 'no verb object line';
+    align-items: baseline;
+    gap: 0 1.5rem;
+    padding-block: 1.3rem;
+  }
+}
+
+.ledger__no {
+  grid-area: no;
+  font-family: var(--mono);
+  font-size: var(--t-data);
+  letter-spacing: 0.08em;
+  color: var(--mute);
+}
+
+.ledger__verb {
+  grid-area: verb;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.ledger__object {
+  grid-area: object;
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ledger__line {
+  grid-area: line;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+
+/* --- Project 1654 ------------------------------------------------------------- */
+
+.fellowship__number {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.research__sub {
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.research__actions {
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* --- the machine plate: the loop, drawn thin ------------------------------ */
 
 .machine__top {
   max-width: 62ch;
@@ -408,132 +646,6 @@ html.is-reading main {
   fill: var(--ink);
 }
 
-/* --- 03 · the domains: heading left, a third of tabs, two of panel ------- */
-
-.usecases__head {
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-  max-width: 62ch;
-}
-
-.usecases__title {
-  font-family: var(--serif);
-  font-size: var(--t-d1);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.05;
-  text-wrap: balance;
-}
-
-.dpanel {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-}
-
-@media (min-width: 900px) {
-  .dpanel {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: 56px;
-    align-items: start;
-  }
-}
-
-.dpanel__index {
-  display: flex;
-  flex-direction: column;
-  border-top: var(--hairline);
-}
-
-.dpanel__tab {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  padding: clamp(0.8rem, 1.6vw, 1.05rem) 0;
-  border-bottom: var(--hairline);
-  text-align: left;
-  cursor: pointer;
-  font-family: var(--serif);
-  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
-  font-weight: 500;
-  letter-spacing: -0.008em;
-  color: var(--mute);
-  transition: color var(--dur-1) var(--ease-out);
-}
-
-.dpanel__tab:hover,
-.dpanel__tab[aria-selected='true'] {
-  color: var(--ink);
-}
-
-.dpanel__tab:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 2px;
-}
-
-.dpanel__no {
-  font-family: var(--mono);
-  font-size: var(--t-data);
-  letter-spacing: 0.08em;
-  color: var(--mute);
-}
-
-.dpanel__tab[aria-selected='true'] .dpanel__no {
-  color: var(--mute);
-}
-
-/* Every panel is rendered and stacked in one cell, so the section's height
-   is the tallest panel and never jumps on selection. */
-.dpanel__stack {
-  display: grid;
-}
-
-.dpanel__panel {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transform: translate3d(0, 8px, 0);
-  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
-}
-
-.dpanel__panel[aria-hidden='true'] {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.dpanel__panel.is-in {
-  opacity: 1;
-  transform: none;
-}
-
-/* Who it is for, where the eyebrow was. */
-.dpanel__aud {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
-.dpanel__question {
-  font-family: var(--serif);
-  font-size: clamp(1.6rem, 3vw, 2.75rem);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.18;
-  color: var(--ink);
-  max-width: 26ch;
-  text-wrap: balance;
-}
-
-.dpanel__returns {
-  margin-top: clamp(1.25rem, 2.4vw, 1.75rem);
-  font-size: var(--t-lead);
-  line-height: 1.62;
-  color: var(--ink-2);
-  max-width: 48ch;
-}
-
-/* --- the seams: shallow ordered lattices --------------------------------- */
 
 /* --- the seams: one surface changing tone ----------------------------------
    A smooth progression between paper and charcoal on an eased curve, so the
@@ -589,35 +701,6 @@ html.is-reading main {
   );
 }
 
-/* --- 04 · the record: the lede and the pillar ----------------------------- */
-
-.record__lede {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.record__title {
-  font-family: var(--serif);
-  font-size: var(--t-d1);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.012em;
-  text-wrap: balance;
-}
-
-.record2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 5.5rem);
-  align-items: start;
-}
-
-@media (min-width: 1000px) {
-  .record2 {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  }
-}
 
 /* One object: the pillar and, beside it, the explanation of the selected
    band. The bands are equal, connected, and still; selection changes the
@@ -765,67 +848,3 @@ html.is-reading main {
   max-width: 40ch;
 }
 
-/* --- 05 · research -------------------------------------------------------- */
-
-.research__statement {
-  font-family: var(--serif);
-  font-size: var(--t-d1);
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.05;
-  color: var(--ink);
-  max-width: 20ch;
-  text-wrap: balance;
-}
-
-.research__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.75rem, 4vw, 4.5rem);
-  align-items: start;
-}
-
-@media (min-width: 960px) {
-  .research__grid {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  }
-}
-
-.research__sub {
-  font-family: var(--serif);
-  font-size: var(--t-d3);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
-  color: var(--ink);
-}
-
-.research__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-}
-
-.fellowship__project {
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.fellowship__number {
-  font-family: var(--serif);
-  font-size: clamp(3.25rem, 8.5vw, 6rem);
-  font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: 0;
-  color: var(--accent, var(--signal));
-  user-select: none;
-  margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
-}
-
-.axiom--sm {
-  font-size: var(--t-d4);
-}

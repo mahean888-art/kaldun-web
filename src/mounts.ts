@@ -3,15 +3,13 @@
  * are driven by data, and points every action at the right destination.
  */
 
-import { qs, qsa } from './lib/dom';
+import { qs, qsa, el } from './lib/dom';
 import { mountMarks } from './visuals/mark';
 import { initBranches } from './visuals/branches';
 import { initInstrument } from './visuals/instrument';
 import { initRotor } from './components/rotor';
-import { initTvReader } from './components/tvReader';
-import { initDomainPanel } from './sections/domainPanel';
 import { initPillar } from './sections/pillar';
-import { DOMAINS } from './data/domains';
+import { ACTIONS } from './data/actions';
 import { RECORD_BANDS } from './data/record';
 import { EMAIL } from './data/site';
 
@@ -31,22 +29,33 @@ function wireEmail(root: ParentNode): void {
   }
 }
 
+/** The actions ledger: five rows, static, in the order the essay gives them. */
+function mountActions(root: ParentNode): void {
+  const host = qs<HTMLElement>('[data-actions]', root);
+  if (!host) return;
+  host.append(
+    ...ACTIONS.map((a) =>
+      el('li', { class: 'ledger__row' }, [
+        el('span', { class: 'ledger__no' }, [a.ordinal]),
+        el('span', { class: 'ledger__verb' }, [a.verb]),
+        el('span', { class: 'ledger__object' }, [a.object]),
+        el('span', { class: 'ledger__line' }, [a.line]),
+      ]),
+    ),
+  );
+}
+
 export function mountHome(root: ParentNode = document): void {
   mountMarks(root);
   initRotor(root);
   wireEmail(root);
-  initTvReader(root);
+  mountActions(root);
 
   const branches = qs<HTMLCanvasElement>('canvas[data-branches]', root);
   if (branches) initBranches(branches);
 
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
-
-  const domains = qs<HTMLElement>('[data-domain-panel]', root);
-  if (domains) {
-    initDomainPanel({ root: domains, items: DOMAINS, label: 'Domains' });
-  }
 
   const pillar = qs<HTMLElement>('[data-pillar]', root);
   if (pillar) initPillar({ root: pillar, bands: RECORD_BANDS });

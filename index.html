@@ -6,7 +6,7 @@
     <title>Foresight Machines</title>
     <meta
       name="description"
-      content="Foresight Machines builds a self-learning foresight engine for markets, infrastructure, and institutions. Run simulations to predict consequences, find your next best action, and learn from real-world outcomes."
+      content="Foresight Machines builds AI systems that hold a living model of the world around an institution and run that world forward before the institution acts."
     />
     <meta name="theme-color" content="#f7f5f0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -32,11 +32,11 @@
         </a>
 
         <nav class="site-nav" aria-label="Sections">
-          <a class="site-nav__item" href="#manifesto">Manifesto<sup>01</sup></a>
+          <a class="site-nav__item" href="#launch">Launch<sup>01</sup></a>
           <a class="site-nav__item" href="#machine">Machine<sup>02</sup></a>
-          <a class="site-nav__item" href="#domains">Domains<sup>03</sup></a>
-          <a class="site-nav__item" href="#record">Record<sup>04</sup></a>
-          <a class="site-nav__item" href="#research">Research<sup>05</sup></a>
+          <a class="site-nav__item" href="#record">Record<sup>03</sup></a>
+          <a class="site-nav__item" href="#actions">Actions<sup>04</sup></a>
+          <a class="site-nav__item" href="#research">1654<sup>05</sup></a>
         </nav>
 
         <div class="header__actions">
@@ -89,158 +89,173 @@
         </div>
       </section>
 
-      <div class="seam seam--to-dark seam--deep seam--flush-top" aria-hidden="true"></div>
 
-      <!-- ============ 01 · MANIFESTO ============ -->
-      <section class="band" id="manifesto">
+      <!-- ============ THE LAUNCH ============ -->
+      <section class="band theme-light launch" id="launch">
         <div class="shell">
-          <p class="band__label t-label">Manifesto</p>
-          <h2 class="t-d1" data-lines style="max-width: 18ch">
-            Every decision contains a model of the future.
-          </h2>
-
-          <div class="manifesto__actions">
-            <button type="button" class="btn" data-tv-open>
-              Read the manifesto <span class="btn__arrow" aria-hidden="true">↗</span>
-            </button>
-            <button
-              type="button"
-              class="link-under"
-              data-text-toggle
-              aria-expanded="false"
-              aria-controls="manifesto-text"
-            >
-              Read as text
-            </button>
-          </div>
-
-          <div class="essay manifesto__text" id="manifesto-text">
-            <p>An investment memo, a credit file, a board strategy, an operating plan — each contains a model of a world that does not exist yet.</p>
-            <p>Today, that model is dispersed. It lives across spreadsheets, slide decks, analyst notes, market prices, policy assumptions, and individual judgment. It is revised unevenly, separated from the decision it informs, and rarely measured after the fact.</p>
-            <p>The conditions around those decisions are changing faster than the institutions built to make them. Capital moves across systems continuously. Supply, energy, information, and policy travel through tighter networks. Rules fragment across jurisdictions. A change in one system can alter the conditions of another before the next planning cycle begins.</p>
-            <p>Software learned to retrieve, summarize, and answer. It did not learn to maintain a state of the world around a consequential decision — and show how that state may change when an institution acts.</p>
-            <p class="essay__declare">We build foresight machines.</p>
-            <p>A foresight machine maintains an explicit state of what is known now. It advances that state through evidence, time, and possible interventions. It produces distributions, not declarations. It shows which assumptions matter, which conditions break the decision, and which actions stay sound across futures.</p>
-            <p>It then commits its claims before the outcome is known.</p>
-            <p>When the outcome is known, the machine is scored. The record remains. The next decision starts with a better model of the world.</p>
-            <p class="essay__declare">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 02 · THE MACHINE ============ -->
-      <section class="band" id="machine">
-        <div class="shell">
-          <p class="band__label t-label">The Machine</p>
-
-          <div class="machine__top">
-            <h2 class="t-d1" data-lines style="max-width: 16ch">
-              Model the world around the decision.
-            </h2>
-            <div class="spacer-sm"></div>
-            <p class="t-lead" data-reveal="fade" style="max-width: 52ch">
-              A foresight machine connects real-world evidence to a model of the people,
-              assets, rules, and dependencies around a decision. As the world changes, the
-              model updates.
-            </p>
-            <p class="t-body" data-reveal="fade" style="max-width: 52ch">
-              Introduce an action. Change the conditions. Compare how the consequences could
-              unfold, where the plan could fail, and which alternatives remain viable.
-            </p>
-          </div>
-
-          <div class="spacer-md"></div>
-
-          <div class="instrument" data-instrument>
-            <div class="instrument__figure" data-instrument-figure aria-hidden="true"></div>
-          </div>
-        </div>
-      </section>
-
-      <div class="seam seam--to-light" aria-hidden="true"></div>
-
-      <!-- ============ 03 · DOMAINS ============ -->
-      <section class="band theme-light" id="domains">
-        <div class="shell">
-          <p class="band__label t-label">Domains</p>
-
-          <div class="usecases__head">
-            <h2 class="usecases__title" data-lines>Where foresight goes to work.</h2>
-          </div>
-
-          <div class="dpanel" data-domain-panel></div>
-        </div>
-      </section>
-
-      <div class="seam seam--to-dark" aria-hidden="true"></div>
-
-      <!-- ============ 04 · THE RECORD ============ -->
-      <section class="band" id="record">
-        <div class="shell">
-          <p class="band__label t-label">The Record</p>
-
-          <div class="record2">
-            <div class="record__lede">
-              <h2 class="record__title" data-lines>
-                The machine learns.<br />The record holds.
-              </h2>
-              <div class="spacer-sm"></div>
-              <p class="t-lead" data-reveal="fade" style="max-width: 46ch">
-                Every run preserves the model state, evidence, assumptions, actions tested,
-                and projected consequences in a timestamped cryptographic record.
-              </p>
-              <p class="t-body" data-reveal="fade" style="max-width: 46ch">
-                As new evidence and outcomes arrive, the record grows. The original remains
-                verifiable: what the engine knew, what it considered, and how its judgment
-                changed.
-              </p>
+          <header class="masthead">
+            <div class="masthead__rail" aria-hidden="true">
+              <span class="kit__cross"></span>
+              <span class="move__code">Launch&nbsp;/&nbsp;01</span>
             </div>
+            <div class="masthead__body">
+              <p class="masthead__kicker t-label">Foresight, made a machine</p>
+              <h2 class="masthead__title" data-lines>Launching Foresight Machines</h2>
+              <span class="kit__rule" aria-hidden="true"></span>
+            </div>
+          </header>
 
+        <div class="move">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">01</span>
+          </div>
+          <div class="move__body">
+            <p class="essay__p essay__p--lead">At Foresight Machines we build AI systems that hold a living model of the world around an institution — its markets, counterparties, rules, and exposures — and run that world forward before the institution acts: in finance, insurance, energy, supply chains, and statecraft. The output is not a prediction. It is a rehearsal: how the consequences of a decision unfold, which assumptions carry the plan, and which course of action survives the futures no one can rule out.</p>
+            <p class="essay__p">Today, Foresight Machines is coming out of stealth. Our team brings together superforecasters, AI scientists, capital allocators, pioneers of agent-based simulation for financial institutions, and a co-inventor of synthetic control methods, the tool economists reach for to measure what a policy actually did. Predicting a world is one discipline; predicting a world you are about to act on takes all of them.</p>
+            <aside class="essay__note" aria-label="Note">Synthetic control: a method that builds a weighted comparison from units a policy did not touch, to estimate what would have happened without it.</aside>
+          </div>
+        </div>
+
+        <div class="move">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">02</span>
+          </div>
+          <div class="move__body">
+            <h3 class="essay__h">The challenge: turn foresight into an instrument</h3>
+            <p class="essay__p">Foreseeing is as old as planting a seed. Acting today against a world that exists only tomorrow is the move underneath everything an institution does: a loan is underwritten into a future economy, a risk is priced into a future climate, capital is committed to a market that will not hold still while it arrives.</p>
+            <p class="essay__p">That move keeps getting harder. Capital, supply, energy, and policy now run through tightly coupled networks, and rules fragment across jurisdictions — so a change in one system reaches another before the next planning cycle begins. Meanwhile the institution's model of the future, the thing every one of these decisions rests on, lives where it has always lived: three tabs of a spreadsheet, a paragraph of an investment memo, an analyst's conviction, a conversation before the board meets. It is scattered, implicit, revised unevenly, and rarely checked against what happened. Institutions measure their people, their processes, and their quarters. Almost none measure their model of the future.</p>
+          </div>
+        </div>
+
+        <div class="move">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">03</span>
+          </div>
+          <div class="move__body">
+            <p class="essay__p essay__p--set">Consider a decision, not a question:</p>
+            <figure class="plate plate--decision">
+            <span class="kit__ruler" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <p class="plate__cap"><span>Fig. 01</span><span>A decision, as the machine receives it</span></p>
+            <div class="decision">
+              <p class="decision__label">Decision</p>
+              <p class="decision__ask">We underwrite this risk in January. Nothing like it has a loss history. What is it worth — and under what conditions does it ruin us?</p>
+              <dl class="decision__returns">
+                <div><dt>What breaks it</dt><dd>The conditions under which the plan fails.</dd></div>
+                <div><dt>What carries it</dt><dd>The assumptions the plan rests on.</dd></div>
+                <div><dt>What each alternative yields</dt><dd>The course of action that stays sound across futures.</dd></div>
+              </dl>
+            </div>
+            </figure>
+            <p class="essay__p">The last twenty years produced real progress on questions about the future. Philip Tetlock showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, matched or beat intelligence analysts with classified access in tournaments run by the US intelligence community. Machines then caught up: in the Summer 2026 Metaculus Cup, AI systems outforecast every human competitor for the first time, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like Polymarket and Kalshi pay for information and penalize miscalibration — the working version of Robin Hanson's futarchy and Vitalik Buterin's info finance, where forecasts are meant to steer governance itself.</p>
+            <aside class="essay__note" aria-label="Note">Proper scoring rule: a score that is best, on average, when the stated probability is the forecaster's honest belief.</aside>
+            <p class="essay__p">None of this decides anything yet. Superforecasts do not run the C-suite. Markets cover what people will bet on, not what institutions must resolve. Machine forecasters answer questions one at a time, each answer separate from the last. The gap is not accuracy. A probability is a fact about the world; a decision is an act upon it. A number tells you the weather. It does not tell you whether to sail, which route holds if the wind turns, or when to put back into port.</p>
+            <p class="essay__p essay__p--set">Two capabilities now close that gap.</p>
+          </div>
+        </div>
+
+        <div class="move" id="record">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">04</span>
+          </div>
+          <div class="move__body">
+            <h3 class="essay__h">Unlock 1: Faster feedback</h3>
+            <p class="essay__p">Every claim about the world eventually resolves, and the resolution is a label no one has to write and no one can fake. A model can be trained on masked history — it is March 2025, and it knows only what was knowable then — and scored when events resolve. A human forecaster cannot unlearn a year and predict it again; a machine can, thousands of times. Judgment has never had feedback this fast, and it works: a 32-billion-parameter model trained this way outpredicts one seven times its size.</p>
+            <aside class="essay__note" aria-label="Note">Masked history: training on the record up to a date, with everything after it withheld, so the model can be scored on what came next.</aside>
+            <p class="essay__p">We extend the same discipline from questions to decisions. Before an outcome is known, a foresight machine commits to what it expects from each action under consideration: what breaks the plan, what carries it, what each alternative yields. When reality arrives, the machine is scored and the score is kept. Each resolved decision improves the next model of the world, and gives the institution a measured record of its own judgment.</p>
+            <figure class="plate plate--record">
+            <span class="kit__ruler" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <p class="plate__cap"><span>Fig. 02</span><span>The record: what one run preserves</span></p>
             <div class="inspect" data-pillar></div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="move" id="machine">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">05</span>
+          </div>
+          <div class="move__body">
+            <h3 class="essay__h">Unlock 2: World models, cheap and current</h3>
+            <p class="essay__p">Modeling the world around a decision used to be manual work — synthetic population modeling proved it works at scale, but each model takes specialists months to build and is stale before it is finished. That cost is why institutions model the future so rarely, and why the model is never maintained between decisions.</p>
+            <p class="essay__p">Language models remove the bottleneck. They can read where an institution's model of the future actually lives — the memos, filings, contracts, and submissions no database ever captured — and assemble it into an explicit state of the world, then keep that state current as evidence arrives. Once the state is explicit, a counterfactual costs compute instead of a planning cycle. If the licensing regime slips six months, what happens to the capital plan? If it slips and rates hold — then what? The machine runs a thousand of these on every decision, and keeps running them as conditions change. And because one model underlies every decision, the claims stay consistent with each other — which is not just tidiness: forecasters whose beliefs stay coherent across related questions are measurably more accurate on each one.</p>
+            <aside class="essay__note" aria-label="Note">Counterfactual: the same world, run again with one condition changed.</aside>
+            <figure class="plate plate--machine">
+            <span class="kit__ruler" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <p class="plate__cap"><span>Fig. 03</span><span>The machine: the loop, from state to outcome and back</span></p>
+            <div class="instrument" data-instrument>
+              <div class="instrument__figure" data-instrument-figure></div>
+            </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="move">
+          <div class="move__rail" aria-hidden="true">
+            <span class="kit__cross"></span>
+            <span class="move__code">06</span>
+          </div>
+          <div class="move__body">
+            <h3 class="essay__h">Machine foresight</h3>
+            <p class="essay__p">We are building machines that maintain the living state of a business, an institution, a sovereign — its assets, obligations, counterparties, rules, and dependencies — update that state as the world changes, run the counterfactuals of what it might do next, and return the actions that stay sound across futures. Today the machine rehearses and the institution decides. The goal is machines trusted to go further: to allocate capital, underwrite risk, hedge exposure, and procure supply on their own record — foresight as infrastructure, a permanent capability of every consequential institution.</p>
+            <p class="essay__p">Weather forecasting delivers billions of dollars of value a year, and the value arrives where forecasts meet decisions: planting schedules, flight paths, shipping lanes, grid dispatch. We are building that junction for everything an institution decides.</p>
+            <p class="essay__close">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
+            <div class="essay__cta">
+              <a class="btn" data-mail="Bring us a decision" href="#horizon">
+                Bring us a decision you haven&rsquo;t made yet <span class="btn__arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- ============ ACTIONS ============ -->
+      <section class="band theme-light actions" id="actions">
+        <div class="shell">
+          <div class="move">
+            <div class="move__rail" aria-hidden="true">
+              <span class="kit__cross"></span>
+              <span class="move__code">Actions</span>
+            </div>
+            <div class="move__body move__body--wide">
+              <h2 class="actions__title" data-lines>What the machine is pointed at.</h2>
+              <ol class="ledger" data-actions aria-label="Actions"></ol>
+            </div>
           </div>
         </div>
       </section>
 
-      <div class="seam seam--to-light" aria-hidden="true"></div>
-
-      <!-- ============ 05 · RESEARCH ============ -->
-      <section class="band theme-light" id="research">
+      <!-- ============ PROJECT 1654 ============ -->
+      <section class="band theme-light research" id="research">
         <div class="shell">
-          <p class="band__label t-label">Research</p>
-
-          <h2 class="research__statement" data-lines>Better models of a changing world.</h2>
-
-          <div class="spacer-md"></div>
-
-          <div class="research__grid">
-            <div class="stack-col">
-              <p class="fellowship__project" aria-hidden="true">Research residency</p>
-              <p class="fellowship__number" aria-hidden="true">1654</p>
-              <h3 class="research__sub" data-lines>Systems that learn from time.</h3>
+          <div class="move">
+            <div class="move__rail" aria-hidden="true">
+              <span class="kit__cross"></span>
+              <span class="move__code">1654</span>
             </div>
-
-            <div class="stack-col">
-              <p class="t-lead" data-reveal="fade">
-                Our research asks how machines can represent a complex system, reason through
-                interventions, and improve from real-world outcomes.
-              </p>
-              <p class="t-body" data-reveal="fade">
-                We combine language models, time-series forecasting, simulation, and causal
-                inference to build models whose predictions can be tested and whose
-                assumptions can be examined.
-              </p>
-              <p class="t-body" data-reveal="fade">
-                Project 1654 brings researchers and builders into this work. Each project
-                defines what it models, what it claims, and how the claim will be evaluated.
-              </p>
-              <p class="axiom axiom--sm" data-reveal="fade">
-                <em>Progress measured against the world.</em>
-              </p>
-              <div class="spacer-sm" style="height: 0.5rem"></div>
+            <div class="move__body">
+              <p class="fellowship__number" aria-hidden="true">1654</p>
+              <h2 class="research__sub" data-lines>Systems that learn from time.</h2>
+              <p class="essay__p">Project 1654 brings researchers and builders into this work. Each project defines what it models, what it claims, and how the claim will be evaluated.</p>
+              <p class="essay__p essay__p--set"><em>Progress measured against the world.</em></p>
               <div class="research__actions">
-                <a class="btn btn--ghost" data-mail="Bring us a decision" href="#horizon">
-                  Bring us a decision <span class="btn__arrow" aria-hidden="true">↗</span>
-                </a>
                 <a class="btn btn--ghost" data-mail="Project 1654 application" href="#horizon">
                   Apply to Project 1654 <span class="btn__arrow" aria-hidden="true">↗</span>
                 </a>
@@ -250,28 +265,8 @@
         </div>
       </section>
 
-      <div class="seam seam--to-dark seam--deep seam--flush-bottom" aria-hidden="true"></div>
+      <div class="seam seam--to-dark seam--deep" aria-hidden="true"></div>
     </main>
-
-    <!-- The manifesto reader: a set you enter to read. -->
-    <dialog class="tvr" data-tv-reader aria-labelledby="tvr-title">
-      <div class="tvr__set">
-        <button type="button" class="tvr__close" data-tv-close>
-          Close <span aria-hidden="true">✕</span>
-        </button>
-        <div class="tvr__frame">
-          <div class="tvr__screen" tabindex="-1" data-tv-screen>
-            <div class="tvr__page">
-              <p class="t-label tvr__label">Manifesto</p>
-              <h2 class="tvr__title" id="tvr-title">Every decision contains a model of the future.</h2>
-              <div class="essay tvr__essay" data-tv-essay></div>
-            </div>
-          </div>
-          <div class="tvr__glass" aria-hidden="true"></div>
-        </div>
-        <span class="tvr__lamp" aria-hidden="true"></span>
-      </div>
-    </dialog>
 
     <!-- ============ THE HORIZON ============ -->
     <footer class="horizon" id="horizon">
@@ -298,11 +293,11 @@
             <div class="horizon__cols">
               <nav class="horizon__col" aria-label="Sections">
                 <p class="horizon__colhead">Site</p>
-                <a href="#manifesto">Manifesto</a>
+                <a href="#launch">Launch</a>
                 <a href="#machine">Machine</a>
-                <a href="#domains">Domains</a>
                 <a href="#record">Record</a>
-                <a href="#research">Research</a>
+                <a href="#actions">Actions</a>
+                <a href="#research">Project 1654</a>
               </nav>
               <div class="horizon__col">
                 <p class="horizon__colhead">Get in touch</p>

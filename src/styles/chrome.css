@@ -18,22 +18,25 @@
      on every scrolled frame and is the single most expensive thing a fixed header
      can do. */
   background: var(--ground);
-  border-bottom-color: var(--edge-soft);
+  border-bottom-color: var(--edge);
 }
 
-/* Over the light hero the bar is light: the wordmark, the index, and the
-   action invert with it, and once stuck it stands on bone. */
-.site-header.is-on-light {
-  --ground: #f7f5f0;
-  --ground-2: #f0ede6;
-  --ink: #141413;
-  --ink-2: #3d4046;
-  --mute: #6b6e66;
-  --faint: #9a9c93;
-  --signal: #101013;
-  --signal-hi: #000000;
-  --edge: #dcd7cc;
-  --edge-soft: #e6e2d9;
+/* The bar's readout: the screen in view, true. */
+.header__read {
+  display: none;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  white-space: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .header__read {
+    display: block;
+  }
 }
 
 .site-header__inner {
@@ -52,8 +55,20 @@
 .wordmark {
   display: inline-flex;
   align-items: center;
+  gap: 0.75rem;
   flex-shrink: 0;
   color: var(--ink);
+}
+
+/* The two squares before the name: the kit's first mark. */
+.wordmark::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 6px;
+  background:
+    linear-gradient(var(--ink), var(--ink)) 0 0 / 6px 6px no-repeat,
+    linear-gradient(var(--ink-50), var(--ink-50)) 8px 0 / 6px 6px no-repeat;
 }
 
 .wordmark__type {
@@ -244,40 +259,22 @@
 
 /* --- the Horizon -------------------------------------------------------- */
 
-/* The site's one gradient: the ground easing up toward a lifted charcoal at
-   the horizon line, then settling back down. Gradual — never toward white. */
+/* The floor stands on the ground; the invitation above it is a screen. */
 .horizon {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    var(--ground) 0%,
-    #121215 44%,
-    #1c1c21 62%,
-    #0c0c0e 100%
-  );
-  /* Paints the Horizon's own end colour below the last pixel of the page
-     without adding height, so any overscroll gap stays dark. */
-  box-shadow: 0 50vh 0 #0c0c0e;
+  background: var(--ground);
+  box-shadow: 0 50vh 0 var(--ground);
 }
-
 
 .horizon__inner {
   display: flex;
   flex-direction: column;
-  min-height: min(62svh, 34rem);
-  padding-block: clamp(3rem, 7vh, 5.5rem) 0;
+  padding-block: var(--screen-gap) 0;
 }
 
-@media (min-width: 1000px) {
-  .horizon__inner {
-    min-height: min(72svh, 44rem);
-  }
-}
-
-/* The invitation: the sky is where the ask lives. */
+/* The invitation, inside its screen. */
 .horizon__invite {
-  padding-block: clamp(1rem, 3vh, 2rem) clamp(3rem, 8vh, 6rem);
   max-width: 44ch;
 }
 

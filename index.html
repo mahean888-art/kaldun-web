@@ -8,7 +8,7 @@
       name="description"
       content="Foresight Machines builds AI systems that hold a living model of the world around an institution and run that world forward before the institution acts."
     />
-    <meta name="theme-color" content="#f7f5f0" />
+    <meta name="theme-color" content="#121214" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -40,6 +40,7 @@
         </nav>
 
         <div class="header__actions">
+          <span class="header__read" data-screen-read aria-hidden="true">00 / Machine foresight</span>
           <a class="btn btn--sm" data-mail="Bring us a decision" href="#horizon">
             Bring us a decision <span class="btn__arrow" aria-hidden="true">↗</span>
           </a>
@@ -49,7 +50,7 @@
 
     <main id="main">
       <!-- ============ HERO ============ -->
-      <section class="hero theme-light" id="top">
+      <section class="hero" id="top" data-screen-code="00" data-screen-name="Machine foresight">
         <div class="hero__dial" aria-hidden="true">
           <canvas data-branches></canvas>
         </div>
@@ -71,9 +72,13 @@
 
         <div class="shell hero__brief" data-reveal="rise" style="--reveal-delay: 460ms">
           <p class="hero__ledger">
-            <span class="hero__mark" aria-hidden="true"></span>
+            <span class="kit__mark" aria-hidden="true"></span>
             <span>State <b>T&#8320;</b></span>
             <span>Futures <b>T&#8321; &rarr; T&#8345;</b></span>
+            <span>Paths <b data-read="paths">120</b></span>
+            <span>Lead <b data-read="lead">4</b></span>
+            <span>Verb <b data-verb-read>decide</b></span>
+            <span class="kit__dots" data-verb-dots aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           </p>
         </div>
 
@@ -91,15 +96,23 @@
 
 
       <!-- ============ THE LAUNCH ============ -->
-      <section class="band theme-light launch" id="launch">
+      <section class="stage" id="launch" data-screen-code="01" data-screen-name="Launch">
         <div class="shell">
+          <article class="screen" data-screen>
+            <p class="kit__bar">
+              <span class="kit__bar-code">01</span>
+              <span class="kit__bar-name">Launch · Foresight, made a machine</span>
+              <span class="kit__bar-read">6 movements</span>
+            </p>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <div class="screen__body">
           <header class="masthead">
             <div class="masthead__rail" aria-hidden="true">
               <span class="kit__cross"></span>
               <span class="move__code">Launch&nbsp;/&nbsp;01</span>
             </div>
             <div class="masthead__body">
-              <p class="masthead__kicker t-label">Foresight, made a machine</p>
               <h2 class="masthead__title" data-lines>Launching Foresight Machines</h2>
               <span class="kit__rule" aria-hidden="true"></span>
             </div>
@@ -142,7 +155,8 @@
             <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
-            <p class="plate__cap"><span>Fig. 01</span><span>A decision, as the machine receives it</span></p>
+            <p class="kit__bar plate__bar"><span class="kit__bar-code">Fig. 01</span><span class="kit__bar-name">A decision, as the machine receives it</span></p>
+            <div class="plate__body">
             <div class="decision">
               <p class="decision__label">Decision</p>
               <p class="decision__ask">We underwrite this risk in January. Nothing like it has a loss history. What is it worth — and under what conditions does it ruin us?</p>
@@ -151,6 +165,7 @@
                 <div><dt>What carries it</dt><dd>The assumptions the plan rests on.</dd></div>
                 <div><dt>What each alternative yields</dt><dd>The course of action that stays sound across futures.</dd></div>
               </dl>
+            </div>
             </div>
             </figure>
             <p class="essay__p">The last twenty years produced real progress on questions about the future. Philip Tetlock showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, matched or beat intelligence analysts with classified access in tournaments run by the US intelligence community. Machines then caught up: in the Summer 2026 Metaculus Cup, AI systems outforecast every human competitor for the first time, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like Polymarket and Kalshi pay for information and penalize miscalibration — the working version of Robin Hanson's futarchy and Vitalik Buterin's info finance, where forecasts are meant to steer governance itself.</p>
@@ -176,8 +191,10 @@
             <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
-            <p class="plate__cap"><span>Fig. 02</span><span>The record: what one run preserves</span></p>
+            <p class="kit__bar plate__bar"><span class="kit__bar-code">Fig. 02</span><span class="kit__bar-name">The record: what one run preserves</span></p>
+            <div class="plate__body">
             <div class="inspect" data-pillar></div>
+            </div>
             </figure>
           </div>
         </div>
@@ -198,9 +215,11 @@
             <span class="kit__corner kit__corner--tr" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
             <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
-            <p class="plate__cap"><span>Fig. 03</span><span>The machine: the loop, from state to outcome and back</span></p>
+            <p class="kit__bar plate__bar"><span class="kit__bar-code">Fig. 03</span><span class="kit__bar-name">The machine: the loop, from state to outcome and back</span></p>
+            <div class="plate__body">
             <div class="instrument" data-instrument>
               <div class="instrument__figure" data-instrument-figure></div>
+            </div>
             </div>
             </figure>
           </div>
@@ -223,28 +242,50 @@
             </div>
           </div>
         </div>
+            </div>
+          </article>
         </div>
       </section>
 
       <!-- ============ ACTIONS ============ -->
-      <section class="band theme-light actions" id="actions">
+      <section class="stage" id="actions" data-screen-code="02" data-screen-name="Actions">
         <div class="shell">
-          <div class="move">
-            <div class="move__rail" aria-hidden="true">
-              <span class="kit__cross"></span>
-              <span class="move__code">Actions</span>
+          <article class="screen" data-screen>
+            <p class="kit__bar">
+              <span class="kit__bar-code">02</span>
+              <span class="kit__bar-name">Actions · What the machine is pointed at</span>
+              <span class="kit__bar-read">5</span>
+            </p>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <div class="screen__body">
+              <div class="move">
+                <div class="move__rail" aria-hidden="true">
+                  <span class="kit__cross"></span>
+                  <span class="move__code">Actions</span>
+                </div>
+                <div class="move__body move__body--wide">
+                  <h2 class="actions__title" data-lines>What the machine is pointed at.</h2>
+                  <ol class="ledger" data-actions aria-label="Actions"></ol>
+                </div>
+              </div>
             </div>
-            <div class="move__body move__body--wide">
-              <h2 class="actions__title" data-lines>What the machine is pointed at.</h2>
-              <ol class="ledger" data-actions aria-label="Actions"></ol>
-            </div>
-          </div>
+          </article>
         </div>
       </section>
 
       <!-- ============ PROJECT 1654 ============ -->
-      <section class="band theme-light research" id="research">
+      <section class="stage" id="research" data-screen-code="03" data-screen-name="Project 1654">
         <div class="shell">
+          <article class="screen" data-screen>
+            <p class="kit__bar">
+              <span class="kit__bar-code">03</span>
+              <span class="kit__bar-name">Project 1654 · Systems that learn from time</span>
+              <span class="kit__bar-read">Apply by email</span>
+            </p>
+            <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+            <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+            <div class="screen__body">
           <div class="move">
             <div class="move__rail" aria-hidden="true">
               <span class="kit__cross"></span>
@@ -262,15 +303,24 @@
               </div>
             </div>
           </div>
+            </div>
+          </article>
         </div>
       </section>
-
-      <div class="seam seam--to-dark seam--deep" aria-hidden="true"></div>
     </main>
 
     <!-- ============ THE HORIZON ============ -->
-    <footer class="horizon" id="horizon">
+    <footer class="horizon" id="horizon" data-screen-code="04" data-screen-name="Contact">
       <div class="shell horizon__inner">
+        <article class="screen screen--invite" data-screen>
+          <p class="kit__bar">
+            <span class="kit__bar-code">04</span>
+            <span class="kit__bar-name">Contact · Bring us a decision</span>
+            <span class="kit__bar-read">hello@foresightmachines.com</span>
+          </p>
+          <span class="kit__corner kit__corner--bl" aria-hidden="true"></span>
+          <span class="kit__corner kit__corner--br" aria-hidden="true"></span>
+          <div class="screen__body">
         <div class="horizon__invite">
           <h2 class="horizon__ask" data-lines>
             Bring us a decision<br />you haven&rsquo;t made yet.
@@ -286,6 +336,8 @@
             <a class="horizon__mail" data-email href="#"></a>
           </div>
         </div>
+          </div>
+        </article>
 
         <div class="horizon__floor">
           <div class="horizon__grid">

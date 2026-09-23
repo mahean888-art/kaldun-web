@@ -1,0 +1,190 @@
+/* ==========================================================================
+   The kit — the instrument's marks, drawn once and used on every surface:
+   a title bar, a registration cross, a bracket corner, a graduated ruler,
+   a hairline with end caps, a row of squares that lights one index, and
+   the 6px copper mark. No glow, no blur, no images.
+   ========================================================================== */
+
+/* The title bar: two squares, the code, the name, a true readout at right. */
+.kit__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  height: 30px;
+  padding-inline: 12px;
+  border-bottom: 1px solid var(--edge);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+  white-space: nowrap;
+}
+
+.kit__bar::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 6px;
+  background:
+    linear-gradient(var(--ink-50), var(--ink-50)) 0 0 / 6px 6px no-repeat,
+    linear-gradient(var(--ink-50), var(--ink-50)) 8px 0 / 6px 6px no-repeat;
+}
+
+.kit__bar-code {
+  color: var(--ink);
+}
+
+.kit__bar-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kit__bar-read {
+  margin-inline-start: auto;
+  color: var(--ink-50);
+}
+
+.kit__bar-read b {
+  font-weight: 500;
+  color: var(--ink-70);
+}
+
+/* A registration cross: two hairlines, 12px. */
+.kit__cross {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+.kit__cross::before,
+.kit__cross::after {
+  content: '';
+  position: absolute;
+  background: var(--ink-50);
+}
+
+.kit__cross::before { left: 0; right: 0; top: 5.5px; height: 1px; }
+.kit__cross::after { top: 0; bottom: 0; left: 5.5px; width: 1px; }
+
+/* A bracket corner, 14px, set inside the frame. */
+.kit__corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--ink-50);
+  pointer-events: none;
+}
+
+.kit__corner--tl { top: 8px; left: 8px; border-top-width: 1px; border-left-width: 1px; }
+.kit__corner--tr { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
+.kit__corner--bl { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
+.kit__corner--br { bottom: 8px; right: 8px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* A graduated ruler down a left edge: a tick every 8px, a major every 40. */
+.kit__ruler {
+  position: absolute;
+  top: 30px;
+  bottom: 30px;
+  left: 8px;
+  width: 10px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, var(--ink-50) 0 1px, transparent 1px 40px) 0 0 / 10px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--ink-50) 0 1px, transparent 1px 8px) 0 0 / 5px 100% no-repeat;
+  opacity: 0.6;
+}
+
+/* A hairline with end caps. */
+.kit__rule {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--edge);
+}
+
+.kit__rule::before,
+.kit__rule::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: var(--ink-50);
+}
+
+.kit__rule::before { left: 0; }
+.kit__rule::after { right: 0; }
+
+/* A row of squares; the one whose index is live is copper. */
+.kit__dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.kit__dots i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--ink-50);
+  opacity: 0.6;
+  transition: background var(--dur-1) var(--ease-out), opacity var(--dur-1) var(--ease-out);
+}
+
+.kit__dots i.is-on {
+  background: var(--accent);
+  opacity: 1;
+}
+
+/* The mark. */
+.kit__mark {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+
+/* --- the screen: a frame on the ground, a bar, an interior ---------------- */
+
+.screen {
+  position: relative;
+  border: 1px solid var(--edge);
+  background: var(--panel);
+  background-image: var(--hatch);
+}
+
+.screen__body {
+  position: relative;
+  padding: clamp(1.75rem, 3.2vw, 3rem) clamp(1.25rem, 2.6vw, 2.5rem) clamp(2rem, 3.6vw, 3.25rem);
+}
+
+/* Power-on: the frame is drawn from the start; the interior comes up once,
+   as the screen enters. No clipping, so a tall screen still registers when
+   its middle is what is in view. Reduced motion: simply present. */
+.screen[data-screen] {
+  transition: border-color 0.2s ease;
+}
+
+.js .screen[data-screen]:not(.is-on) {
+  border-color: var(--edge-soft);
+}
+
+.screen__body,
+.screen > .kit__bar {
+  transition: opacity 0.24s ease 0.06s;
+}
+
+.js .screen[data-screen]:not(.is-on) .screen__body,
+.js .screen[data-screen]:not(.is-on) > .kit__bar {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .screen[data-screen]:not(.is-on) .screen__body,
+  .js .screen[data-screen]:not(.is-on) > .kit__bar {
+    opacity: 1;
+  }
+}

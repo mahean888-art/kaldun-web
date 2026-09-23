@@ -1,47 +1,54 @@
 /* ==========================================================================
    Foresight Machines — design tokens
-   One dark ground, one ink ramp, no chromatic colour. The only accent is
-   pure white, reserved for the single live thing in any component. Adjacent
-   surfaces differ by one step; the Horizon's gradient is the site's only one.
+   One material: charcoal. One ink at three opacities. One light, copper,
+   only where the machine is live. The finishes are static: film grain on
+   the ground, a fine hatch on every screen, a drafting grid behind.
    ========================================================================== */
 
 :root {
-  /* --- ground: stepped near-blacks --------------------------------------- */
+  /* --- ground: the material ---------------------------------------------- */
   --ground: #121214;
+  --panel: #161618;
+  --panel-deep: #0f0f11;
   --ground-2: #17171a;
-  --panel: #1c1c1f;
-  --panel-2: #202024;
-  --edge: #2a2a2e;
-  --edge-soft: #222225;
+  --panel-2: #1c1c1f;
+  --edge: #26262a;
+  --edge-soft: #202023;
 
-  /* --- the one colour: copper, lighter on charcoal so it reads without a glow */
+  /* --- the one light ------------------------------------------------------ */
   --accent: #df8a65;
 
-  /* --- ink ramp ----------------------------------------------------------- */
+  /* --- ink, three opacities ---------------------------------------------- */
   --ink: #f2f0eb;
+  --ink-88: rgba(242, 240, 235, 0.88);
+  --ink-70: rgba(242, 240, 235, 0.7);
+  --ink-50: rgba(242, 240, 235, 0.5);
   --ink-2: #aaa79f;
   --mute: #8a8780;
   --faint: #5b5953;
 
-  /* --- the fan's inks, as r, g, b triplets the canvas reads --------------- */
-  --fan-ink: 255, 255, 255;
-  --fan-ink-2: 244, 243, 240;
-  --fan-mute: 185, 183, 178;
-  --fan-mute-2: 138, 136, 128;
+  /* --- the fan's inks, copper on charcoal, as r, g, b triplets ----------- */
+  --fan-ink: 223, 138, 101;
+  --fan-ink-2: 200, 120, 85;
+  --fan-mute: 150, 95, 70;
+  --fan-mute-2: 100, 64, 48;
 
-  /* --- the signal: pure white, and nothing else --------------------------- */
+  /* --- the signal --------------------------------------------------------- */
   --signal: #ffffff;
   --signal-hi: #ffffff;
   --signal-2: #8a8880;
   --signal-dim: #1b1b1e;
+
+  /* --- finishes ----------------------------------------------------------- */
+  --hatch: repeating-linear-gradient(180deg, rgba(242, 240, 235, 0.025) 0 1px, transparent 1px 3px);
+  --grid-ink: rgba(242, 240, 235, 0.035);
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.94 0 0 0 0 0.92 0 0 0 0.06 0'/></filter><rect width='128' height='128' filter='url(%23g)'/></svg>");
 
   /* --- type -------------------------------------------------------------- */
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Display scale. The hero is deliberately the largest thing on the site,
-     until the Horizon's name outdoes it. */
   --t-hero: clamp(2.4rem, 5.6vw, 5.75rem);
   --t-d1: clamp(2rem, 5vw, 4.25rem);
   --t-d2: clamp(1.6rem, 3.4vw, 2.75rem);
@@ -60,6 +67,7 @@
   --measure: 60ch;
   --shell: 1520px;
   --band: clamp(5rem, 8vw, 7rem);
+  --screen-gap: clamp(2rem, 4vw, 3rem);
 
   /* --- motion ------------------------------------------------------------ */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -92,40 +100,3 @@
   color: var(--ink);
 }
 
-/* The light middle: bone rather than clinical white, the same token names so
-   every component inherits without asking. The live mark flips to near-black,
-   and the one colour on the whole site — a sparing terracotta — exists only
-   inside this scope. */
-.theme-light {
-  --ground: #f7f5f0;
-  --ground-2: #f0ede6;
-  --panel: #e9e5dc;
-  --panel-2: #e2ded4;
-  --edge: #dcd7cc;
-  --edge-soft: #e6e2d9;
-
-  --ink: #141413;
-  --ink-2: #67645d;
-  --mute: #6b6e66;
-  --faint: #9a9c93;
-
-  --signal: #101013;
-  --signal-hi: #000000;
-  --signal-2: #6b6e66;
-  --signal-dim: #e9e6de;
-
-  --accent: #b54a2c;
-
-  /* The drawing in the one colour: the fan's inks on paper. */
-  --fan-ink: 181, 74, 44;
-  --fan-ink-2: 170, 68, 40;
-  --fan-mute: 190, 104, 78;
-  --fan-mute-2: 140, 62, 40;
-
-  --hairline: 1px solid var(--edge);
-  --hairline-soft: 1px solid var(--edge-soft);
-
-  background: var(--ground);
-  color: var(--ink);
-  color-scheme: light;
-}

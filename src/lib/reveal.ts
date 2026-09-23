@@ -51,10 +51,29 @@ export function initReveal(root: ParentNode = document): void {
   for (const node of qsa<HTMLElement>('[data-lines]', root)) buildLines(node);
 
   const targets = qsa<HTMLElement>('[data-reveal], [data-stagger], .lines, .pillar, .glyph', root);
+  const screens = qsa<HTMLElement>('[data-screen]', root);
 
   if (prefersReducedMotion()) {
     for (const node of targets) node.classList.add('is-in');
+    for (const s of screens) s.classList.add('is-on');
     return;
+  }
+
+  // Screens power on once, as they enter.
+  const power = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('is-on');
+        power.unobserve(e.target);
+      }
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0 },
+  );
+  for (const s of screens) {
+    const r = s.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) s.classList.add('is-on');
+    else power.observe(s);
   }
 
   const io = ensureObserver();

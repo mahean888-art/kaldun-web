@@ -1,106 +1,19 @@
 /* ==========================================================================
    Sections — the launch essay and its plates, the actions ledger, Project
-   1654. One column of prose on paper, drawn on a drafting grid; the figures
-   are charcoal plates set into it. Every part of the kit is drawn once here
+   1654. One column of prose on the panel, drawn on a drafting grid; the
+   figures are inset plates, deeper than the panel. Every part of the kit is drawn once here
    and reused.
    ========================================================================== */
 
-/* --- the kit --------------------------------------------------------------- */
+/* --- the stage: each screen on the ground, a gap between ------------------ */
 
-/* A registration cross: two hairlines, 12px. */
-.kit__cross {
+.stage {
   position: relative;
-  display: block;
-  width: 12px;
-  height: 12px;
+  padding-block: calc(var(--screen-gap) / 2);
 }
 
-.kit__cross::before,
-.kit__cross::after {
-  content: '';
-  position: absolute;
-  background: var(--mute);
-}
-
-.kit__cross::before {
-  left: 0;
-  right: 0;
-  top: 5.5px;
-  height: 1px;
-}
-
-.kit__cross::after {
-  top: 0;
-  bottom: 0;
-  left: 5.5px;
-  width: 1px;
-}
-
-/* A bracket corner, 16px, one hairline each way. */
-.kit__corner {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 0 solid var(--mute);
-  pointer-events: none;
-}
-
-.kit__corner--tl { top: 8px; left: 8px; border-top-width: 1px; border-left-width: 1px; }
-.kit__corner--tr { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
-.kit__corner--bl { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
-.kit__corner--br { bottom: 8px; right: 8px; border-bottom-width: 1px; border-right-width: 1px; }
-
-/* A graduated ruler down the plate's left edge: a tick every 8px, a major
-   every 40. Drawn with two repeating gradients, no image. */
-.kit__ruler {
-  position: absolute;
-  top: 30px;
-  bottom: 30px;
-  left: 8px;
-  width: 10px;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(180deg, var(--edge) 0 1px, transparent 1px 40px) 0 0 / 10px 100% no-repeat,
-    repeating-linear-gradient(180deg, var(--edge) 0 1px, transparent 1px 8px) 0 0 / 5px 100% no-repeat;
-  opacity: 0.9;
-}
-
-/* A hairline with end caps. */
-.kit__rule {
-  position: relative;
-  display: block;
-  height: 1px;
-  background: var(--edge);
-}
-
-.kit__rule::before,
-.kit__rule::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  width: 1px;
-  height: 7px;
-  background: var(--mute);
-}
-
-.kit__rule::before { left: 0; }
-.kit__rule::after { right: 0; }
-
-/* --- the drafting grid on paper ------------------------------------------- */
-
-.launch,
-.actions,
-.research {
-  background-color: var(--ground);
-  background-image:
-    linear-gradient(var(--grid-ink) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-ink) 1px, transparent 1px);
-  background-size: 96px 96px;
-  background-position: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter))) 0;
-}
-
-.theme-light {
-  --grid-ink: rgba(20, 20, 19, 0.045);
+.screen--invite .screen__body {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 /* --- the movement: rail + column ------------------------------------------- */
@@ -167,7 +80,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem 0;
-  padding-block: 0 clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(0.5rem, 1.5vw, 1.25rem) clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .masthead__rail {
@@ -199,12 +112,8 @@
   }
 }
 
-.masthead__kicker {
-  color: var(--accent);
-}
-
 .masthead__title {
-  margin-top: clamp(0.9rem, 1.6vw, 1.25rem);
+  margin-top: 0;
   font-family: var(--serif);
   font-size: clamp(2.25rem, 4.6vw, 4rem);
   font-weight: 500;
@@ -220,14 +129,19 @@
 
 /* --- the essay ---------------------------------------------------------------- */
 
+/* Movement heads: a hairline, then the code and the head in the
+   instrument's voice. Short, so they stay readable in caps. */
 .essay__h {
-  margin-top: 0.5rem;
-  margin-bottom: 1.1rem;
-  font-family: var(--sans);
-  font-size: clamp(1.375rem, 1.6vw, 1.5rem);
+  margin-top: 0.25rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--edge);
+  font-family: var(--mono);
+  font-size: 0.75rem;
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--ink);
 }
 
@@ -237,7 +151,7 @@
   font-weight: 400;
   line-height: 1.62;
   letter-spacing: -0.002em;
-  color: var(--ink);
+  color: var(--ink-88);
 }
 
 .essay__p + .essay__p,
@@ -253,7 +167,7 @@
 
 .essay__p--set {
   font-style: italic;
-  color: var(--ink-2);
+  color: var(--ink-70);
 }
 
 .essay__p em {
@@ -269,7 +183,7 @@
   font-family: var(--sans);
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--mute);
+  color: var(--ink-50);
   max-width: 34ch;
 }
 
@@ -307,50 +221,40 @@
   margin-top: clamp(1.75rem, 3vw, 2.5rem);
 }
 
-/* --- the plates: charcoal screens set into the paper ------------------------- */
+/* --- the plates: inset screens, deeper than the panel ---------------------- */
 
 .plate {
   position: relative;
   margin-block: clamp(1.75rem, 3vw, 2.5rem);
-  padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 2.4vw, 2rem) clamp(1.25rem, 2.4vw, 2rem) clamp(2rem, 3vw, 2.75rem);
-  background-color: #121214;
+  border: 1px solid var(--edge);
+  background-color: var(--panel-deep);
   background-image:
+    var(--hatch),
     linear-gradient(rgba(242, 240, 235, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(242, 240, 235, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-  color: #f2f0eb;
-  --ground: #121214;
-  --ground-2: #17171a;
-  --ink: #f2f0eb;
-  --ink-2: #aaa79f;
-  --mute: #8a8780;
-  --faint: #5b5953;
-  --edge: #2a2a2e;
-  --edge-soft: #222225;
-  --accent: #df8a65;
-  --signal: #ffffff;
+  background-size: auto, 48px 48px, 48px 48px;
 }
 
-.plate__cap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35em 1.25em;
-  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
-  font-family: var(--mono);
-  font-size: var(--t-label);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
+.plate__bar {
+  padding-left: 26px;
 }
 
-.plate__cap span:first-child {
-  color: var(--ink);
-  white-space: nowrap;
+.plate__body {
+  position: relative;
+  padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 2.4vw, 2rem) clamp(1.5rem, 2.6vw, 2.25rem) clamp(2rem, 3vw, 2.75rem);
+}
+
+.plate .kit__ruler {
+  top: 38px;
+}
+
+.plate .kit__corner--tl,
+.plate .kit__corner--tr {
+  display: none;
 }
 
 /* At the wide layout the machine plate escapes the column into the right
-   rail, never past the shell's edge. */
+   rail, never past the screen's edge. */
 @media (min-width: 1200px) {
   .plate--machine {
     width: calc(100% + clamp(1.5rem, 3vw, 3rem) + min(18vw, 22rem));
@@ -416,7 +320,7 @@
 .decision__returns dd {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--ink-2);
+  color: var(--ink-70);
 }
 
 /* --- the actions ledger ------------------------------------------------------ */
@@ -434,7 +338,7 @@
 
 .ledger {
   list-style: none;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--ink-50);
 }
 
 .ledger__row {
@@ -490,7 +394,7 @@
   grid-area: line;
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--ink-2);
+  color: var(--ink-70);
   max-width: 48ch;
 }
 
@@ -647,61 +551,6 @@
 }
 
 
-/* --- the seams: one surface changing tone ----------------------------------
-   A smooth progression between paper and charcoal on an eased curve, so the
-   middle greys pass quickly and neither ground plateaus. The band overlaps
-   its neighbours' padding — never their text — so it lives inside the
-   section rhythm rather than adding an empty movement. Deepest entering the
-   manifesto and approaching the invitation. */
-
-.seam {
-  --seam: clamp(64px, 9vw, 120px);
-  position: relative;
-  z-index: 1;
-  height: var(--seam);
-  margin-block: calc(var(--seam) * -0.4);
-  pointer-events: none;
-}
-
-.seam--deep {
-  --seam: clamp(96px, 12vw, 180px);
-}
-
-.seam--flush-top {
-  margin-top: 0;
-}
-
-.seam--flush-bottom {
-  margin-bottom: 0;
-}
-
-.seam--to-dark {
-  background: linear-gradient(
-    180deg,
-    #f7f5f0 0%,
-    #e9e7e3 15%,
-    #c6c4c1 30%,
-    #858482 50%,
-    #444344 70%,
-    #202021 85%,
-    #121214 100%
-  );
-}
-
-.seam--to-light {
-  background: linear-gradient(
-    180deg,
-    #121214 0%,
-    #202021 15%,
-    #444344 30%,
-    #858482 50%,
-    #c6c4c1 70%,
-    #e9e7e3 85%,
-    #f7f5f0 100%
-  );
-}
-
-
 /* One object: the pillar and, beside it, the explanation of the selected
    band. The bands are equal, connected, and still; selection changes the
    light on one of them. Each explanation is offset to sit level with its
@@ -848,3 +697,28 @@
   max-width: 40ch;
 }
 
+/* The ground, with the grain and the drafting grid on it. */
+body {
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(var(--grid-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-ink) 1px, transparent 1px);
+  background-size: 96px 96px;
+  background-position: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter))) 0;
+  color: var(--ink);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--grain);
+  background-size: 128px 128px;
+  pointer-events: none;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}

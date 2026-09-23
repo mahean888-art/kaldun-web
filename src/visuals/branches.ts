@@ -183,6 +183,9 @@ export function initBranches(canvas: HTMLCanvasElement): BranchHandle {
     mode = verb;
     modeChanged = true;
   };
+  // What the drawing is, for the readout beside it: true counts, nothing else.
+  canvas.dataset['paths'] = String(N);
+  canvas.dataset['lead'] = '4';
   document.addEventListener('fm:verb', onVerb);
 
   // The fan's inks come from the page: white on the dark ground, ink-black on

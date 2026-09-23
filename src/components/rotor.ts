@@ -67,6 +67,10 @@ function mount(host: HTMLElement): void {
 
   const announce = (verb: string): void => {
     document.dispatchEvent(new CustomEvent('fm:verb', { detail: { verb } }));
+    // The readout beside the drawing, and the row of squares: which action.
+    for (const out of document.querySelectorAll<HTMLElement>('[data-verb-read]')) out.textContent = verb;
+    const k = VERBS.indexOf(verb) - 1;
+    document.querySelectorAll<HTMLElement>('[data-verb-dots] i').forEach((dot, i) => dot.classList.toggle('is-on', i === k));
   };
   announce(VERBS[0] ?? 'decide');
 

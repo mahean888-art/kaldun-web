@@ -114,13 +114,15 @@
   font-size: clamp(0.9375rem, 1.08vw, 1.125rem);
   line-height: 1.55;
   letter-spacing: -0.004em;
-  color: var(--ink-2);
+  color: var(--ink-70);
   max-width: 52ch;
   text-wrap: pretty;
 }
 
-/* --- the ledger --------------------------------------------------------- */
+/* --- the readout ---------------------------------------------------------- */
 
+/* Top right, in the empty quadrant: what the drawing is. Every line true;
+   the row of squares lights the action in view. */
 .hero__brief {
   position: relative;
   z-index: 2;
@@ -136,17 +138,19 @@
   font-size: var(--t-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--ink-50);
 }
 
 .hero__ledger b {
   font-weight: 500;
-  color: var(--ink);
+  color: var(--ink-70);
+}
+
+.hero__ledger .kit__dots {
+  align-self: center;
 }
 
 @media (min-width: 1000px) {
-  /* The callout in the empty quadrant: top right, under the header, the way
-     Augustus notes the time and the place beside its drawing. */
   .hero__brief {
     position: absolute;
     top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3.5rem));
@@ -165,8 +169,9 @@
     gap: 0.4rem;
   }
 
-  .hero__ledger .hero__mark {
-    margin-bottom: 0.3rem;
+  .hero__ledger .kit__dots {
+    align-self: flex-end;
+    margin-top: 0.5rem;
   }
 }
 

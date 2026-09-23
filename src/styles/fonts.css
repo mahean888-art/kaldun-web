@@ -64,27 +64,13 @@
   src: url('/fonts/newsreader-italic-latin.woff2') format('woff2');
 }
 
-/* Barlow Condensed — the display face: the wordmark, the headings, the verbs. */
+/* Archivo — the display face: the wordmark, the headings, the verbs. One
+   variable file; the semi-expanded width is set where it is used. */
 @font-face {
-  font-family: 'Barlow Condensed';
+  font-family: 'Archivo';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 100 900;
+  font-stretch: 62.5% 125%;
   font-display: swap;
-  src: url('/fonts/barlowcondensed-600-latin.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Barlow Condensed';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/barlowcondensed-700-latin.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Barlow Condensed';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('/fonts/barlowcondensed-800-latin.woff2') format('woff2');
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
 }

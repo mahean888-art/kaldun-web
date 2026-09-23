@@ -4,20 +4,11 @@
  */
 
 import { qs, qsa, el } from './lib/dom';
-import { mountMarks } from './visuals/mark';
-import { initBranches } from './visuals/branches';
 import { initInstrument } from './visuals/instrument';
-import { initRotor } from './components/rotor';
-import { initPillar } from './sections/pillar';
 import { ACTIONS } from './data/actions';
 import { RECORD_BANDS } from './data/record';
 import { EMAIL } from './data/site';
 
-/**
- * The address is data, not markup — one place to change it. `[data-email]`
- * shows and links the address; `[data-mail="Subject"]` composes a mail with
- * that subject, so a decision and a residency application arrive distinctly.
- */
 function wireEmail(root: ParentNode): void {
   for (const node of qsa<HTMLAnchorElement>('[data-email]', root)) {
     node.href = `mailto:${EMAIL}`;
@@ -29,34 +20,65 @@ function wireEmail(root: ParentNode): void {
   }
 }
 
-/** The actions ledger: five rows, static, in the order the essay gives them. */
+/** The actions: five rows. */
 function mountActions(root: ParentNode): void {
   const host = qs<HTMLElement>('[data-actions]', root);
   if (!host) return;
   host.append(
     ...ACTIONS.map((a) =>
-      el('li', { class: 'ledger__row' }, [
-        el('span', { class: 'ledger__no' }, [a.ordinal]),
-        el('span', { class: 'ledger__verb' }, [a.verb]),
-        el('span', { class: 'ledger__object' }, [a.object]),
-        el('span', { class: 'ledger__line' }, [a.line]),
+      el('li', { class: 'row' }, [
+        el('span', { class: 'row__no' }, [a.ordinal]),
+        el('span', { class: 'row__head' }, [a.verb]),
+        el('span', { class: 'row__text' }, [a.line]),
       ]),
     ),
   );
 }
 
+/** The record: four rows. */
+function mountRecord(root: ParentNode): void {
+  const host = qs<HTMLElement>('[data-record-rows]', root);
+  if (!host) return;
+  host.append(
+    ...RECORD_BANDS.map((b) =>
+      el('li', { class: 'row' }, [
+        el('span', { class: 'row__no' }, [b.ordinal]),
+        el('span', { class: 'row__head row__head--sans' }, [b.name]),
+        el('span', { class: 'row__text' }, [b.body]),
+      ]),
+    ),
+  );
+}
+
+/**
+ * The decision form composes a mail. Nothing is stored anywhere: the fields
+ * become the subject and body of a message to the address, in the sender's
+ * own mail client.
+ */
+function wireForm(root: ParentNode): void {
+  const form = qs<HTMLFormElement>('[data-decision-form]', root);
+  if (!form) return;
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const get = (k: string): string => String(data.get(k) ?? '').trim();
+    const body = [
+      `The decision:\n${get('decision')}`,
+      `What is at stake:\n${get('stake')}`,
+      `What would change my mind:\n${get('change')}`,
+      `Reply to: ${get('reply')}`,
+    ].join('\n\n');
+    const href = `mailto:${EMAIL}?subject=${encodeURIComponent('Bring us a decision')}&body=${encodeURIComponent(body)}`;
+    form.dataset['mailto'] = href;
+    window.location.href = href;
+  });
+}
+
 export function mountHome(root: ParentNode = document): void {
-  mountMarks(root);
-  initRotor(root);
   wireEmail(root);
   mountActions(root);
-
-  const branches = qs<HTMLCanvasElement>('canvas[data-branches]', root);
-  if (branches) initBranches(branches);
-
+  mountRecord(root);
+  wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
-
-  const pillar = qs<HTMLElement>('[data-pillar]', root);
-  if (pillar) initPillar({ root: pillar, bands: RECORD_BANDS });
 }

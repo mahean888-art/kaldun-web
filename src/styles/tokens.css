@@ -1,102 +1,43 @@
 /* ==========================================================================
-   Foresight Machines — design tokens
-   One material: charcoal. One ink at three opacities. One light, copper,
-   only where the machine is live. The finishes are static: film grain on
-   the ground, a fine hatch on every screen, a drafting grid behind.
+   Foresight Machines — tokens
+   Black ground, one amber, a visible drafting grid. The display face is
+   condensed and heavy; the body is a plain sans; labels are mono.
    ========================================================================== */
 
 :root {
-  /* --- ground: the material ---------------------------------------------- */
-  --ground: #121214;
-  --panel: #161618;
-  --panel-deep: #0f0f11;
-  --ground-2: #17171a;
-  --panel-2: #1c1c1f;
-  --edge: #26262a;
-  --edge-soft: #202023;
+  --ground: #090301;
+  --amber: #fa9801;
+  --amber-ink: #2a1200;
+  --amber-dim: #451c0a;
+  --frame: rgba(250, 152, 1, 0.42);
+  --rule: rgba(250, 152, 1, 0.22);
+  --grid: rgba(250, 152, 1, 0.11);
 
-  /* --- the one light ------------------------------------------------------ */
-  --accent: #df8a65;
+  --ink: #f7f1ea;
+  --ink-2: #ddd8d0;
+  --ink-3: #b0aaa3;
+  --ink-4: #6f6359;
 
-  /* --- ink, three opacities ---------------------------------------------- */
-  --ink: #f2f0eb;
-  --ink-88: rgba(242, 240, 235, 0.88);
-  --ink-70: rgba(242, 240, 235, 0.7);
-  --ink-50: rgba(242, 240, 235, 0.5);
-  --ink-2: #aaa79f;
-  --mute: #8a8780;
-  --faint: #5b5953;
-
-  /* --- the fan's inks, copper on charcoal, as r, g, b triplets ----------- */
-  --fan-ink: 223, 138, 101;
-  --fan-ink-2: 200, 120, 85;
-  --fan-mute: 150, 95, 70;
-  --fan-mute-2: 100, 64, 48;
-
-  /* --- the signal --------------------------------------------------------- */
+  /* The loop drawing reads these. */
+  --accent: var(--amber);
+  --mute: var(--ink-3);
+  --faint: rgba(250, 152, 1, 0.35);
+  --edge: var(--rule);
   --signal: #ffffff;
-  --signal-hi: #ffffff;
-  --signal-2: #8a8880;
-  --signal-dim: #1b1b1e;
 
-  /* --- finishes ----------------------------------------------------------- */
-  --hatch: repeating-linear-gradient(180deg, rgba(242, 240, 235, 0.025) 0 1px, transparent 1px 3px);
-  --grid-ink: rgba(242, 240, 235, 0.035);
-  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.94 0 0 0 0 0.92 0 0 0 0.06 0'/></filter><rect width='128' height='128' filter='url(%23g)'/></svg>");
-
-  /* --- type -------------------------------------------------------------- */
+  --display: 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --t-hero: clamp(2.4rem, 5.6vw, 5.75rem);
-  --t-d1: clamp(2rem, 5vw, 4.25rem);
-  --t-d2: clamp(1.6rem, 3.4vw, 2.75rem);
-  --t-d3: clamp(1.3rem, 2.3vw, 1.875rem);
-  --t-d4: clamp(1.0625rem, 1.5vw, 1.3125rem);
-  --t-lead: clamp(1.0625rem, 1.3vw, 1.3125rem);
-  --t-body: clamp(0.9375rem, 1.02vw, 1.0625rem);
-  --t-small: 0.875rem;
-  --t-label: clamp(0.6875rem, 0.75vw, 0.75rem);
-  --t-data: clamp(0.6875rem, 0.82vw, 0.8125rem);
+  --inset: 14px;
+  --bar-h: 40px;
+  --header-h: calc(var(--inset) + var(--bar-h));
+  --rail-w: 260px;
+  --screen-w: 1120px;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
 
-  --lh-body: 1.62;
+  --t-body: 1.0625rem;
+  --lh-body: 1.6;
 
-  /* --- space ------------------------------------------------------------- */
-  --gutter: clamp(1.25rem, 4.2vw, 4rem);
-  --measure: 60ch;
-  --shell: 1520px;
-  --band: clamp(5rem, 8vw, 7rem);
-  --screen-gap: clamp(2rem, 4vw, 3rem);
-
-  /* --- motion ------------------------------------------------------------ */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-glide: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --dur-1: 0.26s;
-  --dur-2: 0.52s;
-  --dur-3: 0.9s;
-  --dur-4: 1.4s;
-
-  /* --- depth ------------------------------------------------------------- */
-  --hairline: 1px solid var(--edge);
-  --hairline-soft: 1px solid var(--edge-soft);
-  --radius: 1px;
-
-  --header-h: 64px;
   color-scheme: dark;
 }
-
-@media (min-width: 900px) {
-  :root {
-    --header-h: 88px;
-  }
-}
-
-/* The page has one register; the scope is kept so components that ask which
-   band they stand on always hear the same answer. */
-.theme-dark {
-  background: var(--ground);
-  color: var(--ink);
-}
-

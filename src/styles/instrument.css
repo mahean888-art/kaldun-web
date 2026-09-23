@@ -1,0 +1,124 @@
+/* --- the machine plate: the loop, drawn thin ------------------------------ */
+
+.machine__top {
+  max-width: 62ch;
+}
+
+.instrument {
+  position: relative;
+  width: 100%;
+  /* Chart paper, quiet: a faint dashed grid behind the loop. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f2f0eb' stroke-opacity='.035' stroke-dasharray='3 5'/%3E%3C/svg%3E");
+}
+
+.instrument__figure {
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+@media (min-width: 760px) {
+  .instrument__figure {
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+.instrument__figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The conduits: fine, not heavy. */
+.instrument__figure path[data-arrow] {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.instrument__figure [data-arrow='amber'] {
+  stroke: var(--accent);
+}
+
+.instrument__figure [data-arrow='grey'] {
+  stroke: var(--faint);
+}
+
+.instrument__figure .ins__dot {
+  fill: var(--ink);
+}
+
+.instrument__figure .ins__dot--t {
+  fill: var(--accent);
+}
+
+.instrument__figure .ins__head {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.instrument__figure .ins__pulse {
+  fill: none;
+  stroke: #ffffff;
+  stroke-opacity: 0.8;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* The words are primary. */
+.instrument__figure .ins__name {
+  font-family: var(--sans);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  fill: var(--ink);
+}
+
+.instrument__figure .ins__sub {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  fill: var(--mute);
+}
+
+.instrument__figure .ins__label--amber {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  fill: var(--accent);
+}
+
+/* A plain ground behind each name, so the grid never runs through text. */
+.instrument__figure .ins__plate {
+  fill: var(--ground);
+}
+
+/* The commitment marker: the point past which the claim cannot change. */
+.instrument__figure .ins__marker {
+  fill: var(--accent);
+  stroke: var(--ground);
+  stroke-width: 3;
+}
+
+.instrument__figure .ins__marker-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  fill: var(--mute);
+}
+
+/* The faint cell field beside Futures — beneath the paths' contrast. */
+.instrument__figure .ins__field {
+  opacity: 0.08;
+}
+
+.instrument__figure .ins__cell {
+  fill: var(--ink);
+}
+
+

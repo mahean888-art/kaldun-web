@@ -1,12 +1,6 @@
-/* Load order matters: tokens, then reset, then type, then structure, then parts. */
+/* Load order matters: tokens, then fonts, then reset, then the site. */
 @import './tokens.css';
 @import './fonts.css';
 @import './reset.css';
-@import './typography.css';
-@import './layout.css';
-@import './motion.css';
-@import './kit.css';
-@import './chrome.css';
-@import './components.css';
-@import './hero.css';
-@import './sections.css';
+@import './instrument.css';
+@import './site.css';

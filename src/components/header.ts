@@ -1,38 +1,22 @@
 /**
- * Header behaviour: no drawn bar on the hero, a thin opaque bar once the page
- * scrolls, and a true readout at the right of the bar: the screen in view.
+ * The index at the left names the screen in view.
  */
 
-import { qs, qsa } from '../lib/dom';
-import { onFrame, type Frame } from '../lib/ticker';
+import { qsa } from '../lib/dom';
 
 export function initHeader(): void {
-  const header = qs<HTMLElement>('[data-header]');
-  if (!header) return;
-
-  let stuck = false;
-  onFrame((frame: Frame) => {
-    const nextStuck = frame.scrollY > 12;
-    if (nextStuck !== stuck) {
-      stuck = nextStuck;
-      header.classList.toggle('is-stuck', stuck);
-    }
-  });
-
-  // The screen in view, read into the bar. Whichever screen crosses the line
-  // a third of the way down the viewport is the one named.
-  const read = qs<HTMLElement>('[data-screen-read]', header);
-  const screens = qsa<HTMLElement>('[data-screen-code]');
-  if (!read || screens.length === 0) return;
+  const links = qsa<HTMLAnchorElement>('[data-index] a');
+  const screens = qsa<HTMLElement>('[data-screen]');
+  if (links.length === 0 || screens.length === 0) return;
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
         if (!e.isIntersecting) continue;
-        const el = e.target as HTMLElement;
-        read.textContent = `${el.dataset['screenCode']} / ${el.dataset['screenName']}`;
+        const id = (e.target as HTMLElement).id;
+        for (const a of links) a.classList.toggle('is-on', a.getAttribute('href') === `#${id}`);
       }
     },
-    { rootMargin: '-33% 0px -66% 0px', threshold: 0 },
+    { rootMargin: '-40% 0px -55% 0px', threshold: 0 },
   );
   for (const s of screens) io.observe(s);
 }

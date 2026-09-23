@@ -521,3 +521,182 @@ a {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* --- the finer details ------------------------------------------------------ */
+
+/* Film grain, static, over everything. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.85 0 0 0 0 0.6 0 0 0 1 0'/></filter><rect width='160' height='160' filter='url(%23g)'/></svg>");
+  background-size: 160px 160px;
+}
+
+/* Screens lift off the ground a touch, and carry a second, inner edge. */
+.screen {
+  position: relative;
+  background: rgba(250, 152, 1, 0.025);
+}
+
+.screen::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--bar-h) + 6px) 6px 6px;
+  border: 1px solid rgba(250, 152, 1, 0.1);
+  pointer-events: none;
+}
+
+.screen__corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 0 solid var(--amber);
+  pointer-events: none;
+}
+
+.screen__corner--tl { top: -7px; left: -7px; border-top-width: 1px; border-left-width: 1px; }
+.screen__corner--tr { top: -7px; right: -7px; border-top-width: 1px; border-right-width: 1px; }
+.screen__corner--bl { bottom: -7px; left: -7px; border-bottom-width: 1px; border-left-width: 1px; }
+.screen__corner--br { bottom: -7px; right: -7px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* The bar in three parts: code, name, a true readout at the right. */
+.screen__code {
+  color: var(--amber-ink);
+}
+
+.screen__name {
+  color: rgba(42, 18, 0, 0.72);
+}
+
+.screen__name::before {
+  content: '·';
+  margin-right: 14px;
+}
+
+.screen__read {
+  margin-left: auto;
+  color: rgba(42, 18, 0, 0.72);
+}
+
+/* Hatched amber block behind the hero's line, as on the reference. */
+.hero__line span {
+  display: inline-block;
+  padding: 0.55em 1.1em;
+  background:
+    repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.14) 0 1px, transparent 1px 3px),
+    rgba(250, 152, 1, 0.08);
+  outline: 1px solid rgba(250, 152, 1, 0.22);
+}
+
+/* A graduated ruler up the hero's right edge. */
+.hero__ruler {
+  position: absolute;
+  right: calc(var(--inset) + 22px);
+  top: 22%;
+  bottom: 22%;
+  width: 12px;
+  background:
+    repeating-linear-gradient(180deg, var(--amber) 0 1px, transparent 1px 48px) 0 0 / 12px 100% no-repeat,
+    repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.55) 0 1px, transparent 1px 12px) 0 0 / 5px 100% no-repeat;
+  opacity: 0.7;
+}
+
+@media (max-width: 1099px) {
+  .hero__ruler { display: none; }
+}
+
+/* A rail of six squares at the hero's foot; the lit one is the screen in view. */
+.hero__rail {
+  position: absolute;
+  bottom: calc(var(--inset) + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.hero__rail i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+}
+
+.hero__rail i.is-on {
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+/* Rows answer the pointer with an amber tick, nothing more. */
+.row {
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.row::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 30%;
+  bottom: 30%;
+  width: 2px;
+  background: var(--amber);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.row:hover {
+  background: rgba(250, 152, 1, 0.04);
+}
+
+.row:hover::before {
+  opacity: 1;
+}
+
+/* The bar's squares, the reference way: two, in the darker amber. */
+.bar__squares i {
+  background: var(--amber-dim);
+}
+
+/* Dim amber for secondary rules. */
+.screen__intro,
+.rows,
+.row,
+.form input,
+.form textarea,
+.foot {
+  border-color: rgba(250, 152, 1, 0.28);
+}
+
+/* A compact index in the bar on narrow screens. */
+.bar__index {
+  display: flex;
+  gap: 10px;
+}
+
+@media (min-width: 1100px) {
+  .bar__index { display: none; }
+}
+
+.bar__index a {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: rgba(42, 18, 0, 0.6);
+}
+
+.bar__index a.is-on {
+  color: var(--amber-ink);
+}
+
+@media (max-width: 480px) {
+  .bar > a { display: none; }
+  .hero__corner { font-size: 0.625rem; letter-spacing: 0.2em; }
+}
+
+@media (max-width: 640px) {
+  .hero__rail { display: none; }
+}

@@ -190,14 +190,20 @@ a {
   margin: 0 auto clamp(4.5rem, 8vh, 6rem);
   border: 1px solid var(--frame);
   background-color: var(--clay);
+  /* A quiet grid inside the plate: majors only, faint, held inside the frame. */
   background-image:
-    linear-gradient(rgba(250, 152, 1, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.16) 1px, transparent 1px),
-    linear-gradient(rgba(250, 152, 1, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.045) 1px, transparent 1px);
-  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
+    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-size: 144px 144px;
   background-position: 0 var(--bar-h);
+  background-clip: padding-box;
   scroll-margin-top: calc(var(--header-h) + 1.5rem);
+}
+
+/* The decision plate and the footer keep the plate tone with no grid at all. */
+#decision,
+.foot__row {
+  background-image: none;
 }
 
 .screen__bar {
@@ -1161,12 +1167,6 @@ a {
   padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
   border: 1px solid var(--frame);
   background-color: var(--clay);
-  background-image:
-    linear-gradient(rgba(250, 152, 1, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.16) 1px, transparent 1px),
-    linear-gradient(rgba(250, 152, 1, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.045) 1px, transparent 1px);
-  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
 }
 
 @media (min-width: 900px) {

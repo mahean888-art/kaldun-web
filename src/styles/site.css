@@ -429,7 +429,7 @@ a {
 
 .essay__close em {
   font-style: normal;
-  color: var(--amber);
+  color: var(--ink);
 }
 
 /* --- Project 1654 ------------------------------------------------------------ */
@@ -691,9 +691,9 @@ a {
 .row::before {
   content: '';
   position: absolute;
-  left: -1px;
-  top: 30%;
-  bottom: 30%;
+  left: 0;
+  top: 1.35rem;
+  bottom: 1.35rem;
   width: 2px;
   background: var(--amber);
   opacity: 0;
@@ -1267,9 +1267,23 @@ a {
   }
 }
 
+/* The caption sits at the essay's edge like every head, with a rule
+   beneath it across the column; the diagram follows closely. */
+.fig--loop .fig__cap {
+  margin-bottom: 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
 @media (min-width: 900px) {
   .fig--loop .fig__cap {
-    padding-left: calc(var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2);
+    --lead: calc(var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2);
+    margin-left: var(--lead);
+    width: 720px;
+  }
+
+  .fig--loop .instrument__figure {
+    margin-top: -0.75rem;
   }
 }
 
@@ -1294,4 +1308,11 @@ a {
 
 .fig:not(.fig--loop) .rows {
   border-top: 1px solid var(--rule);
+}
+
+/* Rows: room for the mark at the left, in the wide layout. */
+@media (min-width: 800px) {
+  .row {
+    padding-left: 1.25rem;
+  }
 }

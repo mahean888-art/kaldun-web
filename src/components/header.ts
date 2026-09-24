@@ -26,8 +26,19 @@ function initEnter(): void {
   }
 }
 
+/** The present, kept: the time in San Francisco, to the second. */
+function initClock(): void {
+  const out = document.querySelector<HTMLElement>('[data-clock]');
+  if (!out) return;
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const tick = (): void => { out.textContent = fmt.format(new Date()); };
+  tick();
+  window.setInterval(tick, 1000);
+}
+
 export function initHeader(): void {
   initEnter();
+  initClock();
   document.documentElement.classList.add('is-loaded');
   const links = qsa<HTMLAnchorElement>('[data-index-compact] a');
   const rail = qsa<HTMLElement>('[data-rail] i');

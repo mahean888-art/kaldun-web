@@ -23,13 +23,11 @@
   <body>
     <a class="sr-only" href="#main">Skip to content</a>
 
+    <div class="cap" aria-hidden="true"></div>
     <div class="frame" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="bar">
       <span class="bar__squares" aria-hidden="true"><i></i><i class="bar__blink"></i></span>
-      <nav class="bar__index" aria-label="Sections" data-index-compact>
-        <a href="#launch">01</a><a href="#challenge">02</a><a href="#unlock-1">03</a><a href="#unlock-2">04</a><a href="#machine-foresight">05</a><a href="#decision">06</a>
-      </nav>
       <a href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
     </header>
 
@@ -51,9 +49,7 @@
       <span class="hero__mark hero__mark--tr" aria-hidden="true">T₀<b><u></u><u></u></b><i class="hero__cross"></i></span>
       <span class="hero__mark hero__mark--bl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>State</span>
       <span class="hero__mark hero__mark--br" aria-hidden="true">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
-      <span class="hero__ruler" aria-hidden="true"><s>T₁</s><s>T₂</s><s>T₃</s><s>Tₙ</s></span>
-      <span class="hero__ruler-x" aria-hidden="true"></span>
-      <span class="hero__sweep" aria-hidden="true"></span>
+
     </section>
 
     <main class="main" id="main">
@@ -121,9 +117,15 @@
       </section>
 
       <footer class="foot">
-        <p class="foot__name">Foresight Machines</p>
-        <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
-        <p class="foot__base">© 2026</p>
+        <div class="foot__row">
+          <p class="foot__name"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p>
+          <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
+          <p class="foot__clock" aria-live="off"><span>T₀</span><b data-clock>--:--:--</b><span>PST</span></p>
+        </div>
+        <div class="foot__base">
+          <span>© 2026 Foresight Machines</span>
+          <a data-email href="#"></a>
+        </div>
       </footer>
     </main>
   </body>

@@ -35,12 +35,12 @@ const RETURN_LABEL = 'Update the model';
 /** One station: the word, a plain plate beneath it, the dot, the caption. */
 function station(s: Station, x: number, y: number, terminal: boolean): string {
   const dot = terminal ? 'ins__dot ins__dot--t' : 'ins__dot';
-  const w = s.name.length * 14 + 24;
+  const w = s.name.length * 18 + 28;
   return `
-    <rect class="ins__plate" x="${x - w / 2}" y="${y - 52}" width="${w}" height="32" />
+    <rect class="ins__plate" x="${x - w / 2}" y="${y - 58}" width="${w}" height="40" />
     <text class="ins__name" x="${x}" y="${y - 28}" text-anchor="middle">${s.name}</text>
     <rect class="${dot}" x="${x - 2.5}" y="${y - 2.5}" width="5" height="5" />
-    <text class="ins__sub" x="${x}" y="${y + 30}" text-anchor="middle">${s.sub}</text>`;
+    <text class="ins__sub" x="${x}" y="${y + 34}" text-anchor="middle">${s.sub}</text>`;
 }
 
 /** The commitment marker, on a conduit at (x, y). */
@@ -111,7 +111,7 @@ function portrait(): string {
 
   const stations = STATIONS.map((s, i) => {
     const y = ROW0 + i * STEP;
-    const w = s.name.length * 14 + 24;
+    const w = s.name.length * 18 + 28;
     return `
     <rect class="ins__plate" x="${CX - w / 2}" y="${y - 24}" width="${w}" height="32" />
     <text class="ins__name" x="${CX}" y="${y}" text-anchor="middle">${s.name}</text>

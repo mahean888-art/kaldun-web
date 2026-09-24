@@ -1243,3 +1243,55 @@ a {
   .screen__bar .screen__read { display: none; }
   .screen__bar .screen__name { overflow: hidden; text-overflow: ellipsis; }
 }
+
+
+/* --- the loop, at the width of the screen; the actions as an aside --------- */
+
+.fig--loop {
+  border-top: 0;
+  padding-top: 0;
+  margin-inline: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
+}
+
+/* The figure spans the screen's interior: from the essay's left edge back
+   to the screen's inner edge, and across to the other inner edge. */
+.fig--loop {
+  --pad: clamp(1.25rem, 3vw, 2.75rem);
+}
+
+@media (min-width: 900px) {
+  .fig--loop {
+    width: calc(100% + 2 * var(--pad) + 2rem + 2 * ((min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2));
+    margin-left: calc(-1 * (var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2));
+    max-width: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .fig--loop .fig__cap {
+    padding-left: calc(var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2);
+  }
+}
+
+.fig--loop .instrument__figure {
+  max-width: none;
+}
+
+.fig--loop .instrument__figure svg {
+  width: 100%;
+  height: auto;
+}
+
+/* The actions: an aside, not a box. */
+.fig:not(.fig--loop) {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.fig:not(.fig--loop) .fig__cap {
+  display: none;
+}
+
+.fig:not(.fig--loop) .rows {
+  border-top: 1px solid var(--rule);
+}

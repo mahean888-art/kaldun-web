@@ -71,7 +71,7 @@
 /* The words are primary. */
 .instrument__figure .ins__name {
   font-family: var(--sans);
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 500;
   letter-spacing: -0.02em;
   fill: var(--ink);
@@ -79,14 +79,14 @@
 
 .instrument__figure .ins__sub {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 19px;
   font-weight: 400;
   fill: var(--mute);
 }
 
 .instrument__figure .ins__label--amber {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.01em;
   fill: var(--accent);
@@ -106,7 +106,7 @@
 
 .instrument__figure .ins__marker-label {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.02em;
   fill: var(--mute);

@@ -48,20 +48,22 @@
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Instrument Serif — the editorial voice: the hero statement, the screen
+   titles, the essay heads, the closing line. */
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Instrument Serif';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/newsreader-latin.woff2') format('woff2');
+  src: url('/fonts/instrumentserif-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Instrument Serif';
   font-style: italic;
-  font-weight: 500;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/newsreader-italic-latin.woff2') format('woff2');
+  src: url('/fonts/instrumentserif-italic-latin.woff2') format('woff2');
 }
 
 /* Archivo — the display face: the wordmark, the headings, the verbs. One

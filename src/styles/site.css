@@ -1236,3 +1236,10 @@ a {
   text-transform: none;
   letter-spacing: 0.06em;
 }
+
+/* Narrow: the bar keeps one line; the readout yields. */
+@media (max-width: 640px) {
+  .screen__bar { white-space: nowrap; overflow: hidden; }
+  .screen__bar .screen__read { display: none; }
+  .screen__bar .screen__name { overflow: hidden; text-overflow: ellipsis; }
+}

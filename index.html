@@ -33,14 +33,6 @@
       <a href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
     </header>
 
-    <nav class="index" aria-label="Sections" data-index>
-      <a href="#launch"><b>01</b>Launch</a>
-      <a href="#challenge"><b>02</b>The challenge</a>
-      <a href="#unlock-1"><b>03</b>Faster feedback</a>
-      <a href="#unlock-2"><b>04</b>World models</a>
-      <a href="#machine-foresight"><b>05</b>Machine foresight</a>
-      <a href="#decision"><b>06</b>Decision</a>
-    </nav>
 
     <section class="hero" id="top">
       <picture class="hero__photo" aria-hidden="true">
@@ -55,11 +47,13 @@
         <p class="hero__line">Run the world forward before you decide</p>
         <p class="hero__sub">A self-learning foresight engine for markets, infrastructure, and institutions.</p>
       </div>
-      <span class="hero__corner hero__corner--tl" aria-hidden="true">FM-01</span>
-      <span class="hero__corner hero__corner--tr" aria-hidden="true">T₀</span>
-      <span class="hero__corner hero__corner--l" aria-hidden="true">State · T₀</span>
-      <span class="hero__corner hero__corner--r" aria-hidden="true">Record · Held</span>
-      <span class="hero__ruler" aria-hidden="true"></span>
+      <span class="hero__mark hero__mark--tl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>FM · 01</span>
+      <span class="hero__mark hero__mark--tr" aria-hidden="true">T₀<b><u></u><u></u></b><i class="hero__cross"></i></span>
+      <span class="hero__mark hero__mark--bl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>State</span>
+      <span class="hero__mark hero__mark--br" aria-hidden="true">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
+      <span class="hero__ruler" aria-hidden="true"><s>T₁</s><s>T₂</s><s>T₃</s><s>Tₙ</s></span>
+      <span class="hero__ruler-x" aria-hidden="true"></span>
+      <span class="hero__sweep" aria-hidden="true"></span>
     </section>
 
     <main class="main" id="main">
@@ -70,13 +64,13 @@
           <article class="essay">
             <h2 class="essay__title" id="launch" data-move><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
             <p>At Foresight Machines we build AI systems that hold a living model of the world around an institution — its markets, counterparties, rules, and exposures — and run that world forward before the institution acts: in finance, insurance, energy, supply chains, and statecraft. The output is not a prediction. It is a rehearsal: how the consequences of a decision unfold, which assumptions carry the plan, and which course of action survives the futures no one can rule out.</p>
-            <p>Today, Foresight Machines is coming out of stealth. Our team brings together <a href="https://en.wikipedia.org/wiki/Superforecasting" target="_blank" rel="noopener">superforecasters</a>, AI scientists, capital allocators, pioneers of agent-based simulation for financial institutions, and a co-inventor of <a href="https://en.wikipedia.org/wiki/Synthetic_control_method" target="_blank" rel="noopener">synthetic control methods</a>, the tool economists reach for to measure what a policy actually did. Predicting a world is one discipline; predicting a world you are about to act on takes all of them.</p>
+            <p>Today, Foresight Machines is coming out of stealth. Our team brings together superforecasters, AI scientists, capital allocators, pioneers of agent-based simulation for financial institutions, and a co-inventor of <a href="https://en.wikipedia.org/wiki/Synthetic_control_method" target="_blank" rel="noopener">synthetic control methods</a>, the tool economists reach for to measure what a policy actually did. Predicting a world is one discipline; predicting a world you are about to act on takes all of them.</p>
             <h3 id="challenge" data-move><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
             <p>Foreseeing is as old as planting a seed. Acting today against a world that exists only tomorrow is the move underneath everything an institution does: a loan is underwritten into a future economy, a risk is priced into a future climate, capital is committed to a market that will not hold still while it arrives.</p>
             <p>That move keeps getting harder. Capital, supply, energy, and policy now run through tightly coupled networks, and rules fragment across jurisdictions — so a change in one system reaches another before the next planning cycle begins. Meanwhile the institution's model of the future, the thing every one of these decisions rests on, lives where it has always lived: three tabs of a spreadsheet, a paragraph of an investment memo, an analyst's conviction, a conversation before the board meets. It is scattered, implicit, revised unevenly, and rarely checked against what happened. Institutions measure their people, their processes, and their quarters. Almost none measure their model of the future.</p>
             <p class="essay__set">Consider a decision, not a question:</p>
-            <p><em>We underwrite this risk in January. Nothing like it has a loss history. What is it worth — and under what conditions does it ruin us?</em></p>
-            <p>The last twenty years produced real progress on questions about the future. <a href="https://en.wikipedia.org/wiki/Philip_E._Tetlock" target="_blank" rel="noopener">Philip Tetlock</a> showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, matched or beat intelligence analysts with classified access in tournaments run by the US intelligence community. Machines then caught up: in the Summer 2026 <a href="https://www.metaculus.com/" target="_blank" rel="noopener">Metaculus Cup</a>, AI systems outforecast every human competitor for the first time, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like <a href="https://polymarket.com/" target="_blank" rel="noopener">Polymarket</a> and <a href="https://kalshi.com/" target="_blank" rel="noopener">Kalshi</a> pay for information and penalize miscalibration — the working version of <a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Robin Hanson's futarchy</a> and <a href="https://vitalik.eth.limo/general/2024/11/09/infofinance.html" target="_blank" rel="noopener">Vitalik Buterin's info finance</a>, where forecasts are meant to steer governance itself.</p>
+            <p><em>We can make this move now, in a year, or never. What does each cost in the futures we can&rsquo;t rule out?</em></p>
+            <p>The last twenty years produced real progress on questions about the future. <a href="https://en.wikipedia.org/wiki/Philip_E._Tetlock" target="_blank" rel="noopener">Philip Tetlock</a> showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, matched or beat intelligence analysts with classified access in tournaments run by the US intelligence community. Machines then caught up: in the Summer 2026 <a href="https://www.metaculus.com/tournaments/" target="_blank" rel="noopener">Metaculus Cup</a>, AI systems outforecast every human competitor for the first time, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like <a href="https://polymarket.com/" target="_blank" rel="noopener">Polymarket</a> and <a href="https://kalshi.com/" target="_blank" rel="noopener">Kalshi</a> pay for information and penalize miscalibration — the working version of <a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Robin Hanson's futarchy</a> and <a href="https://vitalik.eth.limo/general/2024/11/09/infofinance.html" target="_blank" rel="noopener">Vitalik Buterin's info finance</a>, where forecasts are meant to steer governance itself.</p>
             <p>None of this decides anything yet. Superforecasts do not run the C-suite. Markets cover what people will bet on, not what institutions must resolve. Machine forecasters answer questions one at a time, each answer separate from the last. The gap is not accuracy. A probability is a fact about the world; a decision is an act upon it. A number tells you the weather. It does not tell you whether to sail, which route holds if the wind turns, or when to put back into port.</p>
             <p class="essay__set">Two capabilities now close that gap.</p>
             <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Faster feedback</h3>
@@ -90,7 +84,7 @@
               <figcaption class="fig__cap">The loop</figcaption>
               <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
             </figure>
-            <p>We are building machines that maintain the living state of a business, an institution, a sovereign — its assets, obligations, counterparties, rules, and dependencies — update that state as the world changes, run the counterfactuals of what it might do next, and return the actions that stay sound across futures. Today the machine rehearses and the institution decides. The goal is machines trusted to go further: to allocate capital, underwrite risk, hedge exposure, and procure supply on their own record — foresight as infrastructure, a permanent capability of every consequential institution.</p>
+            <p>We are building machines that maintain the living state of a business, an institution, a sovereign — its assets, obligations, counterparties, rules, and dependencies — update that state as the world changes, run the counterfactuals of what it might do next, and return the actions that stay sound across futures. Today the machine rehearses and the institution decides. <strong class="essay__mark">The goal is machines trusted to go further: to allocate capital, underwrite risk, hedge exposure, and procure supply on their own record — foresight as infrastructure, a permanent capability of every consequential institution.</strong></p>
             <figure class="fig">
               <figcaption class="fig__cap">The actions</figcaption>
               <ol class="rows rows--flush" data-actions aria-label="Actions"></ol>

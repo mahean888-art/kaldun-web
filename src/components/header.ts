@@ -29,7 +29,7 @@ function initEnter(): void {
 export function initHeader(): void {
   initEnter();
   document.documentElement.classList.add('is-loaded');
-  const links = qsa<HTMLAnchorElement>('[data-index] a, [data-index-compact] a');
+  const links = qsa<HTMLAnchorElement>('[data-index-compact] a');
   const rail = qsa<HTMLElement>('[data-rail] i');
   const order = ['launch', 'challenge', 'unlock-1', 'unlock-2', 'machine-foresight', 'decision'];
   const screens = qsa<HTMLElement>('[data-move], #decision');

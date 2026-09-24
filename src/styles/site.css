@@ -190,7 +190,13 @@ a {
   margin: 0 auto clamp(4.5rem, 8vh, 6rem);
   border: 1px solid var(--frame);
   background-color: var(--clay);
-  background-image: repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.03) 0 1px, transparent 1px 3px);
+  background-image:
+    linear-gradient(rgba(250, 152, 1, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.16) 1px, transparent 1px),
+    linear-gradient(rgba(250, 152, 1, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.045) 1px, transparent 1px);
+  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
+  background-position: 0 var(--bar-h);
   scroll-margin-top: calc(var(--header-h) + 1.5rem);
 }
 
@@ -1106,16 +1112,6 @@ a {
 
 /* The launch screen carries the drawing grid too, aligned to its own box,
    with registration marks in the corners. */
-#essay-screen {
-  background-image:
-    repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.03) 0 1px, transparent 1px 3px),
-    linear-gradient(rgba(250, 152, 1, 0.075) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.075) 1px, transparent 1px),
-    linear-gradient(rgba(250, 152, 1, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.022) 1px, transparent 1px);
-  background-size: auto, 144px 144px, 144px 144px, 24px 24px, 24px 24px;
-  background-position: 0 0, 0 var(--bar-h), 0 var(--bar-h), 0 var(--bar-h), 0 var(--bar-h);
-}
 
 .essay__mark {
   font-weight: 600;
@@ -1164,8 +1160,13 @@ a {
   align-items: center;
   padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
   border: 1px solid var(--frame);
-  background: var(--clay);
-  background-image: repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.03) 0 1px, transparent 1px 3px);
+  background-color: var(--clay);
+  background-image:
+    linear-gradient(rgba(250, 152, 1, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.16) 1px, transparent 1px),
+    linear-gradient(rgba(250, 152, 1, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.045) 1px, transparent 1px);
+  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
 }
 
 @media (min-width: 900px) {

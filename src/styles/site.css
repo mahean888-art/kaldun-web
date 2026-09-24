@@ -1119,7 +1119,7 @@ a {
 
 .essay__mark {
   font-weight: 600;
-  color: var(--amber);
+  color: var(--ink);
 }
 
 /* The index now lives in the bar at every width. */

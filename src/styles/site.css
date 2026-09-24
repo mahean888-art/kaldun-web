@@ -1318,35 +1318,50 @@ a {
 }
 
 
-/* --- the hero: the name is the logo -----------------------------------------
-   The name large in amber, as the marque. Beneath it the promise in the
-   serif, sentence case, readable; then the light sans line. */
+/* --- the hero: a nameplate above one statement --------------------------
+   The name in the display face as a marque, amber, with the two squares;
+   the promise as the h1 in the serif at the full width of the frame; a
+   light sans line beneath. */
 
 .hero .hero__name {
   order: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1.5rem;
   font-family: var(--display);
-  font-size: clamp(2.5rem, 9.2vw, 10.5rem);
+  font-size: clamp(1.5rem, 3.4vw, 3.25rem);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: 0.02em;
+  line-height: 1;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--amber);
-  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 0 1px rgba(11, 7, 5, 0.9), 0 2px 18px rgba(11, 7, 5, 0.55);
-  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 2px 14px rgba(11, 7, 5, 0.55);
+  text-wrap: nowrap;
+}
+
+.hero .hero__name .bar__squares {
+  gap: 0.18em;
+}
+
+.hero .hero__name .bar__squares i {
+  width: 0.34em;
+  height: 0.34em;
+  background: var(--amber);
 }
 
 .hero .hero__line {
   order: 1;
-  margin-top: clamp(1.25rem, 3vh, 2rem);
+  margin: 0;
   font-family: var(--serif);
-  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  font-size: clamp(2.75rem, 6.6vw, 6.25rem);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
   text-transform: none;
   color: var(--ink);
-  text-shadow: 0 1px 8px rgba(11, 7, 5, 0.95);
-  max-width: 22em;
+  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 2px 18px rgba(11, 7, 5, 0.55);
+  max-width: 12em;
   text-wrap: balance;
 }
 
@@ -1359,13 +1374,13 @@ a {
 
 .hero .hero__sub {
   order: 2;
-  margin-top: clamp(0.9rem, 2vh, 1.25rem);
-  max-width: 34em;
+  margin-top: 1.5rem;
+  max-width: 30em;
   font-family: var(--sans);
-  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.5vw, 1.5rem);
   font-weight: 300;
-  line-height: 1.4;
-  color: var(--ink-2);
+  line-height: 1.35;
+  color: var(--ink);
   text-shadow: 0 1px 8px rgba(11, 7, 5, 0.95);
 }
 
@@ -1374,3 +1389,7 @@ a {
 .is-loaded .hero__copy > :nth-child(1) { transition-delay: 0.18s; }
 .is-loaded .hero__copy > :nth-child(2) { transition-delay: 0.27s; }
 .is-loaded .hero__copy > :nth-child(3) { transition-delay: 0.36s; }
+
+@media (max-width: 480px) {
+  .hero .hero__name { font-size: 1.25rem; letter-spacing: 0.1em; }
+}

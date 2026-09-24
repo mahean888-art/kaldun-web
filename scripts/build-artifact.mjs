@@ -52,7 +52,13 @@ const main = async () => {
   const title = TITLE_RE.exec(html)?.[1]?.trim();
   if (!body || !title) throw new Error(`could not parse ${PAGE}`);
 
-  const shell = body.replace(MODULE_SCRIPT_RE, '').trim();
+  // The single file carries its images too: any /x.webp becomes a data URI.
+  let shell = body.replace(MODULE_SCRIPT_RE, '').trim();
+  for (const name of new Set([...shell.matchAll(/(?:\.\/|\/)?([\w-]+\.webp)/g)].map((m) => m[1]))) {
+    const bytes = await readFile(join(DIST, name));
+    const data = `data:image/webp;base64,${bytes.toString('base64')}`;
+    shell = shell.replace(new RegExp(`(?:\\./|/)?${name.replace('.', '\\.')}`, 'g'), data);
+  }
 
   const cssPath = await findOne(OUT_DIR, '.css');
   const jsPath = await findOne(OUT_DIR, '.js');

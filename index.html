@@ -26,75 +26,52 @@
     <div class="frame" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="bar">
-      <span class="bar__squares" aria-hidden="true"><i></i><i></i></span>
+      <span class="bar__squares" aria-hidden="true"><i></i><i class="bar__blink"></i></span>
       <nav class="bar__index" aria-label="Sections" data-index-compact>
-        <a href="#machine">01</a><a href="#actions">02</a><a href="#record">03</a><a href="#launch">04</a><a href="#research">05</a><a href="#decision">06</a>
+        <a href="#launch">01</a><a href="#challenge">02</a><a href="#unlock-1">03</a><a href="#unlock-2">04</a><a href="#machine-foresight">05</a><a href="#decision">06</a>
       </nav>
       <a href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
     </header>
 
     <nav class="index" aria-label="Sections" data-index>
-      <a href="#machine"><b>01</b>Machine</a>
-      <a href="#actions"><b>02</b>Actions</a>
-      <a href="#record"><b>03</b>Record</a>
-      <a href="#launch"><b>04</b>Launch</a>
-      <a href="#research"><b>05</b>1654</a>
+      <a href="#launch"><b>01</b>Launch</a>
+      <a href="#challenge"><b>02</b>The challenge</a>
+      <a href="#unlock-1"><b>03</b>Faster feedback</a>
+      <a href="#unlock-2"><b>04</b>World models</a>
+      <a href="#machine-foresight"><b>05</b>Machine foresight</a>
       <a href="#decision"><b>06</b>Decision</a>
     </nav>
 
     <section class="hero" id="top">
-      <h1 class="hero__name">Foresight<br />Machines</h1>
-      <p class="hero__line"><span>Run the world forward before you decide</span></p>
-      <p class="hero__sub">A self-learning foresight engine for markets, infrastructure, and institutions.</p>
+      <picture class="hero__photo" aria-hidden="true">
+        <source media="(max-width: 900px)" srcset="/hero-1200.webp" />
+        <img src="/hero.webp" alt="" width="1792" height="1008" decoding="async" fetchpriority="high" />
+      </picture>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <h1 class="hero__name">Foresight<br />Machines</h1>
+        <p class="hero__rule" aria-hidden="true"><i></i></p>
+        <p class="hero__line">Run the world forward before you decide</p>
+        <p class="hero__sub">A self-learning foresight engine for markets, infrastructure, and institutions.</p>
+      </div>
+      <span class="hero__corner hero__corner--tl" aria-hidden="true">FM-01</span>
+      <span class="hero__corner hero__corner--tr" aria-hidden="true">T₀</span>
       <span class="hero__corner hero__corner--l" aria-hidden="true">State · T₀</span>
       <span class="hero__corner hero__corner--r" aria-hidden="true">Record · Held</span>
       <span class="hero__ruler" aria-hidden="true"></span>
-      <span class="hero__rail" aria-hidden="true" data-rail><i></i><i></i><i></i><i></i><i></i><i></i></span>
     </section>
 
     <main class="main" id="main">
-      <section class="screen" id="machine" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The machine</span><span class="screen__read">5 stations</span></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <h2 class="screen__title">Model the world around the decision.</h2>
-          <p class="screen__lead">The machine holds an explicit state of what is known now, advances it through evidence and possible actions, commits to what it expects, and is scored when the outcome arrives. Then the model is updated, and the next decision starts from a better one.</p>
-          <div class="machine__fig">
-            <div class="instrument" data-instrument>
-              <div class="instrument__figure" data-instrument-figure></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="actions" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Actions</span><span class="screen__read">5 rows</span></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <p class="screen__intro">Finance, insurance, energy, supply chains, statecraft. The action is what gets run.</p>
-          <ol class="rows rows--flush" data-actions aria-label="Actions"></ol>
-        </div>
-      </section>
-
-      <section class="screen" id="record" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-03</span><span class="screen__name">The record</span><span class="screen__read">4 bands</span></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <h2 class="screen__title">The machine learns. The record holds.</h2>
-          <p class="screen__lead">Every run preserves the model state, evidence, assumptions, actions tested, and projected consequences in a timestamped cryptographic record. As new evidence and outcomes arrive, the record grows. The original remains verifiable: what the engine knew, what it considered, and how its judgment changed.</p>
-          <ol class="rows" data-record-rows aria-label="What the record holds"></ol>
-        </div>
-      </section>
-
-      <section class="screen" id="launch" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-04</span><span class="screen__name">The launch</span><span class="screen__read">6 movements</span></p>
+      <section class="screen" id="essay-screen" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The launch</span><span class="screen__read">6 movements</span></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <article class="essay">
-            <h2 class="essay__title"><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
+            <h2 class="essay__title" id="launch" data-move><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
             <p>At Foresight Machines we build AI systems that hold a living model of the world around an institution — its markets, counterparties, rules, and exposures — and run that world forward before the institution acts: in finance, insurance, energy, supply chains, and statecraft. The output is not a prediction. It is a rehearsal: how the consequences of a decision unfold, which assumptions carry the plan, and which course of action survives the futures no one can rule out.</p>
             <p>Today, Foresight Machines is coming out of stealth. Our team brings together <a href="https://en.wikipedia.org/wiki/Superforecasting" target="_blank" rel="noopener">superforecasters</a>, AI scientists, capital allocators, pioneers of agent-based simulation for financial institutions, and a co-inventor of <a href="https://en.wikipedia.org/wiki/Synthetic_control_method" target="_blank" rel="noopener">synthetic control methods</a>, the tool economists reach for to measure what a policy actually did. Predicting a world is one discipline; predicting a world you are about to act on takes all of them.</p>
-            <h3><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
+            <h3 id="challenge" data-move><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
             <p>Foreseeing is as old as planting a seed. Acting today against a world that exists only tomorrow is the move underneath everything an institution does: a loan is underwritten into a future economy, a risk is priced into a future climate, capital is committed to a market that will not hold still while it arrives.</p>
             <p>That move keeps getting harder. Capital, supply, energy, and policy now run through tightly coupled networks, and rules fragment across jurisdictions — so a change in one system reaches another before the next planning cycle begins. Meanwhile the institution's model of the future, the thing every one of these decisions rests on, lives where it has always lived: three tabs of a spreadsheet, a paragraph of an investment memo, an analyst's conviction, a conversation before the board meets. It is scattered, implicit, revised unevenly, and rarely checked against what happened. Institutions measure their people, their processes, and their quarters. Almost none measure their model of the future.</p>
             <p class="essay__set">Consider a decision, not a question:</p>
@@ -102,33 +79,30 @@
             <p>The last twenty years produced real progress on questions about the future. <a href="https://en.wikipedia.org/wiki/Philip_E._Tetlock" target="_blank" rel="noopener">Philip Tetlock</a> showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, matched or beat intelligence analysts with classified access in tournaments run by the US intelligence community. Machines then caught up: in the Summer 2026 <a href="https://www.metaculus.com/" target="_blank" rel="noopener">Metaculus Cup</a>, AI systems outforecast every human competitor for the first time, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like <a href="https://polymarket.com/" target="_blank" rel="noopener">Polymarket</a> and <a href="https://kalshi.com/" target="_blank" rel="noopener">Kalshi</a> pay for information and penalize miscalibration — the working version of <a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Robin Hanson's futarchy</a> and <a href="https://vitalik.eth.limo/general/2024/11/09/infofinance.html" target="_blank" rel="noopener">Vitalik Buterin's info finance</a>, where forecasts are meant to steer governance itself.</p>
             <p>None of this decides anything yet. Superforecasts do not run the C-suite. Markets cover what people will bet on, not what institutions must resolve. Machine forecasters answer questions one at a time, each answer separate from the last. The gap is not accuracy. A probability is a fact about the world; a decision is an act upon it. A number tells you the weather. It does not tell you whether to sail, which route holds if the wind turns, or when to put back into port.</p>
             <p class="essay__set">Two capabilities now close that gap.</p>
-            <h3><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Faster feedback</h3>
+            <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Faster feedback</h3>
             <p>Every claim about the world eventually resolves, and the resolution is a label no one has to write and no one can fake. A model can be trained on masked history — it is March 2025, and it knows only what was knowable then — and scored when events resolve. A human forecaster cannot unlearn a year and predict it again; a machine can, thousands of times. Judgment has never had feedback this fast, and it works: a 32-billion-parameter model trained this way outpredicts one seven times its size.</p>
             <p>We extend the same discipline from questions to decisions. Before an outcome is known, a foresight machine commits to what it expects from each action under consideration: what breaks the plan, what carries it, what each alternative yields. When reality arrives, the machine is scored and the score is kept. Each resolved decision improves the next model of the world, and gives the institution a measured record of its own judgment.</p>
-            <h3><span class="essay__code" aria-hidden="true">04</span>Unlock 2: World models, cheap and current</h3>
+            <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">04</span>Unlock 2: World models, cheap and current</h3>
             <p>Modeling the world around a decision used to be manual work — synthetic population modeling proved it works at scale, but each model takes specialists months to build and is stale before it is finished. That cost is why institutions model the future so rarely, and why the model is never maintained between decisions.</p>
             <p>Language models remove the bottleneck. They can read where an institution's model of the future actually lives — the memos, filings, contracts, and submissions no database ever captured — and assemble it into an explicit state of the world, then keep that state current as evidence arrives. Once the state is explicit, a counterfactual costs compute instead of a planning cycle. If the licensing regime slips six months, what happens to the capital plan? If it slips and rates hold — then what? The machine runs a thousand of these on every decision, and keeps running them as conditions change. And because one model underlies every decision, the claims stay consistent with each other — which is not just tidiness: forecasters whose beliefs stay coherent across related questions are measurably more accurate on each one.</p>
-            <h3><span class="essay__code" aria-hidden="true">05</span>Machine foresight</h3>
+            <h3 id="machine-foresight" data-move><span class="essay__code" aria-hidden="true">05</span>Machine foresight</h3>
+            <figure class="fig fig--loop">
+              <figcaption class="fig__cap">The loop</figcaption>
+              <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
+            </figure>
             <p>We are building machines that maintain the living state of a business, an institution, a sovereign — its assets, obligations, counterparties, rules, and dependencies — update that state as the world changes, run the counterfactuals of what it might do next, and return the actions that stay sound across futures. Today the machine rehearses and the institution decides. The goal is machines trusted to go further: to allocate capital, underwrite risk, hedge exposure, and procure supply on their own record — foresight as infrastructure, a permanent capability of every consequential institution.</p>
+            <figure class="fig">
+              <figcaption class="fig__cap">The actions</figcaption>
+              <ol class="rows rows--flush" data-actions aria-label="Actions"></ol>
+            </figure>
             <p>Weather forecasting delivers billions of dollars of value a year, and the value arrives where forecasts meet decisions: planting schedules, flight paths, shipping lanes, grid dispatch. We are building that junction for everything an institution decides.</p>
             <p class="essay__close">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
           </article>
         </div>
       </section>
 
-      <section class="screen" id="research" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-05</span><span class="screen__name">Project 1654</span><span class="screen__read">Open</span></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <p class="numeral" aria-hidden="true">1654</p>
-          <h2 class="screen__title">Systems that learn from time.</h2>
-          <p class="screen__lead">Project 1654 brings researchers and builders into this work. Each project defines what it models, what it claims, and how the claim will be evaluated. Progress measured against the world.</p>
-          <p style="margin-top: 2rem"><a class="btn" data-mail="Project 1654 application" href="#">Apply to Project 1654</a></p>
-        </div>
-      </section>
-
       <section class="screen" id="decision" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-06</span><span class="screen__name">Decision</span><span class="screen__read">4 fields</span></p>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Decision</span><span class="screen__read">4 fields</span></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <h2 class="screen__title">Bring us a decision you haven&rsquo;t made yet.</h2>

@@ -6,7 +6,6 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { ACTIONS } from './data/actions';
-import { RECORD_BANDS } from './data/record';
 import { EMAIL } from './data/site';
 
 function wireEmail(root: ParentNode): void {
@@ -30,21 +29,6 @@ function mountActions(root: ParentNode): void {
         el('span', { class: 'row__no' }, [a.ordinal]),
         el('span', { class: 'row__head' }, [a.verb]),
         el('span', { class: 'row__text' }, [a.line]),
-      ]),
-    ),
-  );
-}
-
-/** The record: four rows. */
-function mountRecord(root: ParentNode): void {
-  const host = qs<HTMLElement>('[data-record-rows]', root);
-  if (!host) return;
-  host.append(
-    ...RECORD_BANDS.map((b) =>
-      el('li', { class: 'row' }, [
-        el('span', { class: 'row__no' }, [b.ordinal]),
-        el('span', { class: 'row__head row__head--sans' }, [b.name]),
-        el('span', { class: 'row__text' }, [b.body]),
       ]),
     ),
   );
@@ -77,7 +61,6 @@ function wireForm(root: ParentNode): void {
 export function mountHome(root: ParentNode = document): void {
   wireEmail(root);
   mountActions(root);
-  mountRecord(root);
   wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);

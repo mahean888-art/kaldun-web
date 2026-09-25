@@ -1245,79 +1245,6 @@ a {
 }
 
 
-/* --- the loop, at the width of the screen; the actions as an aside --------- */
-
-.fig--loop {
-  border-top: 0;
-  padding-top: 0;
-  margin-inline: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
-}
-
-/* The figure spans the screen's interior: from the essay's left edge back
-   to the screen's inner edge, and across to the other inner edge. */
-.fig--loop {
-  --pad: clamp(1.25rem, 3vw, 2.75rem);
-}
-
-@media (min-width: 900px) {
-  .fig--loop {
-    width: calc(100% + 2 * var(--pad) + 2rem + 2 * ((min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2));
-    margin-left: calc(-1 * (var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2));
-    max-width: none;
-  }
-}
-
-/* The caption sits at the essay's edge like every head, with a rule
-   beneath it across the column; the diagram follows closely. */
-.fig--loop .fig__cap {
-  margin-bottom: 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-@media (min-width: 900px) {
-  .fig--loop .fig__cap {
-    --lead: calc(var(--pad) + 2rem + (min(var(--screen-w), 100vw - 2 * var(--gutter)) - 2px - 2 * var(--pad) - 720px - 2rem) / 2);
-    margin-left: var(--lead);
-    width: 720px;
-  }
-
-  .fig--loop .instrument__figure {
-    margin-top: -0.75rem;
-  }
-}
-
-.fig--loop .instrument__figure {
-  max-width: none;
-}
-
-.fig--loop .instrument__figure svg {
-  width: 100%;
-  height: auto;
-}
-
-/* The actions: an aside, not a box. */
-.fig:not(.fig--loop) {
-  border-top: 0;
-  padding-top: 0;
-}
-
-.fig:not(.fig--loop) .fig__cap {
-  display: none;
-}
-
-.fig:not(.fig--loop) .rows {
-  border-top: 1px solid var(--rule);
-}
-
-/* Rows: room for the mark at the left, in the wide layout. */
-@media (min-width: 800px) {
-  .row {
-    padding-left: 1.25rem;
-  }
-}
-
-
 /* --- the hero: a nameplate above one statement --------------------------
    The name in the display face as a marque, amber, with the two squares;
    the promise as the h1 in the serif at the full width of the frame; a
@@ -1392,4 +1319,364 @@ a {
 
 @media (max-width: 480px) {
   .hero .hero__name { font-size: 1.25rem; letter-spacing: 0.1em; }
+}
+
+
+/* --- one module ------------------------------------------------------------
+   The launch screen's grid is a 120px module anchored on the screen's centre.
+   At full width the interior is ten modules, so its edges fall on lines, and
+   the essay's column — six modules — is framed by two of them. The column
+   itself is clear paper: the grid shows in the margins and stops at a line. */
+
+.screen {
+  container-type: inline-size;
+  --pad: clamp(1.25rem, 3vw, 2.75rem);
+}
+
+#essay-screen {
+  background-image:
+    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-size: 120px 120px;
+  background-position: calc(50% - 60px) var(--bar-h);
+}
+
+.essay {
+  background-color: var(--clay);
+}
+
+/* The movement codes sit in a clean notch of the margin; where the margin
+   rule passes each one, a registration mark. */
+@media (min-width: 900px) {
+  .essay__code {
+    padding-left: 6px;
+    background-color: var(--clay);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .essay__code::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    width: 11px;
+    height: 11px;
+    margin-top: -6px;
+    background:
+      linear-gradient(var(--amber), var(--amber)) center / 11px 1px no-repeat,
+      linear-gradient(var(--amber), var(--amber)) center / 1px 11px no-repeat;
+  }
+}
+
+/* Between movements: a hairline across the column, a crosshair at its centre. */
+.essay h3 {
+  --gap: clamp(4rem, 7vw, 5.5rem);
+  margin-top: var(--gap);
+}
+
+.essay h3::before,
+.essay h3::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.essay h3::before {
+  top: calc(var(--gap) / -2);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+
+.essay h3::after {
+  top: calc(var(--gap) / -2 - 10px);
+  left: calc(50% - 10.5px);
+  width: 21px;
+  height: 21px;
+  /* A reticle: an open ring that the hairline stops at, with a tick above
+     and below. */
+  background:
+    radial-gradient(circle at center, var(--clay) 0 5.25px, rgba(250, 152, 1, 0.8) 5.25px 6.25px, transparent 6.75px),
+    linear-gradient(rgba(250, 152, 1, 0.8), rgba(250, 152, 1, 0.8)) 10px 0 / 1px 4px no-repeat,
+    linear-gradient(rgba(250, 152, 1, 0.8), rgba(250, 152, 1, 0.8)) 10px 17px / 1px 4px no-repeat;
+}
+
+@media (min-width: 900px) {
+  /* The hairline meets the margin rule; the crosshair marks the column's
+     centre, which is also a line of the grid. */
+  .essay h3::before {
+    left: calc(-2rem - 1px);
+  }
+
+  .essay h3::after {
+    left: calc(50% - 16.5px - 10.5px);
+  }
+}
+
+/* --- the figures: plates set into the essay ------------------------------- */
+
+.fig--loop,
+.fig--actions {
+  margin: clamp(2.5rem, 4.5vw, 3.5rem) 0;
+  padding: 0;
+  border: 0;
+}
+
+/* A plate's heading: the figure's number and name at the left, a true count
+   at the right, both in the small mono, across the essay's column. */
+.plate__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  padding: 0.875rem 0 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.plate__fig {
+  color: var(--amber);
+}
+
+.plate__count {
+  color: var(--ink-4);
+}
+
+/* The loop's plate spans the screen's interior, edge to edge, and holds its
+   own paper; its heading still sits over the essay's column. */
+.plate {
+  --col: min(720px, 100cqw - 2 * var(--pad));
+  --lead: calc(50cqw - var(--col) / 2);
+  position: relative;
+  width: 100cqw;
+  margin-left: calc(-1 * var(--lead));
+  background-color: var(--clay);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .plate {
+    --lead: calc(50cqw - var(--col) / 2 + 2rem + 1px);
+  }
+}
+
+.plate .plate__head {
+  width: calc(100cqw - 2 * var(--lead));
+  margin-left: var(--lead);
+}
+
+@media (min-width: 900px) {
+  .plate .plate__head {
+    width: calc(var(--col) - 2rem - 1px);
+  }
+}
+
+.plate .instrument__figure {
+  padding-block: clamp(0.5rem, 1.5vw, 1rem) clamp(1rem, 2.5vw, 1.75rem);
+}
+
+/* Crop marks at the plate's corners, as on a printed figure. */
+.plate__crop {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .plate__crop {
+    display: block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(250, 152, 1, 0.6), rgba(250, 152, 1, 0.6)) 0 17px / 12px 1px no-repeat,
+      linear-gradient(rgba(250, 152, 1, 0.6), rgba(250, 152, 1, 0.6)) 17px 0 / 1px 12px no-repeat;
+  }
+
+  .plate__crop--tl { top: 10px; left: 10px; }
+  .plate__crop--tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .plate__crop--bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .plate__crop--br { bottom: 10px; right: 10px; transform: scale(-1, -1); }
+}
+
+/* Between the phone and the full plate the drawing is shown smaller than one
+   to one, so its type is set larger to land at a readable size. */
+@media (min-width: 760px) and (max-width: 1099px) {
+  .instrument__figure:not(.is-portrait) .ins__idx { font-size: 17px; }
+  .instrument__figure:not(.is-portrait) .ins__name { font-size: 46px; }
+  .instrument__figure:not(.is-portrait) .ins__sub { font-size: 22px; }
+  .instrument__figure:not(.is-portrait) .ins__label { font-size: 17px; }
+}
+
+/* --- the actions: a directory ------------------------------------------------ */
+
+.fig--actions {
+  border-top: 1px solid var(--rule);
+}
+
+.dir {
+  --c1: 3.25rem;
+  --c2: 10rem;
+  --c3: 6.75rem;
+  position: relative;
+}
+
+.dir__head {
+  display: none;
+}
+
+.dir__rows {
+  list-style: none;
+}
+
+.dir__row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  grid-template-areas: 'no verb' 'no obj' 'no line';
+  align-items: baseline;
+  row-gap: 0.3rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid rgba(250, 152, 1, 0.14);
+  transition: background-color 0.25s ease;
+}
+
+.dir__no {
+  grid-area: no;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-4);
+  transition: color 0.25s ease;
+}
+
+.dir__verb {
+  grid-area: verb;
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 1.6vw, 1.3125rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.dir__obj {
+  grid-area: obj;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.dir__line {
+  grid-area: line;
+  margin-top: 0.35rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.dir__row:hover {
+  background-color: rgba(250, 152, 1, 0.045);
+}
+
+.dir__row:hover .dir__no {
+  color: var(--amber);
+}
+
+@media (min-width: 800px) {
+  /* Four columns, and rules that run the full height of the directory,
+     from the heading row to the last entry. */
+  .dir {
+    background-image:
+      linear-gradient(var(--rule-col), var(--rule-col)),
+      linear-gradient(var(--rule-col), var(--rule-col)),
+      linear-gradient(var(--rule-col), var(--rule-col));
+    background-size: 1px 100%;
+    background-repeat: no-repeat;
+    background-position:
+      var(--c1) 0,
+      calc(var(--c1) + var(--c2)) 0,
+      calc(var(--c1) + var(--c2) + var(--c3)) 0;
+  }
+
+  .dir__head,
+  .dir__row {
+    display: grid;
+    grid-template-columns: var(--c1) var(--c2) var(--c3) minmax(0, 1fr);
+    grid-template-areas: 'no verb obj line';
+    align-items: baseline;
+  }
+
+  .essay p.dir__head {
+    padding-block: 0.7rem 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .dir__row {
+    row-gap: 0;
+    padding-block: 1.2rem;
+  }
+
+  .dir__head > span + span,
+  .dir__row > span + span {
+    padding-left: 1rem;
+  }
+
+  .dir__head > span:last-child,
+  .dir__line {
+    padding-right: 0.5rem;
+  }
+
+  .dir__line {
+    margin-top: 0;
+  }
+}
+
+/* --- the printed finish ------------------------------------------------------ */
+
+/* The amber bars carry a faint scanline, like ink laid down in passes. */
+.bar,
+.screen__bar {
+  background-image: repeating-linear-gradient(180deg, rgba(42, 18, 0, 0.06) 0 1px, transparent 1px 3px);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Their squares are pressed slightly into the bar. */
+.bar .bar__squares i,
+.screen__bar .bar__squares i {
+  box-shadow:
+    inset 1px 1px 0 rgba(20, 6, 0, 0.55),
+    inset -1px -1px 0 rgba(255, 196, 110, 0.16);
+}
+
+/* Grain: fine enough to disappear at a glance, there when you lean in. */
+.grain {
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.86 0 0 0 0 0.64 0 0 0 1.1 -0.05'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>");
+  background-size: 220px 220px;
+}
+
+/* Numbers set to one width wherever they are read as numbers. */
+.foot__clock,
+.foot__base,
+.hero__mark,
+.plate__head,
+.dir {
+  font-variant-numeric: tabular-nums;
 }

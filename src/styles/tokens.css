@@ -38,7 +38,7 @@
   --bar-h: 40px;
   --header-h: calc(var(--inset) + var(--bar-h));
   --rail-w: 260px;
-  --screen-w: 1120px;
+  --screen-w: 1202px;
   --gutter: clamp(1rem, 3vw, 2.5rem);
 
   --t-body: 1.0625rem;

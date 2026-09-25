@@ -1,14 +1,8 @@
-/* --- the machine plate: the loop, drawn thin ------------------------------ */
-
-.machine__top {
-  max-width: 62ch;
-}
+/* --- the loop: one instrument on a plate ------------------------------------ */
 
 .instrument {
   position: relative;
   width: 100%;
-  /* Chart paper, quiet: a faint dashed grid behind the loop. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M55.5 0v56M0 55.5h56' fill='none' stroke='%23f2f0eb' stroke-opacity='.035' stroke-dasharray='3 5'/%3E%3C/svg%3E");
 }
 
 .instrument__figure {
@@ -27,98 +21,170 @@
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
 }
 
-/* The conduits: fine, not heavy. */
-.instrument__figure path[data-arrow] {
+/* Chart paper: a small cross every 40 units, barely there. */
+.instrument__figure .ins__lattice {
   fill: none;
-  stroke-width: 2;
+  stroke: rgba(250, 152, 1, 0.13);
+  stroke-width: 1;
+}
+
+/* Every word on the plate carries a halo of the plate's own tone, so the
+   lattice and the conduits stop short of the type instead of running
+   through it. */
+.instrument__figure text {
+  paint-order: stroke fill;
+  stroke: var(--clay);
+  stroke-width: 10px;
+  stroke-linejoin: round;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The conduits: forward in a quiet amber, the return in full amber. */
+.instrument__figure .ins__wire {
+  fill: none;
+  stroke: rgba(250, 152, 1, 0.42);
+  stroke-width: 1.5;
   stroke-linecap: round;
 }
 
-.instrument__figure [data-arrow='amber'] {
-  stroke: var(--accent);
-}
-
-.instrument__figure [data-arrow='grey'] {
-  stroke: var(--faint);
-}
-
-.instrument__figure .ins__dot {
-  fill: var(--ink);
-}
-
-.instrument__figure .ins__dot--t {
-  fill: var(--accent);
+.instrument__figure .ins__wire--return {
+  stroke: var(--amber);
 }
 
 .instrument__figure .ins__head {
   fill: none;
+  stroke: rgba(250, 152, 1, 0.7);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.instrument__figure .ins__pulse {
-  fill: none;
-  stroke: #ffffff;
-  stroke-opacity: 0.8;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  pointer-events: none;
+.instrument__figure .ins__head--return {
+  stroke: var(--amber);
 }
 
-/* The words are primary. */
-.instrument__figure .ins__name {
-  font-family: var(--sans);
-  font-size: 30px;
+/* The route the travelling mark follows: never drawn. */
+.instrument__figure .ins__route {
+  fill: none;
+  stroke: none;
+}
+
+/* Futures: two thin paths part from the conduit and fade. */
+
+.instrument__figure .ins__fan path {
+  fill: none;
+  stroke: url(#ins-fade-x);
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.instrument__figure .ins__fan--down path {
+  stroke: url(#ins-fade-y);
+}
+
+/* A station: an open square with a small core, lit when the mark arrives. */
+.instrument__figure .ins__node {
+  fill: var(--clay);
+  stroke: rgba(250, 152, 1, 0.6);
+  stroke-width: 1.5;
+  transition: stroke 0.5s ease;
+}
+
+.instrument__figure .ins__core {
+  fill: rgba(250, 152, 1, 0.45);
+  transition: fill 0.5s ease;
+}
+
+.instrument__figure .ins__idx {
+  font-family: var(--mono);
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.16em;
+  fill: var(--ink-4);
+  transition: fill 0.5s ease;
+}
+
+.instrument__figure .ins__name {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
   fill: var(--ink);
+  transition: fill 0.5s ease;
 }
 
 .instrument__figure .ins__sub {
   font-family: var(--sans);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 400;
-  fill: var(--mute);
+  fill: var(--ink-3);
 }
 
-.instrument__figure .ins__label--amber {
-  font-family: var(--sans);
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  fill: var(--accent);
+.instrument__figure [data-live] .ins__node {
+  stroke: var(--amber);
 }
 
-/* A plain ground behind each name, so the grid never runs through text. */
-.instrument__figure .ins__plate {
-  fill: var(--ground);
+.instrument__figure [data-live] .ins__core {
+  fill: var(--amber);
 }
 
-/* The commitment marker: the point past which the claim cannot change. */
-.instrument__figure .ins__marker {
-  fill: var(--accent);
-  stroke: var(--ground);
+.instrument__figure [data-live] .ins__idx,
+.instrument__figure [data-live] .ins__name {
+  fill: var(--amber);
+}
+
+/* The commitment: a sealed diamond across the conduit, on the caption line. */
+.instrument__figure .ins__seal {
+  fill: var(--amber);
+  stroke: var(--clay);
   stroke-width: 3;
+  paint-order: stroke fill;
 }
 
-.instrument__figure .ins__marker-label {
-  font-family: var(--sans);
-  font-size: 15px;
+.instrument__figure .ins__tick {
+  fill: none;
+  stroke: rgba(250, 152, 1, 0.6);
+  stroke-width: 1;
+}
+
+.instrument__figure .ins__label {
+  font-family: var(--mono);
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  fill: var(--mute);
+  letter-spacing: 0.18em;
+  fill: var(--amber);
 }
 
-/* The faint cell field beside Futures — beneath the paths' contrast. */
-.instrument__figure .ins__field {
-  opacity: 0.08;
+.instrument__figure .ins__commit .ins__label {
+  fill: rgba(250, 152, 1, 0.78);
+  transition: fill 0.5s ease;
 }
 
-.instrument__figure .ins__cell {
-  fill: var(--ink);
+.instrument__figure .ins__commit[data-live] .ins__label {
+  fill: var(--amber);
 }
 
+/* The travelling mark. */
+.instrument__figure .ins__token {
+  fill: var(--amber);
+  stroke: var(--clay);
+  stroke-width: 2.5;
+  paint-order: stroke fill;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
+/* Standing, on narrow screens: the plate is drawn larger so it reads at
+   about half scale. */
+.instrument__figure.is-portrait .ins__idx { font-size: 20px; }
+.instrument__figure.is-portrait .ins__name { font-size: 50px; }
+.instrument__figure.is-portrait .ins__sub { font-size: 28px; }
+.instrument__figure.is-portrait .ins__label { font-size: 20px; }
+.instrument__figure.is-portrait .ins__wire { stroke-width: 2.5; }
+.instrument__figure.is-portrait .ins__head { stroke-width: 2.5; }
+.instrument__figure.is-portrait .ins__fan path { stroke-width: 1.75; }
+.instrument__figure.is-portrait .ins__lattice { stroke-width: 1.5; }
+.instrument__figure.is-portrait text { stroke-width: 14px; }

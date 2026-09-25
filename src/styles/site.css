@@ -1495,7 +1495,8 @@ a {
 /* --- movement codes: boxed tags --------------------------------------------- */
 
 .essay__code {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   padding: 3px 6px 2px 7px;
   border: 1px solid rgba(250, 152, 1, 0.55);
   background: linear-gradient(rgba(250, 152, 1, 0.1), rgba(250, 152, 1, 0.1)), var(--clay);
@@ -2258,4 +2259,81 @@ a {
     display: inline;
     margin-left: 0.6em;
   }
+}
+
+
+/* --- after the form is sent -------------------------------------------------------
+   The page always says what happened. When the message goes by the visitor's
+   mail app, it is shown here too, ready to copy. */
+
+.form__done {
+  max-width: 800px;
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem 1.75rem;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+  background: rgba(250, 152, 1, 0.04);
+}
+
+.form__done[hidden],
+.form__done [hidden] {
+  display: none;
+}
+
+.form__done-head {
+  margin-bottom: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.form__done-lead {
+  max-width: 44em;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.form__done-lead a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.form__done-text {
+  margin-top: 1.25rem;
+  max-height: 24rem;
+  overflow: auto;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule);
+  background: var(--ground);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--ink-2);
+}
+
+.form__done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 1.25rem;
+}
+
+.form__done-link {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.form__done-link:hover {
+  color: var(--ink);
 }

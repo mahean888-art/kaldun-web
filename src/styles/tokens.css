@@ -20,7 +20,7 @@
   --ink: #f7f1ea;
   --ink-2: #e6e0d8;
   --ink-3: #b9b1a8;
-  --ink-4: #7a7068;
+  --ink-4: #857b72;
 
   /* The loop drawing reads these. */
   --accent: var(--amber);

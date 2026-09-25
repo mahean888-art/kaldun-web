@@ -6,7 +6,7 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { ACTIONS } from './data/actions';
-import { EMAIL } from './data/site';
+import { EMAIL, FORM_ENDPOINT } from './data/site';
 
 function wireEmail(root: ParentNode): void {
   for (const node of qsa<HTMLAnchorElement>('[data-email]', root)) {
@@ -37,26 +37,106 @@ function mountActions(root: ParentNode): void {
 }
 
 /**
- * The decision form composes a mail. Nothing is stored anywhere: the fields
- * become the subject and body of a message to the address, in the sender's
- * own mail client.
+ * The decision form. With an endpoint configured, the fields are posted there.
+ * Without one, or if the post fails, the fields become a mail to the address
+ * in the sender's own mail app. Either way the page says what happened, and
+ * when it is the mail app, the message is shown ready to copy, so a visitor
+ * without a mail app loses nothing.
  */
 function wireForm(root: ParentNode): void {
   const form = qs<HTMLFormElement>('[data-decision-form]', root);
-  if (!form) return;
+  const done = qs<HTMLElement>('[data-form-done]', root);
+  if (!form || !done) return;
+  const button = qs<HTMLButtonElement>('button[type="submit"]', form);
+  const label = button?.textContent ?? '';
+  const head = qs<HTMLElement>('[data-done-head]', done);
+  const lead = qs<HTMLElement>('[data-done-lead]', done);
+  const text = qs<HTMLElement>('[data-done-text]', done);
+  const actions = qs<HTMLElement>('[data-done-actions]', done);
+  const copy = qs<HTMLButtonElement>('[data-done-copy]', done);
+  const mail = qs<HTMLAnchorElement>('[data-done-mail]', done);
+  const subject = 'Bring us a decision';
+  let message = '';
+
+  const reveal = (): void => {
+    done.hidden = false;
+    done.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  const showSent = (reply: string): void => {
+    if (head) head.textContent = 'Received';
+    if (lead) lead.textContent = `Thank you. We will reply to ${reply}.`;
+    if (text) text.hidden = true;
+    if (actions) actions.hidden = true;
+    reveal();
+  };
+
+  const showMail = (body: string, href: string): void => {
+    message = `To: ${EMAIL}\nSubject: ${subject}\n\n${body}`;
+    if (text) {
+      text.hidden = false;
+      text.textContent = message;
+    }
+    if (actions) actions.hidden = false;
+    if (mail) mail.href = href;
+    if (copy) copy.textContent = 'Copy message';
+    reveal();
+  };
+
+  copy?.addEventListener('click', () => {
+    void navigator.clipboard?.writeText(message).then(
+      () => {
+        copy.textContent = 'Copied';
+      },
+      () => {
+        if (text) window.getSelection()?.selectAllChildren(text);
+      },
+    );
+  });
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(form);
     const get = (k: string): string => String(data.get(k) ?? '').trim();
+    const fields = { decision: get('decision'), stake: get('stake'), change: get('change'), reply: get('reply') };
     const body = [
-      `The decision:\n${get('decision')}`,
-      `What is at stake:\n${get('stake')}`,
-      `What would change my mind:\n${get('change')}`,
-      `Reply to: ${get('reply')}`,
+      `The decision:\n${fields.decision}`,
+      `What is at stake:\n${fields.stake}`,
+      `What would change my mind:\n${fields.change}`,
+      `Reply to: ${fields.reply}`,
     ].join('\n\n');
-    const href = `mailto:${EMAIL}?subject=${encodeURIComponent('Bring us a decision')}&body=${encodeURIComponent(body)}`;
+    const href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     form.dataset['mailto'] = href;
-    window.location.href = href;
+
+    const byMail = (): void => {
+      showMail(body, href);
+      window.location.href = href;
+    };
+
+    if (!FORM_ENDPOINT) {
+      byMail();
+      return;
+    }
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Sending';
+    }
+    fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ ...fields, _subject: subject }),
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        showSent(fields.reply);
+      })
+      .catch(byMail)
+      .finally(() => {
+        if (button) {
+          button.disabled = false;
+          button.textContent = label;
+        }
+      });
   });
 }
 

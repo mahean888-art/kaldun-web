@@ -65,7 +65,11 @@ const main = async () => {
   const css = await inlineFonts(await readFile(cssPath, 'utf8'));
   const js = await readFile(jsPath, 'utf8');
 
-  const doc = `<title>${title}</title>
+  // The tab icon travels with the file too.
+  const icon = `data:image/svg+xml;base64,${(await readFile(join(DIST, 'favicon.svg'))).toString('base64')}`;
+
+  const doc = `<link rel="icon" type="image/svg+xml" href="${icon}" />
+<title>${title}</title>
 <style>
 ${css}
 </style>

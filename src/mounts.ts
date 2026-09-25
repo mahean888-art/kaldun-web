@@ -11,7 +11,9 @@ import { EMAIL } from './data/site';
 function wireEmail(root: ParentNode): void {
   for (const node of qsa<HTMLAnchorElement>('[data-email]', root)) {
     node.href = `mailto:${EMAIL}`;
-    if (!node.textContent?.trim()) node.textContent = EMAIL;
+    const slot = node.querySelector<HTMLElement>('[data-email-text]');
+    if (slot) slot.textContent = EMAIL;
+    else if (!node.textContent?.trim()) node.textContent = EMAIL;
   }
   for (const node of qsa<HTMLAnchorElement>('[data-mail]', root)) {
     const subject = node.dataset['mail'] ?? '';

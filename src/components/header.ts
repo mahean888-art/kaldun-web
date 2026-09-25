@@ -1,8 +1,9 @@
 /**
- * The index at the left names the screen in view.
+ * The page's small machinery: scroll-in, the clock, the lamps.
  */
 
 import { qsa } from '../lib/dom';
+import { initLamps } from './lamps';
 
 /** Astromech's scroll-in: opacity 0, y 24, once, as each enters. */
 function initEnter(): void {
@@ -39,22 +40,6 @@ function initClock(): void {
 export function initHeader(): void {
   initEnter();
   initClock();
+  initLamps();
   document.documentElement.classList.add('is-loaded');
-  const links = qsa<HTMLAnchorElement>('[data-index-compact] a');
-  const rail = qsa<HTMLElement>('[data-rail] i');
-  const order = ['launch', 'challenge', 'unlock-1', 'unlock-2', 'machine-foresight', 'decision'];
-  const screens = qsa<HTMLElement>('[data-move], #decision');
-  if (links.length === 0 || screens.length === 0) return;
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        const id = (e.target as HTMLElement).id;
-        for (const a of links) a.classList.toggle('is-on', a.getAttribute('href') === `#${id}`);
-        rail.forEach((dot, i) => dot.classList.toggle('is-on', order[i] === id));
-      }
-    },
-    { rootMargin: '-6% 0px -68% 0px', threshold: 0 },
-  );
-  for (const s of screens) io.observe(s);
 }

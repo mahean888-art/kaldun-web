@@ -201,8 +201,7 @@ a {
 }
 
 /* The decision plate and the footer keep the plate tone with no grid at all. */
-#decision,
-.foot__row {
+#decision {
   background-image: none;
 }
 
@@ -521,51 +520,6 @@ a {
   color: var(--ink-4);
 }
 
-/* --- the footer -------------------------------------------------------------- */
-
-.foot {
-  max-width: var(--screen-w);
-  margin: 0 auto;
-  padding-top: clamp(2rem, 4vw, 3rem);
-  border-top: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem 2rem;
-  align-items: start;
-}
-
-@media (min-width: 800px) {
-  .foot {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
-    align-items: center;
-  }
-}
-
-.foot__name {
-  font-family: var(--display);
-  font-size: clamp(1.375rem, 2vw, 1.875rem);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-.foot__mission {
-  font-size: clamp(1rem, 1.3vw, 1.25rem);
-  line-height: 1.4;
-  color: var(--ink-2);
-  max-width: 28em;
-}
-
-.foot__base {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -718,8 +672,7 @@ a {
 .rows,
 .row,
 .form input,
-.form textarea,
-.foot {
+.form textarea {
   border-color: rgba(250, 152, 1, 0.24);
 }
 
@@ -937,16 +890,6 @@ a {
   transform: none;
 }
 
-/* One readout square blinks; nothing else moves. */
-@keyframes bar-blink {
-  0%, 92%, 100% { opacity: 1; }
-  94%, 98% { opacity: 0.3; }
-}
-
-.bar__blink {
-  animation: bar-blink 3.2s linear infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero__photo,
   .hero__copy > *,
@@ -956,10 +899,6 @@ a {
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .bar__blink {
-    animation: none;
   }
 }
 
@@ -1150,92 +1089,6 @@ a {
 }
 
 .hero__ruler, .hero__ruler-x, .hero__sweep, .bar__index { display: none !important; }
-
-/* --- the footer: one framed row, the present time at the right ------------- */
-
-.foot {
-  display: block;
-  padding-top: 0;
-  border-top: 0;
-}
-
-.foot__row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem 2rem;
-  align-items: center;
-  padding: clamp(1.5rem, 2.6vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
-  border: 1px solid var(--frame);
-  background-color: var(--clay);
-}
-
-@media (min-width: 900px) {
-  .foot__row {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-}
-
-.foot__name {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
-  letter-spacing: 0.06em;
-}
-
-.foot__name .bar__squares i {
-  background: var(--amber);
-}
-
-.foot__mission {
-  max-width: 34em;
-}
-
-@media (min-width: 900px) {
-  .foot__mission {
-    justify-self: center;
-    text-align: center;
-  }
-}
-
-.foot__clock {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.9em;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--amber);
-  white-space: nowrap;
-}
-
-.foot__clock b {
-  font-weight: 500;
-  font-size: 1.125rem;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.foot__base {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.5rem 2rem;
-  padding: 1rem 0 0;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.foot__base a {
-  color: var(--ink-3);
-  text-transform: none;
-  letter-spacing: 0.06em;
-}
 
 /* Narrow: the bar keeps one line; the readout yields. */
 @media (max-width: 640px) {
@@ -1670,9 +1523,445 @@ a {
 
 /* Numbers set to one width wherever they are read as numbers. */
 .foot__clock,
-.foot__base,
 .hero__mark,
 .plate__head,
 .dir {
   font-variant-numeric: tabular-nums;
+}
+
+
+/* --- lamps --------------------------------------------------------------------
+   Round lamps, as on a panel: open when ahead, lit when passed, and the one
+   that is now beeps. Squares are the mark; lamps are the state. */
+
+@keyframes lamp-beep {
+  0% { opacity: 1; }
+  55% { opacity: 0.16; }
+}
+
+/* In the bar: the page, in seven lamps, centred. */
+.lamps {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lamps__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lamps a {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(42, 18, 0, 0.62);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* A larger target than the lamp itself. */
+.lamps a::before {
+  content: '';
+  position: absolute;
+  inset: -8px -4px;
+}
+
+.lamps a.is-past {
+  background-color: rgba(42, 18, 0, 0.62);
+  box-shadow: none;
+}
+
+.lamps a.is-on {
+  background-color: var(--amber-ink);
+  box-shadow: none;
+  animation: lamp-beep 1.4s steps(1, end) infinite;
+}
+
+.lamps a:hover {
+  box-shadow: inset 0 0 0 1.5px var(--amber-ink);
+}
+
+.lamps a:focus-visible {
+  outline: 1px solid var(--amber-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .bar__domain {
+    display: none;
+  }
+}
+
+/* In the hero: a row between the State and Futures marks. */
+.hero__lamps {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: calc(var(--inset) + 22px);
+  height: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__lamps i {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(250, 152, 1, 0.6);
+}
+
+.hero__lamps i.is-lit {
+  background-color: var(--amber);
+  box-shadow: none;
+}
+
+.hero__lamps i.is-beep {
+  animation: lamp-beep 0.84s steps(1, end) infinite;
+}
+
+@media (max-width: 900px) {
+  .hero__lamps {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamps a.is-on,
+  .hero__lamps i.is-beep {
+    animation: none;
+  }
+}
+
+/* --- the hero grid: one module, registered ------------------------------------
+   The same 120px module as the launch screen, centred, so the statement sits
+   on a crossing; a fine 24px field inside it; a registration cross at every
+   major crossing. */
+
+.hero__grid {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M54 60.5h13M60.5 54v13' fill='none' stroke='%23fa9801' stroke-opacity='.62'/%3E%3C/svg%3E"),
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position:
+    50% 50%,
+    calc(50% - 60px) calc(50% - 60px),
+    calc(50% - 60px) calc(50% - 60px),
+    calc(50% - 12px) calc(50% - 12px),
+    calc(50% - 12px) calc(50% - 12px);
+}
+
+/* The model, as on a monitor: a fine scanline over the photograph only. */
+.hero__photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, rgba(11, 7, 5, 0.34) 0 1px, transparent 1px 3px);
+}
+
+/* The launch screen's margins carry the same registration crosses. */
+#essay-screen {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M55 60.5h11M60.5 55v11' fill='none' stroke='%23fa9801' stroke-opacity='.4'/%3E%3C/svg%3E"),
+    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-size: 120px 120px;
+  background-position: 50% calc(var(--bar-h) - 60px), calc(50% - 60px) var(--bar-h), calc(50% - 60px) var(--bar-h);
+}
+
+/* The screen bar ends in a registration cross. */
+.screen__cross {
+  display: block;
+  flex: none;
+  margin-left: auto;
+  width: 13px;
+  height: 13px;
+  background:
+    linear-gradient(var(--amber-ink), var(--amber-ink)) center / 13px 1px no-repeat,
+    linear-gradient(var(--amber-ink), var(--amber-ink)) center / 1px 13px no-repeat;
+}
+
+/* --- movement codes: boxed tags --------------------------------------------- */
+
+.essay__code {
+  display: inline-block;
+  padding: 3px 6px 2px 7px;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+  background: linear-gradient(rgba(250, 152, 1, 0.1), rgba(250, 152, 1, 0.1)), var(--clay);
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 900px) {
+  /* The tag stands in the margin, clear of the rule; the registration cross
+     sits on the rule itself. */
+  .essay__code {
+    top: 0.5em;
+    padding: 3px 6px 2px 7px;
+    transform: translateX(calc(-100% - 14px));
+    margin: 0;
+  }
+
+  .essay__code::after {
+    right: -20px;
+  }
+}
+
+/* --- the footer: open on the ground, as a machine's nameplate ----------------- */
+
+.foot {
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+
+.foot a {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* The top row: the name and its tag, the present time, the address. */
+.foot__top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .foot__top {
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+    gap: 2rem;
+  }
+}
+
+.foot__brand {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.foot__brand .bar__squares i,
+.foot__end .bar__squares i {
+  background: var(--amber);
+}
+
+.foot__name {
+  font-family: var(--display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.foot__tag {
+  padding: 4px 8px 3px;
+  border: 1px solid rgba(250, 152, 1, 0.6);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+}
+
+.foot__clock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.9em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+}
+
+.foot__clock b {
+  font-weight: 500;
+  font-size: 1.0625rem;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.foot__end {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .foot__brand,
+  .foot__end { white-space: nowrap; flex-wrap: nowrap; }
+  .foot__clock { justify-self: center; }
+  .foot__end { justify-self: end; }
+}
+
+.foot__end a {
+  color: var(--ink-3);
+  letter-spacing: 0.16em;
+}
+
+.foot__end a:hover {
+  color: var(--amber);
+}
+
+.foot__cross {
+  display: block;
+  width: 17px;
+  height: 17px;
+  background:
+    linear-gradient(var(--amber), var(--amber)) center / 17px 1px no-repeat,
+    linear-gradient(var(--amber), var(--amber)) center / 1px 17px no-repeat;
+}
+
+/* Three columns: the mission and the address; the launch; the ways in. */
+.foot__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.75rem;
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+}
+
+@media (min-width: 900px) {
+  .foot__cols {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.foot__mission {
+  max-width: 34em;
+  text-wrap: balance;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+}
+
+.foot__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 27rem;
+  margin-top: 1.75rem;
+  padding: 0.85rem 0.9rem 0.8rem;
+  border-top: 1px solid var(--amber);
+  border-bottom: 1px solid var(--amber);
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.foot__arrow,
+.foot__links span {
+  color: var(--amber);
+  transition: transform 0.25s var(--ease-astro);
+}
+
+.foot__field:hover {
+  background-color: rgba(250, 152, 1, 0.06);
+}
+
+.foot__field:hover .foot__arrow,
+.foot__links a:hover span {
+  transform: translateX(4px);
+}
+
+.foot__head {
+  padding: 0.75rem 0 0.7rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  letter-spacing: 0.16em;
+}
+
+.foot__list,
+.foot__links {
+  list-style: none;
+}
+
+.foot__list a {
+  display: flex;
+  gap: 1.1rem;
+  padding: 0.6rem 0;
+  color: var(--ink-3);
+  letter-spacing: 0.12em;
+}
+
+.foot__list a:hover {
+  color: var(--ink);
+}
+
+.foot__list b {
+  font-weight: 500;
+  color: var(--amber);
+}
+
+.foot__links a {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--amber);
+  letter-spacing: 0.16em;
+}
+
+.foot__links a:hover {
+  color: var(--ink);
+}
+
+.foot__copy {
+  margin-top: 1.1rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-4);
+}
+
+/* The wordmark: the width of the page, amber, laid down in scanlines with a
+   faint bloom. It scans in once, top to bottom. */
+.foot__mark {
+  margin-top: clamp(3.5rem, 8vw, 7rem);
+}
+
+.foot__mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 7px rgba(250, 152, 1, 0.26));
+  -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 3px, rgba(0, 0, 0, 0.42) 3px 4.5px);
+  mask-image: repeating-linear-gradient(180deg, #000 0 3px, rgba(0, 0, 0, 0.42) 3px 4.5px);
+}
+
+.foot__mark text {
+  font-family: var(--display);
+  font-size: 132px;
+  font-weight: 800;
+  fill: var(--amber);
+}
+
+.foot__sq {
+  fill: var(--amber);
+}
+
+.foot__mark.will-scan svg {
+  clip-path: inset(-48px -48px 100% -48px);
+  transition: clip-path 1.6s var(--ease-astro);
+}
+
+.foot__mark.will-scan.is-scanned svg {
+  clip-path: inset(-48px -48px -48px -48px);
 }

@@ -28,8 +28,19 @@
     <div class="frame" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="bar">
-      <span class="bar__squares" aria-hidden="true"><i></i><i class="bar__blink"></i></span>
-      <a href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
+      <span class="bar__squares" aria-hidden="true"><i></i><i></i></span>
+      <nav class="lamps" aria-label="Sections" data-lamps>
+        <a href="#top" title="Top" aria-label="Top"></a>
+        <span class="lamps__group">
+          <a href="#launch" title="01 · Foresight, made a machine" aria-label="01 · Foresight, made a machine"></a>
+          <a href="#challenge" title="02 · The challenge" aria-label="02 · The challenge"></a>
+          <a href="#unlock-1" title="03 · Faster feedback" aria-label="03 · Faster feedback"></a>
+          <a href="#unlock-2" title="04 · World models" aria-label="04 · World models"></a>
+          <a href="#machine-foresight" title="05 · Machine foresight" aria-label="05 · Machine foresight"></a>
+        </span>
+        <a href="#decision" title="Decision" aria-label="Decision"></a>
+      </nav>
+      <a class="bar__domain" href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
     </header>
 
 
@@ -49,12 +60,13 @@
       <span class="hero__mark hero__mark--tr" aria-hidden="true">T₀<b><u></u><u></u></b><i class="hero__cross"></i></span>
       <span class="hero__mark hero__mark--bl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>State</span>
       <span class="hero__mark hero__mark--br" aria-hidden="true">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
+      <span class="hero__lamps" aria-hidden="true" data-hero-lamps><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
 
     </section>
 
     <main class="main" id="main">
       <section class="screen" id="essay-screen" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The launch · September 2026</span><span class="screen__read">6 movements</span></p>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The launch · September 2026</span><i class="screen__cross" aria-hidden="true"></i></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <article class="essay">
@@ -98,7 +110,7 @@
       </section>
 
       <section class="screen" id="decision" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Decision</span><span class="screen__read">4 fields</span></p>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Decision</span><i class="screen__cross" aria-hidden="true"></i></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <h2 class="screen__title">Bring us a decision you haven&rsquo;t made yet.</h2>
@@ -122,14 +134,42 @@
       </section>
 
       <footer class="foot">
-        <div class="foot__row">
-          <p class="foot__name"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p>
-          <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
+        <div class="foot__top">
+          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="foot__name">Foresight Machines</span><span class="foot__tag">Foresight engine</span></p>
           <p class="foot__clock" aria-live="off"><span>T₀</span><b data-clock>--:--:--</b><span>PST</span></p>
+          <p class="foot__end"><a href="#top">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
         </div>
-        <div class="foot__base">
-          <span>© 2026 Foresight Machines</span>
-          <a data-email href="#"></a>
+        <div class="foot__cols">
+          <div class="foot__col foot__col--lead">
+            <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
+            <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
+          </div>
+          <nav class="foot__col" aria-label="The launch">
+            <p class="foot__head">The launch · September 2026</p>
+            <ul class="foot__list">
+              <li><a href="#launch"><b>01</b>Foresight, made a machine</a></li>
+              <li><a href="#challenge"><b>02</b>The challenge</a></li>
+              <li><a href="#unlock-1"><b>03</b>Faster feedback</a></li>
+              <li><a href="#unlock-2"><b>04</b>World models, cheap and current</a></li>
+              <li><a href="#machine-foresight"><b>05</b>Machine foresight</a></li>
+            </ul>
+          </nav>
+          <nav class="foot__col" aria-label="Contact">
+            <p class="foot__head">Contact</p>
+            <ul class="foot__links">
+              <li><a href="#decision">Bring us a decision<span aria-hidden="true">→</span></a></li>
+              <li><a data-email href="#">Email<span aria-hidden="true">→</span></a></li>
+              <li><a href="#top">Back to top<span aria-hidden="true">↑</span></a></li>
+            </ul>
+            <p class="foot__copy">© 2026 Foresight Machines</p>
+          </nav>
+        </div>
+        <div class="foot__mark" data-foot-mark aria-hidden="true">
+          <svg viewBox="0 0 2000 92" preserveAspectRatio="xMidYMid meet">
+            <rect class="foot__sq" x="0" y="23" width="45" height="45" />
+            <rect class="foot__sq" x="69" y="23" width="45" height="45" />
+            <text x="180" y="91" textLength="1820" lengthAdjust="spacingAndGlyphs">FORESIGHT MACHINES</text>
+          </svg>
         </div>
       </footer>
     </main>

@@ -21,17 +21,16 @@ function wireEmail(root: ParentNode): void {
   }
 }
 
-/** The actions: a directory of five entries — number, action, object, what is run. */
+/** The actions: an index of five, each read as one phrase — Allocate capital. */
 function mountActions(root: ParentNode): void {
   const host = qs<HTMLElement>('[data-actions]', root);
   if (!host) return;
   host.append(
     ...ACTIONS.map((a) =>
-      el('li', { class: 'dir__row' }, [
-        el('span', { class: 'dir__no' }, [a.ordinal]),
-        el('span', { class: 'dir__verb' }, [a.verb]),
-        el('span', { class: 'dir__obj' }, [a.object]),
-        el('span', { class: 'dir__line' }, [a.line]),
+      el('li', { class: 'act' }, [
+        el('span', { class: 'act__no' }, [a.ordinal]),
+        el('span', { class: 'act__head' }, [`${a.verb} `, el('em', {}, [a.object])]),
+        el('span', { class: 'act__line' }, [a.line]),
       ]),
     ),
   );

@@ -1363,140 +1363,6 @@ a {
   .instrument__figure:not(.is-portrait) .ins__label { font-size: 17px; }
 }
 
-/* --- the actions: a directory ------------------------------------------------ */
-
-.fig--actions {
-  border-top: 1px solid var(--rule);
-}
-
-.dir {
-  --c1: 3.25rem;
-  --c2: 10rem;
-  --c3: 6.75rem;
-  position: relative;
-}
-
-.dir__head {
-  display: none;
-}
-
-.dir__rows {
-  list-style: none;
-}
-
-.dir__row {
-  display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  grid-template-areas: 'no verb' 'no obj' 'no line';
-  align-items: baseline;
-  row-gap: 0.3rem;
-  padding-block: 1.25rem;
-  border-bottom: 1px solid rgba(250, 152, 1, 0.14);
-  transition: background-color 0.25s ease;
-}
-
-.dir__no {
-  grid-area: no;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink-4);
-  transition: color 0.25s ease;
-}
-
-.dir__verb {
-  grid-area: verb;
-  font-family: var(--display);
-  font-size: clamp(1.25rem, 1.6vw, 1.3125rem);
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--ink);
-}
-
-.dir__obj {
-  grid-area: obj;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-.dir__line {
-  grid-area: line;
-  margin-top: 0.35rem;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-
-.dir__row:hover {
-  background-color: rgba(250, 152, 1, 0.045);
-}
-
-.dir__row:hover .dir__no {
-  color: var(--amber);
-}
-
-@media (min-width: 800px) {
-  /* Four columns, and rules that run the full height of the directory,
-     from the heading row to the last entry. */
-  .dir {
-    background-image:
-      linear-gradient(var(--rule-col), var(--rule-col)),
-      linear-gradient(var(--rule-col), var(--rule-col)),
-      linear-gradient(var(--rule-col), var(--rule-col));
-    background-size: 1px 100%;
-    background-repeat: no-repeat;
-    background-position:
-      var(--c1) 0,
-      calc(var(--c1) + var(--c2)) 0,
-      calc(var(--c1) + var(--c2) + var(--c3)) 0;
-  }
-
-  .dir__head,
-  .dir__row {
-    display: grid;
-    grid-template-columns: var(--c1) var(--c2) var(--c3) minmax(0, 1fr);
-    grid-template-areas: 'no verb obj line';
-    align-items: baseline;
-  }
-
-  .essay p.dir__head {
-    padding-block: 0.7rem 0.6rem;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-4);
-  }
-
-  .dir__row {
-    row-gap: 0;
-    padding-block: 1.2rem;
-  }
-
-  .dir__head > span + span,
-  .dir__row > span + span {
-    padding-left: 1rem;
-  }
-
-  .dir__head > span:last-child,
-  .dir__line {
-    padding-right: 0.5rem;
-  }
-
-  .dir__line {
-    margin-top: 0;
-  }
-}
-
 /* --- the printed finish ------------------------------------------------------ */
 
 /* The amber bars carry a faint scanline, like ink laid down in passes. */
@@ -1524,8 +1390,7 @@ a {
 /* Numbers set to one width wherever they are read as numbers. */
 .foot__clock,
 .hero__mark,
-.plate__head,
-.dir {
+.plate__head {
   font-variant-numeric: tabular-nums;
 }
 
@@ -1599,27 +1464,9 @@ a {
   }
 }
 
-.hero__lamps i {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1px rgba(250, 152, 1, 0.6);
-}
-
-.hero__lamps i.is-lit {
-  background-color: var(--amber);
-  box-shadow: none;
-}
-
-.hero__lamps i.is-beep {
-  animation: lamp-beep 0.84s steps(1, end) infinite;
-}
-
-
 @media (prefers-reduced-motion: reduce) {
   .lamps a.is-on,
-  .hero__lamps i.is-beep {
+  .lc i.is-beep {
     animation: none;
   }
 }
@@ -1926,7 +1773,7 @@ a {
 .hero {
   --hp: clamp(22px, 5vw, 84px);
   --ht: calc(var(--header-h) + clamp(14px, 2.6vh, 28px));
-  --hb: clamp(56px, 8vh, 80px);
+  --hb: clamp(66px, 9.2vh, 90px);
   padding-inline: calc(var(--hp) + clamp(14px, 3vw, 44px));
 }
 
@@ -1950,66 +1797,6 @@ a {
 .hero__mark--bl { bottom: 18px; left: 18px; }
 .hero__mark--br { bottom: 18px; right: 18px; }
 
-/* Outside the panel: the strip. */
-.hero__strip {
-  position: absolute;
-  z-index: 2;
-  left: var(--hp);
-  right: var(--hp);
-  bottom: calc((var(--inset) + var(--hb)) / 2 - 8px);
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(250, 152, 1, 0.8);
-}
-
-.hero__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero__tag b {
-  display: inline-flex;
-  gap: 6px;
-}
-
-.hero__tag i,
-.hero__lamps i {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1px rgba(250, 152, 1, 0.6);
-}
-
-.hero__tag i.is-lit {
-  background-color: var(--amber);
-  box-shadow: none;
-}
-
-.hero__lamps {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-@media (max-width: 699px) {
-  .hero__strip {
-    justify-content: center;
-  }
-
-  .hero__tag {
-    display: none;
-  }
-}
-
 /* The corner marks sit on small plates of the ground, so the grid's lines
    stop at them instead of running through the words. */
 .hero__mark {
@@ -2021,3 +1808,191 @@ a {
 .hero__mark--tr { top: 12px; right: 12px; }
 .hero__mark--bl { bottom: 12px; left: 12px; }
 .hero__mark--br { bottom: 12px; right: 12px; }
+
+
+/* --- beneath the hero's panel: a console strip ---------------------------------
+   Clusters of round lamps across the width, some in two rows, as on
+   Astromech's console. One amber at two strengths, and open rings. */
+
+.hero__strip {
+  position: absolute;
+  z-index: 2;
+  left: var(--hp);
+  right: var(--hp);
+  bottom: calc((var(--inset) + var(--hb)) / 2 - 14px);
+  height: 28px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.lc {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.lc__label {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250, 152, 1, 0.82);
+  white-space: nowrap;
+}
+
+.lc__lamps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lc__row {
+  display: flex;
+  gap: 5px;
+}
+
+.lc i {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.lc i.gap {
+  width: 5px;
+}
+
+/* Full amber, lit. */
+.lc i.a,
+.lc i.d.is-alt,
+.lc i.o.is-alt {
+  background-color: var(--amber);
+  box-shadow: 0 0 6px rgba(250, 152, 1, 0.45);
+}
+
+/* Deep amber: the same amber at half strength. */
+.lc i.d,
+.lc i.a.is-alt {
+  background-color: rgba(250, 152, 1, 0.5);
+  box-shadow: 0 0 4px rgba(250, 152, 1, 0.18);
+}
+
+/* Open. */
+.lc i.o {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1.5px rgba(250, 152, 1, 0.75);
+}
+
+.lc i.is-beep {
+  animation: lamp-beep 1.4s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lc i.is-beep {
+    animation: none;
+  }
+}
+
+@media (max-width: 699px) {
+  .lc:nth-child(2),
+  .lc:nth-child(3),
+  .lc:nth-child(5),
+  .lc:nth-child(6) {
+    display: none;
+  }
+}
+
+/* --- the actions: an index -------------------------------------------------------
+   Each action is one phrase in the serif — Allocate capital — with its code
+   in a tag and what it means beside it. Hairlines between entries only. */
+
+.acts {
+  list-style: none;
+}
+
+.act {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  grid-template-areas: 'no head' 'no line';
+  align-items: baseline;
+  row-gap: 0.5rem;
+  padding-block: 1.4rem;
+  border-bottom: 1px solid rgba(250, 152, 1, 0.16);
+}
+
+/* On the pointer, an amber line draws along the entry's foot. */
+.act::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s var(--ease-astro);
+}
+
+.act:hover::after {
+  transform: scaleX(1);
+}
+
+.act__no {
+  grid-area: no;
+  justify-self: start;
+  padding: 3px 6px 2px 7px;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+  background-color: rgba(250, 152, 1, 0.1);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--amber);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.act:hover .act__no {
+  background-color: var(--amber);
+  color: var(--amber-ink);
+}
+
+.act__head {
+  grid-area: head;
+  font-family: var(--serif);
+  font-size: clamp(1.625rem, 2.3vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.act__head em {
+  font-style: italic;
+  color: var(--ink-3);
+}
+
+.act__line {
+  grid-area: line;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+@media (min-width: 800px) {
+  .act {
+    grid-template-columns: 3.25rem 15rem minmax(0, 1fr);
+    grid-template-areas: 'no head line';
+  }
+
+  .act__line {
+    padding-left: 1rem;
+  }
+}

@@ -6,12 +6,11 @@
  * ahead are open rings, and the one being read is lit and beeps. Only one
  * lamp ever beeps.
  *
- * In the hero, a row of lamps between the State and Futures marks runs the
- * world forward: they light one by one from State toward Futures, the last
- * beeps, and the row starts again. Discrete, like a panel; nothing slides.
+ * Beneath the hero's panel, a strip of lamp clusters, as on a machine's
+ * console: the last lamp beeps, and a few others change state slowly.
  *
- * Under reduced motion the bar lamps still follow the page, nothing beeps,
- * and the hero row rests half lit.
+ * Under reduced motion the bar lamps still follow the page, and nothing
+ * beeps or changes.
  */
 
 import { qs, qsa } from '../lib/dom';
@@ -62,48 +61,35 @@ function initBarLamps(): void {
 }
 
 function initHeroLamps(): void {
-  const row = qs<HTMLElement>('[data-hero-lamps]');
-  if (!row) return;
-  const lamps = qsa<HTMLElement>('i', row);
-  const n = lamps.length;
+  const strip = qs<HTMLElement>('[data-hero-lamps]');
+  if (!strip) return;
+  const lamps = qsa<HTMLElement>('i:not(.gap)', strip);
+  if (lamps.length === 0) return;
 
-  const show = (lit: number, beep: boolean): void => {
-    lamps.forEach((l, i) => {
-      l.classList.toggle('is-lit', i < lit);
-      l.classList.toggle('is-beep', beep && i === lit - 1);
-    });
-  };
+  // The last lamp beeps. A few others change state on their own slow,
+  // staggered periods, so the panel is alive without flickering.
+  lamps[lamps.length - 1]!.classList.add('is-beep');
+  if (reduced()) return;
 
-  if (reduced()) {
-    show(Math.ceil(n / 2), false);
-    return;
-  }
-
-  // One step every 420ms; at the end the last lamp beeps for three beats,
-  // then the row goes dark for a beat and starts again.
-  const STEP = 420;
-  const HOLD = 6; // steps spent beeping at the end
-  const DARK = 2; // steps dark before the next run
-  const cycle = n + HOLD + DARK;
-  let step = 0;
-  let timer = 0;
+  const blinkers: Array<[number, number]> = [
+    [2, 2600],
+    [9, 3900],
+    [15, 3100],
+    [24, 5200],
+    [31, 4400],
+  ];
+  let timers: number[] = [];
   let visible = true;
 
-  const tick = (): void => {
-    const s = step % cycle;
-    if (s < n) show(s + 1, false);
-    else if (s < n + HOLD) show(n, true);
-    else show(0, false);
-    step += 1;
-  };
-
   const run = (): void => {
-    if (timer || !visible || document.hidden) return;
-    timer = window.setInterval(tick, STEP);
+    if (timers.length || !visible || document.hidden) return;
+    timers = blinkers
+      .filter(([i]) => lamps[i])
+      .map(([i, ms]) => window.setInterval(() => lamps[i]!.classList.toggle('is-alt'), ms));
   };
   const halt = (): void => {
-    window.clearInterval(timer);
-    timer = 0;
+    for (const t of timers) window.clearInterval(t);
+    timers = [];
   };
 
   const io = new IntersectionObserver((entries) => {
@@ -111,9 +97,8 @@ function initHeroLamps(): void {
     if (visible) run();
     else halt();
   });
-  io.observe(row);
+  io.observe(strip);
   document.addEventListener('visibilitychange', () => (document.hidden ? halt() : run()));
-  tick();
   run();
 }
 

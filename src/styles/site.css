@@ -55,79 +55,11 @@ a {
   gap: 6px;
 }
 
-.bar__squares i {
-  display: block;
-  width: 12px;
-  height: 12px;
-  background: var(--amber-dim);
-}
-
 .bar a {
   color: var(--amber-ink);
 }
 
-/* --- the index ------------------------------------------------------------ */
-
-.index {
-  display: none;
-}
-
-@media (min-width: 1100px) {
-  .index {
-    position: fixed;
-    left: calc(var(--inset) + 8px);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 55;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    padding-left: 14px;
-    border-left: 1px solid var(--rule);
-  }
-}
-
-.index a {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  font-size: 0.9375rem;
-  color: var(--ink-3);
-  transition: color 0.2s ease;
-}
-
-.index a b {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--amber);
-}
-
-.index a:hover,
-.index a.is-on {
-  color: var(--ink);
-}
-
 /* --- the hero ---------------------------------------------------------------- */
-
-.hero {
-  position: relative;
-  min-height: 100svh;
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
-  background-position: var(--inset) var(--inset);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: calc(var(--header-h) + 3rem) var(--gutter) 4rem;
-}
 
 .hero__name {
   font-family: var(--display);
@@ -158,47 +90,7 @@ a {
   color: var(--ink-2);
 }
 
-.hero__corner {
-  position: absolute;
-  bottom: calc(var(--inset) + 12px);
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.hero__corner--l { left: calc(var(--inset) + 24px); }
-.hero__corner--r { right: calc(var(--inset) + 24px); }
-
 /* --- the screens --------------------------------------------------------- */
-
-.main {
-  padding-inline: var(--gutter);
-  padding-bottom: 6rem;
-}
-
-@media (min-width: 1100px) {
-  .main {
-    padding-left: max(var(--gutter), var(--rail-w));
-    padding-right: max(var(--gutter), 3.5rem);
-  }
-}
-
-.screen {
-  max-width: var(--screen-w);
-  margin: 0 auto clamp(4.5rem, 8vh, 6rem);
-  border: 1px solid var(--frame);
-  background-color: var(--clay);
-  /* A quiet grid inside the plate: majors only, faint, held inside the frame. */
-  background-image:
-    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
-  background-size: 144px 144px;
-  background-position: 0 var(--bar-h);
-  background-clip: padding-box;
-  scroll-margin-top: calc(var(--header-h) + 1.5rem);
-}
 
 /* The decision plate and the footer keep the plate tone with no grid at all. */
 #decision {
@@ -228,14 +120,6 @@ a {
   padding: clamp(1.75rem, 3.2vw, 2.75rem) clamp(1.25rem, 3vw, 2.75rem) clamp(2rem, 3.6vw, 3.25rem);
 }
 
-.screen__intro {
-  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-  line-height: 1.45;
-  color: var(--ink-2);
-  padding-bottom: clamp(1.25rem, 2.4vw, 2rem);
-  border-bottom: 1px solid var(--rule);
-}
-
 .screen__title {
   font-family: var(--serif);
   font-size: clamp(2.5rem, 4.6vw, 4.25rem);
@@ -255,95 +139,7 @@ a {
   color: var(--ink-2);
 }
 
-/* --- rows: the actions, the record ---------------------------------------- */
-
-.rows {
-  list-style: none;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  border-top: 1px solid var(--rule);
-}
-
-.rows--flush {
-  margin-top: 0;
-  border-top: 0;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  grid-template-areas: 'no head' 'no text';
-  gap: 0.35rem 1rem;
-  padding-block: clamp(1.5rem, 2.6vw, 2.25rem);
-  border-bottom: 1px solid var(--rule);
-}
-
-@media (min-width: 800px) {
-  .row {
-    grid-template-columns: 4rem 16rem minmax(0, 1fr);
-    grid-template-areas: 'no head text';
-    gap: 0;
-    align-items: start;
-  }
-
-  .row__head,
-  .row__text {
-    border-left: 1px solid var(--rule-col);
-    padding-left: 1.5rem;
-  }
-}
-
-.row__no {
-  grid-area: no;
-  padding-top: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: var(--amber);
-}
-
-.row__head {
-  grid-area: head;
-  font-family: var(--display);
-  font-size: clamp(1.5rem, 2.2vw, 2.125rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.005em;
-  color: var(--ink);
-}
-
-.row__head--sans {
-  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
-  padding-top: 0.15rem;
-}
-
-.row__text {
-  grid-area: text;
-  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
-  line-height: 1.5;
-  color: var(--ink-2);
-  max-width: 36em;
-}
-
-/* --- the loop -------------------------------------------------------------- */
-
-.machine__fig {
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  padding-top: clamp(1.5rem, 3vw, 2.5rem);
-  border-top: 1px solid var(--rule);
-}
-
-.instrument__figure .ins__plate {
-  fill: var(--clay);
-}
-
 /* --- the launch essay ------------------------------------------------------ */
-
-.essay {
-  position: relative;
-  max-width: 720px;
-  margin: 0 auto;
-  padding-block: clamp(1rem, 2vw, 2rem);
-}
 
 @media (min-width: 900px) {
   .essay {
@@ -361,38 +157,6 @@ a {
   letter-spacing: -0.01em;
   color: var(--ink);
   margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
-}
-
-.essay h3 {
-  position: relative;
-  margin-top: clamp(2.5rem, 4.5vw, 3.5rem);
-  margin-bottom: 1rem;
-  font-family: var(--serif);
-  font-size: clamp(1.875rem, 3vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.08;
-  color: var(--ink);
-}
-
-.essay__code {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--amber);
-}
-
-@media (min-width: 900px) {
-  .essay__code {
-    position: absolute;
-    left: -2rem;
-    top: 0.45em;
-    transform: translateX(-100%);
-    padding-right: 1rem;
-    margin: 0;
-  }
 }
 
 .essay p {
@@ -431,17 +195,6 @@ a {
   color: var(--ink);
 }
 
-/* --- Project 1654 ------------------------------------------------------------ */
-
-.numeral {
-  font-family: var(--display);
-  font-size: clamp(3.5rem, 6.5vw, 5.5rem);
-  font-weight: 600;
-  line-height: 0.9;
-  color: var(--amber);
-  margin-bottom: 0.5rem;
-}
-
 /* --- the decision form ------------------------------------------------------ */
 
 .form {
@@ -455,24 +208,6 @@ a {
   display: block;
   font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
   color: var(--ink);
-}
-
-.form input,
-.form textarea {
-  display: block;
-  width: 100%;
-  margin-top: 0.6rem;
-  padding: 0.6rem 0 0.8rem;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--rule);
-  border-radius: 0;
-  color: var(--ink);
-  font: inherit;
-  font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
-  line-height: 1.5;
-  outline: none;
-  transition: border-color 0.2s ease;
 }
 
 .form textarea {
@@ -512,14 +247,6 @@ a {
   background: #ffb038;
 }
 
-.form__note {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-4);
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -530,22 +257,6 @@ a {
 }
 
 /* --- the finer details ------------------------------------------------------ */
-
-/* Film grain, static, over everything. */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.85 0 0 0 0 0.6 0 0 0 1 0'/></filter><rect width='160' height='160' filter='url(%23g)'/></svg>");
-  background-size: 160px 160px;
-}
-
-/* Screens carry a second, inner edge. */
-.screen {
-  position: relative;
-}
 
 .screen::after {
   content: '';
@@ -568,7 +279,7 @@ a {
 .screen__corner--bl { bottom: -7px; left: -7px; border-bottom-width: 1px; border-left-width: 1px; }
 .screen__corner--br { bottom: -7px; right: -7px; border-bottom-width: 1px; border-right-width: 1px; }
 
-/* The bar in three parts: code, name, a true readout at the right. */
+/* The bar: its code and name, ending in a cross. */
 .screen__code {
   color: var(--amber-ink);
 }
@@ -582,137 +293,39 @@ a {
   margin-right: 14px;
 }
 
-.screen__read {
-  margin-left: auto;
-  color: rgba(42, 18, 0, 0.72);
-}
-
-/* Hatched amber block behind the hero's line, as on the reference. */
-.hero__line span {
-  display: inline-block;
-  padding: 0.55em 1.1em;
-  background:
-    repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.14) 0 1px, transparent 1px 3px),
-    rgba(250, 152, 1, 0.08);
-  outline: 1px solid rgba(250, 152, 1, 0.22);
-}
-
-/* A graduated ruler up the hero's right edge. */
-.hero__ruler {
-  position: absolute;
-  right: calc(var(--inset) + 22px);
-  top: 22%;
-  bottom: 22%;
-  width: 12px;
-  background:
-    repeating-linear-gradient(180deg, var(--amber) 0 1px, transparent 1px 48px) 0 0 / 12px 100% no-repeat,
-    repeating-linear-gradient(180deg, rgba(250, 152, 1, 0.55) 0 1px, transparent 1px 12px) 0 0 / 5px 100% no-repeat;
-  opacity: 0.7;
-}
-
-@media (max-width: 1099px) {
-  .hero__ruler { display: none; }
-}
-
-/* A rail of six squares at the hero's foot; the lit one is the screen in view. */
-.hero__rail {
-  position: absolute;
-  bottom: calc(var(--inset) + 14px);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.hero__rail i {
-  display: block;
-  width: 7px;
-  height: 7px;
-  border: 1px solid rgba(250, 152, 1, 0.55);
-}
-
-.hero__rail i.is-on {
-  background: var(--amber);
-  border-color: var(--amber);
-}
-
-/* Rows answer the pointer with an amber tick, nothing more. */
-.row {
-  position: relative;
-  transition: background 0.2s ease;
-}
-
-.row::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 1.35rem;
-  bottom: 1.35rem;
-  width: 2px;
-  background: var(--amber);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.row:hover {
-  background: rgba(250, 152, 1, 0.04);
-}
-
-.row:hover::before {
-  opacity: 1;
-}
-
 /* The bar's squares, the reference way: two, in the darker amber. */
 .bar__squares i {
+  display: block;
+  width: 12px;
+  height: 12px;
   background: var(--amber-dim);
 }
 
 /* Dim amber for secondary rules. */
-.screen__intro,
-.rows,
-.row,
 .form input,
 .form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.6rem 0 0.8rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  color: var(--ink);
+  font: inherit;
+  font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.2s ease;
   border-color: rgba(250, 152, 1, 0.24);
-}
-
-/* A compact index in the bar on narrow screens. */
-.bar__index {
-  display: flex;
-  gap: 10px;
-}
-
-@media (min-width: 1100px) {
-  .bar__index { display: none; }
-}
-
-.bar__index a {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  color: rgba(42, 18, 0, 0.6);
-}
-
-.bar__index a.is-on {
-  color: var(--amber-ink);
 }
 
 @media (max-width: 480px) {
   .bar > a { display: none; }
-  .hero__corner { font-size: 0.625rem; letter-spacing: 0.2em; }
-}
-
-@media (max-width: 640px) {
-  .hero__rail { display: none; }
 }
 
 /* --- the hero over the model ----------------------------------------------- */
-
-.hero {
-  overflow: hidden;
-  background-image: none;
-  padding-inline: var(--gutter);
-}
 
 .hero__photo,
 .hero__photo img {
@@ -733,123 +346,12 @@ a {
     radial-gradient(ellipse 70% 60% at 50% 48%, rgba(11, 7, 5, 0.1) 0%, rgba(11, 7, 5, 0.55) 70%, rgba(11, 7, 5, 0.85) 100%);
 }
 
-/* The drawing grid, over the photo, anchored to the frame. */
-.hero__grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
-  background-position: var(--inset) var(--inset);
-  --grid-major: rgba(250, 152, 1, 0.16);
-  --grid-minor: rgba(250, 152, 1, 0.04);
-}
-
-.hero__copy {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero .hero__name {
-  color: var(--amber);
-  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 0 1px rgba(11, 7, 5, 0.9), 0 2px 18px rgba(11, 7, 5, 0.55);
-}
-
-/* A short rule with a ring at its centre, then the line. */
-.hero__rule {
-  position: relative;
-  width: min(420px, 60vw);
-  height: 1px;
-  margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
-  background: var(--amber);
-  opacity: 0.7;
-}
-
-.hero__rule i {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 9px;
-  height: 9px;
-  transform: translate(-50%, -50%);
-  border: 1px solid var(--amber);
-  background: var(--ground);
-  border-radius: 50%;
-}
-
-.hero .hero__line {
-  margin-top: 1.4rem;
-  background: none;
-  outline: 0;
-  padding: 0;
-  text-shadow: 0 1px 6px rgba(11, 7, 5, 0.9);
-}
-
-.hero .hero__line span {
-  background: none;
-  outline: 0;
-  padding: 0;
-}
-
-.hero .hero__sub {
-  color: var(--ink);
-  text-shadow: 0 1px 8px rgba(11, 7, 5, 0.95), 0 0 2px rgba(11, 7, 5, 0.9);
-}
-
-.hero__corner {
-  z-index: 2;
-}
-
-.hero__corner--tl,
-.hero__corner--tr {
-  top: calc(var(--header-h) + 18px);
-  bottom: auto;
-  color: var(--amber);
-}
-
-.hero__corner--tl { left: calc(var(--inset) + 24px); }
-.hero__corner--tr { right: calc(var(--inset) + 24px); }
-
 /* --- figures set into the essay --------------------------------------------- */
 
 .fig {
   margin: clamp(2rem, 3.5vw, 3rem) 0;
   padding-top: 1rem;
   border-top: 1px solid var(--rule);
-}
-
-.fig__cap {
-  margin-bottom: 0.75rem;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-.fig .rows {
-  margin-top: 0;
-}
-
-.fig .row {
-  padding-block: 1.1rem;
-}
-
-.fig .row__head {
-  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
-}
-
-@media (min-width: 800px) {
-  .fig .row {
-    grid-template-columns: 3rem 11rem minmax(0, 1fr);
-  }
 }
 
 /* --- motion, as measured on Astromech: from opacity 0 / y 50, one ease ----- */
@@ -859,9 +361,7 @@ a {
 }
 
 .hero__photo,
-.hero__copy > *,
-.hero__corner,
-.hero__ruler {
+.hero__copy > * {
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1.1s var(--ease-astro), transform 1.1s var(--ease-astro);
@@ -872,12 +372,7 @@ a {
 }
 
 .is-loaded .hero__photo { opacity: 1; transform: none; transition-delay: 0s; }
-.is-loaded .hero__copy > :nth-child(1) { opacity: 1; transform: none; transition-delay: 0.18s; }
-.is-loaded .hero__copy > :nth-child(2) { opacity: 1; transform: none; transition-delay: 0.27s; }
-.is-loaded .hero__copy > :nth-child(3) { opacity: 1; transform: none; transition-delay: 0.36s; }
 .is-loaded .hero__copy > :nth-child(4) { opacity: 1; transform: none; transition-delay: 0.45s; }
-.is-loaded .hero__corner,
-.is-loaded .hero__ruler { opacity: 1; transform: none; transition-delay: 0.6s; }
 
 .will-enter {
   opacity: 0;
@@ -893,8 +388,6 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .hero__photo,
   .hero__copy > *,
-  .hero__corner,
-  .hero__ruler,
   .will-enter {
     opacity: 1;
     transform: none;
@@ -919,28 +412,15 @@ a {
 }
 
 .hero__copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   isolation: isolate;
 }
 
-
 /* --- the hero's instrument marks: alive, contextual, amber ------------------ */
-
-.hero__grid {
-  --grid-major: rgba(250, 152, 1, 0.2);
-  --grid-minor: rgba(250, 152, 1, 0.05);
-}
-
-/* A slow amber sweep across one grid line: the only thing that moves. */
-.hero__sweep {
-  position: absolute;
-  top: var(--inset);
-  bottom: var(--inset);
-  left: var(--inset);
-  width: 1px;
-  background: linear-gradient(180deg, rgba(250, 152, 1, 0) 0%, rgba(250, 152, 1, 0.55) 30%, rgba(250, 152, 1, 0.55) 70%, rgba(250, 152, 1, 0) 100%);
-  animation: hero-sweep 14s linear infinite;
-  pointer-events: none;
-}
 
 @keyframes hero-sweep {
   from { transform: translateX(0); }
@@ -960,11 +440,6 @@ a {
   text-transform: uppercase;
   color: var(--amber);
 }
-
-.hero__mark--tl { top: calc(var(--header-h) + 22px); left: calc(var(--inset) + 22px); }
-.hero__mark--tr { top: calc(var(--header-h) + 22px); right: calc(var(--inset) + 22px); }
-.hero__mark--bl { bottom: calc(var(--inset) + 22px); left: calc(var(--inset) + 22px); }
-.hero__mark--br { bottom: calc(var(--inset) + 22px); right: calc(var(--inset) + 22px); }
 
 .hero__cross {
   position: relative;
@@ -998,82 +473,19 @@ a {
   border: 1px solid var(--amber);
 }
 
-/* The right ruler, graduated and labelled with the horizons. */
-.hero__ruler {
-  position: absolute;
-  right: calc(var(--inset) + 24px);
-  top: 26%;
-  bottom: 26%;
-  width: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background:
-    repeating-linear-gradient(180deg, var(--amber) 0 1px, transparent 1px 12px) 0 0 / 6px 100% no-repeat;
-  border-right: 1px solid var(--amber);
-  opacity: 0.85;
-  z-index: 2;
-}
-
-.hero__ruler s {
-  position: relative;
-  display: block;
-  text-decoration: none;
-  transform: translateX(-32px);
-  font-family: var(--mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.1em;
-  color: var(--amber);
-}
-
-.hero__ruler s::after {
-  content: '';
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  width: 26px;
-  height: 1px;
-  background: var(--amber);
-}
-
-/* A horizontal ruler along the foot. */
-.hero__ruler-x {
-  position: absolute;
-  left: 22%;
-  right: 22%;
-  bottom: calc(var(--inset) + 28px);
-  height: 8px;
-  background:
-    repeating-linear-gradient(90deg, var(--amber) 0 1px, transparent 1px 24px) 0 0 / 100% 8px no-repeat,
-    repeating-linear-gradient(90deg, rgba(250, 152, 1, 0.6) 0 1px, transparent 1px 6px) 0 4px / 100% 4px no-repeat;
-  border-bottom: 1px solid var(--amber);
-  opacity: 0.8;
-  z-index: 2;
-}
-
 @media (max-width: 900px) {
-  .hero__ruler, .hero__ruler-x, .hero__mark--bl, .hero__mark--br { display: none; }
+  .hero__mark--bl, .hero__mark--br { display: none; }
 }
-
-/* The launch screen carries the drawing grid too, aligned to its own box,
-   with registration marks in the corners. */
 
 .essay__mark {
   font-weight: 600;
   color: var(--ink);
 }
 
-/* The index now lives in the bar at every width. */
-.bar__index { display: flex; }
-@media (min-width: 1100px) { .bar__index { display: flex; } }
-.index { display: none !important; }
-.main { padding-left: var(--gutter); }
-@media (min-width: 1100px) { .main { padding-left: var(--gutter); padding-right: var(--gutter); } }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__sweep { animation: none; opacity: 0; }
+.main {
+  padding-inline: var(--gutter);
+  padding-bottom: 6rem;
 }
-
 
 /* --- closures ------------------------------------------------------------------ */
 
@@ -1088,15 +500,11 @@ a {
   z-index: 59;
 }
 
-.hero__ruler, .hero__ruler-x, .hero__sweep, .bar__index { display: none !important; }
-
-/* Narrow: the bar keeps one line; the readout yields. */
+/* Narrow: the bar keeps one line; the name yields. */
 @media (max-width: 640px) {
   .screen__bar { white-space: nowrap; overflow: hidden; }
-  .screen__bar .screen__read { display: none; }
   .screen__bar .screen__name { overflow: hidden; text-overflow: ellipsis; }
 }
-
 
 /* --- the hero: a nameplate above one statement --------------------------
    The name in the display face as a marque, amber, with the two squares;
@@ -1131,6 +539,10 @@ a {
 }
 
 .hero .hero__line {
+  margin-top: 1.4rem;
+  background: none;
+  outline: 0;
+  padding: 0;
   order: 1;
   margin: 0;
   font-family: var(--serif);
@@ -1145,13 +557,6 @@ a {
   text-wrap: balance;
 }
 
-.hero .hero__line span {
-  display: inline;
-  padding: 0;
-  background: none;
-  outline: 0;
-}
-
 .hero .hero__sub {
   order: 2;
   margin-top: 1.5rem;
@@ -1164,16 +569,25 @@ a {
   text-shadow: 0 1px 8px rgba(11, 7, 5, 0.95);
 }
 
-.hero__rule { display: none; }
-
-.is-loaded .hero__copy > :nth-child(1) { transition-delay: 0.18s; }
-.is-loaded .hero__copy > :nth-child(2) { transition-delay: 0.27s; }
-.is-loaded .hero__copy > :nth-child(3) { transition-delay: 0.36s; }
+.is-loaded .hero__copy > :nth-child(1) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.18s;
+}
+.is-loaded .hero__copy > :nth-child(2) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.27s;
+}
+.is-loaded .hero__copy > :nth-child(3) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.36s;
+}
 
 @media (max-width: 480px) {
   .hero .hero__name { font-size: 1.25rem; letter-spacing: 0.1em; }
 }
-
 
 /* --- one module ------------------------------------------------------------
    The launch screen's grid is a 120px module anchored on the screen's centre.
@@ -1181,7 +595,21 @@ a {
    the essay's column — six modules — is framed by two of them. The column
    itself is clear paper: the grid shows in the margins and stops at a line. */
 
+/* Screens carry a second, inner edge. */
+
 .screen {
+  max-width: var(--screen-w);
+  margin: 0 auto clamp(4.5rem, 8vh, 6rem);
+  border: 1px solid var(--frame);
+  background-color: var(--clay);
+  /* A quiet grid inside the plate: majors only, faint, held inside the frame. */
+  background-image: linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-size: 144px 144px;
+  background-position: 0 var(--bar-h);
+  background-clip: padding-box;
+  scroll-margin-top: calc(var(--header-h) + 1.5rem);
+  position: relative;
   container-type: inline-size;
   --pad: clamp(1.25rem, 3vw, 2.75rem);
 }
@@ -1195,34 +623,25 @@ a {
 }
 
 .essay {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-block: clamp(1rem, 2vw, 2rem);
   background-color: var(--clay);
 }
 
 /* The movement codes sit in a clean notch of the margin; where the margin
    rule passes each one, a registration mark. */
-@media (min-width: 900px) {
-  .essay__code {
-    padding-left: 6px;
-    background-color: var(--clay);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .essay__code::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -5px;
-    width: 11px;
-    height: 11px;
-    margin-top: -6px;
-    background:
-      linear-gradient(var(--amber), var(--amber)) center / 11px 1px no-repeat,
-      linear-gradient(var(--amber), var(--amber)) center / 1px 11px no-repeat;
-  }
-}
 
 /* Between movements: a hairline across the column, a crosshair at its centre. */
 .essay h3 {
+  position: relative;
+  margin-bottom: 1rem;
+  font-family: var(--serif);
+  font-size: clamp(1.875rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--ink);
   --gap: clamp(4rem, 7vw, 5.5rem);
   margin-top: var(--gap);
 }
@@ -1276,8 +695,8 @@ a {
   border: 0;
 }
 
-/* A plate's heading: the figure's number and name at the left, a true count
-   at the right, both in the small mono, across the essay's column. */
+/* A plate's heading: the figure's number and name in the small mono,
+   across the essay's column. */
 .plate__head {
   display: flex;
   flex-wrap: wrap;
@@ -1380,8 +799,13 @@ a {
     inset -1px -1px 0 rgba(255, 196, 110, 0.16);
 }
 
-/* Grain: fine enough to disappear at a glance, there when you lean in. */
+/* Film grain, static, over everything: fine enough to disappear at a
+   glance, there when you lean in. */
 .grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
   opacity: 0.06;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' seed='1654' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.86 0 0 0 0 0.64 0 0 0 1.1 -0.05'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>");
   background-size: 220px 220px;
@@ -1393,7 +817,6 @@ a {
 .plate__head {
   font-variant-numeric: tabular-nums;
 }
-
 
 /* --- lamps --------------------------------------------------------------------
    Round lamps, as on a panel: open when ahead, lit when passed, and the one
@@ -1495,6 +918,11 @@ a {
 /* --- movement codes: boxed tags --------------------------------------------- */
 
 .essay__code {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--amber);
   display: block;
   width: fit-content;
   padding: 3px 6px 2px 7px;
@@ -1508,6 +936,12 @@ a {
   /* The tag stands in the margin, clear of the rule; the registration cross
      sits on the rule itself. */
   .essay__code {
+    position: absolute;
+    left: -2rem;
+    padding-right: 1rem;
+    padding-left: 6px;
+    background-color: var(--clay);
+    font-variant-numeric: tabular-nums;
     top: 0.62em;
     padding: 3px 6px 2px 7px;
     transform: translateX(calc(-100% - 14px));
@@ -1516,6 +950,9 @@ a {
 
   /* A short leader joins the tag to the margin rule. */
   .essay__code::after {
+    content: '';
+    position: absolute;
+    top: 50%;
     right: -15px;
     width: 14px;
     height: 1px;
@@ -1541,7 +978,7 @@ a {
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-/* The top row: the name and its tag, the present time, the address. */
+/* The top row: the name, the present time, the address. */
 .foot__top {
   display: grid;
   grid-template-columns: 1fr;
@@ -1624,7 +1061,7 @@ a {
     linear-gradient(var(--amber), var(--amber)) center / 1px 17px no-repeat;
 }
 
-/* Three columns: the mission and the address; the launch; the ways in. */
+/* Two columns: the mission and the address; the ways in. */
 .foot__cols {
   display: grid;
   grid-template-columns: 1fr;
@@ -1686,26 +1123,8 @@ a {
   letter-spacing: 0.16em;
 }
 
-.foot__list,
 .foot__links {
   list-style: none;
-}
-
-.foot__list a {
-  display: flex;
-  gap: 1.1rem;
-  padding: 0.6rem 0;
-  color: var(--ink-3);
-  letter-spacing: 0.12em;
-}
-
-.foot__list a:hover {
-  color: var(--ink);
-}
-
-.foot__list b {
-  font-weight: 500;
-  color: var(--amber);
 }
 
 .foot__links a {
@@ -1764,7 +1183,6 @@ a {
   clip-path: inset(-48px -48px -48px -48px);
 }
 
-
 /* --- the hero as a panel ---------------------------------------------------------
    The model, its grid and its corner marks sit in a framed panel held in from
    the edges, as on Astromech; the space outside the panel carries a strip of
@@ -1772,6 +1190,18 @@ a {
    anchored to the panel's corner. */
 
 .hero {
+  position: relative;
+  min-height: 100svh;
+  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
+  background-position: var(--inset) var(--inset);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: calc(var(--header-h) + 3rem) var(--gutter) 4rem;
+  overflow: hidden;
+  background-image: none;
   --hp: clamp(22px, 5vw, 84px);
   --ht: calc(var(--header-h) + clamp(14px, 2.6vh, 28px));
   --hb: clamp(66px, 9.2vh, 90px);
@@ -1789,9 +1219,19 @@ a {
   box-shadow: 0 0 0 1px rgba(11, 7, 5, 0.9), 0 0 28px rgba(250, 152, 1, 0.07);
 }
 
-/* Without script the grid is centred, so any part cells are equal on both
-   sides; with it, the grid is redrawn to divide the panel exactly. */
+/* The drawing grid over the photo. Script redraws it to divide the panel
+   exactly (heroGrid.ts); without script it is centred, so any part cells
+   are equal on both sides. */
 .hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
+  --grid-major: rgba(250, 152, 1, 0.2);
+  --grid-minor: rgba(250, 152, 1, 0.05);
   background-position: 50% 50%;
 }
 
@@ -1815,11 +1255,6 @@ a {
   stroke-width: 1;
 }
 
-.hero__mark--tl { top: 18px; left: 18px; }
-.hero__mark--tr { top: 18px; right: 18px; }
-.hero__mark--bl { bottom: 18px; left: 18px; }
-.hero__mark--br { bottom: 18px; right: 18px; }
-
 /* The corner marks sit on small plates of the ground, so the grid's lines
    stop at them instead of running through the words. */
 .hero__mark {
@@ -1827,11 +1262,22 @@ a {
   background-color: rgba(11, 7, 5, 0.9);
 }
 
-.hero__mark--tl { top: 12px; left: 12px; }
-.hero__mark--tr { top: 12px; right: 12px; }
-.hero__mark--bl { bottom: 12px; left: 12px; }
-.hero__mark--br { bottom: 12px; right: 12px; }
-
+.hero__mark--tl {
+  top: 12px;
+  left: 12px;
+}
+.hero__mark--tr {
+  top: 12px;
+  right: 12px;
+}
+.hero__mark--bl {
+  bottom: 12px;
+  left: 12px;
+}
+.hero__mark--br {
+  bottom: 12px;
+  right: 12px;
+}
 
 /* --- beneath the hero's panel: a console strip ---------------------------------
    Clusters of round lamps across the width, some in two rows, as on
@@ -2260,7 +1706,6 @@ a {
     margin-left: 0.6em;
   }
 }
-
 
 /* --- after the form is sent -------------------------------------------------------
    The page always says what happened. When the message goes by the visitor's

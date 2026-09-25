@@ -8,7 +8,7 @@ import { initHeroGrid } from './heroGrid';
 
 /** Astromech's scroll-in: opacity 0, y 24, once, as each enters. */
 function initEnter(): void {
-  const items = qsa<HTMLElement>('[data-screen], .row, .fig, .form > *');
+  const items = qsa<HTMLElement>('[data-screen], .fig, .form > *');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   for (const el of items) el.classList.add('will-enter');
   const io = new IntersectionObserver(

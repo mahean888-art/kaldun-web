@@ -1444,10 +1444,6 @@ a {
   color: var(--amber);
 }
 
-.plate__count {
-  color: var(--ink-4);
-}
-
 /* The loop's plate spans the screen's interior, edge to edge, and holds its
    own paper; its heading still sits over the essay's column. */
 .plate {

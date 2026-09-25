@@ -45,22 +45,28 @@
 
 
     <section class="hero" id="top">
-      <picture class="hero__photo" aria-hidden="true">
-        <source media="(max-width: 900px)" srcset="/hero-1200.webp" />
-        <img src="/hero.webp" alt="" width="1792" height="1008" decoding="async" fetchpriority="high" />
-      </picture>
-      <div class="hero__shade" aria-hidden="true"></div>
-      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__panel" aria-hidden="true">
+        <picture class="hero__photo">
+          <source media="(max-width: 900px)" srcset="/hero-1200.webp" />
+          <img src="/hero.webp" alt="" width="1792" height="1008" decoding="async" fetchpriority="high" />
+        </picture>
+        <div class="hero__shade"></div>
+        <div class="hero__grid"></div>
+        <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b>FM · 01</span>
+        <span class="hero__mark hero__mark--tr">T₀<b><u></u><u></u></b><i class="hero__cross"></i></span>
+        <span class="hero__mark hero__mark--bl"><i class="hero__cross"></i><b><u></u><u></u></b>State</span>
+        <span class="hero__mark hero__mark--br">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
+      </div>
       <div class="hero__copy">
         <p class="hero__name"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p>
         <h1 class="hero__line">Run the world forward before you&nbsp;decide.</h1>
         <p class="hero__sub">A self-correcting foresight engine for markets, infrastructure, and institutions.</p>
       </div>
-      <span class="hero__mark hero__mark--tl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>FM · 01</span>
-      <span class="hero__mark hero__mark--tr" aria-hidden="true">T₀<b><u></u><u></u></b><i class="hero__cross"></i></span>
-      <span class="hero__mark hero__mark--bl" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>State</span>
-      <span class="hero__mark hero__mark--br" aria-hidden="true">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
-      <span class="hero__lamps" aria-hidden="true" data-hero-lamps><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <div class="hero__strip" aria-hidden="true">
+        <span class="hero__tag"><b><i class="is-lit"></i><i></i></b>Foresight Machines</span>
+        <span class="hero__lamps" data-hero-lamps><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="hero__tag">September 2026<b><i></i><i class="is-lit"></i></b></span>
+      </div>
 
     </section>
 
@@ -135,7 +141,7 @@
 
       <footer class="foot">
         <div class="foot__top">
-          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="foot__name">Foresight Machines</span><span class="foot__tag">Foresight engine</span></p>
+          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="foot__name">Foresight Machines</span></p>
           <p class="foot__clock" aria-live="off"><span>T₀</span><b data-clock>--:--:--</b><span>PST</span></p>
           <p class="foot__end"><a href="#top">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
         </div>
@@ -144,16 +150,6 @@
             <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
             <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
           </div>
-          <nav class="foot__col" aria-label="The launch">
-            <p class="foot__head">The launch · September 2026</p>
-            <ul class="foot__list">
-              <li><a href="#launch"><b>01</b>Foresight, made a machine</a></li>
-              <li><a href="#challenge"><b>02</b>The challenge</a></li>
-              <li><a href="#unlock-1"><b>03</b>Faster feedback</a></li>
-              <li><a href="#unlock-2"><b>04</b>World models, cheap and current</a></li>
-              <li><a href="#machine-foresight"><b>05</b>Machine foresight</a></li>
-            </ul>
-          </nav>
           <nav class="foot__col" aria-label="Contact">
             <p class="foot__head">Contact</p>
             <ul class="foot__links">

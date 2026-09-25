@@ -1599,19 +1599,6 @@ a {
   }
 }
 
-/* In the hero: a row between the State and Futures marks. */
-.hero__lamps {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  bottom: calc(var(--inset) + 22px);
-  height: 16px;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .hero__lamps i {
   display: block;
   width: 8px;
@@ -1629,38 +1616,12 @@ a {
   animation: lamp-beep 0.84s steps(1, end) infinite;
 }
 
-@media (max-width: 900px) {
-  .hero__lamps {
-    display: none;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .lamps a.is-on,
   .hero__lamps i.is-beep {
     animation: none;
   }
-}
-
-/* --- the hero grid: one module, registered ------------------------------------
-   The same 120px module as the launch screen, centred, so the statement sits
-   on a crossing; a fine 24px field inside it; a registration cross at every
-   major crossing. */
-
-.hero__grid {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M54 60.5h13M60.5 54v13' fill='none' stroke='%23fa9801' stroke-opacity='.62'/%3E%3C/svg%3E"),
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
-  background-position:
-    50% 50%,
-    calc(50% - 60px) calc(50% - 60px),
-    calc(50% - 60px) calc(50% - 60px),
-    calc(50% - 12px) calc(50% - 12px),
-    calc(50% - 12px) calc(50% - 12px);
 }
 
 /* The model, as on a monitor: a fine scanline over the photograph only. */
@@ -1670,16 +1631,6 @@ a {
   inset: 0;
   pointer-events: none;
   background: repeating-linear-gradient(180deg, rgba(11, 7, 5, 0.34) 0 1px, transparent 1px 3px);
-}
-
-/* The launch screen's margins carry the same registration crosses. */
-#essay-screen {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M55 60.5h11M60.5 55v11' fill='none' stroke='%23fa9801' stroke-opacity='.4'/%3E%3C/svg%3E"),
-    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
-  background-size: 120px 120px;
-  background-position: 50% calc(var(--bar-h) - 60px), calc(50% - 60px) var(--bar-h), calc(50% - 60px) var(--bar-h);
 }
 
 /* The screen bar ends in a registration cross. */
@@ -1709,14 +1660,19 @@ a {
   /* The tag stands in the margin, clear of the rule; the registration cross
      sits on the rule itself. */
   .essay__code {
-    top: 0.5em;
+    top: 0.62em;
     padding: 3px 6px 2px 7px;
     transform: translateX(calc(-100% - 14px));
     margin: 0;
   }
 
+  /* A short leader joins the tag to the margin rule. */
   .essay__code::after {
-    right: -20px;
+    right: -15px;
+    width: 14px;
+    height: 1px;
+    margin-top: 0;
+    background: rgba(250, 152, 1, 0.55);
   }
 }
 
@@ -1771,13 +1727,6 @@ a {
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-}
-
-.foot__tag {
-  padding: 4px 8px 3px;
-  border: 1px solid rgba(250, 152, 1, 0.6);
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
 }
 
 .foot__clock {
@@ -1837,7 +1786,8 @@ a {
 
 @media (min-width: 900px) {
   .foot__cols {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+    grid-template-columns: minmax(0, 30rem) minmax(0, 24rem);
+    justify-content: space-between;
     gap: clamp(2rem, 4vw, 4rem);
   }
 }
@@ -1965,3 +1915,109 @@ a {
 .foot__mark.will-scan.is-scanned svg {
   clip-path: inset(-48px -48px -48px -48px);
 }
+
+
+/* --- the hero as a panel ---------------------------------------------------------
+   The model, its grid and its corner marks sit in a framed panel held in from
+   the edges, as on Astromech; the space outside the panel carries a strip of
+   lamps. The grid is the drawing grid it was: 144px majors, 24px minors,
+   anchored to the panel's corner. */
+
+.hero {
+  --hp: clamp(22px, 5vw, 84px);
+  --ht: calc(var(--header-h) + clamp(14px, 2.6vh, 28px));
+  --hb: clamp(56px, 8vh, 80px);
+  padding-inline: calc(var(--hp) + clamp(14px, 3vw, 44px));
+}
+
+.hero__panel {
+  position: absolute;
+  top: var(--ht);
+  left: var(--hp);
+  right: var(--hp);
+  bottom: var(--hb);
+  overflow: hidden;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+  box-shadow: 0 0 0 1px rgba(11, 7, 5, 0.9), 0 0 28px rgba(250, 152, 1, 0.07);
+}
+
+.hero__grid {
+  background-position: 0 0;
+}
+
+.hero__mark--tl { top: 18px; left: 18px; }
+.hero__mark--tr { top: 18px; right: 18px; }
+.hero__mark--bl { bottom: 18px; left: 18px; }
+.hero__mark--br { bottom: 18px; right: 18px; }
+
+/* Outside the panel: the strip. */
+.hero__strip {
+  position: absolute;
+  z-index: 2;
+  left: var(--hp);
+  right: var(--hp);
+  bottom: calc((var(--inset) + var(--hb)) / 2 - 8px);
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250, 152, 1, 0.8);
+}
+
+.hero__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__tag b {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.hero__tag i,
+.hero__lamps i {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(250, 152, 1, 0.6);
+}
+
+.hero__tag i.is-lit {
+  background-color: var(--amber);
+  box-shadow: none;
+}
+
+.hero__lamps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 699px) {
+  .hero__strip {
+    justify-content: center;
+  }
+
+  .hero__tag {
+    display: none;
+  }
+}
+
+/* The corner marks sit on small plates of the ground, so the grid's lines
+   stop at them instead of running through the words. */
+.hero__mark {
+  padding: 5px 8px;
+  background-color: rgba(11, 7, 5, 0.9);
+}
+
+.hero__mark--tl { top: 12px; left: 12px; }
+.hero__mark--tr { top: 12px; right: 12px; }
+.hero__mark--bl { bottom: 12px; left: 12px; }
+.hero__mark--br { bottom: 12px; right: 12px; }

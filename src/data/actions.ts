@@ -15,7 +15,7 @@ export const ACTIONS: Action[] = [
     ordinal: '01',
     verb: 'Allocate',
     object: 'capital',
-    line: 'A loan, a position, a fund, sized against the whole balance sheet and the futures it has to survive.',
+    line: 'The trillions in sovereign wealth, private credit, and infrastructure, and the new banks and primitives being built beside them: each allocation run before it is made.',
   },
   {
     ordinal: '02',

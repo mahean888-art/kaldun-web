@@ -21,7 +21,7 @@ export const ACTIONS: Action[] = [
     ordinal: '02',
     verb: 'Underwrite',
     object: 'risk',
-    line: 'A policy priced against everything already insured and the losses that arrive together.',
+    line: 'A risk with no loss history yet, priced from the futures it could set in motion.',
   },
   {
     ordinal: '03',

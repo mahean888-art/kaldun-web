@@ -746,31 +746,36 @@ a {
   }
 }
 
+/* The drawing fills the plate, so its grid meets both edges; the heading
+   sits in the drawing's first row, on a small plate of the ground so the
+   grid's lines stop at the words. */
 .plate .instrument__figure {
-  padding-block: clamp(0.5rem, 1.5vw, 1rem) clamp(1rem, 2.5vw, 1.75rem);
+  padding-block: 0;
 }
 
-/* Crop marks at the plate's corners, as on a printed figure. */
-.plate__crop {
-  display: none;
+.plate .plate__head {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  border-bottom: 0;
+  pointer-events: none;
 }
 
-@media (min-width: 900px) {
-  .plate__crop {
-    display: block;
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    pointer-events: none;
-    background:
-      linear-gradient(rgba(250, 152, 1, 0.6), rgba(250, 152, 1, 0.6)) 0 17px / 12px 1px no-repeat,
-      linear-gradient(rgba(250, 152, 1, 0.6), rgba(250, 152, 1, 0.6)) 17px 0 / 1px 12px no-repeat;
+.plate .plate__head > span {
+  padding: 3px 8px;
+  margin-left: -8px;
+  background-color: var(--clay);
+}
+
+/* Wide: the heading sits centred in the first row of the grid (the drawing
+   is ten cells across, so a row is 10cqw tall). */
+@media (min-width: 760px) {
+  .plate .plate__head {
+    top: 5cqw;
+    padding: 0;
+    line-height: 1.4;
+    transform: translateY(-50%);
   }
-
-  .plate__crop--tl { top: 10px; left: 10px; }
-  .plate__crop--tr { top: 10px; right: 10px; transform: scaleX(-1); }
-  .plate__crop--bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
-  .plate__crop--br { bottom: 10px; right: 10px; transform: scale(-1, -1); }
 }
 
 /* Between the phone and the full plate the drawing is shown smaller than one

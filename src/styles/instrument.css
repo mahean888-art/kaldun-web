@@ -24,16 +24,23 @@
   overflow: visible;
 }
 
-/* Chart paper: a small cross every 40 units, barely there. */
-.instrument__figure .ins__lattice {
+/* The drawing grid: the launch screen's lines, with a finer field between. */
+.instrument__figure .ins__grid {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.13);
   stroke-width: 1;
 }
 
+.instrument__figure .ins__grid--major {
+  stroke: rgba(250, 152, 1, 0.055);
+}
+
+.instrument__figure .ins__grid--minor {
+  stroke: rgba(250, 152, 1, 0.022);
+}
+
 /* Every word on the plate carries a halo of the plate's own tone, so the
-   lattice and the conduits stop short of the type instead of running
-   through it. */
+   grid and the conduits stop short of the type instead of running through
+   it. */
 .instrument__figure text {
   paint-order: stroke fill;
   stroke: var(--clay);
@@ -186,5 +193,5 @@
 .instrument__figure.is-portrait .ins__wire { stroke-width: 2.5; }
 .instrument__figure.is-portrait .ins__head { stroke-width: 2.5; }
 .instrument__figure.is-portrait .ins__fan path { stroke-width: 1.75; }
-.instrument__figure.is-portrait .ins__lattice { stroke-width: 1.5; }
+.instrument__figure.is-portrait .ins__grid { stroke-width: 1.6; }
 .instrument__figure.is-portrait text { stroke-width: 14px; }

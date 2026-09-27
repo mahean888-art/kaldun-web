@@ -36,12 +36,8 @@ const COMMIT_LABEL = 'COMMITMENT';
 const DRAW_MS = 900;
 const HOLD_MS = 1100;
 
-/** The chart paper inside the plate: a faint 40-unit lattice. */
 const DEFS = `
   <defs>
-    <pattern id="ins-lattice" x="-20" y="-20" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path class="ins__lattice" d="M 17 20 H 23 M 20 17 V 23" />
-    </pattern>
     <linearGradient id="ins-fade-x" x1="1" y1="0" x2="0" y2="0">
       <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
       <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
@@ -53,6 +49,28 @@ const DEFS = `
   </defs>`;
 
 const pad = (n: number): string => String(n).padStart(2, '0');
+
+/**
+ * The drawing grid under the loop: fine lines on a module, as elsewhere on the
+ * site, with none on the plate's own edges. Lines sit on half units so they
+ * draw one crisp pixel wide at one to one, exactly where the launch screen's
+ * grid lines fall.
+ */
+function grid(w: number, h: number, major: number, minor = 0): string {
+  const steps = (length: number, step: number): number[] => {
+    const out: number[] = [];
+    for (let v = step; v < length; v += step) out.push(v);
+    return out;
+  };
+  const lines = (xs: number[], ys: number[]): string =>
+    xs.map((x) => `M${x + 0.5} 0V${h}`).join('') + ys.map((y) => `M0 ${y + 0.5}H${w}`).join('');
+  const off = (v: number): boolean => v % major !== 0;
+  const minors = minor ? lines(steps(w, minor).filter(off), steps(h, minor).filter(off)) : '';
+  return (
+    (minors ? `<path class="ins__grid ins__grid--minor" d="${minors}" />` : '') +
+    `<path class="ins__grid ins__grid--major" d="${lines(steps(w, major), steps(h, major))}" />`
+  );
+}
 
 /** A station: index, name, node, caption. Labels centred over the node. */
 function stationAcross(s: Station, i: number, x: number, y: number): string {
@@ -104,20 +122,22 @@ type Layout = { svg: string; stops: Stop[] };
 /**
  * Wide screens: a 3 × 2 grid. Columns at 240, 600, 960 — at full width,
  * one to one with the page, so the outer two stand on the essay's edges and
- * the middle one on its centre. Conduits at 120 and 360, on the plate's own
- * 40-unit lattice; the bend down the right at 1100, the return up the left
- * at 100.
+ * the middle one on its centre. Conduits at 240 and 480, with the first row
+ * of the plate left for the figure's heading. Under it all, the
+ * site's drawing grid: majors every 120 (the launch screen's own lines, so
+ * each station and both conduits sit on one), minors every 24. The bend
+ * down the right at 1100, the return up the left at 100.
  */
 function landscape(): Layout {
   const C = [240, 600, 960];
-  const T = 120;
-  const B = 360;
+  const T = 240;
+  const B = 480;
   const R = 1100;
   const L = 100;
   const K = 22; // corner radius
   const G = 20; // where a conduit stops short of a node
   const W = 1200;
-  const H = 460;
+  const H = 600;
 
   const stops: Stop[] = [
     { key: 'state', p: { x: C[0]!, y: T } },
@@ -166,7 +186,7 @@ function landscape(): Layout {
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${DEFS}
-    <rect class="ins__paper" x="0" y="0" width="${W}" height="${H}" fill="url(#ins-lattice)" />
+    ${grid(W, H, 120, 24)}
     ${fan}
     ${wires}
     ${stations}
@@ -185,9 +205,10 @@ function portrait(): Layout {
   const RET = 48;
   const K = 22;
   const G = 22;
-  const Y = { state: 100, evidence: 280, decision: 460, futures: 640, commitment: 840, outcomes: 980 };
+  // The first row is left for the figure's heading.
+  const Y = { state: 220, evidence: 400, decision: 580, futures: 760, commitment: 960, outcomes: 1100 };
   const W = 640;
-  const H = 1120;
+  const H = 1280;
 
   const stops: Stop[] = (['state', 'evidence', 'decision', 'futures', 'commitment', 'outcomes'] as const).map(
     (key) => ({ key, p: { x: X, y: Y[key] } }),
@@ -229,7 +250,7 @@ function portrait(): Layout {
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${DEFS}
-    <rect class="ins__paper" x="0" y="0" width="${W}" height="${H}" fill="url(#ins-lattice)" />
+    ${grid(W, H, 80)}
     ${fan}
     ${wires}
     ${stations}

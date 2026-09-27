@@ -28,12 +28,23 @@ function initEnter(): void {
   }
 }
 
-/** The present, kept: the time in San Francisco, to the second. */
+/**
+ * The present, kept: the time in San Francisco, to the second, with the zone
+ * as it stands that day (PDT in summer, PST in winter).
+ */
 function initClock(): void {
   const out = document.querySelector<HTMLElement>('[data-clock]');
   if (!out) return;
-  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  const tick = (): void => { out.textContent = fmt.format(new Date()); };
+  const zoneOut = document.querySelector<HTMLElement>('[data-clock-zone]');
+  const tz = 'America/Los_Angeles';
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const zone = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'short' });
+  const tick = (): void => {
+    const now = new Date();
+    out.textContent = fmt.format(now);
+    const name = zone.formatToParts(now).find((p) => p.type === 'timeZoneName')?.value;
+    if (zoneOut && name && /^P[SD]T$/.test(name)) zoneOut.textContent = name;
+  };
   tick();
   window.setInterval(tick, 1000);
 }

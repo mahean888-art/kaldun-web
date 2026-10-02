@@ -1,12 +1,12 @@
 /**
- * The loop, as one instrument.
+ * The learning loop, as one instrument.
  *
- * Five stations on a strict grid: State, Evidence and Decision across the
- * top; Futures under Decision and Outcomes under State. The commitment is
- * sealed on the conduit under Evidence, and the return arm closes the loop
- * up the left: update the model. Between Futures and the commitment the
- * conduit opens into three paths and closes again: the futures that could
- * unfold, and the claim that is fixed before one of them does.
+ * Six stations on a strict grid, read clockwise: Observe, Model and Compare
+ * actions across the top; Record expectations, Evaluate outcomes and Test
+ * corrections back along the bottom. Past Compare actions the conduit opens
+ * into three paths: the options, each run forward. Record expectations is
+ * the sealed diamond, the point past which the claim cannot change. The
+ * return arm closes the loop up the left: keep the original forecast.
  *
  * On entering, the conduits draw in. Then one amber mark travels the loop,
  * pausing at each station and lighting it, and goes round again. It runs
@@ -23,15 +23,15 @@ type Point = { x: number; y: number };
 type Stop = { key: string; p: Point };
 
 const STATIONS: Station[] = [
-  { key: 'state', name: 'State', sub: 'What is known now' },
-  { key: 'evidence', name: 'Evidence', sub: 'What changes the model' },
-  { key: 'decision', name: 'Decision', sub: 'The action being tested' },
-  { key: 'futures', name: 'Futures', sub: 'How consequences could unfold' },
-  { key: 'outcomes', name: 'Outcomes', sub: 'What happened, and how it compared' },
+  { key: 'observe', name: 'Observe', sub: 'Evidence as it arrives' },
+  { key: 'model', name: 'Model', sub: 'The institution and its world' },
+  { key: 'compare', name: 'Compare actions', sub: 'Each option run forward' },
+  { key: 'record', name: 'Record expectations', sub: 'Committed before the outcome' },
+  { key: 'evaluate', name: 'Evaluate outcomes', sub: 'Scored against what happened' },
+  { key: 'test', name: 'Test corrections', sub: 'On cases held out' },
 ];
 
-const RETURN_LABEL = 'UPDATE THE MODEL';
-const COMMIT_LABEL = 'COMMITMENT';
+const RETURN_LABEL = 'KEEP THE ORIGINAL FORECAST';
 
 const DRAW_MS = 900;
 const HOLD_MS = 1100;
@@ -39,6 +39,10 @@ const HOLD_MS = 1100;
 const DEFS = `
   <defs>
     <linearGradient id="ins-fade-x" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
+      <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="ins-fade-xr" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
       <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
     </linearGradient>
@@ -72,14 +76,27 @@ function grid(w: number, h: number, major: number, minor = 0): string {
   );
 }
 
+/** A station's node: an open square with a core, or, where expectations are
+    recorded, the sealed diamond across the conduit. */
+function node(key: string, x: number, y: number, r: number, vertical: boolean): string {
+  if (key === 'record') {
+    const tick = vertical
+      ? `<path class="ins__tick" d="M ${x - 3 * r} ${y} H ${x + 3 * r}" />`
+      : `<path class="ins__tick" d="M ${x} ${y - 3 * r} V ${y + 3 * r}" />`;
+    return `${tick}<rect class="ins__seal" x="${x - r}" y="${y - r}" width="${2 * r}" height="${2 * r}" transform="rotate(45 ${x} ${y})" />`;
+  }
+  const c = Math.round(r * 0.45);
+  return `<rect class="ins__node" x="${x - r}" y="${y - r}" width="${2 * r}" height="${2 * r}" />
+      <rect class="ins__core" x="${x - c}" y="${y - c}" width="${2 * c}" height="${2 * c}" />`;
+}
+
 /** A station: index, name, node, caption. Labels centred over the node. */
 function stationAcross(s: Station, i: number, x: number, y: number): string {
   return `
     <g class="ins__station" data-station="${s.key}" data-x="${x}" data-y="${y}">
       <text class="ins__idx" x="${x}" y="${y - 74}" text-anchor="middle">${pad(i + 1)}</text>
       <text class="ins__name" x="${x}" y="${y - 28}" text-anchor="middle">${s.name}</text>
-      <rect class="ins__node" x="${x - 7}" y="${y - 7}" width="14" height="14" />
-      <rect class="ins__core" x="${x - 3}" y="${y - 3}" width="6" height="6" />
+      ${node(s.key, x, y, 7, false)}
       <text class="ins__sub" x="${x}" y="${y + 46}" text-anchor="middle">${s.sub}</text>
     </g>`;
 }
@@ -90,8 +107,7 @@ function stationBeside(s: Station, i: number, x: number, y: number, lx: number):
     <g class="ins__station" data-station="${s.key}" data-x="${x}" data-y="${y}">
       <text class="ins__idx" x="${lx}" y="${y - 30}">${pad(i + 1)}</text>
       <text class="ins__name" x="${lx}" y="${y + 14}">${s.name}</text>
-      <rect class="ins__node" x="${x - 9}" y="${y - 9}" width="18" height="18" />
-      <rect class="ins__core" x="${x - 4}" y="${y - 4}" width="8" height="8" />
+      ${node(s.key, x, y, 9, true)}
       <text class="ins__sub" x="${lx}" y="${y + 52}">${lines(s.sub)
         .map((t, n) => `<tspan x="${lx}" dy="${n === 0 ? 0 : 34}">${t}</tspan>`)
         .join('')}</text>
@@ -104,29 +120,16 @@ function lines(text: string): string[] {
   return text.length > 26 && at > 0 ? [text.slice(0, at + 1), text.slice(at + 2)] : [text];
 }
 
-/** The commitment: a sealed diamond across the conduit, labelled. */
-function commitment(x: number, y: number, label: string, vertical: boolean): string {
-  const tick = vertical
-    ? `<path class="ins__tick" d="M ${x - 22} ${y} H ${x + 22}" />`
-    : `<path class="ins__tick" d="M ${x} ${y - 20} V ${y + 20}" />`;
-  return `
-    <g class="ins__commit" data-station="commitment" data-marker data-x="${x}" data-y="${y}">
-      ${tick}
-      <rect class="ins__seal" x="${x - 7}" y="${y - 7}" width="14" height="14" transform="rotate(45 ${x} ${y})" />
-      ${label}
-    </g>`;
-}
-
 type Layout = { svg: string; stops: Stop[] };
 
 /**
  * Wide screens: a 3 × 2 grid. Columns at 240, 600, 960 — at full width,
  * one to one with the page, so the outer two stand on the essay's edges and
  * the middle one on its centre. Conduits at 240 and 480, with the first row
- * of the plate left for the figure's heading. Under it all, the
- * site's drawing grid: majors every 120 (the launch screen's own lines, so
- * each station and both conduits sit on one), minors every 24. The bend
- * down the right at 1100, the return up the left at 100.
+ * of the plate left for the figure's heading. Under it all, the site's
+ * drawing grid: majors every 120 (the launch screen's own lines, so each
+ * station and both conduits sit on one), minors every 24. The bend down the
+ * right at 1100, the return up the left at 100.
  */
 function landscape(): Layout {
   const C = [240, 600, 960];
@@ -139,14 +142,15 @@ function landscape(): Layout {
   const W = 1200;
   const H = 600;
 
-  const stops: Stop[] = [
-    { key: 'state', p: { x: C[0]!, y: T } },
-    { key: 'evidence', p: { x: C[1]!, y: T } },
-    { key: 'decision', p: { x: C[2]!, y: T } },
-    { key: 'futures', p: { x: C[2]!, y: B } },
-    { key: 'commitment', p: { x: C[1]!, y: B } },
-    { key: 'outcomes', p: { x: C[0]!, y: B } },
-  ];
+  const at: Record<string, Point> = {
+    observe: { x: C[0]!, y: T },
+    model: { x: C[1]!, y: T },
+    compare: { x: C[2]!, y: T },
+    record: { x: C[2]!, y: B },
+    evaluate: { x: C[1]!, y: B },
+    test: { x: C[0]!, y: B },
+  };
+  const stops: Stop[] = STATIONS.map((s) => ({ key: s.key, p: at[s.key]! }));
 
   const wires = [
     `<path class="ins__wire" data-arrow d="M ${C[0]! + G} ${T} H ${C[1]! - G}" />`,
@@ -157,30 +161,17 @@ function landscape(): Layout {
     `<path class="ins__wire ins__wire--return" data-arrow d="M ${C[0]! - G} ${B} H ${L + K} Q ${L} ${B} ${L} ${B - K} V ${T + K} Q ${L} ${T} ${L + K} ${T} H ${C[0]! - G}" />`,
   ].join('');
 
-  // The futures: past the station the conduit opens into three thin paths.
-  // The middle one is the conduit itself; the outer two part and fade.
-  const s = 14;
-  const a = C[2]! - G;
+  // Past Compare actions the conduit opens into three thin paths: the
+  // options, each run forward. The middle one is the conduit itself.
+  const s = 12;
+  const a = C[2]! + G;
   const fan = `
-    <g class="ins__fan" data-fan>
-      <path d="M ${a} ${B} C ${a - 36} ${B}, ${a - 44} ${B - s}, ${a - 80} ${B - s} H ${a - 190}" />
-      <path d="M ${a} ${B} C ${a - 36} ${B}, ${a - 44} ${B + s}, ${a - 80} ${B + s} H ${a - 190}" />
+    <g class="ins__fan ins__fan--right" data-fan>
+      <path d="M ${a} ${T} C ${a + 26} ${T}, ${a + 32} ${T - s}, ${a + 58} ${T - s} H ${R - 14}" />
+      <path d="M ${a} ${T} C ${a + 26} ${T}, ${a + 32} ${T + s}, ${a + 58} ${T + s} H ${R - 14}" />
     </g>`;
 
-  const stations = [
-    stationAcross(STATIONS[0]!, 0, C[0]!, T),
-    stationAcross(STATIONS[1]!, 1, C[1]!, T),
-    stationAcross(STATIONS[2]!, 2, C[2]!, T),
-    stationAcross(STATIONS[3]!, 3, C[2]!, B),
-    stationAcross(STATIONS[4]!, 4, C[0]!, B),
-  ].join('');
-
-  const commit = commitment(
-    C[1]!,
-    B,
-    `<text class="ins__label" x="${C[1]}" y="${B + 46}" text-anchor="middle">${COMMIT_LABEL}</text>`,
-    false,
-  );
+  const stations = STATIONS.map((st, i) => stationAcross(st, i, at[st.key]!.x, at[st.key]!.y)).join('');
 
   const mid = (T + B) / 2;
   const svg = `
@@ -190,7 +181,6 @@ function landscape(): Layout {
     ${fan}
     ${wires}
     ${stations}
-    ${commit}
     <text class="ins__label ins__label--return" x="${L - 16}" y="${mid}" transform="rotate(-90 ${L - 16} ${mid})" text-anchor="middle">${RETURN_LABEL}</text>
     <rect class="ins__token" x="-6" y="-6" width="12" height="12" data-token />
     <path class="ins__route" data-loop d="M ${C[0]} ${T} H ${R - K} Q ${R} ${T} ${R} ${T + K} V ${B - K} Q ${R} ${B} ${R - K} ${B} H ${L + K} Q ${L} ${B} ${L} ${B - K} V ${T + K} Q ${L} ${T} ${L + K} ${T} H ${C[0]}" />
@@ -206,47 +196,32 @@ function portrait(): Layout {
   const K = 22;
   const G = 22;
   // The first row is left for the figure's heading.
-  const Y = { state: 220, evidence: 400, decision: 580, futures: 760, commitment: 960, outcomes: 1100 };
+  const Y: Record<string, number> = { observe: 220, model: 400, compare: 580, record: 760, evaluate: 940, test: 1120 };
   const W = 640;
   const H = 1280;
 
-  const stops: Stop[] = (['state', 'evidence', 'decision', 'futures', 'commitment', 'outcomes'] as const).map(
-    (key) => ({ key, p: { x: X, y: Y[key] } }),
-  );
+  const keys = STATIONS.map((st) => st.key);
+  const y = (k: string): number => Y[k]!;
+  const stops: Stop[] = keys.map((key) => ({ key, p: { x: X, y: y(key) } }));
 
+  const first = y(keys[0]!);
+  const last = y(keys[keys.length - 1]!);
   const wires = [
-    `<path class="ins__wire" data-arrow d="M ${X} ${Y.state + G} V ${Y.evidence - G}" />`,
-    `<path class="ins__wire" data-arrow d="M ${X} ${Y.evidence + G} V ${Y.decision - G}" />`,
-    `<path class="ins__wire" data-arrow d="M ${X} ${Y.decision + G} V ${Y.futures - G}" />`,
-    `<path class="ins__wire" data-arrow d="M ${X} ${Y.futures + G} V ${Y.commitment - G}" />`,
-    `<path class="ins__wire" data-arrow d="M ${X} ${Y.commitment + G} V ${Y.outcomes - G}" />`,
-    `<path class="ins__wire ins__wire--return" data-arrow d="M ${X - G} ${Y.outcomes} H ${RET + K} Q ${RET} ${Y.outcomes} ${RET} ${Y.outcomes - K} V ${Y.state + K} Q ${RET} ${Y.state} ${RET + K} ${Y.state} H ${X - G}" />`,
+    ...keys.slice(0, -1).map((k, i) => `<path class="ins__wire" data-arrow d="M ${X} ${y(k) + G} V ${y(keys[i + 1]!) - G}" />`),
+    `<path class="ins__wire ins__wire--return" data-arrow d="M ${X - G} ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${first + K} Q ${RET} ${first} ${RET + K} ${first} H ${X - G}" />`,
   ].join('');
 
   const s = 16;
-  const a = Y.futures + G;
+  const a = y('compare') + G;
   const fan = `
     <g class="ins__fan ins__fan--down" data-fan>
-      <path d="M ${X} ${a} C ${X} ${a + 30}, ${X - s} ${a + 38}, ${X - s} ${a + 70} V ${a + 150}" />
-      <path d="M ${X} ${a} C ${X} ${a + 30}, ${X + s} ${a + 38}, ${X + s} ${a + 70} V ${a + 150}" />
+      <path d="M ${X} ${a} C ${X} ${a + 26}, ${X - s} ${a + 34}, ${X - s} ${a + 62} V ${a + 136}" />
+      <path d="M ${X} ${a} C ${X} ${a + 26}, ${X + s} ${a + 34}, ${X + s} ${a + 62} V ${a + 136}" />
     </g>`;
 
-  const stations = [
-    stationBeside(STATIONS[0]!, 0, X, Y.state, LX),
-    stationBeside(STATIONS[1]!, 1, X, Y.evidence, LX),
-    stationBeside(STATIONS[2]!, 2, X, Y.decision, LX),
-    stationBeside(STATIONS[3]!, 3, X, Y.futures, LX),
-    stationBeside(STATIONS[4]!, 4, X, Y.outcomes, LX),
-  ].join('');
+  const stations = STATIONS.map((st, i) => stationBeside(st, i, X, y(st.key), LX)).join('');
 
-  const commit = commitment(
-    X,
-    Y.commitment,
-    `<text class="ins__label" x="${LX}" y="${Y.commitment + 7}">${COMMIT_LABEL}</text>`,
-    true,
-  );
-
-  const mid = (Y.state + Y.outcomes) / 2;
+  const mid = (first + last) / 2;
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${DEFS}
@@ -254,10 +229,9 @@ function portrait(): Layout {
     ${fan}
     ${wires}
     ${stations}
-    ${commit}
     <text class="ins__label ins__label--return" x="${RET - 16}" y="${mid}" transform="rotate(-90 ${RET - 16} ${mid})" text-anchor="middle">${RETURN_LABEL}</text>
     <rect class="ins__token" x="-7" y="-7" width="14" height="14" data-token />
-    <path class="ins__route" data-loop d="M ${X} ${Y.state} V ${Y.outcomes} H ${RET + K} Q ${RET} ${Y.outcomes} ${RET} ${Y.outcomes - K} V ${Y.state + K} Q ${RET} ${Y.state} ${RET + K} ${Y.state} H ${X}" />
+    <path class="ins__route" data-loop d="M ${X} ${first} V ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${first + K} Q ${RET} ${first} ${RET + K} ${first} H ${X}" />
   </svg>`;
   return { svg, stops };
 }
@@ -337,7 +311,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
           best = l;
         }
       }
-      return { key: s.key, at: s.key === 'state' ? 0 : best };
+      return { key: s.key, at: s.key === STATIONS[0]!.key ? 0 : best };
     });
     marks.sort((m, n) => m.at - n.at);
   };
@@ -357,7 +331,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
         // Back at the start: State again.
         pos = 0;
         next = 1;
-        light('state');
+        light(STATIONS[0]!.key);
       } else {
         light(marks[next]!.key);
         next += 1;
@@ -394,7 +368,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
       for (const w of wires) addHead(w);
     }, DRAW_MS * 0.8);
     startTimer = window.setTimeout(() => {
-      light('state');
+      light(STATIONS[0]!.key);
       next = 1;
       pos = 0;
       holdUntil = performance.now() + HOLD_MS;
@@ -424,7 +398,7 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
     if (token) token.style.opacity = '0';
     if (played) {
       for (const w of wires) addHead(w);
-      light('state');
+      light(STATIONS[0]!.key);
       pos = 0;
       next = 1;
       holdUntil = performance.now() + HOLD_MS;

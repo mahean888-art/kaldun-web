@@ -5,6 +5,7 @@
 
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
+import { initReserve } from './visuals/reserve';
 import { ACTIONS } from './data/actions';
 import { EMAIL, FORM_ENDPOINT } from './data/site';
 
@@ -146,4 +147,6 @@ export function mountHome(root: ParentNode = document): void {
   wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
+  const reserve = qs<HTMLElement>('[data-reserve]', root);
+  if (reserve) initReserve(reserve);
 }

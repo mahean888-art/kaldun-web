@@ -1787,3 +1787,406 @@ a {
 .form__done-link:hover {
   color: var(--ink);
 }
+
+/* --- sources, set under the paragraph they support ----------------------------- */
+
+.essay p.essay__src {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0;
+  margin-top: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--ink-4);
+}
+
+.essay p.essay__src > span {
+  margin-right: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.essay p.essay__src a {
+  text-decoration-color: rgba(250, 152, 1, 0.35);
+}
+
+.essay p.essay__src a + a::before {
+  content: '·';
+  display: inline-block;
+  margin: 0 0.75em;
+  color: var(--ink-4);
+}
+
+/* Captions beneath a plate's drawing, over the essay's column. */
+.plate .plate__caption,
+.fig--actions .plate__caption {
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.fig--loop .plate__caption {
+  width: calc(100cqw - 2 * var(--lead));
+  margin-left: var(--lead);
+}
+
+@media (min-width: 900px) {
+  .fig--loop .plate__caption {
+    width: calc(var(--col) - 2rem - 1px);
+  }
+}
+
+/* --- Fig. 01: a reserve decision under stress --------------------------------------
+   An interactive plate. The record of what happened sits on its own line,
+   apart from the simulation; the controls at the left, the run at the right. */
+
+.fig--reserve {
+  --inner: min(960px, 100cqw - 2 * var(--pad));
+  padding: 0 calc((100cqw - var(--inner)) / 2) 0.25rem;
+  background-image:
+    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-size: 120px 120px;
+  background-position: calc(50% - 60px) 0;
+}
+
+.fig--reserve .plate__head {
+  position: static;
+  width: auto;
+  margin: 0;
+  padding: 1.6rem 0 1rem;
+  transform: none;
+  border-bottom: 0;
+}
+
+.fig--reserve .plate__head > span {
+  margin-left: 0;
+  padding: 3px 0;
+}
+
+.plate__tag {
+  color: var(--ink-4);
+}
+
+.essay p.reserve__record {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0;
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  background-color: var(--ground);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+
+.essay p.reserve__record b {
+  margin-right: 1rem;
+  padding: 2px 6px 1px;
+  border: 1px solid rgba(250, 152, 1, 0.55);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.essay p.reserve__record span + span::before {
+  content: '·';
+  margin: 0 0.75em;
+  color: var(--ink-4);
+}
+
+.reserve__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(250, 152, 1, 0.42);
+  background-color: var(--clay);
+}
+
+@media (min-width: 900px) {
+  .reserve__body {
+    grid-template-columns: 17rem minmax(0, 1fr);
+  }
+}
+
+.reserve__controls {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 900px) {
+  .reserve__controls {
+    border-bottom: 0;
+    border-right: 1px solid var(--rule);
+  }
+}
+
+.reserve__controls fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.reserve__controls legend {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.reserve__controls label {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.reserve__controls input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.reserve__controls label span {
+  display: block;
+  padding: 0.45rem 0.7rem 0.4rem;
+  border: 1px solid var(--rule);
+  font-size: 0.875rem;
+  line-height: 1.3;
+  color: var(--ink-3);
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.reserve__controls label:hover span {
+  color: var(--ink);
+  border-color: rgba(250, 152, 1, 0.5);
+}
+
+.reserve__controls input:checked + span {
+  border-color: var(--amber);
+  background-color: rgba(250, 152, 1, 0.12);
+  color: var(--amber);
+}
+
+.reserve__controls input:focus-visible + span {
+  outline: 1px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.reserve__stage {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+}
+
+.reserve__chart {
+  padding: 1rem 1rem 0.25rem;
+}
+
+.reserve__chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.reserve__read {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.reserve__read > div {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.reserve__read > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.reserve__read dt {
+  margin-bottom: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.reserve__read dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.reserve__read dd.is-fail {
+  color: var(--amber);
+}
+
+@media (max-width: 599px) {
+  .reserve__read {
+    grid-template-columns: 1fr;
+  }
+
+  .reserve__read > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+/* The run itself. */
+.reserve__chart text {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.rs__grid {
+  fill: none;
+  stroke: rgba(250, 152, 1, 0.07);
+}
+
+.rs__axis {
+  fill: none;
+  stroke: rgba(250, 152, 1, 0.4);
+}
+
+.rs__tick {
+  font-size: 11px;
+  fill: var(--ink-4);
+}
+
+.rs__unit {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: var(--ink-4);
+}
+
+.rs__shock path,
+.rs__support path {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.rs__shock path { stroke: var(--ink-4); }
+.rs__support path { stroke: var(--amber); }
+
+.rs__shock text,
+.rs__support text {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  paint-order: stroke fill;
+  stroke: var(--clay);
+  stroke-width: 6px;
+}
+
+.rs__shock text { fill: var(--ink-3); }
+.rs__support text { fill: var(--amber); }
+
+.rs__reach {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.rs__due {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.rs__gap {
+  fill: rgba(250, 152, 1, 0.14);
+  stroke: none;
+}
+
+.rs__fail rect {
+  fill: var(--amber);
+  stroke: var(--clay);
+  stroke-width: 3;
+  paint-order: stroke fill;
+}
+
+.rs__fail text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--amber);
+  paint-order: stroke fill;
+  stroke: var(--clay);
+  stroke-width: 6px;
+}
+
+.rs__key text {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--ink-3);
+}
+
+/* --- the mission's two paragraphs ------------------------------------------------- */
+
+.mission__words .mission__text + .mission__text {
+  margin-top: 1rem;
+}
+
+@media (max-width: 899px) {
+  .essay p.reserve__record {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .essay p.reserve__record b {
+    margin-bottom: 0.4rem;
+  }
+
+  .essay p.reserve__record span + span::before {
+    content: none;
+  }
+}
+
+/* On a phone the run is drawn narrower; its type is set a step larger. */
+.reserve__chart svg.is-narrow .rs__tick { font-size: 13px; }
+.reserve__chart svg.is-narrow .rs__unit,
+.reserve__chart svg.is-narrow .rs__shock text,
+.reserve__chart svg.is-narrow .rs__support text { font-size: 11.5px; }
+.reserve__chart svg.is-narrow .rs__fail text { font-size: 12.5px; }
+.reserve__chart svg.is-narrow .rs__key text { font-size: 13px; }
+
+@media (max-width: 599px) {
+  .reserve__chart {
+    padding: 0.75rem 0.5rem 0.25rem;
+  }
+}

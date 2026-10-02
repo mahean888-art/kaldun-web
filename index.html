@@ -6,7 +6,7 @@
     <title>Foresight Machines — Foresight, made a machine</title>
     <meta
       name="description"
-      content="Foresight Machines builds AI systems that hold a living model of the world around an institution and run that world forward before the institution acts."
+      content="Foresight Machines builds AI systems that model the world around an institution, examine the consequences of its choices, and learn from what happens next."
     />
     <meta name="theme-color" content="#0b0705" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -35,9 +35,10 @@
         <span class="lamps__group">
           <a href="#launch" title="01 · Foresight, made a machine" aria-label="01 · Foresight, made a machine"></a>
           <a href="#challenge" title="02 · The challenge" aria-label="02 · The challenge"></a>
-          <a href="#unlock-1" title="03 · Faster feedback" aria-label="03 · Faster feedback"></a>
-          <a href="#unlock-2" title="04 · World models" aria-label="04 · World models"></a>
-          <a href="#machine-foresight" title="05 · Machine foresight" aria-label="05 · Machine foresight"></a>
+          <a href="#unlock-1" title="03 · Models that stay current" aria-label="03 · Models that stay current"></a>
+          <a href="#running" title="04 · Running a decision" aria-label="04 · Running a decision"></a>
+          <a href="#unlock-2" title="05 · Learning from outcomes" aria-label="05 · Learning from outcomes"></a>
+          <a href="#capability" title="06 · Institutional capability" aria-label="06 · Institutional capability"></a>
         </span>
         <a href="#decision" title="Decision" aria-label="Decision"></a>
       </nav>
@@ -82,32 +83,96 @@
         <div class="screen__body">
           <article class="essay">
             <h2 class="essay__title" id="launch" data-move><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
-            <p>At Foresight Machines we build AI systems that hold a living model of the world around an institution — its markets, counterparties, rules, and exposures — and run that world forward before the institution acts: in finance, insurance, energy, supply chains, and statecraft.</p>
-            <p>The output is not a prediction. It is a rehearsal: how the consequences of a decision unfold, which assumptions carry the plan, and which course of action survives the futures no one can rule out.</p>
-            <p>Today, Foresight Machines is coming out of stealth. Our team brings together people who forecast the world, people who model it, and people who have acted on both: superforecasters, AI scientists, capital allocators, pioneers of agent-based simulation for financial institutions, and a co-inventor of <a href="https://en.wikipedia.org/wiki/Synthetic_control_method" target="_blank" rel="noopener">synthetic control methods</a>, which economists use to estimate what would have happened without a policy. Predicting a world is one discipline; predicting a world you are about to change takes all of them.</p>
+            <p>Today we are introducing Foresight Machines. We are building AI systems that model the world around an institution, examine the consequences of its choices, and learn from what happens next.</p>
+            <p>A bank should be able to prepare for a run, an insurer to underwrite a hard-to-price specialty risk, a developer to weigh a power delay before committing capital. Our ambition is to make that foresight a permanent capability of institutions.</p>
+            <p>Every institution already has a model of the future. A quant expresses it in equations, an analyst in a forecast, an investment committee in the assumptions behind an approval. Demand will hold. Funding will remain available. A supplier will deliver. These beliefs determine what gets financed, insured, and built, yet the connections between them often go unexamined. The world they describe does not respect the boundaries between departments, disciplines, or markets.</p>
+            <p>From a super El Niño that could unsettle harvests and food prices, to an AI buildout that strains power grids and construction capacity, to digital dollars that carry banking risk into software, each development reaches beyond the field in which it begins. The surprise often lies in the interaction: a shortage prompts an export restriction, a power delay becomes a financing problem, a frozen deposit becomes a run on a different institution. Understanding the parts is only the beginning of understanding what they can do together.</p>
+            <p class="essay__src"><span>Sources</span><a href="https://www.noaa.gov/understanding-el-nino" target="_blank" rel="noopener">El Niño impacts</a><a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" target="_blank" rel="noopener">AI and energy</a></p>
+            <p>An institution needs a way to follow those connections and test its choices against them. The model behind a consequential decision should be something it can inspect, run, and improve.</p>
+            <p>Our team brings together forecasters, builders of agent-based simulations, capital allocators, and a co-developer of <a href="https://en.wikipedia.org/wiki/Synthetic_control_method" target="_blank" rel="noopener">synthetic control methods</a>. Each addresses a different part of the problem: what may happen, how it could unfold, and what an intervention would change.</p>
+
             <h3 id="challenge" data-move><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
-            <p>Foreseeing is as old as planting a seed. Acting today against a world that exists only tomorrow is the move underneath everything an institution does: a loan is underwritten into a future economy, a risk is priced into a future climate, capital is committed to a market that will not hold still while it arrives.</p>
-            <p>That move keeps getting harder. From a super El Niño bearing down on harvests, shipping, and power grids, to AI data centers bidding for the same power, to programmable capital scaling toward trillions, the world an institution decides into has never been more tightly coupled. Rules fragment across jurisdictions, and a change in one system reaches another before the next planning cycle begins.</p>
-            <p>Yet the model of the future that every one of these decisions rests on still lives where it always has: three tabs of a spreadsheet, a paragraph of an investment memo, an analyst's conviction, a conversation before the board meets. It is scattered, implicit, revised unevenly, and rarely checked against what happened. Institutions measure their people, their processes, and their quarters. Almost none measure their model of the future.</p>
-            <p class="essay__set">Consider a decision, not a question:</p>
-            <p><em>We can make this move now, in a year, or never. What does each cost in the futures we can&rsquo;t rule out?</em></p>
-            <p>The last twenty years produced real progress on questions about the future. Philip Tetlock showed that judgment can be trained and scored: his superforecasters, generalists graded with proper scoring rules, <a href="https://goodjudgment.com/resources/the-superforecasters-track-record/superforecasters-vs-the-icpm/" target="_blank" rel="noopener">outperformed intelligence analysts with classified access</a> in tournaments run by the US intelligence community. Machines have since caught up: in the <a href="https://www.metaculus.com/tournament/metaculus-cup-summer-2026/" target="_blank" rel="noopener">Summer 2026 Metaculus Cup</a>, AI systems finished first and second, ahead of every human competitor, and calibrated probabilities on world events are becoming abundant and cheap. Prediction markets like <a href="https://polymarket.com/" target="_blank" rel="noopener">Polymarket</a> and <a href="https://kalshi.com/" target="_blank" rel="noopener">Kalshi</a> pay for information and penalize miscalibration, and Robin Hanson's <a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">futarchy</a> and Vitalik Buterin's <a href="https://vitalik.eth.limo/general/2024/11/09/infofinance.html" target="_blank" rel="noopener">info finance</a> propose letting markets steer decisions, governance included.</p>
-            <p>None of this decides anything yet. Superforecasts do not run the C-suite. Markets price what people will bet on; institutions must resolve everything else. Machine forecasters answer questions one at a time, each answer separate from the last. The gap lies between knowing and acting. A probability is a fact about the world; a decision is an act upon it. A number tells you the weather. It does not tell you whether to sail, which route holds if the wind turns, or when to put back into port.</p>
-            <p class="essay__set">Two capabilities now close that gap.</p>
-            <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Faster feedback</h3>
-            <p>Every claim with a deadline eventually resolves, and the resolution is a label no one has to write and no one can fake. A model can be trained on masked history — it is March 2025, and it knows only what was knowable then — and scored when events resolve. A human forecaster cannot unlearn a year and predict it again; a machine can, thousands of times. Judgment has never had feedback this fast, and it works: <a href="https://arxiv.org/abs/2601.06336" target="_blank" rel="noopener">a 32-billion-parameter model trained this way outpredicts one seven times its size</a>.</p>
-            <p>We extend the same discipline from questions to decisions. Before an outcome is known, a foresight machine commits to what it expects from each action under consideration: what breaks the plan, what carries it, what each alternative yields. When reality arrives, the machine is scored and the score is kept. Each resolved decision improves the next model of the world, and gives the institution a measured record of its own judgment.</p>
-            <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">04</span>Unlock 2: World models, cheap and current</h3>
-            <p><a href="https://contraryresearch.substack.com/p/ai-polling-how-synthetic-surveys" target="_blank" rel="noopener">Synthetic population modeling</a> has shown that simulating people at scale can predict what they do better than asking them. But modeling the world around a single decision is still manual work: it takes specialists months, and the model is stale before it is finished. That cost is why institutions model the future so rarely, and why the model is never maintained between decisions.</p>
-            <p>Language models remove the bottleneck. They can read where an institution's model of the future actually lives — the memos, filings, contracts, and submissions no database ever captured — and assemble it into an explicit state of the world, then keep that state current as evidence arrives. Once the state is explicit, a counterfactual costs minutes of compute, where it once cost a planning cycle. If the licensing regime slips six months, what happens to the capital plan? If it slips and rates hold — then what? The machine runs a thousand of these on every decision, and keeps running them as conditions change. And because one model underlies every decision, the claims stay consistent with each other. Forecasters whose beliefs are coherent across related questions are <a href="https://www.sciencedirect.com/science/article/abs/pii/S0169207024000104" target="_blank" rel="noopener">measurably more accurate on each one</a>.</p>
-            <h3 id="machine-foresight" data-move><span class="essay__code" aria-hidden="true">05</span>Machine foresight</h3>
-            <figure class="fig fig--loop plate">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 01 — The loop</span></figcaption>
-              <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
+            <p>Superforecasting showed that judgment about the future can be trained, scored, and improved. AI is now reaching that standard. In the Summer 2026 Metaculus Cup, AI systems finished first and second overall, ahead of every human entrant. This is a significant advance in our ability to anticipate events.</p>
+            <p class="essay__src"><span>Source</span><a href="https://www.metaculus.com/notebooks/45734/announcing-the-metaculus-cup-summer-2026-winners/" target="_blank" rel="noopener">Metaculus results</a></p>
+            <p>Prediction markets such as Kalshi aggregate beliefs into prices. Robin Hanson&rsquo;s futarchy goes further, proposing that decisions be guided by markets estimating outcomes under alternative policies. Both make expectations explicit and give people a reason to improve them.</p>
+            <p class="essay__src"><span>Sources</span><a href="https://news.kalshi.com/p/how-to-read-probabilities" target="_blank" rel="noopener">Kalshi</a><a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Futarchy</a></p>
+            <p>An institution must connect those expectations to its own choices. A forecast of higher interest rates is an input; deciding whether to refinance requires a model of its debt, cash flows, and alternatives. The same forecast can justify different actions for different institutions. What matters is how an event reaches the institution, what it can do in response, and how that response changes the outcome.</p>
+            <p>Weather forecasting offers a precedent. Observations feed models of the atmosphere; forecasts are checked against the weather that arrives; errors inform the next improvement. This discipline creates value wherever a better view of tomorrow changes what people do today: routing aircraft, dispatching power, planning harvests, and moving goods.</p>
+            <p class="essay__src"><span>Sources</span><a href="https://weather.metoffice.gov.uk/learn-about/how-forecasts-are-made" target="_blank" rel="noopener">How forecasts are made</a><a href="https://www.metoffice.gov.uk/about-us/who-we-are/impact" target="_blank" rel="noopener">Forecasts in use</a></p>
+            <p>Markets and institutions introduce a further difficulty: people respond. A depositor withdraws because others might, a competitor invests because demand is rising, a regulator intervenes because a market is failing. A decision changes the conditions under which other decisions are made.</p>
+            <p>We want to bring the discipline of weather forecasting to this world of interacting decisions. Two capabilities are opening the way: the ability to maintain richer models at lower cost, and to train and test their judgment against outcomes.</p>
+
+            <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Models that stay current</h3>
+            <p>Much of the knowledge needed to model an institution sits in contracts, filings, operating reports, and the heads of specialists. Turning it into a working model has required painstaking translation. Keeping it current has required doing that work again.</p>
+            <p>Language models can take on more of this translation: extracting an obligation from a contract, a dependency from an operating report, a constraint from a regulation. Connected to current observations, these capabilities make it more practical to maintain a model as the world changes.</p>
+            <p>The model must preserve the nature of what it contains. A contractual payment is an obligation; a power limit is a physical constraint; a forecast of withdrawals is an estimate of behavior. Each needs an appropriate method and a traceable basis. Fluent descriptions alone do not establish how a system works.</p>
+            <p>With those relationships represented, an institution can compare actions against the same evidence. It can examine what drives the result, where uncertainty changes the choice, and which missing fact would be worth learning before it commits.</p>
+
+            <h3 id="running" data-move><span class="essay__code" aria-hidden="true">04</span>Running a decision</h3>
+            <p>In March 2023, Silicon Valley Bank failed with $3.3 billion of Circle&rsquo;s USDC reserves on deposit. USDC broke its dollar peg. Authorities subsequently protected all SVB deposits, restoring access to the funds. A digital dollar transferable around the clock had depended on bank deposits its issuer could not immediately reach.</p>
+            <p class="essay__src"><span>Sources</span><a href="https://www.circle.com/pressroom/3-3-billion-of-usdc-reserve-risk-removed-dollar-de-peg-closes" target="_blank" rel="noopener">Circle&rsquo;s account</a><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20230312b.htm" target="_blank" rel="noopener">Official intervention</a></p>
+            <p>Consider the decision before such a crisis: how should an issuer arrange its reserves so it can keep meeting redemptions under stress?</p>
+            <p>A foresight machine would connect the issuer&rsquo;s holdings to its banking partners, settlement arrangements, and redemption obligations. It would examine how rising rates and tighter funding could affect several counterparties at once, and how doubts about reserve access could accelerate demand for redemption. Spreading cash across banks may still leave it exposed to a common shock.</p>
+            <p>The issuer could then compare changes to its banking mix, reserve liquidity, and backup funding. For each combination, the machine would estimate how much cash could be reached by a given deadline, how much redemption demand it could meet, and what that protection would cost. Policy support would be a scenario to test alongside delayed intervention and no intervention.</p>
+            <p>As evidence changed, the model would show which assumptions had weakened and which choices remained viable. The decision would turn on the time an issuer could withstand interrupted access, the price of extending that time, and the conditions under which its defenses would fail.</p>
+            <figure class="fig fig--reserve plate" data-reserve aria-labelledby="reserve-title">
+              <figcaption class="plate__head"><span class="plate__fig" id="reserve-title">Fig. 01 — A reserve decision under stress</span><span class="plate__tag">Illustrative simulation</span></figcaption>
+              <p class="reserve__record"><b>Record</b><span>March 2023</span><span>$3.3 billion of USDC reserves at Silicon Valley Bank</span><span>Peg broken</span><span>Deposits protected 12 March</span></p>
+              <div class="reserve__body">
+                <form class="reserve__controls" data-reserve-controls aria-label="Scenario">
+                  <fieldset><legend>Reserve arrangement</legend>
+                    <label><input type="radio" name="arr" value="one" /><span>One bank</span></label>
+                    <label><input type="radio" name="arr" value="spread" checked /><span>Spread across banks</span></label>
+                    <label><input type="radio" name="arr" value="bills" /><span>Spread + short-dated bills</span></label>
+                  </fieldset>
+                  <fieldset><legend>Access interrupted</legend>
+                    <label><input type="radio" name="shock" value="partner" checked /><span>One partner bank</span></label>
+                    <label><input type="radio" name="shock" value="common" /><span>Funding stress across banks</span></label>
+                  </fieldset>
+                  <fieldset><legend>Redemption demand</legend>
+                    <label><input type="radio" name="pace" value="slow" /><span>Slow</span></label>
+                    <label><input type="radio" name="pace" value="steady" /><span>Steady</span></label>
+                    <label><input type="radio" name="pace" value="fast" checked /><span>Fast</span></label>
+                  </fieldset>
+                  <fieldset><legend>Policy support</legend>
+                    <label><input type="radio" name="support" value="3" /><span>Day 3</span></label>
+                    <label><input type="radio" name="support" value="10" checked /><span>Day 10</span></label>
+                    <label><input type="radio" name="support" value="none" /><span>None</span></label>
+                  </fieldset>
+                </form>
+                <div class="reserve__stage">
+                  <div class="reserve__chart" data-reserve-chart></div>
+                  <dl class="reserve__read" data-reserve-read aria-live="polite">
+                    <div><dt>Outcome</dt><dd data-read-outcome>&nbsp;</dd></div>
+                    <div><dt>Cash reachable, day 1</dt><dd data-read-reach>&nbsp;</dd></div>
+                    <div><dt>Cost of the arrangement</dt><dd data-read-cost>&nbsp;</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <p class="plate__caption">Compare reserve arrangements, interrupt access to a banking partner, and vary redemption demand and the timing of policy support. Inspect where each arrangement holds and where it fails. Illustrative simulation; historical facts and estimated alternatives remain distinct.</p>
             </figure>
-            <p>We are building machines that maintain the living state of a business, an institution, a sovereign — its assets, obligations, counterparties, rules, and dependencies — update that state as the world changes, run the counterfactuals of what it might do next, and return the actions that stay sound across futures.</p>
+            <p>The output is a rehearsal of the decision, while there is still time to make it differently.</p>
+
+            <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">05</span>Unlock 2: Learning from outcomes</h3>
+            <p>A model earns trust by exposing itself to correction. Its expectations must be recorded before events unfold, its errors preserved after they do, its revisions tested before they are relied upon.</p>
+            <p>In the reserve example, the machine would commit its estimates of withdrawals, cash availability, and funding costs. Outcomes would test those estimates. Repeatedly understating the speed of redemptions would reveal a weakness; a proposed correction would have to improve performance on cases withheld from its development.</p>
+            <p>This is what we mean by self-correcting: a process that makes mistakes visible and tests whether a change remedies them.</p>
+            <p>Historical events can accelerate that process, provided later knowledge is excluded from the evidence and the model being tested. Research on training language models with resolved forecasting questions offers evidence that outcomes can improve predictive accuracy and calibration. Live forecasts, recorded in advance, remain the continuing test.</p>
+            <p class="essay__src"><span>Source</span><a href="https://arxiv.org/abs/2601.06336" target="_blank" rel="noopener">Future-as-Label research</a></p>
+            <p>Judging a decision requires another distinction. We observe what followed the action taken; the effects of alternatives must be estimated. A fortunate outcome can reward a poor decision, and an unlucky one can punish a sound decision. The machine therefore needs a record across many cases, with forecast accuracy assessed separately from evidence about what its actions changed.</p>
+            <p>Over time, an institution gains a history it can learn from: what it believed, why it acted, and where its understanding failed.</p>
+            <figure class="fig fig--loop plate">
+              <figcaption class="plate__head"><span class="plate__fig">Fig. 02 — The learning loop</span></figcaption>
+              <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
+              <p class="plate__caption">Observe, model, compare actions, record expectations, evaluate outcomes, test corrections. The original forecast is preserved alongside every revision.</p>
+            </figure>
+
+            <h3 id="capability" data-move><span class="essay__code" aria-hidden="true">06</span>Foresight as an institutional capability</h3>
+            <p>An institution should be able to carry what it learns from one decision into the next. The evidence behind an investment, the dependencies behind a supply commitment, and the assumptions behind an underwriting decision should remain available for examination. When conditions change, the institution should know which commitments need another look.</p>
+            <p>Better foresight can also expand what an institution is willing to undertake. An insurer can examine whether a hard-to-price specialty risk becomes insurable under different terms. A business can test whether a new market becomes viable with a different partner, a smaller initial commitment, or a later launch. The machine should help identify the conditions that make an opportunity worth pursuing.</p>
+            <p>As the machines earn trust, we intend for them to assume responsibility within defined mandates. An allocation can be made, monitored, and revised by the same system, with the evidence for each action available for inspection.</p>
             <aside class="mission fig" aria-labelledby="mission-title">
-              <p class="mission__strip" aria-hidden="true"><span>05<span class="bar__squares"><i></i><i></i></span></span><span>Machine foresight</span><span>The mission</span></p>
+              <p class="mission__strip" aria-hidden="true"><span>06<span class="bar__squares"><i></i><i></i></span></span><span>Institutional capability</span><span>The mission</span></p>
               <div class="mission__body">
                 <div class="mission__image" aria-hidden="true"><img src="/hero-1200.webp" alt="" width="1200" height="675" loading="lazy" decoding="async" /></div>
                 <div class="mission__main">
@@ -116,17 +181,20 @@
                     <h4 class="mission__title" id="mission-title">The Foresight Machines mission</h4>
                   </div>
                   <div class="mission__copy">
-                    <span class="mission__sec" aria-hidden="true">Sec-01 <b>05</b></span>
-                    <p class="mission__text">Today the machine rehearses and the institution decides. Soon no bank will lend, no insurer will price a risk, and no government will set a policy without running the world forward first. Their shareholders, reinsurers, and voters will ask to see the run. <strong class="essay__mark">The goal is machines trusted to go further: to allocate capital, underwrite risk, hedge exposure, and procure supply on their own record — foresight as infrastructure, a permanent capability of every consequential institution.</strong></p>
+                    <span class="mission__sec" aria-hidden="true">Sec-01 <b>06</b></span>
+                    <div class="mission__words">
+                      <p class="mission__text">We want every consequential institution to be able to run the world forward before it acts. We are building self-correcting machines that can earn the trust to go further: to allocate capital, underwrite risk, hedge exposure, and secure supply on the strength of their own record. Their models should remain open to challenge, their mistakes visible, and their judgment capable of improving with experience.</p>
+                      <p class="mission__text"><em class="essay__mark">Foresight should be a permanent capability of every consequential institution.</em></p>
+                    </div>
                   </div>
                 </div>
               </div>
             </aside>
             <figure class="fig fig--actions">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 02 — The actions</span></figcaption>
+              <figcaption class="plate__head"><span class="plate__fig">Fig. 03 — Where foresight meets action</span></figcaption>
               <ol class="acts" data-actions aria-label="Actions"></ol>
             </figure>
-            <p>Weather forecasting delivers billions of dollars of value a year, and the value arrives where forecasts meet decisions: planting schedules, flight paths, shipping lanes, grid dispatch. We are building that junction for everything an institution decides.</p>
+            <p>Weather forecasting earned its place in the economy through use, measurement, and improvement. We want foresight about the systems people build to earn the same standing.</p>
             <p class="essay__close">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
           </article>
         </div>
@@ -137,7 +205,7 @@
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <h2 class="screen__title">Bring us a decision you haven&rsquo;t made yet.</h2>
-          <p class="screen__lead">Tell us what you are considering, what is at stake, and what would change your mind.</p>
+          <p class="screen__lead">Tell us what is at stake, what you are considering, and what would change your mind.</p>
           <form class="form" data-decision-form>
             <label>The decision
               <textarea name="decision" placeholder="The action you are weighing, and when it has to be made" required></textarea>

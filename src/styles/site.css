@@ -2569,3 +2569,22 @@ a {
 .engine svg.is-mid .rs__support text { font-size: 12px; }
 .engine svg.is-mid .rs__fail text { font-size: 13px; }
 .engine svg.is-mid .rs__key text { font-size: 14px; }
+
+/* --- keyboard focus: every stop visible ------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--amber);
+  outline-offset: 3px;
+}
+
+.bar a:focus-visible {
+  outline-color: var(--amber-ink);
+}
+
+.skip-link {
+  font-size: 0.6875rem;
+  background: var(--amber);
+  color: var(--amber-ink);
+  transition: transform 0.2s ease;
+}

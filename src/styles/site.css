@@ -2588,3 +2588,12 @@ button:focus-visible {
   color: var(--amber-ink);
   transition: transform 0.2s ease;
 }
+
+/* A field for bots only. */
+.form__honey {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}

@@ -5,10 +5,11 @@
 export const EMAIL = 'hello@foresightmachines.com';
 
 /**
- * Where the decision form posts. Left empty, the form hands the message to
- * the visitor's mail app and also shows it on the page, ready to copy, so it
- * is never lost. Set it to a form endpoint that accepts JSON (for example a
- * Formspree form, https://formspree.io/f/<id>) to receive submissions
- * directly; if that request fails, the form falls back to the mail app.
+ * Where the decision form posts: FormSubmit, which emails each submission to
+ * the address in the URL, with no account or key. The first submission to a
+ * new address sends that inbox a one-time "Activate form" link; after it is
+ * clicked, every submission arrives on its own. If a post ever fails, the
+ * form falls back to the visitor's mail app and shows the message on the
+ * page, ready to copy, so nothing is lost.
  */
-export const FORM_ENDPOINT = '';
+export const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;

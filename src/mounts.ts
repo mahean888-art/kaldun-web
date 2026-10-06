@@ -118,17 +118,33 @@ function wireForm(root: ParentNode): void {
       byMail();
       return;
     }
+    // A field people never see: only a bot fills it in. Thank it and send nothing.
+    if (get('_honey')) {
+      showSent(fields.reply);
+      return;
+    }
     if (button) {
       button.disabled = true;
-      button.textContent = 'Sending';
+      button.textContent = 'Sending…';
     }
     fetch(FORM_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ ...fields, _subject: subject }),
+      body: JSON.stringify({
+        'The decision': fields.decision,
+        'What is at stake': fields.stake,
+        'What would change my mind': fields.change || '(not given)',
+        'Reply to': fields.reply,
+        _subject: `Decision: ${fields.decision.replace(/\s+/g, ' ').slice(0, 60)}${fields.decision.length > 60 ? '…' : ''}`,
+        _replyto: fields.reply,
+        _template: 'table',
+        _captcha: 'false',
+      }),
     })
-      .then((r) => {
+      .then(async (r) => {
         if (!r.ok) throw new Error(String(r.status));
+        const out = (await r.json().catch(() => ({}))) as { success?: string | boolean };
+        if (out.success === false || out.success === 'false') throw new Error('not sent');
         showSent(fields.reply);
       })
       .catch(byMail)

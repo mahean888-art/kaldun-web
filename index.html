@@ -115,7 +115,7 @@
             <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Models that stay current</h3>
             <p>Much of the knowledge needed to model an institution sits in contracts, filings, operating reports, and the heads of specialists. Turning it into a working model has required painstaking translation. Keeping it current has required doing that work again.</p>
             <p>Language models can take on more of this translation: extracting an obligation from a contract, a dependency from an operating report, a constraint from a regulation. Connected to current observations, these capabilities make it more practical to maintain a model as the world changes.</p>
-            <p>The model must preserve the nature of what it contains. A contractual payment is an obligation; a power limit is a physical constraint; a forecast of withdrawals is an estimate of behavior. Each needs an appropriate method and a traceable basis. Fluent descriptions alone do not establish how a system works.</p>
+            <p>The model must preserve the nature of what it contains. A contractual payment is an obligation; a power limit is a physical constraint; a forecast of withdrawals is an estimate of behavior. Each needs an appropriate method and a traceable basis. Fluent descriptions alone do not establish how a system works. It must also preserve when each fact was known, so that a decision is judged against the evidence available then, not what arrived afterward.</p>
             <p>With those relationships represented, an institution can compare actions against the same evidence. It can examine what drives the result, where uncertainty changes the choice, and which missing fact would be worth learning before it commits.</p>
 
             <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">04</span>Unlock 2: Learning from outcomes</h3>
@@ -135,7 +135,7 @@
             <h3 id="running" data-move><span class="essay__code" aria-hidden="true">05</span>Running a decision</h3>
             <p>In March 2023, Silicon Valley Bank failed with $3.3 billion of Circle&rsquo;s USDC reserves on deposit. USDC broke its dollar peg. Authorities subsequently protected all SVB deposits, restoring access to the funds. A digital dollar transferable around the clock had depended on bank deposits its issuer could not immediately reach.</p>
             <p class="essay__src"><span>Sources</span><a href="https://www.circle.com/pressroom/3-3-billion-of-usdc-reserve-risk-removed-dollar-de-peg-closes" target="_blank" rel="noopener">Circle&rsquo;s account</a><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20230312b.htm" target="_blank" rel="noopener">Official intervention</a></p>
-            <p>Consider the decision before such a crisis: how should an issuer arrange its reserves so it can keep meeting redemptions under stress?</p>
+            <p>Consider the decision every issuer faces before such a crisis: how should it arrange its reserves so it can keep meeting redemptions when access to part of them is interrupted?</p>
             <p>A foresight machine would connect the issuer&rsquo;s holdings to its banking partners, settlement arrangements, and redemption obligations. It would examine how rising rates and tighter funding could affect several counterparties at once, and how doubts about reserve access could accelerate demand for redemption. Spreading cash across banks may still leave it exposed to a common shock.</p>
             <p>The issuer could then compare changes to its banking mix, reserve liquidity, and backup funding. For each combination, the machine would estimate how much cash could be reached by a given deadline, how much redemption demand it could meet, and what that protection would cost. Policy support would be a scenario to test alongside delayed intervention and no intervention.</p>
             <p>As evidence changed, the model would show which assumptions had weakened and which choices remained viable. The decision would turn on the time an issuer could withstand interrupted access, the price of extending that time, and the conditions under which its defenses would fail.</p>
@@ -145,14 +145,13 @@
               <div class="engine" data-engine>
                 <div class="engine__bar">
                   <span class="engine__brand"><span class="engine__mark" aria-hidden="true"><i></i><i></i></span>Foresight Machines</span>
-                  <span class="engine__crumbs"><span>Dollar stablecoin issuer</span><span>Reserves</span><span aria-current="page">Decision</span></span>
-                  <span class="engine__status" data-engine-status role="status"><i aria-hidden="true"></i><span data-engine-status-text>Model current</span></span>
+                  <span class="engine__crumbs"><span>Synthetic dollar issuer</span><span>Reserves</span><span aria-current="page">Decision</span></span>                  <span class="engine__status" data-engine-status role="status"><i aria-hidden="true"></i><span data-engine-status-text>Model current</span></span>
                   <button type="button" class="engine__commit" data-engine-commit>Commit expectations</button>
                 </div>
                 <div class="engine__head">
                   <p class="engine__kicker">Decision · open</p>
                   <h4 class="engine__title">How should reserves be arranged to keep meeting redemptions under stress?</h4>
-                  <p class="engine__meta">Horizon 14 days · Reserves shown as shares, not balances</p>
+                  <p class="engine__meta"><span class="engine__asof">Evidence as of day 0</span>Horizon 14 days · Reserves shown as shares, not balances</p>
                 </div>
                 <form class="engine__grid" data-reserve-controls aria-label="Scenario and arrangements">
                   <div class="engine__scenario">
@@ -160,6 +159,7 @@
                     <fieldset><legend>Access interrupted</legend>
                       <label><input type="radio" name="shock" value="partner" checked /><span>One partner bank</span></label>
                       <label><input type="radio" name="shock" value="common" /><span>Funding stress across banks</span></label>
+                      <label><input type="radio" name="shock" value="route" /><span>Shared settlement route</span></label>
                     </fieldset>
                     <fieldset><legend>Redemption demand</legend>
                       <label><input type="radio" name="pace" value="slow" /><span>Slow</span></label>
@@ -176,10 +176,10 @@
                     <p class="engine__label">Arrangements compared under this scenario</p>
                     <fieldset class="engine__table">
                       <legend class="sr-only">Reserve arrangement</legend>
-                      <div class="engine__thead" aria-hidden="true"><span>Arrangement</span><span>Outcome</span><span>Reachable, day 1</span><span>Cost</span></div>
+                      <div class="engine__thead" aria-hidden="true"><span>Arrangement</span><span>Outcome</span><span>Reachable, day 1</span><span>Standing cost (assumed)</span></div>
                       <label class="engine__row"><input type="radio" name="arr" value="one" /><span class="engine__opt"><b>Concentrated</b><small>One bank</small></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
-                      <label class="engine__row"><input type="radio" name="arr" value="spread" checked /><span class="engine__opt"><b>Spread</b><small>Four banks</small></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
-                      <label class="engine__row"><input type="radio" name="arr" value="bills" /><span class="engine__opt"><b>Spread + Treasuries</b><small>Four banks, short-dated bills, a repo line</small></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
+                      <label class="engine__row"><input type="radio" name="arr" value="spread" checked /><span class="engine__opt"><b>Spread</b><small>Four banks</small><span class="engine__flag" data-flag hidden>Four accounts, one route</span></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
+                      <label class="engine__row"><input type="radio" name="arr" value="bills" /><span class="engine__opt"><b>Spread + Treasuries</b><small>Four banks, short-dated bills, a repo line</small><span class="engine__flag" data-flag hidden>Four accounts, one route</span></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
                     </fieldset>
                     <div class="engine__chart" data-reserve-chart></div>
                     <div class="engine__mix" data-engine-mix></div>
@@ -187,15 +187,16 @@
                   <div class="engine__assume">
                     <p class="engine__label">Assumptions</p>
                     <ul data-engine-assume>
-                      <li data-assume="shock"><span class="engine__kind">Obligation</span><b>Deposit access</b><span data-assume-detail></span><em>Revised</em></li>
-                      <li data-assume="liquidity"><span class="engine__kind">Market constraint</span><b>Treasury sale and repo capacity</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="obligation"><span class="engine__kind">Obligation</span><b>Redemptions at par, on demand</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="shock"><span class="engine__kind">Operating condition</span><b>Deposit access, by bank</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="liquidity"><span class="engine__kind">Market constraint</span><b>Treasury settlement and repo capacity</b><span data-assume-detail></span><em>Revised</em></li>
                       <li data-assume="pace"><span class="engine__kind">Behavioural estimate</span><b>Redemption speed</b><span data-assume-detail></span><em>Revised</em></li>
                       <li data-assume="support"><span class="engine__kind">Scenario</span><b>Policy support</b><span data-assume-detail></span><em>Revised</em></li>
                     </ul>
                   </div>
                 </form>
               </div>
-              <p class="plate__caption">Compare reserve arrangements, interrupt access to a banking partner, and vary redemption demand and the timing of policy support. Inspect where each arrangement holds and where it fails. Historical facts and estimated alternatives remain distinct.</p>
+              <p class="plate__caption">Compare reserve arrangements, interrupt access to a banking partner, and vary redemption demand and the timing of policy support. Inspect where each arrangement holds and where it fails. The record above is history; the issuer below is synthetic.</p>
             </figure>
             <p>The output is a rehearsal of the decision, while there is still time to make it differently.</p>
 

@@ -2085,9 +2085,11 @@ a {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.engine__commit:hover {
-  background: transparent;
-  color: var(--e-ink);
+@media (hover: hover) {
+  .engine__commit:hover {
+    background: transparent;
+    color: var(--e-ink);
+  }
 }
 
 .engine__commit:focus-visible,
@@ -2251,7 +2253,7 @@ a {
 .engine__thead,
 .engine .engine__row {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(7.5rem, 1.1fr) minmax(0, 0.8fr) minmax(0, 0.7fr);
+  grid-template-columns: minmax(0, 1.45fr) minmax(7.5rem, 1fr) minmax(0, 0.7fr) minmax(0, 1.05fr);
   gap: 0.75rem;
   align-items: center;
   padding: 0.6rem 0.6rem;
@@ -2370,6 +2372,70 @@ a {
 .engine .rs__fail text { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--e-amber-ink); paint-order: stroke fill; stroke: #fff; stroke-width: 6px; }
 .engine .rs__key text { font-family: var(--sans); font-size: 12px; fill: var(--e-ink-2); }
 
+/* The recorded expectation: the run as it stood when it was committed. */
+.engine .rs__ghost-reach,
+.engine .rs__ghost-due { fill: none; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.engine .rs__ghost-reach { stroke: var(--e-amber-ink); opacity: 0.55; }
+.engine .rs__ghost-due { stroke: var(--e-ink-2); opacity: 0.45; }
+.engine .rs__ghost text { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--e-amber-ink); paint-order: stroke fill; stroke: #fff; stroke-width: 6px; }
+.engine .rs__ghost-key path { stroke-dasharray: 5 4; }
+
+@media (max-width: 1099px) {
+  .engine__bar {
+    flex-wrap: wrap;
+  }
+}
+
+/* The time the evidence stands at. */
+.engine__asof {
+  display: inline-block;
+  margin-right: 0.75rem;
+  padding: 3px 7px 2px;
+  border: 1px solid var(--e-rule-2);
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  color: var(--e-ink-2);
+  white-space: nowrap;
+}
+
+.engine__status.is-diverged i {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--e-amber);
+}
+
+.engine__status.is-diverged {
+  color: var(--e-amber-ink);
+}
+
+/* When the accounts share one route. */
+.engine__flag {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 2px 6px 1px;
+  background: var(--e-amber);
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2a1200;
+}
+
+.engine__flag[hidden] {
+  display: none;
+}
+
+/* What each arrangement's cost is assumed to consist of. */
+.engine__row [data-col='cost'] small {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--e-mute);
+}
+
 /* The selected arrangement's reserves. */
 .engine__bars {
   display: flex;
@@ -2388,6 +2454,10 @@ a {
 
 .engine__bars span.is-frozen {
   background: repeating-linear-gradient(135deg, var(--e-amber) 0 3px, rgba(250, 152, 1, 0.25) 3px 6px);
+}
+
+.engine__bars span.is-delayed {
+  background: repeating-linear-gradient(90deg, var(--e-ink-2) 0 6px, #8a7d6f 6px 9px);
 }
 
 .engine__legend {
@@ -2473,22 +2543,27 @@ a {
   color: var(--e-mute);
 }
 
+/* A revised assumption says so beneath its value, with what it was. */
 .engine__assume li em {
-  position: absolute;
-  top: 0.6rem;
-  right: 0;
+  display: none;
+  margin-top: 0.15rem;
   font-style: normal;
   font-family: var(--mono);
   font-size: 0.5625rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--e-amber-ink);
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .engine__assume li.is-revised {
+  margin-inline: -0.5rem;
+  padding-inline: 0.5rem;
   background: var(--e-amber-wash);
+  box-shadow: inset 2px 0 0 var(--e-amber);
+}
+
+.engine__assume li.is-revised em {
+  display: block;
 }
 
 .engine__assume li.is-revised em {
@@ -2553,7 +2628,11 @@ a {
   }
 
   .engine__row [data-col='reach']::before { content: 'Day 1 '; color: var(--e-mute); }
-  .engine__row [data-col='cost']::before { content: 'Cost '; color: var(--e-mute); }
+  .engine__row [data-col='cost']::before { content: 'Cost, assumed '; color: var(--e-mute); }
+  .engine__row [data-col='cost'] { width: 100%; white-space: normal; }
+  .engine__row [data-col='cost'] small { display: inline; margin-left: 0.4em; }
+  .engine__row [data-col='cost'] small::before { content: '· '; }
+  .engine__asof { display: table; margin-bottom: 0.4rem; }
 }
 
 .engine svg.is-small .rs__tick { font-size: 13px; }

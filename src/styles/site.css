@@ -3,7 +3,7 @@
    ========================================================================== */
 
 html {
-  scroll-padding-top: calc(var(--header-h) + 2rem);
+  scroll-padding-top: calc(var(--header-h) + 2.5rem);
 }
 
 body {
@@ -608,7 +608,6 @@ a {
   background-size: 144px 144px;
   background-position: 0 var(--bar-h);
   background-clip: padding-box;
-  scroll-margin-top: calc(var(--header-h) + 1.5rem);
   position: relative;
   container-type: inline-size;
   --pad: clamp(1.25rem, 3vw, 2.75rem);
@@ -905,7 +904,7 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(180deg, rgba(11, 7, 5, 0.34) 0 1px, transparent 1px 3px);
+  background: repeating-linear-gradient(180deg, rgba(11, 7, 5, 0.2) 0 1px, transparent 1px 3px);
 }
 
 /* The screen bar ends in a registration cross. */
@@ -1221,7 +1220,7 @@ a {
   bottom: var(--hb);
   overflow: hidden;
   border: 1px solid rgba(250, 152, 1, 0.55);
-  box-shadow: 0 0 0 1px rgba(11, 7, 5, 0.9), 0 0 28px rgba(250, 152, 1, 0.07);
+  box-shadow: none;
 }
 
 /* The drawing grid over the photo. Script redraws it to divide the panel
@@ -1797,10 +1796,10 @@ a {
   gap: 0.25rem 0;
   margin-top: 0.6rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
-  line-height: 1.5;
-  letter-spacing: 0.08em;
-  color: var(--ink-4);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
 }
 
 .essay p.essay__src > span {
@@ -1967,13 +1966,11 @@ a {
   --e-amber-ink: #9a5600;
   --e-amber-wash: rgba(250, 152, 1, 0.12);
   position: relative;
-  margin: 1.4rem 7px 1.6rem;
+  margin: 1.25rem 0 1.5rem;
   border: 1px solid rgba(250, 152, 1, 0.55);
-  outline: 6px solid #050302;
   background: var(--e-paper);
   color: var(--e-ink);
   font-family: var(--sans);
-  box-shadow: 0 0 0 7px rgba(250, 152, 1, 0.22), 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 
 .engine p,
@@ -1988,7 +1985,7 @@ a {
 .essay .engine p.engine__label {
   margin-bottom: 0.6rem;
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -2129,61 +2126,219 @@ a {
   color: var(--e-mute);
 }
 
-/* Three panes. */
+/* Two areas: the case (finding, dependencies, run, comparison) and, beside
+   it, the assumptions that drive it. */
 .engine__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (min-width: 760px) {
+@media (min-width: 1000px) {
   .engine__grid {
-    grid-template-columns: 13rem minmax(0, 1fr);
-  }
-
-  .engine__assume {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) 16.5rem;
   }
 }
 
-@media (min-width: 1100px) {
-  .engine__grid {
-    grid-template-columns: 12.5rem minmax(0, 1fr) 14rem;
-  }
-
-  .engine__assume {
-    grid-column: auto;
-  }
-}
-
-.engine__scenario,
-.engine__main,
-.engine__assume {
+.engine__main {
   padding: 1.1rem 1.25rem 1.25rem;
   min-width: 0;
 }
 
-.engine__scenario {
+.engine__side {
+  min-width: 0;
   background: var(--e-panel);
-  border-bottom: 1px solid var(--e-rule);
-}
-
-.engine__assume {
   border-top: 1px solid var(--e-rule);
 }
 
-@media (min-width: 760px) {
-  .engine__scenario {
-    border-bottom: 0;
-    border-right: 1px solid var(--e-rule);
+@media (min-width: 1000px) {
+  .engine__side {
+    border-top: 0;
+    border-left: 1px solid var(--e-rule);
   }
 }
 
-@media (min-width: 1100px) {
-  .engine__assume {
-    border-top: 0;
-    border-left: 1px solid var(--e-rule);
-    background: var(--e-panel);
+/* Folds: open beside the case on wide screens, closed beneath it on phones. */
+.engine__fold {
+  border-bottom: 1px solid var(--e-rule);
+}
+
+.engine__fold > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--e-ink-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.engine__fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.engine__fold > summary::after {
+  content: '+';
+  font-size: 1rem;
+  color: var(--e-amber-ink);
+}
+
+.engine__fold[open] > summary::after {
+  content: '−';
+}
+
+.engine__fold > summary:focus-visible {
+  outline: 2px solid var(--e-amber);
+  outline-offset: -2px;
+}
+
+.engine__scenario {
+  padding: 0.25rem 1.1rem 0.5rem;
+}
+
+.engine__assume ul,
+.engine__notes {
+  padding: 0 1.1rem 1rem;
+}
+
+.engine__notes p,
+.essay .engine__notes p {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--e-ink-2);
+}
+
+.engine__notes b {
+  font-weight: 600;
+  color: var(--e-ink);
+}
+
+.engine__notes a {
+  color: var(--e-amber-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* The finding: what the run shows, in plain words, first. */
+.essay .engine p.engine__finding {
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid #3e8f5a;
+  background: #fff;
+  font-family: var(--serif);
+  font-size: clamp(1.1875rem, 1.8vw, 1.375rem);
+  line-height: 1.3;
+  color: var(--e-ink);
+}
+
+.essay .engine p.engine__finding.is-fail {
+  border-left-color: var(--e-amber);
+}
+
+/* The dependency map: holdings, the routes they rely on, the obligation. */
+.engine__map {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 0 1.6rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--e-rule);
+  background: #fff;
+}
+
+.emap__col {
+  position: relative;
+  min-width: 0;
+}
+
+.emap__col + .emap__col::before {
+  content: '→';
+  position: absolute;
+  top: 1.85rem;
+  left: -1.2rem;
+  font-size: 0.875rem;
+  color: var(--e-mute);
+}
+
+.essay .engine p.emap__h {
+  margin-bottom: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--e-mute);
+}
+
+.emap__col ul {
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+
+.emap__node {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--e-rule-2);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--e-ink);
+}
+
+.emap__node b {
+  display: block;
+  font-weight: 600;
+}
+
+.emap__node span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--e-mute);
+}
+
+.emap__node.is-hit {
+  border-color: var(--e-amber);
+  background: repeating-linear-gradient(135deg, rgba(250, 152, 1, 0.16) 0 4px, rgba(250, 152, 1, 0.06) 4px 8px);
+}
+
+.emap__node.is-hit span {
+  color: var(--e-amber-ink);
+  font-weight: 500;
+}
+
+.emap__node.is-bills {
+  border-style: dashed;
+}
+
+.emap__node.is-duty {
+  border-color: var(--e-ink);
+}
+
+@media (max-width: 759px) {
+  .engine__map {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
   }
+
+  .emap__col + .emap__col::before {
+    content: '↓';
+    top: -1.15rem;
+    left: 0.5rem;
+  }
+
+}
+
+.emap__col:first-child ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.emap__node.is-bills {
+  grid-column: 1 / -1;
 }
 
 .engine fieldset {
@@ -2202,9 +2357,9 @@ a {
 
 .engine__scenario legend {
   width: 100%;
-  margin-bottom: 0.4rem;
+  margin: 0.6rem 0 0.4rem;
   padding: 0;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--e-ink-2);
 }
@@ -2224,8 +2379,10 @@ a {
 }
 
 .engine__scenario label span {
-  display: block;
-  padding: 0.35rem 0.6rem;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
   border: 1px solid var(--e-rule-2);
   background: #fff;
   font-size: 0.8125rem;
@@ -2253,7 +2410,7 @@ a {
 .engine__thead,
 .engine .engine__row {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(7.5rem, 1fr) minmax(0, 0.7fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(9.5rem, 1.15fr) minmax(0, 0.65fr) minmax(0, 1fr);
   gap: 0.75rem;
   align-items: center;
   padding: 0.6rem 0.6rem;
@@ -2293,13 +2450,13 @@ a {
 
 .engine__opt small {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--e-mute);
 }
 
 .engine__cell {
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--e-ink);
   font-variant-numeric: tabular-nums;
 }
@@ -2507,7 +2664,7 @@ a {
   list-style: none;
 }
 
-@media (min-width: 760px) and (max-width: 1099px) {
+@media (min-width: 760px) and (max-width: 999px) {
   .engine__assume ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1.25rem;
@@ -2520,8 +2677,8 @@ a {
   gap: 0.15rem;
   padding: 0.6rem 0 0.65rem;
   border-bottom: 1px solid var(--e-rule);
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-size: 0.8125rem;
+  line-height: 1.45;
   color: var(--e-ink-2);
   transition: background-color 0.6s ease;
 }
@@ -2576,21 +2733,15 @@ a {
     flex-wrap: wrap;
   }
 
-  .engine__crumbs span:not([aria-current]) {
+  .engine__crumbs span:nth-child(2) {
     display: none;
-  }
-
-  .engine__crumbs span[aria-current]::before {
-    content: none;
   }
 
   .engine {
     margin-inline: 4px;
   }
 
-  .engine__scenario,
   .engine__main,
-  .engine__assume,
   .engine__head {
     padding-inline: 0.9rem;
   }
@@ -2712,4 +2863,101 @@ button:focus-visible {
 .hero .hero__sub span {
   display: block;
   text-wrap: balance;
+}
+
+/* The way in: quiet, explicit. */
+.hero .hero__next {
+  order: 3;
+  margin-top: 1.75rem;
+  padding: 0.6rem 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border-bottom: 1px solid rgba(250, 152, 1, 0.45);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero .hero__next:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.hero .hero__next span {
+  display: inline-block;
+  margin-left: 0.4em;
+}
+
+/* The fine lines are gone; the fallback grid draws majors only. */
+.hero__grid {
+  --grid-minor: transparent;
+}
+
+/* --- the mission, read in order ---------------------------------------------------
+   No glowing plate: the name is a quiet label, the first sentence is the
+   statement in the serif, and the two that follow it read as body text. */
+
+.mission__head {
+  padding-block: 1.1rem;
+}
+
+.mission__title {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+  letter-spacing: 0.14em;
+}
+
+.essay p.mission__text {
+  font-family: var(--sans);
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.essay p.mission__text--lead {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.mission__words .mission__text--lead + .mission__text {
+  margin-top: 1.25rem;
+}
+
+.mission__words .mission__text + .mission__text {
+  margin-top: 0.85rem;
+}
+
+.mission__words .mission__text--goal {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(250, 152, 1, 0.3);
+}
+
+.essay p.mission__text--goal {
+  font-family: var(--serif);
+  font-size: clamp(1.375rem, 1.9vw, 1.625rem);
+  line-height: 1.3;
+}
+
+@media (max-width: 759px) {
+  .mission__image {
+    aspect-ratio: auto;
+    height: 88px;
+    min-height: 0;
+  }
+
+  .mission__image img {
+    transform: scale(1.2);
+    object-position: 50% 45%;
+  }
 }

@@ -31,11 +31,11 @@
 }
 
 .instrument__figure .ins__grid--major {
-  stroke: rgba(250, 152, 1, 0.055);
+  stroke: rgba(250, 152, 1, 0.045);
 }
 
 .instrument__figure .ins__grid--minor {
-  stroke: rgba(250, 152, 1, 0.022);
+  stroke: rgba(250, 152, 1, 0.014);
 }
 
 /* Every word on the plate carries a halo of the plate's own tone, so the
@@ -52,7 +52,7 @@
 /* The conduits: forward in a quiet amber, the return in full amber. */
 .instrument__figure .ins__wire {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.42);
+  stroke: rgba(250, 152, 1, 0.62);
   stroke-width: 1.5;
   stroke-linecap: round;
 }
@@ -61,9 +61,23 @@
   stroke: var(--amber);
 }
 
+/* A rejected revision stops: the existing model is retained. */
+.instrument__figure .ins__wire--reject {
+  stroke: rgba(250, 152, 1, 0.45);
+  stroke-dasharray: 4 5;
+}
+
+.instrument__figure text.ins__label--reject {
+  fill: var(--ink-3);
+}
+
+.instrument__figure text.ins__label--record {
+  fill: rgba(250, 152, 1, 0.85);
+}
+
 .instrument__figure .ins__head {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.7);
+  stroke: rgba(250, 152, 1, 0.9);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;

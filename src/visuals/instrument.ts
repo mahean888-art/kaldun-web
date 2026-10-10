@@ -1,17 +1,19 @@
 /**
  * The learning loop, as one instrument.
  *
- * Six stations on a strict grid, read clockwise: Observe, Model and Compare
- * actions across the top; Record expectations, Evaluate outcomes and Test
- * corrections back along the bottom. Past Compare actions the conduit opens
- * into three paths: the options, each run forward. Record expectations is
- * the sealed diamond, the point past which the claim cannot change. The
- * return arm closes the loop up the left: keep the original forecast.
+ * Six stations on a strict grid. Observe feeds Model as evidence arrives;
+ * Model, Compare actions and Record expectations follow, then Score
+ * expectations and Test revisions back along the bottom. Past Compare actions
+ * the conduit opens into three paths: the options, each run forward. Record
+ * expectations is the sealed diamond, the point past which the claim cannot
+ * change, and the original record is preserved there. A tested revision
+ * branches: accepted, it returns to Model as a new version; rejected, the
+ * existing model is retained.
  *
  * On entering, the conduits draw in. Then one amber mark travels the loop,
- * pausing at each station and lighting it, and goes round again. It runs
- * only while the figure is on screen and the tab is visible. Under reduced
- * motion everything is simply present and nothing travels.
+ * pausing at each station and lighting it; after the first pass it goes round
+ * again from Model. It runs only while the figure is on screen and the tab is
+ * visible. Under reduced motion everything is simply present.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
@@ -23,15 +25,17 @@ type Point = { x: number; y: number };
 type Stop = { key: string; p: Point };
 
 const STATIONS: Station[] = [
-  { key: 'observe', name: 'Observe', sub: 'Evidence as it arrives' },
-  { key: 'model', name: 'Model', sub: 'The institution and its world' },
-  { key: 'compare', name: 'Compare actions', sub: 'Each option run forward' },
-  { key: 'record', name: 'Record expectations', sub: 'Committed before the outcome' },
-  { key: 'evaluate', name: 'Evaluate outcomes', sub: 'Scored against what happened' },
-  { key: 'test', name: 'Test corrections', sub: 'On cases held out' },
+  { key: 'observe', name: 'Observe', sub: 'Evidence, with its source and time' },
+  { key: 'model', name: 'Model', sub: 'The institution and its dependencies' },
+  { key: 'compare', name: 'Compare actions', sub: 'Consequences under stated assumptions' },
+  { key: 'record', name: 'Record expectations', sub: 'Preserve the action and model version' },
+  { key: 'score', name: 'Score expectations', sub: 'Compare with observed outcomes' },
+  { key: 'test', name: 'Test revisions', sub: 'Evaluate on separate cases' },
 ];
 
-const RETURN_LABEL = 'KEEP THE ORIGINAL FORECAST';
+const ACCEPT_LABEL = 'ACCEPTED · NEW MODEL VERSION';
+const REJECT_LABEL = 'REJECTED · MODEL RETAINED';
+const RECORD_LABEL = 'ORIGINAL RECORD PRESERVED';
 
 const DRAW_MS = 900;
 const HOLD_MS = 1100;
@@ -114,10 +118,16 @@ function stationBeside(s: Station, i: number, x: number, y: number, lx: number):
     </g>`;
 }
 
-/** A caption too long for the narrow plate breaks after its comma. */
+/** A caption too long for the narrow plate breaks after its comma, or else
+    at the space nearest its middle. */
 function lines(text: string): string[] {
+  if (text.length <= 26) return [text];
   const at = text.indexOf(', ');
-  return text.length > 26 && at > 0 ? [text.slice(0, at + 1), text.slice(at + 2)] : [text];
+  if (at > 0) return [text.slice(0, at + 1), text.slice(at + 2)];
+  const mid = text.length / 2;
+  let best = -1;
+  for (let i = text.indexOf(' '); i >= 0; i = text.indexOf(' ', i + 1)) if (best < 0 || Math.abs(i - mid) < Math.abs(best - mid)) best = i;
+  return best > 0 ? [text.slice(0, best), text.slice(best + 1)] : [text];
 }
 
 type Layout = { svg: string; stops: Stop[] };
@@ -136,7 +146,6 @@ function landscape(): Layout {
   const T = 240;
   const B = 480;
   const R = 1100;
-  const L = 100;
   const K = 22; // corner radius
   const G = 20; // where a conduit stops short of a node
   const W = 1200;
@@ -147,10 +156,17 @@ function landscape(): Layout {
     model: { x: C[1]!, y: T },
     compare: { x: C[2]!, y: T },
     record: { x: C[2]!, y: B },
-    evaluate: { x: C[1]!, y: B },
+    score: { x: C[1]!, y: B },
     test: { x: C[0]!, y: B },
   };
   const stops: Stop[] = STATIONS.map((s) => ({ key: s.key, p: at[s.key]! }));
+
+  // The branch after Test revisions: out to the left, then either up and back
+  // into the conduit before Model (accepted), or on to a stop (rejected).
+  const JX = 128; // where the branch turns up
+  const MY = 360; // the middle row, clear of every label
+  const IN = 420; // where an accepted revision rejoins the conduit to Model
+  const accepted = `M ${C[0]! - G} ${B} H ${JX + K} Q ${JX} ${B} ${JX} ${B - K} V ${MY + K} Q ${JX} ${MY} ${JX + K} ${MY} H ${IN - K} Q ${IN} ${MY} ${IN} ${MY - K} V ${T + 12}`;
 
   const wires = [
     `<path class="ins__wire" data-arrow d="M ${C[0]! + G} ${T} H ${C[1]! - G}" />`,
@@ -158,8 +174,9 @@ function landscape(): Layout {
     `<path class="ins__wire" data-arrow d="M ${C[2]! + G} ${T} H ${R - K} Q ${R} ${T} ${R} ${T + K} V ${B - K} Q ${R} ${B} ${R - K} ${B} H ${C[2]! + G}" />`,
     `<path class="ins__wire" data-arrow d="M ${C[2]! - G} ${B} H ${C[1]! + G}" />`,
     `<path class="ins__wire" data-arrow d="M ${C[1]! - G} ${B} H ${C[0]! + G}" />`,
-    `<path class="ins__wire ins__wire--return" data-arrow d="M ${C[0]! - G} ${B} H ${L + K} Q ${L} ${B} ${L} ${B - K} V ${T + K} Q ${L} ${T} ${L + K} ${T} H ${C[0]! - G}" />`,
+    `<path class="ins__wire ins__wire--return" data-arrow d="${accepted}" />`,
   ].join('');
+  const reject = `<path class="ins__wire ins__wire--reject" d="M ${JX} ${B - K} V ${B + 62} M ${JX - 9} ${B + 62} H ${JX + 9}" />`;
 
   // Past Compare actions the conduit opens into three thin paths: the
   // options, each run forward. The middle one is the conduit itself.
@@ -173,17 +190,19 @@ function landscape(): Layout {
 
   const stations = STATIONS.map((st, i) => stationAcross(st, i, at[st.key]!.x, at[st.key]!.y)).join('');
 
-  const mid = (T + B) / 2;
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${DEFS}
     ${grid(W, H, 120, 24)}
     ${fan}
     ${wires}
+    ${reject}
     ${stations}
-    <text class="ins__label ins__label--return" x="${L - 16}" y="${mid}" transform="rotate(-90 ${L - 16} ${mid})" text-anchor="middle">${RETURN_LABEL}</text>
+    <text class="ins__label ins__label--return" x="${IN + 14}" y="${MY - 30}">${ACCEPT_LABEL}</text>
+    <text class="ins__label ins__label--reject" x="${JX + 18}" y="${B + 76}">${REJECT_LABEL}</text>
+    <text class="ins__label ins__label--record" x="${C[2]}" y="${B + 76}" text-anchor="middle">${RECORD_LABEL}</text>
     <rect class="ins__token" x="-6" y="-6" width="12" height="12" data-token />
-    <path class="ins__route" data-loop d="M ${C[0]} ${T} H ${R - K} Q ${R} ${T} ${R} ${T + K} V ${B - K} Q ${R} ${B} ${R - K} ${B} H ${L + K} Q ${L} ${B} ${L} ${B - K} V ${T + K} Q ${L} ${T} ${L + K} ${T} H ${C[0]}" />
+    <path class="ins__route" data-loop d="M ${C[0]} ${T} H ${R - K} Q ${R} ${T} ${R} ${T + K} V ${B - K} Q ${R} ${B} ${R - K} ${B} H ${JX + K} Q ${JX} ${B} ${JX} ${B - K} V ${MY + K} Q ${JX} ${MY} ${JX + K} ${MY} H ${IN - K} Q ${IN} ${MY} ${IN} ${MY - K} V ${T + K} Q ${IN} ${T} ${IN + K} ${T} H ${C[1]}" />
   </svg>`;
   return { svg, stops };
 }
@@ -196,20 +215,21 @@ function portrait(): Layout {
   const K = 22;
   const G = 22;
   // The first row is left for the figure's heading.
-  const Y: Record<string, number> = { observe: 220, model: 400, compare: 580, record: 760, evaluate: 940, test: 1120 };
+  const Y: Record<string, number> = { observe: 220, model: 400, compare: 580, record: 760, score: 960, test: 1140 };
   const W = 640;
-  const H = 1280;
+  const H = 1320;
 
   const keys = STATIONS.map((st) => st.key);
   const y = (k: string): number => Y[k]!;
   const stops: Stop[] = keys.map((key) => ({ key, p: { x: X, y: y(key) } }));
 
-  const first = y(keys[0]!);
+  const back = y('model'); // an accepted revision returns to Model
   const last = y(keys[keys.length - 1]!);
   const wires = [
     ...keys.slice(0, -1).map((k, i) => `<path class="ins__wire" data-arrow d="M ${X} ${y(k) + G} V ${y(keys[i + 1]!) - G}" />`),
-    `<path class="ins__wire ins__wire--return" data-arrow d="M ${X - G} ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${first + K} Q ${RET} ${first} ${RET + K} ${first} H ${X - G}" />`,
+    `<path class="ins__wire ins__wire--return" data-arrow d="M ${X - G} ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${back + K} Q ${RET} ${back} ${RET + K} ${back} H ${X - G}" />`,
   ].join('');
+  const reject = `<path class="ins__wire ins__wire--reject" d="M ${X} ${last + G} V ${last + 120} M ${X - 12} ${last + 120} H ${X + 12}" />`;
 
   const s = 16;
   const a = y('compare') + G;
@@ -221,17 +241,20 @@ function portrait(): Layout {
 
   const stations = STATIONS.map((st, i) => stationBeside(st, i, X, y(st.key), LX)).join('');
 
-  const mid = (first + last) / 2;
+  const mid = (back + last) / 2;
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     ${DEFS}
     ${grid(W, H, 80)}
     ${fan}
     ${wires}
+    ${reject}
     ${stations}
-    <text class="ins__label ins__label--return" x="${RET - 16}" y="${mid}" transform="rotate(-90 ${RET - 16} ${mid})" text-anchor="middle">${RETURN_LABEL}</text>
+    <text class="ins__label ins__label--return" x="${RET - 16}" y="${mid}" transform="rotate(-90 ${RET - 16} ${mid})" text-anchor="middle">${ACCEPT_LABEL}</text>
+    <text class="ins__label ins__label--reject" x="${LX}" y="${last + 126}">${REJECT_LABEL}</text>
+    <text class="ins__label ins__label--record" x="${LX}" y="${y('record') + 126}">${RECORD_LABEL}</text>
     <rect class="ins__token" x="-7" y="-7" width="14" height="14" data-token />
-    <path class="ins__route" data-loop d="M ${X} ${first} V ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${first + K} Q ${RET} ${first} ${RET + K} ${first} H ${X}" />
+    <path class="ins__route" data-loop d="M ${X} ${y('observe')} V ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${back + K} Q ${RET} ${back} ${RET + K} ${back} H ${X}" />
   </svg>`;
   return { svg, stops };
 }
@@ -328,10 +351,10 @@ export function initInstrument(host: HTMLElement): InstrumentHandle {
 
     if (pos >= target) {
       if (next >= marks.length) {
-        // Back at the start: State again.
-        pos = 0;
-        next = 1;
-        light(STATIONS[0]!.key);
+        // An accepted revision has reached Model: round again from there.
+        pos = marks[1]!.at;
+        next = 2;
+        light(marks[1]!.key);
       } else {
         light(marks[next]!.key);
         next += 1;

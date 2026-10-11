@@ -15,8 +15,10 @@
  * failure the repo line still pays on day 1 and sale proceeds arrive a day
  * late, and repo and sale draw on the same bills, never counted twice.
  *
- * The screen leads with the finding, then the dependency the disruption hits,
- * then the consequence, then the alternatives.
+ * The screen reads top to bottom: the scenario, the finding, what the
+ * disruption reaches beside its consequence over time, then every
+ * arrangement under the same scenario. Assumptions and method stay folded.
+ * On first view the fourteen days run out from day 0, once.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
@@ -226,10 +228,11 @@ function frame(): string {
     .map((v) => `<text class="rs__tick" x="${P.l - 12}" y="${Y(v) + 4}" text-anchor="end">${v}%</text>`)
     .join('');
   // The key: in one row on the wide drawing, stacked beneath the narrow one.
+  // On the narrow one the day-1 line goes unlabelled; the scenario names it.
   const stacked = KEY2 < 0;
   const ky = stacked ? H - 12 : H - 4;
   const k1 = `<path class="rs__reach" d="M ${P.l} ${ky - 4} h 18" /><text x="${P.l + 26}" y="${ky}">Funds available</text>`;
-  const k2x = stacked ? P.l + 150 : P.l + KEY2;
+  const k2x = stacked ? P.l + 122 : P.l + KEY2;
   const k2 = `<path class="rs__due" d="M ${k2x} ${ky - 4} h 18" /><text x="${k2x + 26}" y="${ky}">Cumulative demand</text>`;
   const ghostKey =
     KEY3 > 0
@@ -241,13 +244,17 @@ function frame(): string {
     ${dayLabels}${valLabels}
     ${stacked ? '' : `<text class="rs__unit rs__unit--day" x="${W - P.r}" y="${H - 6}" text-anchor="end">Day</text>`}
     <text class="rs__unit" x="${P.l}" y="${P.t - 10}">Share of initial reserves</text>
-    <g class="rs__shock"><path d="M${Math.round(X(1)) + 0.5} ${P.t}V${H - P.b}" /><text x="${X(1) + 8}" y="${P.t + 14}">Access interrupted</text></g>
-    <g class="rs__support" data-rs-support><path d="" /><text x="0" y="${P.t + 14}"></text></g>
-    <g class="rs__ghost" data-rs-ghost><path class="rs__ghost-due" d="" /><path class="rs__ghost-reach" d="" /><text x="0" y="0">Saved</text></g>
-    <path class="rs__gap" data-rs-gap d="" />
-    <path class="rs__due" data-rs-due d="" />
-    <path class="rs__reach" data-rs-reach d="" />
-    <g class="rs__fail" data-rs-fail><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)" /><text x="0" y="-18" text-anchor="middle"></text></g>
+    <clipPath id="rs-run"><rect data-rs-clip x="0" y="0" width="${W}" height="${H}" /></clipPath>
+    <g clip-path="url(#rs-run)">
+      <g class="rs__shock"><path d="M${Math.round(X(1)) + 0.5} ${P.t}V${H - P.b}" />${stacked ? '' : `<text x="${X(1) + 8}" y="${P.t + 14}">Access interrupted</text>`}</g>
+      <g class="rs__support" data-rs-support><path d="" /><text x="0" y="${P.t + 14}"></text></g>
+      <g class="rs__ghost" data-rs-ghost><path class="rs__ghost-due" d="" /><path class="rs__ghost-reach" d="" /><text x="0" y="0">Saved</text></g>
+      <path class="rs__gap" data-rs-gap d="" />
+      <path class="rs__due" data-rs-due d="" />
+      <path class="rs__reach" data-rs-reach d="" />
+      <g class="rs__fail" data-rs-fail><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)" /><text x="0" y="-18" text-anchor="middle"></text></g>
+    </g>
+    <g class="rs__cursor" data-rs-cursor style="display:none"><path d="M0 ${P.t}V${H - P.b}" /><text x="6" y="${H - P.b - 8}"></text></g>
     <g class="rs__key">${k1}${k2}${ghostKey}</g>`;
 }
 
@@ -262,52 +269,54 @@ function composition(sc: Scenario): Part[] {
   return parts;
 }
 
-/** What each assumption currently holds, in words, and in brief for "was". */
+/** What each assumption currently holds, in brief, and the shorter form shown
+    as "was" once it changes. */
 function assumptions(sc: Scenario): Record<string, { detail: string; brief: string }> {
   const hasBills = sc.arr === 'bills';
+  const perDay = sc.shock === 'common' ? 20 : 40;
   return {
-    obligation: { detail: 'Every token redeemable for a dollar, on any day', brief: '' },
+    obligation: { detail: 'At par, on demand, every day', brief: '' },
     shock: {
       detail:
         sc.shock === 'partner'
-          ? 'Lost at one partner bank from day 1, when it fails'
+          ? 'Lost at one bank from day 1'
           : sc.shock === 'common'
-            ? 'Lost at all but one bank from day 1, under funding stress'
-            : 'Every account settles through the failed route, so all are unreachable',
-      brief: sc.shock === 'partner' ? 'one partner bank' : sc.shock === 'common' ? 'stress across banks' : 'shared route',
+            ? 'Lost at all but one bank from day 1'
+            : 'Unreachable while the shared route is down',
+      brief: sc.shock === 'partner' ? 'one bank' : sc.shock === 'common' ? 'all but one bank' : 'route down',
     },
     route: {
       detail:
         sc.shock === 'route'
-          ? `The banks’ shared route fails on day 1 and recovers on day ${ROUTE_RECOVERY} (assumed); Treasuries settle through a separate dealer route`
-          : 'The banks share one settlement route, which keeps working; Treasuries settle through a separate dealer route',
+          ? `Bank route down until day ${ROUTE_RECOVERY} (assumed); Treasuries use a separate dealer route`
+          : 'Banks share one route; Treasuries use a separate dealer route',
       brief: sc.shock === 'route' ? 'route down' : 'route working',
     },
     liquidity: {
       detail: !hasBills
-        ? 'No bills held; deposits only'
+        ? 'None held'
         : sc.shock === 'route'
-          ? `Repo raises ${REPO_DAY1}% on day 1; sale proceeds arrive a day late. Together never more than the bills`
-          : `Bills reach cash at ${sc.shock === 'common' ? 20 : 40}% of reserves a day`,
-      brief: !hasBills ? 'no bills' : sc.shock === 'route' ? 'repo only on day 1' : `${sc.shock === 'common' ? 20 : 40}% a day`,
+          ? `Repo raises ${REPO_DAY1}% on day 1; sale proceeds a day late`
+          : `Bills turn to cash at ${perDay}% of reserves a day`,
+      brief: !hasBills ? 'none held' : sc.shock === 'route' ? 'repo on day 1' : `${perDay}% a day`,
     },
     pace: {
-      detail: `${Math.round(PACE[sc.pace] * 100)}% of remaining supply a day, faster when access is impaired (assumed)`,
+      detail: `${Math.round(PACE[sc.pace] * 100)}% of supply a day, faster while access is impaired`,
       brief: sc.pace,
     },
     support: {
       detail:
         sc.shock === 'route'
-          ? 'Not relevant: no bank has failed, and protection does not repair a route'
+          ? 'Does not apply: no bank has failed'
           : sc.support === 'none'
-            ? 'None assumed'
-            : `Deposits at the affected banks become accessible on day ${sc.support}`,
+            ? 'None'
+            : `Day ${sc.support}, at the affected banks`,
       brief: sc.support === 'none' ? 'none' : `day ${sc.support}`,
     },
   };
 }
 
-const OUTCOME = (r: Run): string => (r.fails === null ? `No shortfall within ${DAYS} days` : `Shortfall begins: day ${r.fails}`);
+const OUTCOME = (r: Run): string => (r.fails === null ? 'No shortfall' : `Shortfall, day ${r.fails}`);
 const same = (a: Scenario, b: Scenario): boolean =>
   a.arr === b.arr && a.shock === b.shock && a.pace === b.pace && a.support === b.support;
 
@@ -322,16 +331,6 @@ export function initReserve(host: HTMLElement): void {
   const statusText = host.querySelector<HTMLElement>('[data-engine-status-text]');
   const status = host.querySelector<HTMLElement>('[data-engine-status]');
   const commit = host.querySelector<HTMLButtonElement>('[data-engine-commit]');
-
-  // On wide screens the assumptions sit open beside the case; on a phone
-  // they fold beneath it, so the finding and the run come first.
-  const wide = window.matchMedia('(min-width: 1000px)');
-  const folds = Array.from(host.querySelectorAll<HTMLDetailsElement>('[data-engine-explore], [data-engine-sources]'));
-  const setFolds = (): void => {
-    for (const d of folds) d.open = wide.matches;
-  };
-  setFolds();
-  wide.addEventListener('change', setFolds);
 
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('role', 'img');
@@ -375,6 +374,37 @@ export function initReserve(host: HTMLElement): void {
     label.setAttribute('y', String(lv > 85 ? Y(lv) + 16 : Y(lv) - 7));
   };
 
+  /** The first view: the fourteen days run out from day 0, once. */
+  let swept = reduced;
+  let sweepRaf = 0;
+  const SWEEP_MS = 2200;
+  const sweepTo = (t: number): void => {
+    const clip = svg.querySelector<SVGRectElement>('[data-rs-clip]');
+    const cursor = svg.querySelector<SVGGElement>('[data-rs-cursor]');
+    if (!clip || !cursor) return;
+    if (t >= 1) {
+      clip.setAttribute('width', String(W));
+      cursor.style.display = 'none';
+      return;
+    }
+    const day = t * DAYS;
+    const x = X(day);
+    clip.setAttribute('width', x.toFixed(1));
+    cursor.style.display = '';
+    cursor.setAttribute('transform', `translate(${x.toFixed(1)} 0)`);
+    cursor.querySelector('text')!.textContent = `Day ${Math.floor(day)}`;
+  };
+  const sweep = (): void => {
+    const start = performance.now();
+    const step = (now: number): void => {
+      const t = Math.min(1, (now - start) / SWEEP_MS);
+      sweepTo(t);
+      if (t < 1) sweepRaf = requestAnimationFrame(step);
+      else swept = true;
+    };
+    sweepRaf = requestAnimationFrame(step);
+  };
+
   const draw = (): void => {
     setSize(size);
     narrow = size !== 'wide';
@@ -389,6 +419,7 @@ export function initReserve(host: HTMLElement): void {
     support = svg.querySelector<SVGGElement>('[data-rs-support]')!;
     ghost = svg.querySelector<SVGGElement>('[data-rs-ghost]')!;
     paintGhost();
+    if (!swept && !sweepRaf) sweepTo(0);
   };
 
   const read = (): Scenario => {
@@ -438,6 +469,11 @@ export function initReserve(host: HTMLElement): void {
       const late = sx > W * 0.68;
       t.setAttribute('x', String(late ? sx - 8 : sx + 8));
       t.setAttribute('text-anchor', late ? 'end' : 'start');
+      // If demand runs along the top where the label would sit, it drops
+      // beneath the line instead of crossing it.
+      const span = late ? [run.access - 4, run.access] : [run.access, run.access + 4];
+      const high = Math.max(...due.slice(Math.max(0, span[0]!), Math.min(DAYS, span[1]!) + 1));
+      t.setAttribute('y', String(high > 86 ? Y(high) + 22 : P.t + 14));
       t.textContent = sc.shock === 'route' ? 'Route recovers' : 'Protection';
     }
   };
@@ -452,7 +488,7 @@ export function initReserve(host: HTMLElement): void {
       row.dataset['fails'] = r.fails === null ? 'none' : String(r.fails);
       row.querySelector('[data-col="outcome"]')!.textContent = OUTCOME(r);
       row.querySelector('[data-col="reach"]')!.textContent = `${Math.round(r.reach[1]!)}%`;
-      row.querySelector('[data-col="cost"]')!.innerHTML = `${r.cost}<small>${r.basis}</small>`;
+      row.querySelector('[data-col="cost"]')!.textContent = r.cost;
       // Spreading accounts does not spread access when they share one route.
       const flag = row.querySelector<HTMLElement>('[data-flag]');
       if (flag) flag.hidden = !(sc.shock === 'route' && arr !== 'one');
@@ -474,11 +510,11 @@ export function initReserve(host: HTMLElement): void {
     map.innerHTML =
       `<div class="emap__col"><p class="emap__h">Holdings</p><ul>` +
       banks.map((b) => node(b.frozen ? 'is-hit' : '', `${b.name} · ${b.share}%`, b.frozen ? 'Access lost' : '')).join('') +
-      (bills ? node('is-bills', `Treasury bills · ${bills.share}%`, routeDown ? 'Sale proceeds a day late' : '') : '') +
+      (bills ? node('is-bills', `Treasury bills · ${bills.share}%`, routeDown ? 'Sale a day late' : '') : '') +
       `</ul></div>` +
-      `<div class="emap__col"><p class="emap__h">Access route</p><ul>` +
-      node(routeDown ? 'is-hit' : '', banks.length > 1 ? 'Shared settlement route' : 'Settlement route', routeDown ? `Down until day ${ROUTE_RECOVERY}` : `Serves ${banks.length > 1 ? 'all four banks' : 'the bank'}`) +
-      (bills ? node('', 'Dealer route', 'Separate; repo pays on day 1') : '') +
+      `<div class="emap__col"><p class="emap__h">Route</p><ul>` +
+      node(routeDown ? 'is-hit' : '', banks.length > 1 ? 'Shared bank route' : 'Bank route', routeDown ? `Down until day ${ROUTE_RECOVERY}` : '') +
+      (bills ? node('', 'Dealer route', routeDown ? 'Repo pays on day 1' : '') : '') +
       `</ul></div>` +
       `<div class="emap__col"><p class="emap__h">Obligation</p><ul>` +
       node('is-duty', 'Redemptions', 'At par, on demand') +
@@ -577,4 +613,21 @@ export function initReserve(host: HTMLElement): void {
   size = sizeFor(chart.clientWidth);
   draw();
   update();
+
+  if (!swept) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) begin();
+      },
+      { threshold: 0.5 },
+    );
+    // A reader who changes the scenario before scrolling on starts the run.
+    const begin = (): void => {
+      io.disconnect();
+      form.removeEventListener('change', begin);
+      if (!sweepRaf) sweep();
+    };
+    io.observe(chart);
+    form.addEventListener('change', begin);
+  }
 }

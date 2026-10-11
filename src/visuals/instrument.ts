@@ -1,14 +1,12 @@
 /**
  * The learning loop, as one instrument.
  *
- * Six stations on a strict grid. Observe feeds Model as evidence arrives;
- * Model, Compare actions and Record expectations follow, then Score
- * expectations and Test revisions back along the bottom. Past Compare actions
- * the conduit opens into three paths: the options, each run forward. Record
- * expectations is the sealed diamond, the point past which the claim cannot
- * change, and the original record is preserved there. A tested revision
- * branches: accepted, it returns to Model as a new version; rejected, the
- * existing model is retained.
+ * Six stations on a strict grid, named and nothing more: Observe, Model and
+ * Compare actions along the top, then Record expectations, Score expectations
+ * and Test revisions back along the bottom. Record expectations is the sealed
+ * diamond, the point past which the claim cannot change. One conduit returns
+ * from Test revisions to Model, labelled once: a revision is adopted only if
+ * it proves better. The rest is said in the caption, not on the drawing.
  *
  * On entering, the conduits draw in. Then one amber mark travels the loop,
  * pausing at each station and lighting it; after the first pass it goes round
@@ -20,41 +18,23 @@ import { prefersReducedMotion } from '../lib/prefers';
 
 export type InstrumentHandle = { destroy: () => void };
 
-type Station = { key: string; name: string; sub: string };
+type Station = { key: string; name: string };
 type Point = { x: number; y: number };
 type Stop = { key: string; p: Point };
 
 const STATIONS: Station[] = [
-  { key: 'observe', name: 'Observe', sub: 'Evidence, with its source and time' },
-  { key: 'model', name: 'Model', sub: 'The institution and its dependencies' },
-  { key: 'compare', name: 'Compare actions', sub: 'Consequences under stated assumptions' },
-  { key: 'record', name: 'Record expectations', sub: 'Preserve the action and model version' },
-  { key: 'score', name: 'Score expectations', sub: 'Compare with observed outcomes' },
-  { key: 'test', name: 'Test revisions', sub: 'Evaluate on separate cases' },
+  { key: 'observe', name: 'Observe' },
+  { key: 'model', name: 'Model' },
+  { key: 'compare', name: 'Compare actions' },
+  { key: 'record', name: 'Record expectations' },
+  { key: 'score', name: 'Score expectations' },
+  { key: 'test', name: 'Test revisions' },
 ];
 
-const ACCEPT_LABEL = 'ACCEPTED · NEW MODEL VERSION';
-const REJECT_LABEL = 'REJECTED · MODEL RETAINED';
-const RECORD_LABEL = 'ORIGINAL RECORD PRESERVED';
+const RETURN_LABEL = 'ADOPTED ONLY IF BETTER';
 
 const DRAW_MS = 900;
 const HOLD_MS = 1100;
-
-const DEFS = `
-  <defs>
-    <linearGradient id="ins-fade-x" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
-      <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
-    </linearGradient>
-    <linearGradient id="ins-fade-xr" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
-      <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
-    </linearGradient>
-    <linearGradient id="ins-fade-y" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fa9801" stop-opacity="0.6" />
-      <stop offset="1" stop-color="#fa9801" stop-opacity="0" />
-    </linearGradient>
-  </defs>`;
 
 const pad = (n: number): string => String(n).padStart(2, '0');
 
@@ -94,40 +74,24 @@ function node(key: string, x: number, y: number, r: number, vertical: boolean): 
       <rect class="ins__core" x="${x - c}" y="${y - c}" width="${2 * c}" height="${2 * c}" />`;
 }
 
-/** A station: index, name, node, caption. Labels centred over the node. */
+/** A station: index and name, centred over the node. */
 function stationAcross(s: Station, i: number, x: number, y: number): string {
   return `
     <g class="ins__station" data-station="${s.key}" data-x="${x}" data-y="${y}">
       <text class="ins__idx" x="${x}" y="${y - 74}" text-anchor="middle">${pad(i + 1)}</text>
       <text class="ins__name" x="${x}" y="${y - 28}" text-anchor="middle">${s.name}</text>
       ${node(s.key, x, y, 7, false)}
-      <text class="ins__sub" x="${x}" y="${y + 46}" text-anchor="middle">${s.sub}</text>
     </g>`;
 }
 
-/** A station beside a vertical spine: labels to the right of the node. */
+/** A station beside a vertical spine: index and name to the right of the node. */
 function stationBeside(s: Station, i: number, x: number, y: number, lx: number): string {
   return `
     <g class="ins__station" data-station="${s.key}" data-x="${x}" data-y="${y}">
       <text class="ins__idx" x="${lx}" y="${y - 30}">${pad(i + 1)}</text>
       <text class="ins__name" x="${lx}" y="${y + 14}">${s.name}</text>
       ${node(s.key, x, y, 9, true)}
-      <text class="ins__sub" x="${lx}" y="${y + 52}">${lines(s.sub)
-        .map((t, n) => `<tspan x="${lx}" dy="${n === 0 ? 0 : 34}">${t}</tspan>`)
-        .join('')}</text>
     </g>`;
-}
-
-/** A caption too long for the narrow plate breaks after its comma, or else
-    at the space nearest its middle. */
-function lines(text: string): string[] {
-  if (text.length <= 26) return [text];
-  const at = text.indexOf(', ');
-  if (at > 0) return [text.slice(0, at + 1), text.slice(at + 2)];
-  const mid = text.length / 2;
-  let best = -1;
-  for (let i = text.indexOf(' '); i >= 0; i = text.indexOf(' ', i + 1)) if (best < 0 || Math.abs(i - mid) < Math.abs(best - mid)) best = i;
-  return best > 0 ? [text.slice(0, best), text.slice(best + 1)] : [text];
 }
 
 type Layout = { svg: string; stops: Stop[] };
@@ -139,7 +103,8 @@ type Layout = { svg: string; stops: Stop[] };
  * of the plate left for the figure's heading. Under it all, the site's
  * drawing grid: majors every 120 (the launch screen's own lines, so each
  * station and both conduits sit on one), minors every 24. The bend down the
- * right at 1100, the return up the left at 100.
+ * right at 1100; the return runs out left of Test revisions, up, and back
+ * into the conduit just before Model.
  */
 function landscape(): Layout {
   const C = [240, 600, 960];
@@ -149,7 +114,7 @@ function landscape(): Layout {
   const K = 22; // corner radius
   const G = 20; // where a conduit stops short of a node
   const W = 1200;
-  const H = 600;
+  const H = 560;
 
   const at: Record<string, Point> = {
     observe: { x: C[0]!, y: T },
@@ -161,9 +126,9 @@ function landscape(): Layout {
   };
   const stops: Stop[] = STATIONS.map((s) => ({ key: s.key, p: at[s.key]! }));
 
-  // The branch after Test revisions: out to the left, then either up and back
-  // into the conduit before Model (accepted), or on to a stop (rejected).
-  const JX = 128; // where the branch turns up
+  // The return after Test revisions: out to the left, up, and back into the
+  // conduit before Model.
+  const JX = 128; // where the return turns up
   const MY = 360; // the middle row, clear of every label
   const IN = 420; // where an accepted revision rejoins the conduit to Model
   const accepted = `M ${C[0]! - G} ${B} H ${JX + K} Q ${JX} ${B} ${JX} ${B - K} V ${MY + K} Q ${JX} ${MY} ${JX + K} ${MY} H ${IN - K} Q ${IN} ${MY} ${IN} ${MY - K} V ${T + 12}`;
@@ -176,31 +141,14 @@ function landscape(): Layout {
     `<path class="ins__wire" data-arrow d="M ${C[1]! - G} ${B} H ${C[0]! + G}" />`,
     `<path class="ins__wire ins__wire--return" data-arrow d="${accepted}" />`,
   ].join('');
-  const reject = `<path class="ins__wire ins__wire--reject" d="M ${JX} ${B - K} V ${B + 62} M ${JX - 9} ${B + 62} H ${JX + 9}" />`;
-
-  // Past Compare actions the conduit opens into three thin paths: the
-  // options, each run forward. The middle one is the conduit itself.
-  const s = 12;
-  const a = C[2]! + G;
-  const fan = `
-    <g class="ins__fan ins__fan--right" data-fan>
-      <path d="M ${a} ${T} C ${a + 26} ${T}, ${a + 32} ${T - s}, ${a + 58} ${T - s} H ${R - 14}" />
-      <path d="M ${a} ${T} C ${a + 26} ${T}, ${a + 32} ${T + s}, ${a + 58} ${T + s} H ${R - 14}" />
-    </g>`;
-
   const stations = STATIONS.map((st, i) => stationAcross(st, i, at[st.key]!.x, at[st.key]!.y)).join('');
 
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    ${DEFS}
     ${grid(W, H, 120, 24)}
-    ${fan}
     ${wires}
-    ${reject}
     ${stations}
-    <text class="ins__label ins__label--return" x="${IN + 14}" y="${MY - 30}">${ACCEPT_LABEL}</text>
-    <text class="ins__label ins__label--reject" x="${JX + 18}" y="${B + 76}">${REJECT_LABEL}</text>
-    <text class="ins__label ins__label--record" x="${C[2]}" y="${B + 76}" text-anchor="middle">${RECORD_LABEL}</text>
+    <text class="ins__label ins__label--return" x="${IN + 16}" y="${MY + 5}">${RETURN_LABEL}</text>
     <rect class="ins__token" x="-6" y="-6" width="12" height="12" data-token />
     <path class="ins__route" data-loop d="M ${C[0]} ${T} H ${R - K} Q ${R} ${T} ${R} ${T + K} V ${B - K} Q ${R} ${B} ${R - K} ${B} H ${JX + K} Q ${JX} ${B} ${JX} ${B - K} V ${MY + K} Q ${JX} ${MY} ${JX + K} ${MY} H ${IN - K} Q ${IN} ${MY} ${IN} ${MY - K} V ${T + K} Q ${IN} ${T} ${IN + K} ${T} H ${C[1]}" />
   </svg>`;
@@ -215,9 +163,9 @@ function portrait(): Layout {
   const K = 22;
   const G = 22;
   // The first row is left for the figure's heading.
-  const Y: Record<string, number> = { observe: 220, model: 400, compare: 580, record: 760, score: 960, test: 1140 };
+  const Y: Record<string, number> = { observe: 200, model: 340, compare: 480, record: 620, score: 760, test: 900 };
   const W = 640;
-  const H = 1320;
+  const H = 1000;
 
   const keys = STATIONS.map((st) => st.key);
   const y = (k: string): number => Y[k]!;
@@ -229,30 +177,15 @@ function portrait(): Layout {
     ...keys.slice(0, -1).map((k, i) => `<path class="ins__wire" data-arrow d="M ${X} ${y(k) + G} V ${y(keys[i + 1]!) - G}" />`),
     `<path class="ins__wire ins__wire--return" data-arrow d="M ${X - G} ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${back + K} Q ${RET} ${back} ${RET + K} ${back} H ${X - G}" />`,
   ].join('');
-  const reject = `<path class="ins__wire ins__wire--reject" d="M ${X} ${last + G} V ${last + 120} M ${X - 12} ${last + 120} H ${X + 12}" />`;
-
-  const s = 16;
-  const a = y('compare') + G;
-  const fan = `
-    <g class="ins__fan ins__fan--down" data-fan>
-      <path d="M ${X} ${a} C ${X} ${a + 26}, ${X - s} ${a + 34}, ${X - s} ${a + 62} V ${a + 136}" />
-      <path d="M ${X} ${a} C ${X} ${a + 26}, ${X + s} ${a + 34}, ${X + s} ${a + 62} V ${a + 136}" />
-    </g>`;
-
   const stations = STATIONS.map((st, i) => stationBeside(st, i, X, y(st.key), LX)).join('');
 
   const mid = (back + last) / 2;
   const svg = `
   <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    ${DEFS}
     ${grid(W, H, 80)}
-    ${fan}
     ${wires}
-    ${reject}
     ${stations}
-    <text class="ins__label ins__label--return" x="${RET - 16}" y="${mid}" transform="rotate(-90 ${RET - 16} ${mid})" text-anchor="middle">${ACCEPT_LABEL}</text>
-    <text class="ins__label ins__label--reject" x="${LX}" y="${last + 126}">${REJECT_LABEL}</text>
-    <text class="ins__label ins__label--record" x="${LX}" y="${y('record') + 126}">${RECORD_LABEL}</text>
+    <text class="ins__label ins__label--return" x="${RET - 16}" y="${mid}" transform="rotate(-90 ${RET - 16} ${mid})" text-anchor="middle">${RETURN_LABEL}</text>
     <rect class="ins__token" x="-7" y="-7" width="14" height="14" data-token />
     <path class="ins__route" data-loop d="M ${X} ${y('observe')} V ${last} H ${RET + K} Q ${RET} ${last} ${RET} ${last - K} V ${back + K} Q ${RET} ${back} ${RET + K} ${back} H ${X}" />
   </svg>`;

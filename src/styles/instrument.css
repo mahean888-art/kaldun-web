@@ -61,20 +61,6 @@
   stroke: var(--amber);
 }
 
-/* A rejected revision stops: the existing model is retained. */
-.instrument__figure .ins__wire--reject {
-  stroke: rgba(250, 152, 1, 0.45);
-  stroke-dasharray: 4 5;
-}
-
-.instrument__figure text.ins__label--reject {
-  fill: var(--ink-3);
-}
-
-.instrument__figure text.ins__label--record {
-  fill: rgba(250, 152, 1, 0.85);
-}
-
 .instrument__figure .ins__head {
   fill: none;
   stroke: rgba(250, 152, 1, 0.9);
@@ -91,19 +77,6 @@
 .instrument__figure .ins__route {
   fill: none;
   stroke: none;
-}
-
-/* Futures: two thin paths part from the conduit and fade. */
-
-.instrument__figure .ins__fan path {
-  fill: none;
-  stroke: url(#ins-fade-x);
-  stroke-width: 1;
-  stroke-linecap: round;
-}
-
-.instrument__figure .ins__fan--down path {
-  stroke: url(#ins-fade-y);
 }
 
 /* A station: an open square with a small core, lit when the mark arrives. */
@@ -135,13 +108,6 @@
   letter-spacing: -0.005em;
   fill: var(--ink);
   transition: fill 0.5s ease;
-}
-
-.instrument__figure .ins__sub {
-  font-family: var(--sans);
-  font-size: 17px;
-  font-weight: 400;
-  fill: var(--ink-3);
 }
 
 .instrument__figure [data-live] .ins__node {
@@ -202,10 +168,8 @@
    about half scale. */
 .instrument__figure.is-portrait .ins__idx { font-size: 20px; }
 .instrument__figure.is-portrait .ins__name { font-size: 50px; }
-.instrument__figure.is-portrait .ins__sub { font-size: 28px; }
 .instrument__figure.is-portrait .ins__label { font-size: 20px; }
 .instrument__figure.is-portrait .ins__wire { stroke-width: 2.5; }
 .instrument__figure.is-portrait .ins__head { stroke-width: 2.5; }
-.instrument__figure.is-portrait .ins__fan path { stroke-width: 1.75; }
 .instrument__figure.is-portrait .ins__grid { stroke-width: 1.6; }
 .instrument__figure.is-portrait text { stroke-width: 14px; }

@@ -166,3 +166,9 @@ export function mountHome(root: ParentNode = document): void {
   const reserve = qs<HTMLElement>('[data-reserve]', root);
   if (reserve) initReserve(reserve);
 }
+
+export function mountExample(root: ParentNode = document): void {
+  wireEmail(root);
+  const reserve = qs<HTMLElement>('[data-reserve]', root);
+  if (reserve) initReserve(reserve);
+}

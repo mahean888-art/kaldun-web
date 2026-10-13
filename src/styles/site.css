@@ -831,7 +831,7 @@ a {
   55% { opacity: 0.16; }
 }
 
-/* In the bar: the page, in seven lamps, centred. */
+/* In the bar: the page, a lamp for each part, centred. */
 .lamps {
   position: absolute;
   left: 50%;
@@ -2996,4 +2996,58 @@ button:focus-visible {
   margin: 0;
   opacity: 0;
   cursor: pointer;
+}
+
+/* --- the interactive example, and the way to it ---------------------------------- */
+
+/* The link from the essay: quiet, explicit, amber. */
+.essay p.essay__example {
+  margin-top: 2rem;
+}
+
+.essay p.essay__example a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.55rem 0 0.45rem;
+  border-bottom: 1px solid rgba(250, 152, 1, 0.45);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--amber);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .essay p.essay__example a:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+}
+
+.essay p.essay__example--back {
+  margin-top: 3rem;
+}
+
+/* The example's own page: no hero, so the screen starts below the bar. */
+.main--page {
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
+}
+
+.bar .bar__back {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+/* On a phone the bar keeps its way back, even where the domain is hidden. */
+@media (max-width: 480px) {
+  .bar > a.bar__back {
+    display: block;
+  }
 }

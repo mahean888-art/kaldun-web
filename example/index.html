@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rehearsing a reserve decision — Foresight Machines</title>
+    <meta
+      name="description"
+      content="An interactive example from Foresight Machines: how an issuer could rehearse a reserve decision before access to its money is interrupted."
+    />
+    <meta name="theme-color" content="#0b0705" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://foresightmachines.com/example/" />
+    <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:title" content="Rehearsing a reserve decision — Foresight Machines" />
+    <meta property="og:description" content="Run the world forward before you decide." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://foresightmachines.com/example/" />
+    <meta property="og:image" content="https://foresightmachines.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Foresight Machines. Run the world forward before you decide." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Foresight Machines" />
+    <meta name="twitter:description" content="Run the world forward before you decide." />
+    <meta name="twitter:image" content="https://foresightmachines.com/og.png" />
+    <script type="module" src="/src/pages/example.ts"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="cap" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="bar" id="top">
+      <span class="bar__squares" aria-hidden="true"><i></i><i></i></span>
+      <a class="bar__back" href="/"><span aria-hidden="true">←</span> The launch essay</a>
+      <a class="bar__domain" href="/" aria-label="Foresight Machines — home">foresightmachines.com</a>
+    </header>
+
+    <main class="main main--page" id="main">
+      <section class="screen" id="example-screen" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Ex-01</span><span class="screen__name">Interactive example</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <article class="essay">
+            <h1 class="essay__title" id="running">Running a decision</h1>
+            <p>In March 2023, Silicon Valley Bank failed with $3.3 billion of Circle&rsquo;s USDC reserves on deposit. USDC broke its dollar peg. Authorities subsequently protected all SVB deposits, restoring access to the funds. A digital dollar transferable around the clock had depended on bank deposits its issuer could not immediately reach.</p>
+            <p class="essay__src"><span>Sources</span><a href="https://www.circle.com/pressroom/3-3-billion-of-usdc-reserve-risk-removed-dollar-de-peg-closes" target="_blank" rel="noopener">Circle&rsquo;s account</a><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20230312b.htm" target="_blank" rel="noopener">Official intervention</a></p>
+            <p>Before such a crisis, an issuer faces a practical question: how should it arrange its reserves so it can keep meeting redemptions when access to part of them is interrupted?</p>
+            <p>A foresight machine would connect the issuer&rsquo;s holdings to its banking partners, settlement arrangements, and redemption obligations. It would examine how rising rates and tighter funding could affect several counterparties at once, and how doubts about reserve access could accelerate demand for redemption. Spreading cash across banks may still leave it exposed to a common shock.</p>
+            <p>The issuer could compare changes to its banking mix, reserve liquidity, and backup funding. The machine would estimate the funds each arrangement could make available by a given deadline, the demand it could meet, and the cost of that protection. It would test timely policy support alongside delayed intervention and no intervention.</p>
+            <p>As evidence changed, the model would show which assumptions had weakened and which choices remained viable. The useful result is a comparison: how long each arrangement could withstand interrupted access, what extending that time would cost, and under which conditions it would fail to meet redemptions.</p>
+            <figure class="fig fig--reserve plate" data-reserve aria-labelledby="reserve-title">
+              <figcaption class="plate__head"><span class="plate__fig" id="reserve-title">Fig. 02 — Rehearsing a reserve decision</span><span class="plate__tag">Interactive case study · Example issuer</span></figcaption>
+              <p class="reserve__record"><b>Record</b><span>March 2023</span><span>$3.3 billion of USDC reserves at Silicon Valley Bank</span><span>Peg broken</span><span>Deposits protected 12 March</span></p>
+              <div class="engine" data-engine>
+                <div class="engine__bar">
+                  <span class="engine__brand"><span class="engine__mark" aria-hidden="true"><i></i><i></i></span>Foresight Machines</span>
+                  <span class="engine__crumbs"><span>Example issuer</span><span>Reserves</span><span aria-current="page">Decision</span></span>
+                  <span class="engine__status" data-engine-status role="status"><i aria-hidden="true"></i><span data-engine-status-text>Scenario ready</span></span>
+                  <button type="button" class="engine__commit" data-engine-commit>Save comparison</button>
+                </div>
+                <div class="engine__head">
+                  <p class="engine__kicker">Decision · open</p>
+                  <h4 class="engine__title">How should reserves be arranged to keep meeting redemptions under stress?</h4>
+                  <p class="engine__meta"><span class="engine__asof">Evidence as of day 0</span>Horizon 14 days · Shares of initial reserves, not balances</p>
+                </div>
+                <form class="engine__body" data-reserve-controls aria-label="Reserve decision">
+                  <div class="engine__scenario">
+                    <fieldset><legend>Disruption</legend>
+                      <label><input type="radio" name="shock" value="partner" checked /><span>One bank fails</span></label>
+                      <label><input type="radio" name="shock" value="common" /><span>Stress across banks</span></label>
+                      <label><input type="radio" name="shock" value="route" /><span>Shared route fails</span></label>
+                    </fieldset>
+                    <fieldset><legend>Redemptions</legend>
+                      <label><input type="radio" name="pace" value="slow" /><span>Slow</span></label>
+                      <label><input type="radio" name="pace" value="steady" /><span>Steady</span></label>
+                      <label><input type="radio" name="pace" value="fast" checked /><span>Fast</span></label>
+                    </fieldset>
+                    <fieldset><legend>Deposit protection</legend>
+                      <label><input type="radio" name="support" value="3" /><span>Day 3</span></label>
+                      <label><input type="radio" name="support" value="10" checked /><span>Day 10</span></label>
+                      <label><input type="radio" name="support" value="none" /><span>None</span></label>
+                    </fieldset>
+                  </div>
+                  <p class="engine__finding" data-engine-finding aria-live="polite"></p>
+                  <div class="engine__case">
+                    <div class="engine__map" data-engine-map></div>
+                    <div class="engine__chart" data-reserve-chart></div>
+                  </div>
+                  <fieldset class="engine__table">
+                    <legend class="engine__label">Every arrangement, same scenario</legend>
+                    <div class="engine__thead" aria-hidden="true"><span>Arrangement</span><span>Result</span><span>Funds, day 1</span><span>Cost (assumed)</span></div>
+                    <label class="engine__row"><input type="radio" name="arr" value="one" /><span class="engine__opt"><b>Concentrated</b><small>One bank</small></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
+                    <label class="engine__row"><input type="radio" name="arr" value="spread" checked /><span class="engine__opt"><b>Spread</b><small>Four banks</small><span class="engine__flag" data-flag hidden>Four accounts, one route</span></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
+                    <label class="engine__row"><input type="radio" name="arr" value="bills" /><span class="engine__opt"><b>Spread + Treasuries</b><small>Four banks, bills, a repo line</small><span class="engine__flag" data-flag hidden>Four accounts, one route</span></span><span class="engine__cell" data-col="outcome"></span><span class="engine__cell" data-col="reach"></span><span class="engine__cell" data-col="cost"></span></label>
+                  </fieldset>
+                  <details class="engine__fold engine__assume" data-engine-sources>
+                    <summary>Assumptions &amp; method</summary>
+                    <ul data-engine-assume>
+                      <li data-assume="obligation"><span class="engine__kind">Obligation</span><b>Redemptions</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="shock"><span class="engine__kind">Operating condition</span><b>Deposit access</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="route"><span class="engine__kind">Operating condition</span><b>Settlement routes</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="liquidity"><span class="engine__kind">Market constraint</span><b>Treasury sale and repo</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="pace"><span class="engine__kind">Behavioural estimate</span><b>Redemption speed</b><span data-assume-detail></span><em>Revised</em></li>
+                      <li data-assume="support"><span class="engine__kind">Scenario</span><b>Deposit protection</b><span data-assume-detail></span><em>Revised</em></li>
+                    </ul>
+                    <p class="engine__notes">The issuer and its banks are illustrative, not Circle&rsquo;s position. Funds available are reachable deposits plus cash from Treasuries; repo and sale draw on the same bills and are never counted twice. Protection restores deposits at a failed bank, not a failed route. Costs are assumed categories, not a cost model.</p>
+                  </details>
+                </form>
+              </div>
+              <p class="plate__caption">Choose a disruption and see what it reaches: which money becomes unreachable, when redemptions outrun what remains, and which arrangement holds.</p>
+            </figure>
+            <p>The output is a rehearsal of the decision, while there is still time to make it differently.</p>
+            <p class="essay__example essay__example--back"><a href="/#capability"><span aria-hidden="true">←</span> Back to the launch essay</a></p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <div class="foot__top">
+          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="foot__name">Foresight Machines</span></p>
+          <p class="foot__clock" aria-live="off"><span>T₀</span><b data-clock>--:--:--</b><span data-clock-zone>PT</span></p>
+          <p class="foot__end"><a href="/">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
+        </div>
+        <div class="foot__cols">
+          <div class="foot__col foot__col--lead">
+            <p class="foot__mission">Making foresight a permanent capability of every consequential institution.</p>
+            <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
+          </div>
+          <nav class="foot__col" aria-label="Contact">
+            <p class="foot__head">Contact</p>
+            <ul class="foot__links">
+              <li><a href="/#decision">Bring us a decision<span aria-hidden="true">→</span></a></li>
+              <li><a href="#top">Back to top<span aria-hidden="true">↑</span></a></li>
+            </ul>
+            <p class="foot__copy">© 2026 Foresight Machines</p>
+          </nav>
+        </div>
+        <div class="foot__mark" data-foot-mark aria-hidden="true">
+          <svg viewBox="0 0 2000 92" preserveAspectRatio="xMidYMid meet">
+            <rect class="foot__sq" x="0" y="23" width="45" height="45" />
+            <rect class="foot__sq" x="69" y="23" width="45" height="45" />
+            <text x="180" y="91" textLength="1820" lengthAdjust="spacingAndGlyphs">FORESIGHT MACHINES</text>
+          </svg>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

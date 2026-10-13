@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite';
 
 /**
- * Two static documents: the launch essay, and its interactive example. All
- * copy is in the HTML, so each page is readable without JavaScript and
- * indexable by crawlers; TypeScript only enhances.
+ * One static document. All copy is in index.html, so the page is readable
+ * without JavaScript and indexable by crawlers; TypeScript only enhances.
  */
 export default defineConfig({
   base: './',
@@ -13,7 +12,7 @@ export default defineConfig({
     cssMinify: true,
     assetsInlineLimit: 0,
     rollupOptions: {
-      input: { home: 'index.html', example: 'example/index.html' },
+      input: { home: 'index.html' },
     },
   },
   server: {

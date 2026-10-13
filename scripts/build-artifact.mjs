@@ -60,9 +60,6 @@ const main = async () => {
     shell = shell.replace(new RegExp(`(?:\\./|/)?${name.replace('.', '\\.')}`, 'g'), data);
   }
 
-  // The example is a page of its own on the site; the single file links to it there.
-  shell = shell.split('href="/example/"').join('href="https://foresightmachines.com/example/" target="_blank" rel="noopener"');
-
   const cssPath = await findOne(OUT_DIR, '.css');
   const jsPath = await findOne(OUT_DIR, '.js');
   const css = await inlineFonts(await readFile(cssPath, 'utf8'));

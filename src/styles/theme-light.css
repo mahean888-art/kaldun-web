@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Light: the same machine on paper. Warm paper ground, near-black ink, amber
+   kept as the one accent — bright where it fills (the bar, the lamps, the
+   seal), deepened where it is read as text, so it holds its contrast.
+   ========================================================================== */
+
+:root {
+  --ground: #efebe3;
+  --clay: #f7f4ee;
+  --ground-svg: #f7f4ee;
+  --ground-rgb: 239, 235, 227;
+
+  --amber: #f39200;
+  --amber-rgb: 214, 118, 0;
+  --amber-text: #a35400;
+  --amber-ink: #2a1200;
+  --amber-dim: #451c0a;
+
+  --frame: rgba(23, 19, 15, 0.22);
+  --rule: rgba(23, 19, 15, 0.14);
+  --rule-col: rgba(23, 19, 15, 0.1);
+  --grid-major: rgba(214, 118, 0, 0.12);
+  --grid-minor: rgba(214, 118, 0, 0.04);
+
+  --ink: #17130f;
+  --ink-2: #2f2923;
+  --ink-3: #5c534a;
+  --ink-4: #82786e;
+
+  --mute: var(--ink-3);
+  --faint: rgba(214, 118, 0, 0.4);
+  --signal: #17130f;
+
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--ground);
+}
+
+/* Paper grain: dark fibres, very faint. */
+.grain {
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  filter: invert(1);
+}
+
+/* The hero's model, printed: the dark render inverted into a white study
+   model on paper, its shadows kept as soft greys. */
+.hero__photo img {
+  filter: grayscale(1) invert(1) brightness(1.04) contrast(0.92);
+}
+
+.hero__photo::after {
+  display: none;
+}
+
+.hero .hero__sub {
+  text-shadow: 0 1px 10px rgba(var(--ground-rgb), 0.95);
+}
+
+/* Screens: ruled paper plates on the ground, hairline-framed. */
+.screen {
+  box-shadow: 0 1px 0 rgba(23, 19, 15, 0.04), 0 18px 40px -28px rgba(23, 19, 15, 0.25);
+}
+
+/* The nameplate: large enough to carry a brighter amber than body labels. */
+.hero .hero__name {
+  color: #c46c00;
+}
+
+/* The mission: a paper panel; its image a printed amber halftone rather
+   than a dark screen. */
+.mission {
+  background-image: none;
+  box-shadow: 0 18px 40px -30px rgba(23, 19, 15, 0.3);
+}
+
+.mission__image {
+  background: var(--clay);
+}
+
+.mission__image img {
+  filter: grayscale(1) invert(1) contrast(2.1) brightness(1.12);
+}
+
+.mission__image::before {
+  background: #f7a12a;
+}
+
+.mission__image::after {
+  background:
+    repeating-linear-gradient(90deg, rgba(var(--ground-rgb), 0.55) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(180deg, rgba(var(--ground-rgb), 0.55) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse 75% 70% at 50% 50%, rgba(var(--ground-rgb), 0) 45%, rgba(var(--ground-rgb), 0.9) 100%);
+}
+
+.essay p.mission__strip,
+.mission__strip .bar__squares i,
+.mission__lamps i.is-lit {
+  text-shadow: none;
+  box-shadow: none;
+}

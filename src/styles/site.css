@@ -79,7 +79,7 @@ a {
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 .hero__sub {
@@ -174,11 +174,11 @@ a {
 }
 
 .essay a {
-  color: var(--amber);
+  color: var(--amber-text);
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgba(250, 152, 1, 0.5);
+  text-decoration-color: rgba(var(--amber-rgb), 0.5);
 }
 
 .essay p.essay__close {
@@ -222,7 +222,7 @@ a {
 
 .form input:focus,
 .form textarea:focus {
-  border-bottom-color: var(--amber);
+  border-bottom-color: var(--amber-text);
 }
 
 .btn {
@@ -262,7 +262,7 @@ a {
   content: '';
   position: absolute;
   inset: calc(var(--bar-h) + 6px) 6px 6px;
-  border: 1px solid rgba(250, 152, 1, 0.1);
+  border: 1px solid rgba(var(--amber-rgb), 0.1);
   pointer-events: none;
 }
 
@@ -318,7 +318,7 @@ a {
   line-height: 1.5;
   outline: none;
   transition: border-color 0.2s ease;
-  border-color: rgba(250, 152, 1, 0.24);
+  border-color: rgba(var(--amber-rgb), 0.24);
 }
 
 @media (max-width: 480px) {
@@ -342,8 +342,8 @@ a {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(11, 7, 5, 0.55) 0%, rgba(11, 7, 5, 0) 28%, rgba(11, 7, 5, 0) 58%, rgba(11, 7, 5, 0.92) 100%),
-    radial-gradient(ellipse 70% 60% at 50% 48%, rgba(11, 7, 5, 0.1) 0%, rgba(11, 7, 5, 0.55) 70%, rgba(11, 7, 5, 0.85) 100%);
+    linear-gradient(180deg, rgba(var(--ground-rgb), 0.55) 0%, rgba(var(--ground-rgb), 0) 28%, rgba(var(--ground-rgb), 0) 58%, rgba(var(--ground-rgb), 0.92) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 48%, rgba(var(--ground-rgb), 0.1) 0%, rgba(var(--ground-rgb), 0.55) 70%, rgba(var(--ground-rgb), 0.85) 100%);
 }
 
 /* --- figures set into the essay --------------------------------------------- */
@@ -407,7 +407,7 @@ a {
   position: absolute;
   inset: -18% -10%;
   z-index: -1;
-  background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(11, 7, 5, 0.86) 0%, rgba(11, 7, 5, 0.6) 48%, rgba(11, 7, 5, 0) 100%);
+  background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(var(--ground-rgb), 0.86) 0%, rgba(var(--ground-rgb), 0.6) 48%, rgba(var(--ground-rgb), 0) 100%);
   pointer-events: none;
 }
 
@@ -438,7 +438,7 @@ a {
   font-size: 0.6875rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 .hero__cross {
@@ -469,7 +469,7 @@ a {
   display: block;
   width: 8px;
   height: 8px;
-  background: rgba(250, 152, 1, 0.35);
+  background: rgba(var(--amber-rgb), 0.35);
   border: 1px solid var(--amber);
 }
 
@@ -523,8 +523,8 @@ a {
   line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--amber);
-  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 2px 14px rgba(11, 7, 5, 0.55);
+  color: var(--amber-text);
+  text-shadow: 0 1px 0 rgba(var(--ground-rgb), 0.9), 0 2px 14px rgba(var(--ground-rgb), 0.55);
   text-wrap: nowrap;
 }
 
@@ -552,7 +552,7 @@ a {
   letter-spacing: -0.015em;
   text-transform: none;
   color: var(--ink);
-  text-shadow: 0 1px 0 rgba(11, 7, 5, 0.9), 0 2px 18px rgba(11, 7, 5, 0.55);
+  text-shadow: 0 1px 0 rgba(var(--ground-rgb), 0.9), 0 2px 18px rgba(var(--ground-rgb), 0.55);
   max-width: 11em;
   text-wrap: balance;
 }
@@ -566,7 +566,7 @@ a {
   font-weight: 300;
   line-height: 1.35;
   color: var(--ink);
-  text-shadow: 0 1px 8px rgba(11, 7, 5, 0.95);
+  text-shadow: 0 1px 8px rgba(var(--ground-rgb), 0.95);
 }
 
 .is-loaded .hero__copy > :nth-child(1) {
@@ -603,8 +603,8 @@ a {
   border: 1px solid var(--frame);
   background-color: var(--clay);
   /* A quiet grid inside the plate: majors only, faint, held inside the frame. */
-  background-image: linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(var(--amber-rgb), 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--amber-rgb), 0.055) 1px, transparent 1px);
   background-size: 144px 144px;
   background-position: 0 var(--bar-h);
   background-clip: padding-box;
@@ -615,8 +615,8 @@ a {
 
 #essay-screen {
   background-image:
-    linear-gradient(rgba(250, 152, 1, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 152, 1, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(var(--amber-rgb), 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--amber-rgb), 0.055) 1px, transparent 1px);
   background-size: 120px 120px;
   background-position: calc(50% - 60px) var(--bar-h);
 }
@@ -668,9 +668,9 @@ a {
   /* A reticle: an open ring that the hairline stops at, with a tick above
      and below. */
   background:
-    radial-gradient(circle at center, var(--clay) 0 5.25px, rgba(250, 152, 1, 0.8) 5.25px 6.25px, transparent 6.75px),
-    linear-gradient(rgba(250, 152, 1, 0.8), rgba(250, 152, 1, 0.8)) 10px 0 / 1px 4px no-repeat,
-    linear-gradient(rgba(250, 152, 1, 0.8), rgba(250, 152, 1, 0.8)) 10px 17px / 1px 4px no-repeat;
+    radial-gradient(circle at center, var(--clay) 0 5.25px, rgba(var(--amber-rgb), 0.8) 5.25px 6.25px, transparent 6.75px),
+    linear-gradient(rgba(var(--amber-rgb), 0.8), rgba(var(--amber-rgb), 0.8)) 10px 0 / 1px 4px no-repeat,
+    linear-gradient(rgba(var(--amber-rgb), 0.8), rgba(var(--amber-rgb), 0.8)) 10px 17px / 1px 4px no-repeat;
 }
 
 @media (min-width: 900px) {
@@ -712,7 +712,7 @@ a {
 }
 
 .plate__fig {
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 /* The loop's plate spans the screen's interior, edge to edge, and holds its
@@ -904,7 +904,7 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(180deg, rgba(11, 7, 5, 0.2) 0 1px, transparent 1px 3px);
+  background: repeating-linear-gradient(180deg, rgba(var(--ground-rgb), 0.2) 0 1px, transparent 1px 3px);
 }
 
 /* The screen bar ends in a registration cross. */
@@ -926,12 +926,12 @@ a {
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.18em;
-  color: var(--amber);
+  color: var(--amber-text);
   display: block;
   width: fit-content;
   padding: 3px 6px 2px 7px;
-  border: 1px solid rgba(250, 152, 1, 0.55);
-  background: linear-gradient(rgba(250, 152, 1, 0.1), rgba(250, 152, 1, 0.1)), var(--clay);
+  border: 1px solid rgba(var(--amber-rgb), 0.55);
+  background: linear-gradient(rgba(var(--amber-rgb), 0.1), rgba(var(--amber-rgb), 0.1)), var(--clay);
   line-height: 1.4;
   margin-bottom: 0.75rem;
 }
@@ -961,7 +961,7 @@ a {
     width: 14px;
     height: 1px;
     margin-top: 0;
-    background: rgba(250, 152, 1, 0.55);
+    background: rgba(var(--amber-rgb), 0.55);
   }
 }
 
@@ -974,7 +974,7 @@ a {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1053,7 +1053,7 @@ a {
 }
 
 .foot__end a:hover {
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 .foot__cross {
@@ -1107,12 +1107,12 @@ a {
 
 .foot__arrow,
 .foot__links span {
-  color: var(--amber);
+  color: var(--amber-text);
   transition: transform 0.25s var(--ease-astro);
 }
 
 .foot__field:hover {
-  background-color: rgba(250, 152, 1, 0.06);
+  background-color: rgba(var(--amber-rgb), 0.06);
 }
 
 .foot__field:hover .foot__arrow,
@@ -1136,7 +1136,7 @@ a {
   justify-content: space-between;
   padding: 0.8rem 0 0.75rem;
   border-bottom: 1px solid var(--rule);
-  color: var(--amber);
+  color: var(--amber-text);
   letter-spacing: 0.16em;
 }
 
@@ -1162,7 +1162,7 @@ a {
   width: 100%;
   height: auto;
   overflow: visible;
-  filter: drop-shadow(0 0 7px rgba(250, 152, 1, 0.26));
+  filter: drop-shadow(0 0 7px rgba(var(--amber-rgb), 0.26));
   -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 3px, rgba(0, 0, 0, 0.42) 3px 4.5px);
   mask-image: repeating-linear-gradient(180deg, #000 0 3px, rgba(0, 0, 0, 0.42) 3px 4.5px);
 }
@@ -1219,7 +1219,7 @@ a {
   right: var(--hp);
   bottom: var(--hb);
   overflow: hidden;
-  border: 1px solid rgba(250, 152, 1, 0.55);
+  border: 1px solid rgba(var(--amber-rgb), 0.55);
   box-shadow: none;
 }
 
@@ -1234,8 +1234,8 @@ a {
     linear-gradient(var(--grid-minor) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
   background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
-  --grid-major: rgba(250, 152, 1, 0.2);
-  --grid-minor: rgba(250, 152, 1, 0.05);
+  --grid-major: rgba(var(--amber-rgb), 0.2);
+  --grid-minor: rgba(var(--amber-rgb), 0.05);
   background-position: 50% 50%;
 }
 
@@ -1249,13 +1249,13 @@ a {
 
 .hero__grid-major {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.2);
+  stroke: rgba(var(--amber-rgb), 0.2);
   stroke-width: 1;
 }
 
 .hero__grid-minor {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.05);
+  stroke: rgba(var(--amber-rgb), 0.05);
   stroke-width: 1;
 }
 
@@ -1263,7 +1263,7 @@ a {
    stop at them instead of running through the words. */
 .hero__mark {
   padding: 5px 8px;
-  background-color: rgba(11, 7, 5, 0.9);
+  background-color: rgba(var(--ground-rgb), 0.9);
 }
 
 .hero__mark--tl {
@@ -1312,7 +1312,7 @@ a {
   line-height: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(250, 152, 1, 0.82);
+  color: rgba(var(--amber-rgb), 0.82);
   white-space: nowrap;
 }
 
@@ -1344,21 +1344,21 @@ a {
 .lc i.a,
 .lc i.d.is-alt,
 .lc i.o.is-alt {
-  background-color: var(--amber);
-  box-shadow: 0 0 6px rgba(250, 152, 1, 0.45);
+  background-color: var(--amber-text);
+  box-shadow: 0 0 6px rgba(var(--amber-rgb), 0.45);
 }
 
 /* Deep amber: the same amber at half strength. */
 .lc i.d,
 .lc i.a.is-alt {
-  background-color: rgba(250, 152, 1, 0.5);
-  box-shadow: 0 0 4px rgba(250, 152, 1, 0.18);
+  background-color: rgba(var(--amber-rgb), 0.5);
+  box-shadow: 0 0 4px rgba(var(--amber-rgb), 0.18);
 }
 
 /* Open. */
 .lc i.o {
   background-color: transparent;
-  box-shadow: inset 0 0 0 1.5px rgba(250, 152, 1, 0.75);
+  box-shadow: inset 0 0 0 1.5px rgba(var(--amber-rgb), 0.75);
 }
 
 .lc i.is-beep {
@@ -1396,7 +1396,7 @@ a {
   align-items: baseline;
   row-gap: 0.5rem;
   padding-block: 1.4rem;
-  border-bottom: 1px solid rgba(250, 152, 1, 0.16);
+  border-bottom: 1px solid rgba(var(--amber-rgb), 0.16);
 }
 
 /* On the pointer, an amber line draws along the entry's foot. */
@@ -1421,20 +1421,20 @@ a {
   grid-area: no;
   justify-self: start;
   padding: 3px 6px 2px 7px;
-  border: 1px solid rgba(250, 152, 1, 0.55);
-  background-color: rgba(250, 152, 1, 0.1);
+  border: 1px solid rgba(var(--amber-rgb), 0.55);
+  background-color: rgba(var(--amber-rgb), 0.1);
   font-family: var(--mono);
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.14em;
   font-variant-numeric: tabular-nums;
-  color: var(--amber);
+  color: var(--amber-text);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .act:hover .act__no {
-  background-color: var(--amber);
+  background-color: var(--amber-text);
   color: var(--amber-ink);
 }
 
@@ -1482,10 +1482,10 @@ a {
   width: var(--w);
   margin: clamp(2.5rem, 4.5vw, 3.5rem) 0 clamp(2.5rem, 4.5vw, 3.5rem) calc(var(--col) / 2 - var(--w) / 2);
   padding: 0;
-  border: 1px solid rgba(250, 152, 1, 0.75);
+  border: 1px solid rgba(var(--amber-rgb), 0.75);
   background-color: var(--ground);
   background-image: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px);
-  box-shadow: 0 0 0 1px rgba(11, 7, 5, 0.85), 0 0 40px rgba(250, 152, 1, 0.1);
+  box-shadow: 0 0 0 1px rgba(var(--ground-rgb), 0.85), 0 0 40px rgba(var(--amber-rgb), 0.1);
 }
 
 @media (min-width: 900px) {
@@ -1501,16 +1501,16 @@ a {
   align-items: center;
   height: 40px;
   padding: 0 1rem;
-  border-bottom: 1px solid rgba(250, 152, 1, 0.75);
+  border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
   font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 8px rgba(250, 152, 1, 0.35);
+  text-shadow: 0 0 8px rgba(var(--amber-rgb), 0.35);
 }
 
 .mission__strip > span:first-child {
@@ -1527,7 +1527,7 @@ a {
   width: 10px;
   height: 10px;
   background: var(--amber);
-  box-shadow: 0 0 6px rgba(250, 152, 1, 0.5);
+  box-shadow: 0 0 6px rgba(var(--amber-rgb), 0.5);
 }
 
 .mission__body {
@@ -1540,7 +1540,7 @@ a {
   position: relative;
   overflow: hidden;
   min-height: 100%;
-  border-right: 1px solid rgba(250, 152, 1, 0.75);
+  border-right: 1px solid rgba(var(--amber-rgb), 0.75);
   background: #000;
   isolation: isolate;
 }
@@ -1587,7 +1587,7 @@ a {
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(250, 152, 1, 0.75);
+  border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
 }
 
 /* The icon box holds our mark. */
@@ -1599,8 +1599,8 @@ a {
   gap: 5px;
   width: 56px;
   height: 56px;
-  border: 1px solid rgba(250, 152, 1, 0.7);
-  background: rgba(250, 152, 1, 0.1);
+  border: 1px solid rgba(var(--amber-rgb), 0.7);
+  background: rgba(var(--amber-rgb), 0.1);
 }
 
 .mission__icon i {
@@ -1608,21 +1608,21 @@ a {
   width: 14px;
   height: 14px;
   background: var(--amber);
-  box-shadow: 0 0 8px rgba(250, 152, 1, 0.55);
+  box-shadow: 0 0 8px rgba(var(--amber-rgb), 0.55);
 }
 
 .mission__title {
   padding: 0.4em 0.6em 0.32em;
-  background: rgba(250, 152, 1, 0.13);
-  box-shadow: 0 0 24px rgba(250, 152, 1, 0.12);
+  background: rgba(var(--amber-rgb), 0.13);
+  box-shadow: 0 0 24px rgba(var(--amber-rgb), 0.12);
   font-family: var(--display);
   font-size: clamp(1.0625rem, 1.9vw, 1.625rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--amber);
-  text-shadow: 0 0 12px rgba(250, 152, 1, 0.45);
+  color: var(--amber-text);
+  text-shadow: 0 0 12px rgba(var(--amber-rgb), 0.45);
 }
 
 .mission__copy {
@@ -1645,7 +1645,7 @@ a {
   line-height: 1.35;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(250, 152, 1, 0.8);
+  color: rgba(var(--amber-rgb), 0.8);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1681,7 +1681,7 @@ a {
   .mission__image {
     aspect-ratio: 16 / 9;
     border-right: 0;
-    border-bottom: 1px solid rgba(250, 152, 1, 0.75);
+    border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
   }
 
   .mission__head {
@@ -1719,8 +1719,8 @@ a {
   max-width: 800px;
   margin-top: 2rem;
   padding: 1.5rem 1.75rem 1.75rem;
-  border: 1px solid rgba(250, 152, 1, 0.55);
-  background: rgba(250, 152, 1, 0.04);
+  border: 1px solid rgba(var(--amber-rgb), 0.55);
+  background: rgba(var(--amber-rgb), 0.04);
 }
 
 .form__done[hidden],
@@ -1735,7 +1735,7 @@ a {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 .form__done-lead {
@@ -1746,7 +1746,7 @@ a {
 }
 
 .form__done-lead a {
-  color: var(--amber);
+  color: var(--amber-text);
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
@@ -1780,7 +1780,7 @@ a {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--amber-text);
 }
 
 .form__done-link:hover {
@@ -1809,7 +1809,7 @@ a {
 }
 
 .essay p.essay__src a {
-  text-decoration-color: rgba(250, 152, 1, 0.35);
+  text-decoration-color: rgba(var(--amber-rgb), 0.35);
 }
 
 .essay p.essay__src a + a::before {
@@ -1861,12 +1861,12 @@ a {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1px rgba(250, 152, 1, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(var(--amber-rgb), 0.7);
 }
 
 .mission__lamps i.is-lit {
   background: var(--amber);
-  box-shadow: 0 0 6px rgba(250, 152, 1, 0.5);
+  box-shadow: 0 0 6px rgba(var(--amber-rgb), 0.5);
 }
 
 .mission__copy {
@@ -1948,8 +1948,8 @@ button:focus-visible {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--amber);
-  border-bottom: 1px solid rgba(250, 152, 1, 0.45);
+  color: var(--amber-text);
+  border-bottom: 1px solid rgba(var(--amber-rgb), 0.45);
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2013,7 +2013,7 @@ button:focus-visible {
 .mission__words .mission__text--goal {
   margin-top: 1.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(250, 152, 1, 0.3);
+  border-top: 1px solid rgba(var(--amber-rgb), 0.3);
 }
 
 .essay p.mission__text--goal {

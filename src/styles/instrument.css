@@ -31,11 +31,11 @@
 }
 
 .instrument__figure .ins__grid--major {
-  stroke: rgba(250, 152, 1, 0.045);
+  stroke: rgba(var(--amber-rgb), 0.045);
 }
 
 .instrument__figure .ins__grid--minor {
-  stroke: rgba(250, 152, 1, 0.014);
+  stroke: rgba(var(--amber-rgb), 0.014);
 }
 
 /* Every word on the plate carries a halo of the plate's own tone, so the
@@ -52,7 +52,7 @@
 /* The conduits: forward in a quiet amber, the return in full amber. */
 .instrument__figure .ins__wire {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.62);
+  stroke: rgba(var(--amber-rgb), 0.62);
   stroke-width: 1.5;
   stroke-linecap: round;
 }
@@ -63,7 +63,7 @@
 
 .instrument__figure .ins__head {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.9);
+  stroke: rgba(var(--amber-rgb), 0.9);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -82,13 +82,13 @@
 /* A station: an open square with a small core, lit when the mark arrives. */
 .instrument__figure .ins__node {
   fill: var(--clay);
-  stroke: rgba(250, 152, 1, 0.6);
+  stroke: rgba(var(--amber-rgb), 0.6);
   stroke-width: 1.5;
   transition: stroke 0.5s ease;
 }
 
 .instrument__figure .ins__core {
-  fill: rgba(250, 152, 1, 0.45);
+  fill: rgba(var(--amber-rgb), 0.45);
   transition: fill 0.5s ease;
 }
 
@@ -120,7 +120,7 @@
 
 .instrument__figure [data-live] .ins__idx,
 .instrument__figure [data-live] .ins__name {
-  fill: var(--amber);
+  fill: var(--amber-text);
 }
 
 /* The commitment: a sealed diamond across the conduit, on the caption line. */
@@ -133,7 +133,7 @@
 
 .instrument__figure .ins__tick {
   fill: none;
-  stroke: rgba(250, 152, 1, 0.6);
+  stroke: rgba(var(--amber-rgb), 0.6);
   stroke-width: 1;
 }
 
@@ -142,16 +142,16 @@
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.18em;
-  fill: var(--amber);
+  fill: var(--amber-text);
 }
 
 .instrument__figure .ins__commit .ins__label {
-  fill: rgba(250, 152, 1, 0.78);
+  fill: rgba(var(--amber-rgb), 0.78);
   transition: fill 0.5s ease;
 }
 
 .instrument__figure .ins__commit[data-live] .ins__label {
-  fill: var(--amber);
+  fill: var(--amber-text);
 }
 
 /* The travelling mark. */

@@ -9,6 +9,9 @@
   --clay: #0e0906;
   --ground-svg: #160e08;
   --amber: #fa9801;
+  --amber-rgb: 250, 152, 1;
+  --amber-text: var(--amber);
+  --ground-rgb: 11, 7, 5;
   --amber-ink: #2a1200;
   --amber-dim: #451c0a;
   --frame: rgba(250, 152, 1, 0.38);

@@ -1,35 +1,39 @@
 /* ==========================================================================
-   Light: the same machine on paper. Warm paper ground, near-black ink, amber
-   kept as the one accent — bright where it fills (the bar, the lamps, the
-   seal), deepened where it is read as text, so it holds its contrast.
+   Light: the same machine, on paper.
+
+   Paper that is nearly white, ink that is nearly black, and the drafting grid
+   in graphite hairlines. Amber is kept for what it does best on paper: the
+   bar, the codes, the lamps, the seal, the mission's header, and a marker
+   stroke under the lines that matter. Words are set in ink, never in amber.
    ========================================================================== */
 
 :root {
-  --ground: #efebe3;
-  --clay: #f7f4ee;
-  --ground-svg: #f7f4ee;
-  --ground-rgb: 239, 235, 227;
+  --ground: #f3f1ec;
+  --clay: #fcfbf8;
+  --ground-svg: #fcfbf8;
+  --ground-rgb: 252, 251, 248;
+  --line-rgb: 23, 20, 16;
 
   --amber: #f39200;
-  --amber-rgb: 214, 118, 0;
-  --amber-text: #a35400;
-  --amber-ink: #2a1200;
-  --amber-dim: #451c0a;
+  --amber-rgb: 243, 146, 0;
+  --amber-text: var(--ink);
+  --amber-ink: #1f0e00;
+  --amber-dim: #3a1a06;
 
-  --frame: rgba(23, 19, 15, 0.22);
-  --rule: rgba(23, 19, 15, 0.14);
-  --rule-col: rgba(23, 19, 15, 0.1);
-  --grid-major: rgba(214, 118, 0, 0.12);
-  --grid-minor: rgba(214, 118, 0, 0.04);
+  --frame: rgba(23, 20, 16, 0.2);
+  --rule: rgba(23, 20, 16, 0.12);
+  --rule-col: rgba(23, 20, 16, 0.08);
+  --grid-major: rgba(23, 20, 16, 0.06);
+  --grid-minor: rgba(23, 20, 16, 0.025);
 
-  --ink: #17130f;
-  --ink-2: #2f2923;
-  --ink-3: #5c534a;
-  --ink-4: #82786e;
+  --ink: #141210;
+  --ink-2: #2a2723;
+  --ink-3: #5f5b55;
+  --ink-4: #8d8881;
 
   --mute: var(--ink-3);
-  --faint: rgba(214, 118, 0, 0.4);
-  --signal: #17130f;
+  --faint: rgba(23, 20, 16, 0.3);
+  --signal: var(--ink);
 
   color-scheme: light;
 }
@@ -38,66 +42,232 @@ body {
   background-color: var(--ground);
 }
 
-/* Paper grain: dark fibres, very faint. */
+::selection {
+  background: rgba(var(--amber-rgb), 0.35);
+  color: var(--ink);
+}
+
+/* Print is crisp: no grain. */
 .grain {
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-  filter: invert(1);
-}
-
-/* The hero's model, printed: the dark render inverted into a white study
-   model on paper, its shadows kept as soft greys. */
-.hero__photo img {
-  filter: grayscale(1) invert(1) brightness(1.04) contrast(0.92);
-}
-
-.hero__photo::after {
   display: none;
 }
 
-.hero .hero__sub {
-  text-shadow: 0 1px 10px rgba(var(--ground-rgb), 0.95);
-}
+/* --- the hero: the world, modelled ---------------------------------------------
+   The plan lies on the ground and recedes to a hazy horizon; what is near is
+   sharp, what is ahead dissolves into paper. */
 
-/* Screens: ruled paper plates on the ground, hairline-framed. */
-.screen {
-  box-shadow: 0 1px 0 rgba(23, 19, 15, 0.04), 0 18px 40px -28px rgba(23, 19, 15, 0.25);
-}
-
-/* The nameplate: large enough to carry a brighter amber than body labels. */
-.hero .hero__name {
-  color: #c46c00;
-}
-
-/* The mission: a paper panel; its image a printed amber halftone rather
-   than a dark screen. */
-.mission {
-  background-image: none;
-  box-shadow: 0 18px 40px -30px rgba(23, 19, 15, 0.3);
-}
-
-.mission__image {
+.hero__panel {
+  border-color: rgba(var(--line-rgb), 0.18);
   background: var(--clay);
-}
-
-.mission__image img {
-  filter: grayscale(1) invert(1) contrast(2.1) brightness(1.12);
-}
-
-.mission__image::before {
-  background: #f7a12a;
-}
-
-.mission__image::after {
-  background:
-    repeating-linear-gradient(90deg, rgba(var(--ground-rgb), 0.55) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(180deg, rgba(var(--ground-rgb), 0.55) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse 75% 70% at 50% 50%, rgba(var(--ground-rgb), 0) 45%, rgba(var(--ground-rgb), 0.9) 100%);
-}
-
-.essay p.mission__strip,
-.mission__strip .bar__squares i,
-.mission__lamps i.is-lit {
-  text-shadow: none;
   box-shadow: none;
+}
+
+.hero__world {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero__world .world {
+  position: absolute;
+  inset: 0;
+}
+
+.is-loaded .hero__photo.hero__world {
+  opacity: 1;
+}
+
+.hero__shade {
+  background:
+    linear-gradient(180deg, rgb(var(--ground-rgb)) 0%, rgb(var(--ground-rgb)) 12%, rgba(var(--ground-rgb), 0.55) 30%, rgba(var(--ground-rgb), 0) 46%, rgba(var(--ground-rgb), 0) 86%, rgba(var(--ground-rgb), 0.5) 100%),
+    linear-gradient(90deg, rgb(var(--ground-rgb)) 0%, rgba(var(--ground-rgb), 0) 20%, rgba(var(--ground-rgb), 0) 80%, rgb(var(--ground-rgb)) 100%),
+    radial-gradient(ellipse 40% 44% at 50% 52%, rgba(var(--ground-rgb), 0.96) 0%, rgba(var(--ground-rgb), 0.86) 58%, rgba(var(--ground-rgb), 0) 100%);
+}
+
+.hero__copy::before {
+  display: none;
+}
+
+.hero__grid-major {
+  stroke: rgba(var(--line-rgb), 0.07);
+}
+
+.hero .hero__name {
+  color: var(--ink);
+}
+
+.hero .hero__line {
+  text-shadow: none;
+}
+
+.hero .hero__sub {
+  color: var(--ink-2);
+  text-shadow: none;
+}
+
+.hero__mark {
+  color: var(--ink-2);
+  background-color: var(--clay);
+}
+
+.hero .hero__next {
+  border-bottom-color: var(--amber);
+  border-bottom-width: 2px;
+}
+
+@media (hover: hover) {
+  .hero .hero__next:hover {
+    color: var(--ink);
+    background: rgba(var(--amber-rgb), 0.16);
+  }
+}
+
+/* The console strip: amber lamps on paper, without the glow they need at night. */
+.lc__label {
+  color: var(--ink-3);
+}
+
+/* --- screens: sheets on the ground ------------------------------------------------ */
+
+.screen {
+  background-color: var(--clay);
+  box-shadow: 0 1px 2px rgba(23, 20, 16, 0.05), 0 14px 28px -22px rgba(23, 20, 16, 0.2);
+}
+
+#essay-screen {
+  background-image:
+    linear-gradient(rgba(var(--line-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--line-rgb), 0.05) 1px, transparent 1px);
+  background-size: 144px 144px;
+  background-position: 0 var(--bar-h);
+}
+
+.screen::after {
+  border-color: rgba(var(--line-rgb), 0.06);
+}
+
+/* Section codes: small amber plates, ink figures. */
+.essay__code {
+  border-color: var(--amber);
+  background: var(--amber);
+  color: var(--amber-ink);
+}
+
+/* The lines that matter carry a marker stroke, as if read with a pen in hand. */
+.essay__close em,
+.essay .essay__mark {
+  background-image: linear-gradient(transparent 62%, rgba(var(--amber-rgb), 0.32) 62%, rgba(var(--amber-rgb), 0.32) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.essay p.essay__src a,
+.essay a {
+  text-decoration-color: rgba(var(--amber-rgb), 0.9);
+}
+
+/* --- the mission: an instrument panel on paper ------------------------------------ */
+
+.mission {
+  border-color: rgba(var(--line-rgb), 0.22);
+  background-color: var(--clay);
+  background-image: none;
+  box-shadow: 0 14px 28px -22px rgba(23, 20, 16, 0.22);
+}
+
+.essay p.mission__strip {
+  background: var(--amber);
+  color: var(--amber-ink);
+  border-bottom-color: var(--amber);
+  text-shadow: none;
+}
+
+.mission__strip .bar__squares i {
+  background: var(--amber-dim);
+  box-shadow: none;
+}
+
+.mission__lamps i {
+  box-shadow: inset 0 0 0 1px rgba(31, 14, 0, 0.6);
+}
+
+.mission__lamps i.is-lit {
+  background: var(--amber-ink);
+  box-shadow: none;
+}
+
+.mission__world {
+  background: var(--clay);
+  border-right-color: rgba(var(--line-rgb), 0.16);
+}
+
+.mission__world::before,
+.mission__world::after {
+  display: none;
+}
+
+.mission__world .world {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.world__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+
+
+.mission__head {
+  border-bottom-color: rgba(var(--line-rgb), 0.14);
+}
+
+.mission__title {
+  color: var(--ink);
+}
+
+/* --- footer -------------------------------------------------------------------------- */
+
+.foot__mark text,
+.foot__sq {
+  fill: var(--amber);
+}
+
+.foot__mark svg {
+  filter: none;
+}
+
+/* Lamps on paper: amber lit, amber at a third, open rings in graphite. */
+.lc i.a,
+.lc i.d.is-alt,
+.lc i.o.is-alt {
+  box-shadow: none;
+}
+
+.lc i.d,
+.lc i.a.is-alt {
+  background-color: rgba(var(--amber-rgb), 0.32);
+  box-shadow: none;
+}
+
+.lc i.o {
+  box-shadow: inset 0 0 0 1.5px rgba(var(--line-rgb), 0.35);
+}
+
+/* Fig. 03's numbers match the section codes: solid amber plates. */
+.act__no {
+  border-color: var(--amber);
+  background-color: var(--amber);
+  color: var(--amber-ink);
+}
+
+@media (max-width: 759px) {
+  .mission__image.mission__world {
+    height: 150px;
+    border-bottom-color: rgba(var(--line-rgb), 0.16);
+  }
 }

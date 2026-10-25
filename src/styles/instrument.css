@@ -31,11 +31,11 @@
 }
 
 .instrument__figure .ins__grid--major {
-  stroke: rgba(var(--amber-rgb), 0.045);
+  stroke: rgba(var(--line-rgb), 0.045);
 }
 
 .instrument__figure .ins__grid--minor {
-  stroke: rgba(var(--amber-rgb), 0.014);
+  stroke: rgba(var(--line-rgb), 0.014);
 }
 
 /* Every word on the plate carries a halo of the plate's own tone, so the

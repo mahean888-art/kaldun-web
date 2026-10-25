@@ -222,7 +222,7 @@ a {
 
 .form input:focus,
 .form textarea:focus {
-  border-bottom-color: var(--amber-text);
+  border-bottom-color: var(--amber);
 }
 
 .btn {
@@ -262,7 +262,7 @@ a {
   content: '';
   position: absolute;
   inset: calc(var(--bar-h) + 6px) 6px 6px;
-  border: 1px solid rgba(var(--amber-rgb), 0.1);
+  border: 1px solid rgba(var(--line-rgb), 0.1);
   pointer-events: none;
 }
 
@@ -318,7 +318,7 @@ a {
   line-height: 1.5;
   outline: none;
   transition: border-color 0.2s ease;
-  border-color: rgba(var(--amber-rgb), 0.24);
+  border-color: rgba(var(--line-rgb), 0.24);
 }
 
 @media (max-width: 480px) {
@@ -603,8 +603,8 @@ a {
   border: 1px solid var(--frame);
   background-color: var(--clay);
   /* A quiet grid inside the plate: majors only, faint, held inside the frame. */
-  background-image: linear-gradient(rgba(var(--amber-rgb), 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--amber-rgb), 0.055) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(var(--line-rgb), 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--line-rgb), 0.055) 1px, transparent 1px);
   background-size: 144px 144px;
   background-position: 0 var(--bar-h);
   background-clip: padding-box;
@@ -615,8 +615,8 @@ a {
 
 #essay-screen {
   background-image:
-    linear-gradient(rgba(var(--amber-rgb), 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--amber-rgb), 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(var(--line-rgb), 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--line-rgb), 0.055) 1px, transparent 1px);
   background-size: 120px 120px;
   background-position: calc(50% - 60px) var(--bar-h);
 }
@@ -1219,7 +1219,7 @@ a {
   right: var(--hp);
   bottom: var(--hb);
   overflow: hidden;
-  border: 1px solid rgba(var(--amber-rgb), 0.55);
+  border: 1px solid rgba(var(--line-rgb), 0.55);
   box-shadow: none;
 }
 
@@ -1234,8 +1234,8 @@ a {
     linear-gradient(var(--grid-minor) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
   background-size: 144px 144px, 144px 144px, 24px 24px, 24px 24px;
-  --grid-major: rgba(var(--amber-rgb), 0.2);
-  --grid-minor: rgba(var(--amber-rgb), 0.05);
+  --grid-major: rgba(var(--line-rgb), 0.2);
+  --grid-minor: rgba(var(--line-rgb), 0.05);
   background-position: 50% 50%;
 }
 
@@ -1249,13 +1249,13 @@ a {
 
 .hero__grid-major {
   fill: none;
-  stroke: rgba(var(--amber-rgb), 0.2);
+  stroke: rgba(var(--line-rgb), 0.2);
   stroke-width: 1;
 }
 
 .hero__grid-minor {
   fill: none;
-  stroke: rgba(var(--amber-rgb), 0.05);
+  stroke: rgba(var(--line-rgb), 0.05);
   stroke-width: 1;
 }
 
@@ -1344,7 +1344,7 @@ a {
 .lc i.a,
 .lc i.d.is-alt,
 .lc i.o.is-alt {
-  background-color: var(--amber-text);
+  background-color: var(--amber);
   box-shadow: 0 0 6px rgba(var(--amber-rgb), 0.45);
 }
 
@@ -1396,7 +1396,7 @@ a {
   align-items: baseline;
   row-gap: 0.5rem;
   padding-block: 1.4rem;
-  border-bottom: 1px solid rgba(var(--amber-rgb), 0.16);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.16);
 }
 
 /* On the pointer, an amber line draws along the entry's foot. */
@@ -1434,7 +1434,7 @@ a {
 }
 
 .act:hover .act__no {
-  background-color: var(--amber-text);
+  background-color: var(--amber);
   color: var(--amber-ink);
 }
 
@@ -1482,7 +1482,7 @@ a {
   width: var(--w);
   margin: clamp(2.5rem, 4.5vw, 3.5rem) 0 clamp(2.5rem, 4.5vw, 3.5rem) calc(var(--col) / 2 - var(--w) / 2);
   padding: 0;
-  border: 1px solid rgba(var(--amber-rgb), 0.75);
+  border: 1px solid rgba(var(--line-rgb), 0.75);
   background-color: var(--ground);
   background-image: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px);
   box-shadow: 0 0 0 1px rgba(var(--ground-rgb), 0.85), 0 0 40px rgba(var(--amber-rgb), 0.1);
@@ -1501,7 +1501,7 @@ a {
   align-items: center;
   height: 40px;
   padding: 0 1rem;
-  border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.75);
   font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 500;
@@ -1540,7 +1540,7 @@ a {
   position: relative;
   overflow: hidden;
   min-height: 100%;
-  border-right: 1px solid rgba(var(--amber-rgb), 0.75);
+  border-right: 1px solid rgba(var(--line-rgb), 0.75);
   background: #000;
   isolation: isolate;
 }
@@ -1587,7 +1587,7 @@ a {
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.75);
 }
 
 /* The icon box holds our mark. */
@@ -1681,7 +1681,7 @@ a {
   .mission__image {
     aspect-ratio: 16 / 9;
     border-right: 0;
-    border-bottom: 1px solid rgba(var(--amber-rgb), 0.75);
+    border-bottom: 1px solid rgba(var(--line-rgb), 0.75);
   }
 
   .mission__head {
@@ -1949,7 +1949,7 @@ button:focus-visible {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--amber-text);
-  border-bottom: 1px solid rgba(var(--amber-rgb), 0.45);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.45);
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2013,7 +2013,7 @@ button:focus-visible {
 .mission__words .mission__text--goal {
   margin-top: 1.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(var(--amber-rgb), 0.3);
+  border-top: 1px solid rgba(var(--line-rgb), 0.3);
 }
 
 .essay p.mission__text--goal {

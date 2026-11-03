@@ -40,103 +40,36 @@
     <div class="grain" aria-hidden="true"></div>
     <header class="bar" id="top">
       <a class="bar__home" href="/" aria-label="Foresight Machines — home"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span></a>
-      <nav class="lamps" aria-label="Sections" data-lamps>
-        <a href="#top" title="Top" aria-label="Top"></a>
-        <span class="lamps__group">
-          <a href="#launch" title="01 · Foresight, made a machine" aria-label="01 · Foresight, made a machine"></a>
-          <a href="#challenge" title="02 · The challenge" aria-label="02 · The challenge"></a>
-          <a href="#unlock-1" title="03 · Models that stay current" aria-label="03 · Models that stay current"></a>
-          <a href="#unlock-2" title="04 · Learning from outcomes" aria-label="04 · Learning from outcomes"></a>
-          <a href="#capability" title="05 · Institutional capability" aria-label="05 · Institutional capability"></a>
-          <a href="#mission" title="06 · The mission" aria-label="06 · The mission"></a>
-        </span>
-      </nav>
+      <a class="bar__back" href="/#journal"><span aria-hidden="true">←</span> Journal</a>
       <a class="bar__domain" href="/" aria-label="Foresight Machines — home">foresightmachines.com</a>
     </header>
 
     <main class="main main--page" id="main">
-      <section class="screen" id="essay-screen" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Journal · 01</span><span class="screen__name">Introducing Foresight Machines</span><i class="screen__cross" aria-hidden="true"></i></p>
+      <section class="screen" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Journal · 01</span><span class="screen__name">Essay</span><i class="screen__cross" aria-hidden="true"></i></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
-          <article class="essay">
-            <h2 class="essay__title" id="launch" data-move><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
-            <p>Today we are introducing Foresight Machines. We are building AI systems that model the world around an institution so it can decide which risks to take, which commitments to make, and how much capital they require.</p>
-            <p>A bank should be able to prepare for a run, an insurer to underwrite a hard-to-price specialty risk, a developer to weigh a power delay before committing capital. Our ambition is to make that foresight a permanent capability of institutions.</p>
-            <p>Every institution already has a model of the future. A quant expresses it in equations, an analyst in a forecast, an investment committee in the assumptions behind an approval. Demand will hold. Funding will remain available. A supplier will deliver. These beliefs determine what gets financed, insured, and built. An institution can understand each exposure in isolation and still miss what connects them.</p>
-            <p>A super El Niño can disrupt harvests, lift food prices, and provoke export restrictions. The AI buildout can strain power supply, delay construction, and put financing at risk. A digital dollar can carry a bank&rsquo;s failure into markets that trade around the clock. Each changes the conditions under which other commitments were made.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://www.fao.org/el-nino/en" target="_blank" rel="noopener">El Niño and agriculture</a><a href="https://apnews.com/article/aa7135b3a7f5ef9df440e94825880346" target="_blank" rel="noopener">Food markets and export restrictions</a><a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" target="_blank" rel="noopener">AI and energy</a><a href="https://www.circle.com/pressroom/3-3-billion-of-usdc-reserve-risk-removed-dollar-de-peg-closes" target="_blank" rel="noopener">Circle&rsquo;s account</a></p>
-            <p>An institution needs a way to follow those connections and test its choices against them. The model behind a consequential decision should be something it can inspect, run, and improve.</p>
-
-            <h3 id="challenge" data-move><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
-            <p>Superforecasting showed that judgment about the future can be measured and improved. In the Summer 2026 Metaculus Cup, AI systems finished first and second overall, ahead of every human entrant. The opportunity is to bring that discipline to the decisions that allocate capital and shape the economy.</p>
-            <p class="essay__src"><span>Source</span><a href="https://www.metaculus.com/notebooks/45734/announcing-the-metaculus-cup-summer-2026-winners/" target="_blank" rel="noopener">Metaculus results</a></p>
-            <p>Prediction markets such as Kalshi aggregate beliefs into prices. Robin Hanson&rsquo;s futarchy goes further, proposing that decisions be guided by markets estimating outcomes under alternative policies. Both make expectations explicit and give people a reason to improve them.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://news.kalshi.com/p/how-to-read-probabilities" target="_blank" rel="noopener">Kalshi</a><a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Futarchy</a></p>
-            <p>An institution must connect those expectations to its own choices. A forecast of higher interest rates is an input; deciding whether to refinance requires a model of its debt, cash flows, and alternatives. The same forecast can justify different actions for different institutions. What matters is how an event reaches the institution, what it can do in response, and how that response changes the outcome.</p>
-            <p>Weather forecasting offers a precedent. Observations feed models of the atmosphere; forecasts are checked against the weather that arrives; errors inform the next improvement. This discipline creates value wherever a better view of tomorrow changes what people do today: routing aircraft, dispatching power, planning harvests, and moving goods.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://weather.metoffice.gov.uk/learn-about/how-forecasts-are-made" target="_blank" rel="noopener">How forecasts are made</a><a href="https://www.metoffice.gov.uk/about-us/who-we-are/impact" target="_blank" rel="noopener">Forecasts in use</a></p>
-            <p>Markets and institutions introduce a further difficulty: people respond. A depositor withdraws because others might, a lender tightens terms as risk rises, a government intervenes to contain a shortage. Their responses change the conditions under which other decisions are made.</p>
-            <p>We want to bring the discipline of weather forecasting to this world of interacting decisions. Two capabilities are opening the way: maintaining models as the world changes, and improving them through a record of what they get right and wrong.</p>
-
-            <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Models that stay current</h3>
-            <p>Much of the knowledge needed to model an institution sits in contracts, filings, operating reports, and the heads of specialists. Turning it into a working model has required painstaking translation. Keeping it current has required doing that work again.</p>
-            <p>Language models can take on more of this translation: extracting an obligation from a contract, a dependency from an operating report, a constraint from a regulation. Connected to current observations, these capabilities make it more practical to maintain a model as the world changes.</p>
-            <p>A contractual payment is an obligation; a power limit is a physical constraint; expected withdrawals are an estimate of behavior. Each needs a traceable basis. The machine must distinguish them while calculating how they interact: whether funds arrive before a payment falls due, or a power delay threatens a project&rsquo;s financing.</p>
-            <p>It must preserve what was known when a decision was made, along with what changed afterward. An institution should be able to examine both its current understanding and the evidence on which an earlier commitment rested.</p>
-            <p>Together, these relationships form a shared model of the institution and the systems it depends on. Different choices can be compared against the same evidence. When an assumption changes, the machine should show which commitments need another look&mdash;and which missing information could change the decision.</p>
-
-            <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">04</span>Unlock 2: Learning from outcomes</h3>
-            <p>A model earns trust by exposing itself to correction. Its expectations must be recorded before events unfold, its errors preserved after they do, its revisions tested before they are relied upon.</p>
-            <p>History can accelerate that process. Past events provide situations to reconstruct, expectations to test, and outcomes to learn from. We are building the machinery to recover the evidence available at each point and test a model without giving it knowledge of what followed. This would let successive versions learn from a body of experience already available, while reserving separate cases to test whether they have improved. Expectations recorded ahead of new events provide the continuing test.</p>
-            <p>For a reserve model, that means recording estimates of withdrawals, cash availability, and funding costs, then comparing them with what follows. If withdrawals repeatedly arrive faster than expected, the record should expose the error. A proposed correction must improve performance on cases that were not used to develop it.</p>
-            <p>This is what we mean by self-correcting: a process that makes mistakes visible and tests whether a change remedies them.</p>
-            <p>Judging a decision requires another distinction. We observe what followed the action taken; the effects of alternatives must be estimated. A fortunate outcome can reward a poor decision, and an unlucky one can punish a sound decision. The machine therefore needs a record across many cases, with forecast accuracy assessed separately from evidence about what its actions changed.</p>
-            <figure class="fig fig--loop plate">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 01 — The learning loop</span></figcaption>
-              <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
-              <ol class="sr-only">
-                <li>Observe: evidence, with its source and time.</li>
-                <li>Model: the institution and its dependencies.</li>
-                <li>Compare actions: consequences under stated assumptions.</li>
-                <li>Record expectations: the action, the model version, and what was expected. This record is never altered.</li>
-                <li>Score expectations: against what actually happened.</li>
-                <li>Test revisions: on separate cases. A revision that proves better becomes the new model; otherwise the model stays as it was.</li>
-              </ol>
-              <p class="plate__caption">Every choice leaves a record that outcomes can score. A revision changes the model only if it proves better on cases it has not seen, and the original record is never altered.</p>
-            </figure>
-
-            <h3 id="capability" data-move><span class="essay__code" aria-hidden="true">05</span>Foresight as an institutional capability</h3>
-            <p>An institution should be able to carry what it learns from one decision into the next. A model built to assess a counterparty can inform a financing choice. Evidence gathered for a supply commitment can inform the next investment. As tested relationships accumulate, the institution gains a more coherent understanding of the systems it depends on.</p>
-            <p>Better foresight can change which risks an institution takes and how much capital it commits. An insurer could find terms that make a hard-to-price specialty risk worth carrying. A business could make a new market viable by changing its partner, timing, or initial investment. The machine should reveal what makes an opportunity worth pursuing&mdash;and when those conditions no longer hold.</p>
-            <p>As their record earns an institution&rsquo;s trust, the machines should take responsibility within defined mandates: propose an allocation, carry it out, and monitor the conditions that justified it. When those conditions weaken, the machine should identify what needs to change. Each expansion of its authority should rest on demonstrated competence.</p>
-            <aside class="mission fig" id="mission" data-move aria-labelledby="mission-title">
-              <p class="mission__strip" aria-hidden="true"><span>06<span class="bar__squares"><i></i><i></i></span></span><span class="mission__lamps"><i class="is-lit"></i><i></i></span></p>
-              <div class="mission__body">
-                <div class="mission__image mission__world" aria-hidden="true"><div class="world" data-world="plate"></div></div>
-                <div class="mission__main">
-                  <div class="mission__head">
-                    <h4 class="mission__title" id="mission-title">The Foresight Machines mission</h4>
-                  </div>
-                  <div class="mission__copy">
-                    <div class="mission__words">
-                      <p class="mission__text mission__text--lead">We want every consequential institution to be able to run the world forward before it acts.</p>
-                      <p class="mission__text">We are building self-correcting machines that can earn the trust to go further: to allocate capital, underwrite risk, hedge exposure, and secure supply on the strength of their own record.</p>
-                      <p class="mission__text">Their models should remain open to challenge, their mistakes visible, and their judgment capable of improving with experience.</p>
-                      <p class="mission__text mission__text--goal"><em class="essay__mark">Foresight should be a permanent capability of every consequential institution.</em></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </aside>
-            <figure class="fig fig--actions">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 03 — Where foresight meets action</span></figcaption>
-              <p class="acts__head" aria-hidden="true"><span></span><span>Decision</span><span>The question it should help answer</span></p>
-              <ol class="acts" data-actions aria-label="Decisions and the questions they should help answer"></ol>
-              <p class="plate__caption">A shared model supports different institutional decisions.</p>
-            </figure>
-            <p>Weather forecasting earned its place in the economy through use, measurement, and improvement. We want foresight about the systems people build to earn the same standing.</p>
-            <p class="essay__close">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
+          <article class="essay essay--plain">
+            <p class="essay__kind">Essay</p>
+            <h1 class="essay__title">Introducing Foresight Machines</h1>
+            <p>A power project can be valuable and still be impossible to finance under the terms proposed. Different construction stages, supply agreements, or financing conditions might make it viable. Finding that arrangement requires understanding how the pieces interact before anyone commits.</p>
+            <p>The same problem appears across the economy. An insurer must decide which risks it can carry and on what terms. A manufacturer must decide how to secure supply. A financial institution must place funds where they can meet obligations as conditions change. Each decision concerns resources, uncertainty, and the responses of others.</p>
+            <p>Institutions have sophisticated tools for these questions. But the evidence sits across contracts, operating systems, forecasts, specialist models, and people. Connecting it takes work. Keeping the connections current takes more. The alternatives considered are often limited by what the team has time to investigate.</p>
+            <p>Foresight Machines is building AI to expand that search. Our systems will model financial and physical systems, explore possible futures, and investigate better ways to allocate capital and coordinate resources. The aim is to help institutions discover arrangements they can responsibly put into practice.</p>
+            <p>The model is central. It represents the resources available, the obligations to be met, and the rules and dependencies that govern what happens next. A liquidity model includes payment deadlines, ownership, transfer limits, and settlement times. A model of an infrastructure project may include equipment capacity, construction dependencies, energy availability, and financing conditions. The institution supplies the objectives and authority for the decision.</p>
+            <p>Simulation runs the model under different conditions and interventions. A machine can investigate how a decision performs as demand, availability, prices, or behavior change. It can search for different timing, terms, partners, or allocations, test a proposed arrangement, identify what defeats it, and use that failure to propose another. Forecasts inform the conditions explored; the model connects those conditions to the choices available.</p>
+            <p>AI is changing the economics of this work. In the Summer 2026 Metaculus Cup, AI systems finished first and second overall among 885 forecasters. That is a significant result for machine forecasting, even as performance must be assessed on the particular questions a decision requires.</p>
+            <p class="essay__src"><span>Source</span><a href="https://www.metaculus.com/notebooks/45734/announcing-the-metaculus-cup-summer-2026-winners/" target="_blank" rel="noopener">Metaculus's results</a></p>
+            <p>Language models and coding agents can also help extract rules, build models, investigate inconsistencies, and propose tests. Systems such as AlphaEvolve show how AI can generate candidates and improve them through automated evaluation. Applying that discipline to institutions requires models whose assumptions and limits can be examined. It also requires checking whether a modeled improvement survives outside the model.</p>
+            <p class="essay__src"><span>Source</span><a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/" target="_blank" rel="noopener">Google DeepMind on AlphaEvolve</a></p>
+            <p>We are starting with the liquidity behind stablecoin redemption. An issuer can have sufficient reserves overall while funds are unavailable on the route that needs to pay. We will test how reserve placement, funding routes, service commitments, and contingency terms work together—and investigate changes that improve reliability, reduce cost, or make a new service feasible.</p>
+            <p>This first application gives us recurring decisions, identifiable obligations, and operating mechanisms that can be checked. It also makes the distinction between an existing option and a proposed arrangement concrete. A transfer may be available today. A new facility requires agreement, onboarding, and proof that it can be used when needed.</p>
+            <p>Our evaluation will begin with the mechanisms and the evidence behind them. We will compare policies with the institution's current approach and strong conventional methods under the same constraints. Recommendations and expected observations will be recorded before events unfold. Operational exercises will test whether a plan can actually be carried out.</p>
+            <p>As outcomes arrive, the record should expose where the model was wrong. A proposed correction must improve performance on separate cases before it is relied upon. Simulations estimate what alternatives could produce; they do not reveal the true outcome of every path. The institution sets the objectives, chooses the trade-offs, and retains authority over commitments.</p>
+            <p>The longer research question is how much of this machinery can travel. Liquidity, collateral, and credit connect to the financing of inventory, equipment, energy, and construction. They share obligations, resources, timing, and dependencies, while each introduces rules and evidence of its own. We intend to develop methods that carry useful knowledge between systems and measure what must be rebuilt. Controlled training and evaluation environments will help us test that transfer.</p>
+            <p>Success would mean more than improving an existing allocation. A different sequence of purchases might make a project financeable. Different supply terms might make production reliable. Better-designed cover might let an institution carry a risk it would otherwise decline. These are possibilities to investigate and establish through evidence.</p>
+            <p>We begin in finance because the first decisions must be specific enough to test. The ambition reaches wherever institutions commit resources to an uncertain future. Our mission is to expand what humanity can responsibly make possible.</p>
+            <p class="essay__cta"><a class="btn" href="/#decision">Discuss a decision</a></p>
           </article>
         </div>
       </section>

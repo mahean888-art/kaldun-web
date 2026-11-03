@@ -973,3 +973,273 @@
 @media (max-width: 759px) {
   .main--page .screen__corner { display: none; }
 }
+
+/* ==========================================================================
+   Outer layer: each band carries the hero's frame — an inset hairline with
+   registration crosses at its corners and one named mark. Inside, the
+   content is plain.
+   ========================================================================== */
+
+.band__frame {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid var(--hair);
+  pointer-events: none;
+}
+
+.band__frame i {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background:
+    linear-gradient(var(--amber), var(--amber)) center / 15px 1px no-repeat,
+    linear-gradient(var(--amber), var(--amber)) center / 1px 15px no-repeat;
+}
+
+.band__frame i:nth-child(1) { left: -8px; top: -8px; }
+.band__frame i:nth-child(2) { right: -8px; top: -8px; }
+.band__frame i:nth-child(3) { left: -8px; bottom: -8px; }
+.band__frame i:nth-child(4) { right: -8px; bottom: -8px; }
+
+.band .band__mark {
+  top: 28px;
+  left: 30px;
+  color: var(--ink-3);
+  background: transparent;
+}
+
+.band--amber .band__frame i {
+  background:
+    linear-gradient(var(--ink), var(--ink)) center / 15px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) center / 1px 15px no-repeat;
+}
+
+.band--amber .band__mark .hero__cross::before,
+.band--amber .band__mark .hero__cross::after { background: var(--ink); }
+.band--amber .band__mark b,
+.band--amber .band__mark b u { border-color: var(--ink); }
+.band--amber .band__mark b u { background: rgba(26, 13, 0, 0.25); }
+
+@media (max-width: 759px) {
+  .band__frame { inset: 8px; }
+  .band .band__mark { top: 20px; left: 20px; }
+}
+
+/* Figure 01 sits directly on the ink, no box. */
+.f1 { margin: 0; }
+.f1__art { padding: 0; }
+
+/* ==========================================================================
+   The questions, Simile's way.
+   ========================================================================== */
+
+.sim__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sim__tab {
+  padding: 0.6rem 1.15rem;
+  border: 1px solid rgba(23, 20, 16, 0.16);
+  border-radius: 999px;
+  background: transparent;
+  font: 400 1rem/1.2 var(--sans);
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+@media (hover: hover) {
+  .sim__tab:hover { color: var(--ink); border-color: rgba(23, 20, 16, 0.35); }
+}
+
+.sim__tab[aria-selected='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fbf9f4;
+}
+
+.sim__tab:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+/* The three questions, named once above their column. */
+.sim__kinds {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .sim__kinds {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin: clamp(2.5rem, 4vw, 3.25rem) 0 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .sim__kinds span { padding-left: 2px; }
+}
+
+.sim__panel { margin-top: 1.5rem; }
+
+@media (min-width: 1000px) {
+  .sim__panel { margin-top: 0; }
+}
+
+.sim__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(82%, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.sim__track::-webkit-scrollbar { display: none; }
+
+@media (min-width: 1000px) {
+  .sim__track {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    overflow: visible;
+  }
+}
+
+.sim__card {
+  display: flex;
+  flex-direction: column;
+  min-height: 30rem;
+  padding: clamp(1.5rem, 2.4vw, 2.25rem);
+  background: #f1eee7;
+  scroll-snap-align: start;
+}
+
+.sim__who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9375rem;
+  color: var(--ink-3);
+}
+
+.sim__mark { display: inline-flex; gap: 3px; }
+.sim__mark i { width: 7px; height: 7px; background: var(--amber); }
+
+.sim__q {
+  margin-top: 1.75rem;
+  font-family: var(--sans);
+  font-size: clamp(1.25rem, 1.55vw, 1.4375rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.sim__metric {
+  margin-top: auto;
+  padding-top: 2rem;
+  font-size: 0.8125rem;
+  color: var(--ink-4);
+}
+
+.sim__rows {
+  display: grid;
+  gap: 8px;
+  margin-top: 0.75rem;
+  list-style: none;
+}
+
+.sim__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: 14px;
+  align-items: center;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  color: var(--ink-2);
+}
+
+.sim__bar {
+  position: relative;
+  display: block;
+  height: 26px;
+  border-radius: 3px;
+  background: rgba(23, 20, 16, 0.06);
+  overflow: hidden;
+}
+
+.sim__bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w);
+  border-radius: 3px;
+  background: rgba(23, 20, 16, 0.18);
+  transform-origin: left;
+}
+
+.sim__row.is-pick .sim__bar i { background: var(--amber); }
+.sim__row.is-hit .sim__bar i { background: rgba(243, 146, 0, 0.55); }
+
+.sim__bar b {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sim__row.is-pick .sim__opt { color: var(--ink); }
+
+.sim__more {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(23, 20, 16, 0.1);
+}
+
+.sim__more p {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.sim__more ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.75rem;
+  list-style: none;
+}
+
+.sim__more li {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(23, 20, 16, 0.14);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+@keyframes sim-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sim-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.sim__panel.is-in .sim__card { animation: sim-in 0.5s ease both; }
+.sim__panel.is-in .sim__card:nth-child(2) { animation-delay: 0.06s; }
+.sim__panel.is-in .sim__card:nth-child(3) { animation-delay: 0.12s; }
+.sim__panel.is-in .sim__bar i { animation: sim-grow 0.8s cubic-bezier(0.3, 0.7, 0.2, 1) 0.2s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sim__panel.is-in * { animation: none !important; }
+}
+
+.band--paper .sim + .note { margin-top: 1.75rem; }

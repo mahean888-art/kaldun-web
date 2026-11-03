@@ -83,6 +83,7 @@
 
     <main class="main" id="main">
       <section class="band band--ink" id="foresight" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-01 · Foresight</span>
         <div class="wrap">
           <section class="blk blk--center">
             <h2 class="h2">There’s forecasting, and there’s foresight.</h2>
@@ -98,58 +99,131 @@
       </section>
 
       <section class="band band--paper" id="questions" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-02 · Questions</span>
         <div class="wrap">
           <section class="blk">
-            <header class="blk__head2">
+            <header class="blk__head blk__head--center">
               <h2 class="h2">From what could happen to what could work.</h2>
               <p class="lead">Three questions a model of your system can answer.</p>
             </header>
-            <div class="asks" data-asks>
-              <figure class="panel panel--ink asks__view" aria-hidden="true">
-                <div class="panel__world" data-ask-world></div>
-                <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b><span data-ask-label>Q-01 · Conditions change</span></span>
-                <span class="hero__mark hero__mark--br">Model · from above<b><u></u><u></u></b><i class="hero__cross"></i></span>
-              </figure>
-              <ol class="asks__list">
-                <li class="ask" data-ask data-label="Q-01 · Conditions change">
-                  <button type="button" aria-expanded="false" aria-controls="ask-1"><span class="ask__no">01</span><span class="ask__t">What happens if conditions change?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
-                  <div class="ask__body" id="ask-1">
-                    <p class="ask__x">Follow a change through the system to see which dependencies and commitments it affects.</p>
-                    <ul class="ask__chips"><li><span>Liquidity</span>If our second settlement bank goes offline on Friday, can we still meet Monday’s redemptions?</li><li><span>Infrastructure</span>If equipment arrives six months late, which obligations fall due before revenue begins?</li><li><span>Supply</span>If a supplier’s lead time doubles, where does our capacity run short first?</li></ul>
-                  </div>
-                </li>
-                <li class="ask" data-ask data-label="Q-02 · Act differently">
-                  <button type="button" aria-expanded="false" aria-controls="ask-2"><span class="ask__no">02</span><span class="ask__t">What changes if we act differently?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
-                  <div class="ask__body" id="ask-2">
-                    <p class="ask__x">Compare allocations, terms and timing to understand their costs and consequences.</p>
-                    <ul class="ask__chips"><li><span>Payments</span>Which prefunding policy keeps payouts on time at the lowest carrying cost?</li><li><span>Treasury</span>Should we draw on the facility now, or hold bills and arrange repo if needed?</li><li><span>Insurance</span>On which terms is this specialty risk worth carrying?</li></ul>
-                  </div>
-                </li>
-                <li class="ask" data-ask data-label="Q-03 · Find an arrangement">
-                  <button type="button" aria-expanded="false" aria-controls="ask-3"><span class="ask__no">03</span><span class="ask__t">What arrangement could make this work?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
-                  <div class="ask__body" id="ask-3">
-                    <p class="ask__x">Search for combinations the original plan did not consider, and examine what they require.</p>
-                    <ul class="ask__chips"><li><span>Energy</span>Is there a sequence of commitments that still finances the project?</li><li><span>Reserves</span>Which mix of routes and contingency terms meets redemptions at acceptable cost?</li><li><span>Supply</span>Could staged orders and milestone funding make this contract viable?</li></ul>
-                  </div>
-                </li>
-              </ol>
+            <div class="sim" data-sim>
+              <div class="sim__tabs" role="tablist" aria-label="Kinds of decision"><button type="button" role="tab" class="sim__tab" id="sim-liquidity-tab" aria-controls="sim-liquidity" aria-selected="true">Liquidity &amp; reserves</button><button type="button" role="tab" class="sim__tab" id="sim-payments-tab" aria-controls="sim-payments" aria-selected="false" tabindex="-1">Payments</button><button type="button" role="tab" class="sim__tab" id="sim-risk-tab" aria-controls="sim-risk" aria-selected="false" tabindex="-1">Insurance &amp; credit</button><button type="button" role="tab" class="sim__tab" id="sim-energy-tab" aria-controls="sim-energy" aria-selected="false" tabindex="-1">Energy &amp; infrastructure</button></div>
+              <p class="sim__kinds" aria-hidden="true"><span>What happens if conditions change?</span><span>What changes if we act differently?</span><span>What arrangement could make this work?</span></p>
+              <div class="sim__panel" role="tabpanel" id="sim-liquidity" aria-labelledby="sim-liquidity-tab">
+                <div class="sim__track">
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Digital-dollar issuer · Treasury</p>
+                    <h3 class="sim__q">If our second settlement bank goes offline on Friday, can we still meet Monday’s redemptions?</h3>
+                    <p class="sim__metric">Monday’s redemptions met by the cut-off</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Keep the current placement</span><span class="sim__bar"><i style="--w:38%"></i><b>Short</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Move funds to Bank A on Friday</span><span class="sim__bar"><i style="--w:100%"></i><b>Met</b></span></li><li class="sim__row"><span class="sim__opt">Sell bills on Monday morning</span><span class="sim__bar"><i style="--w:72%"></i><b>Met late</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Cut-off timing</li><li>Bank concentration</li><li>Route outages</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Digital-dollar issuer · Risk</p>
+                    <h3 class="sim__q">Which reserve placement keeps meeting redemptions under stress at the lowest cost?</h3>
+                    <p class="sim__metric">Holds across the stress set</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">All reserves at one bank</span><span class="sim__bar"><i style="--w:22%"></i><b>Fails</b></span></li><li class="sim__row"><span class="sim__opt">Four banks, deposits only</span><span class="sim__bar"><i style="--w:58%"></i><b>Fails one case</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Four banks, bills and a repo line</span><span class="sim__bar"><i style="--w:100%"></i><b>Holds</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Stress testing</li><li>Counterparty mix</li><li>Repo access</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Digital-dollar issuer · Product</p>
+                    <h3 class="sim__q">What contingency terms would let us offer same-day redemption?</h3>
+                    <p class="sim__metric">Redemption service achievable</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Current arrangement</span><span class="sim__bar"><i style="--w:40%"></i><b>Next day</b></span></li><li class="sim__row"><span class="sim__opt">Add a second settlement route</span><span class="sim__bar"><i style="--w:74%"></i><b>Weekdays</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Second route and a standby facility</span><span class="sim__bar"><i style="--w:100%"></i><b>Same day</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Service promises</li><li>Standby facilities</li><li>Weekend coverage</li></ul></div>
+                  </article>
+                </div>
+              </div>
+              <div class="sim__panel" role="tabpanel" id="sim-payments" aria-labelledby="sim-payments-tab" hidden>
+                <div class="sim__track">
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Payments company · Treasury</p>
+                    <h3 class="sim__q">Which prefunding policy keeps payouts on time at the lowest carrying cost?</h3>
+                    <p class="sim__metric">Relative carrying cost</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Prefund every corridor daily</span><span class="sim__bar"><i style="--w:100%"></i><b>On time</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Prefund by forecast, top up at noon</span><span class="sim__bar"><i style="--w:52%"></i><b>On time</b></span></li><li class="sim__row"><span class="sim__opt">Shared buffer and a credit line</span><span class="sim__bar"><i style="--w:30%"></i><b>Needs a line</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Prefunding</li><li>Corridor forecasts</li><li>Credit lines</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Payments company · Operations</p>
+                    <h3 class="sim__q">If a partner bank is delayed, which payouts miss their window?</h3>
+                    <p class="sim__metric">Payouts delivered on time</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Current routing</span><span class="sim__bar"><i style="--w:54%"></i><b>Two late</b></span></li><li class="sim__row"><span class="sim__opt">Reroute through a second partner</span><span class="sim__bar"><i style="--w:86%"></i><b>One late</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Reroute and advance funding</span><span class="sim__bar"><i style="--w:100%"></i><b>All on time</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Partner outages</li><li>Routing</li><li>Payout windows</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Payments company · Expansion</p>
+                    <h3 class="sim__q">What would it take to launch a new corridor without more prefunding?</h3>
+                    <p class="sim__metric">Funding the corridor requires</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Standard prefunding</span><span class="sim__bar"><i style="--w:100%"></i><b>Full buffer</b></span></li><li class="sim__row"><span class="sim__opt">Share an existing buffer</span><span class="sim__bar"><i style="--w:62%"></i><b>Part buffer</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Settle on receipt with a partner</span><span class="sim__bar"><i style="--w:30%"></i><b>New terms</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>New corridors</li><li>Partner terms</li><li>Buffer sizing</li></ul></div>
+                  </article>
+                </div>
+              </div>
+              <div class="sim__panel" role="tabpanel" id="sim-risk" aria-labelledby="sim-risk-tab" hidden>
+                <div class="sim__track">
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Specialty insurer · Underwriting</p>
+                    <h3 class="sim__q">On which terms is this hard-to-price risk worth carrying?</h3>
+                    <p class="sim__metric">Expected result after losses</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Standard terms</span><span class="sim__bar"><i style="--w:28%"></i><b>Decline</b></span></li><li class="sim__row"><span class="sim__opt">Higher deductible</span><span class="sim__bar"><i style="--w:62%"></i><b>Marginal</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Parametric trigger and a sublimit</span><span class="sim__bar"><i style="--w:100%"></i><b>Write it</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Policy terms</li><li>Risk selection</li><li>Reinsurance</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Credit fund · Portfolio</p>
+                    <h3 class="sim__q">If rates stay high for a year, which borrowers breach their covenants first?</h3>
+                    <p class="sim__metric">Covenant headroom remaining</p>
+                    <ul class="sim__rows"><li class="sim__row is-hit"><span class="sim__opt">Floating-rate borrowers</span><span class="sim__bar"><i style="--w:24%"></i><b>Breach Q3</b></span></li><li class="sim__row"><span class="sim__opt">Fixed rate, refinancing due</span><span class="sim__bar"><i style="--w:56%"></i><b>Breach Q4</b></span></li><li class="sim__row"><span class="sim__opt">Fixed rate, long maturity</span><span class="sim__bar"><i style="--w:100%"></i><b>Holds</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Covenants</li><li>Rate scenarios</li><li>Refinancing</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Lender · Structuring</p>
+                    <h3 class="sim__q">Which facility lets this borrower draw on time without raising our risk?</h3>
+                    <p class="sim__metric">Exposure within our limit</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Single upfront draw</span><span class="sim__bar"><i style="--w:40%"></i><b>Over limit</b></span></li><li class="sim__row"><span class="sim__opt">Draws on milestones</span><span class="sim__bar"><i style="--w:82%"></i><b>Within</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Milestone draws and a cash sweep</span><span class="sim__bar"><i style="--w:100%"></i><b>Within, lower</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Facility design</li><li>Draw schedules</li><li>Collateral</li></ul></div>
+                  </article>
+                </div>
+              </div>
+              <div class="sim__panel" role="tabpanel" id="sim-energy" aria-labelledby="sim-energy-tab" hidden>
+                <div class="sim__track">
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Energy developer · Finance</p>
+                    <h3 class="sim__q">If turbines arrive six months late, which obligations fall due before revenue?</h3>
+                    <p class="sim__metric">Due before first revenue</p>
+                    <ul class="sim__rows"><li class="sim__row is-hit"><span class="sim__opt">Construction loan interest</span><span class="sim__bar"><i style="--w:34%"></i><b>Month 3</b></span></li><li class="sim__row is-hit"><span class="sim__opt">Grid connection payment</span><span class="sim__bar"><i style="--w:58%"></i><b>Month 5</b></span></li><li class="sim__row is-hit"><span class="sim__opt">Offtake delivery start</span><span class="sim__bar"><i style="--w:82%"></i><b>Month 7</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Delivery delays</li><li>Debt service</li><li>Offtake terms</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Energy developer · Procurement</p>
+                    <h3 class="sim__q">Should we sign the supply contract now, or wait for a later equipment slot?</h3>
+                    <p class="sim__metric">Expected cost of the commitment</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Sign now at the quoted price</span><span class="sim__bar"><i style="--w:72%"></i><b>Locked price</b></span></li><li class="sim__row"><span class="sim__opt">Wait one quarter</span><span class="sim__bar"><i style="--w:100%"></i><b>Price risk</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Sign with a delivery-linked clause</span><span class="sim__bar"><i style="--w:54%"></i><b>Lowest</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Supply contracts</li><li>Timing</li><li>Price risk</li></ul></div>
+                  </article>
+                  <article class="sim__card">
+                    <p class="sim__who"><span class="sim__mark" aria-hidden="true"><i></i><i></i></span>Project sponsor</p>
+                    <h3 class="sim__q">Equipment will arrive late. Is there a sequence that still finances the project?</h3>
+                    <p class="sim__metric">Financeable on these terms</p>
+                    <ul class="sim__rows"><li class="sim__row"><span class="sim__opt">Original plan</span><span class="sim__bar"><i style="--w:30%"></i><b>No</b></span></li><li class="sim__row"><span class="sim__opt">Defer full capacity</span><span class="sim__bar"><i style="--w:68%"></i><b>Marginal</b></span></li><li class="sim__row is-pick"><span class="sim__opt">Commit in stages as capacity arrives</span><span class="sim__bar"><i style="--w:100%"></i><b>Yes, new terms</b></span></li></ul>
+                    <div class="sim__more"><p>Related decisions</p><ul><li>Staging</li><li>Milestone funding</li><li>Capacity</li></ul></div>
+                  </article>
+                </div>
+              </div>
             </div>
+            <p class="note">Illustrative examples, not customer results.</p>
           </section>
-        </div>
-      </section>
         </div>
       </section>
 
       <section class="band band--ink" id="how" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-03 · Method</span>
         <div class="wrap">
           <section class="blk">
             <header class="blk__head2">
               <h2 class="h2">A model to explore with. A record to improve from.</h2>
               <p class="lead">The institution supplies the objectives and the authority. The machine models the system, searches it, and learns from what happens.</p>
             </header>
-            <figure class="panel panel--ink" data-f1>
-              <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b>Figure 01</span>
-              <span class="hero__mark hero__mark--br">Evidence → Decision<b><u></u><u></u></b><i class="hero__cross"></i></span>
+            <figure class="f1" data-f1>
               <div class="f1__art" data-f1-art></div>
               <figcaption class="sr-only">Evidence feeds a system model. The model is searched and simulated, alternatives are evaluated, and a decision is made with the institution's objectives and constraints. A search loop returns from evaluation to search; a learning loop returns from the decision's outcomes to the model.</figcaption>
             </figure>
@@ -161,6 +235,7 @@
       </section>
 
       <section class="band band--amber" id="evidence" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-04 · Evidence</span>
         <div class="wrap">
           <section class="blk blk--split">
             <div class="blk__side">
@@ -177,6 +252,7 @@
       </section>
 
       <section class="band band--paper" id="journal" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-05 · Journal</span>
         <div class="wrap">
           <section class="blk">
             <header class="jhead">
@@ -193,6 +269,7 @@
       </section>
 
       <section class="band band--ink" id="decision" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-06 · Decision</span>
         <div class="wrap">
           <section class="blk blk--split">
             <div class="blk__side">

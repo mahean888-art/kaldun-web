@@ -6,6 +6,8 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { initWorld } from './visuals/world';
+import { initAsks } from './visuals/asks';
+import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
 import { EMAIL, FORM_ENDPOINT } from './data/site';
 
@@ -163,6 +165,9 @@ export function mountHome(root: ParentNode = document): void {
   wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
+  initAsks(root);
+  const fig = qs<HTMLElement>('[data-f1]', root);
+  if (fig) initFigure(fig);
   for (const world of qsa<HTMLElement>('[data-world]', root)) {
     const plate = world.dataset['world'] === 'plate';
     initWorld(world, plate ? { seed: 2023, drift: 4, every: 6.5, view: 'above', ink: world.closest('.band--ink') ? '236, 228, 214' : undefined } : { seed: 1654, drift: 8, every: 7.2, view: 'ground' });

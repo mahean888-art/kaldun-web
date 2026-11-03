@@ -100,55 +100,63 @@
       <section class="band band--paper" id="questions" data-screen>
         <div class="wrap">
           <section class="blk">
-            <header class="blk__head blk__head--center">
+            <header class="blk__head2">
               <h2 class="h2">From what could happen to what could work.</h2>
               <p class="lead">Three questions a model of your system can answer.</p>
             </header>
-            <div class="outs">
-              <article class="out">
-                <h3 class="out__q">What happens if conditions change?</h3>
-                <p class="out__who"><i aria-hidden="true"></i>Digital-dollar issuer · Treasury</p>
-                <p class="out__ask">“If our second settlement bank goes offline on Friday, can we still meet Monday’s redemptions?”</p>
-                <ul class="out__rows"><li class="out__row"><span>Reserves at Bank A</span><b>Reachable</b></li><li class="out__row is-hit"><span>Reserves at Bank B</span><b>Offline until Tuesday</b></li><li class="out__row"><span>Treasury bills</span><b>Cash on Tuesday</b></li><li class="out__row is-bind"><span>Monday redemptions</span><b>Short at the 10:00 cut-off</b></li></ul>
-                <p class="out__then"><span>The machine returns</span>Move funds to Bank A on Friday. Escalate if Monday’s request queue passes the agreed threshold.</p>
-              </article>
-              <article class="out">
-                <h3 class="out__q">What changes if we act differently?</h3>
-                <p class="out__who"><i aria-hidden="true"></i>Payments company · Prefunding</p>
-                <p class="out__ask">“Which prefunding policy keeps payouts on time at the lowest carrying cost?”</p>
-                <ul class="out__rows"><li class="out__head"><span>Policy</span><span>Carrying cost · payouts</span></li><li class="out__row out__row--bar"><span>Prefund every corridor daily</span><i style="--w:100%"></i><b>On time</b></li><li class="out__row out__row--bar is-pick"><span>Prefund by forecast, top up at noon</span><i style="--w:52%"></i><b>On time</b></li><li class="out__row out__row--bar"><span>Shared buffer and a credit facility</span><i style="--w:30%"></i><b>Needs a facility</b></li></ul>
-                <p class="out__then"><span>The machine returns</span>Prefund by forecast. Review the policy if noon top-ups miss twice in a month.</p>
-              </article>
-              <article class="out">
-                <h3 class="out__q">What arrangement could make this work?</h3>
-                <p class="out__who"><i aria-hidden="true"></i>Energy developer · Project finance</p>
-                <p class="out__ask">“Equipment will arrive six months late. Is there a sequence that still finances the project?”</p>
-                <ul class="out__rows"><li class="out__row is-off"><span>Original plan</span><b>Not financeable</b></li><li class="out__row is-pick"><span>Stage 1 · Grid connection, first units</span><b>Commit now</b></li><li class="out__row is-pick"><span>Stage 2 · Remaining equipment</span><b>On delivery</b></li><li class="out__row is-pick"><span>Stage 3 · Full capacity</span><b>When output is contracted</b></li></ul>
-                <p class="out__then"><span>The machine returns</span>Commit in stages as capacity becomes available. Requires revised terms; may extend completion.</p>
-              </article>
+            <div class="asks" data-asks>
+              <figure class="panel panel--ink asks__view" aria-hidden="true">
+                <div class="panel__world" data-ask-world></div>
+                <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b><span data-ask-label>Q-01 · Conditions change</span></span>
+                <span class="hero__mark hero__mark--br">Model · from above<b><u></u><u></u></b><i class="hero__cross"></i></span>
+              </figure>
+              <ol class="asks__list">
+                <li class="ask" data-ask data-label="Q-01 · Conditions change">
+                  <button type="button" aria-expanded="false" aria-controls="ask-1"><span class="ask__no">01</span><span class="ask__t">What happens if conditions change?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
+                  <div class="ask__body" id="ask-1">
+                    <p class="ask__x">Follow a change through the system to see which dependencies and commitments it affects.</p>
+                    <ul class="ask__chips"><li><span>Liquidity</span>If our second settlement bank goes offline on Friday, can we still meet Monday’s redemptions?</li><li><span>Infrastructure</span>If equipment arrives six months late, which obligations fall due before revenue begins?</li><li><span>Supply</span>If a supplier’s lead time doubles, where does our capacity run short first?</li></ul>
+                  </div>
+                </li>
+                <li class="ask" data-ask data-label="Q-02 · Act differently">
+                  <button type="button" aria-expanded="false" aria-controls="ask-2"><span class="ask__no">02</span><span class="ask__t">What changes if we act differently?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
+                  <div class="ask__body" id="ask-2">
+                    <p class="ask__x">Compare allocations, terms and timing to understand their costs and consequences.</p>
+                    <ul class="ask__chips"><li><span>Payments</span>Which prefunding policy keeps payouts on time at the lowest carrying cost?</li><li><span>Treasury</span>Should we draw on the facility now, or hold bills and arrange repo if needed?</li><li><span>Insurance</span>On which terms is this specialty risk worth carrying?</li></ul>
+                  </div>
+                </li>
+                <li class="ask" data-ask data-label="Q-03 · Find an arrangement">
+                  <button type="button" aria-expanded="false" aria-controls="ask-3"><span class="ask__no">03</span><span class="ask__t">What arrangement could make this work?</span><span class="ask__arrow" aria-hidden="true">→</span></button>
+                  <div class="ask__body" id="ask-3">
+                    <p class="ask__x">Search for combinations the original plan did not consider, and examine what they require.</p>
+                    <ul class="ask__chips"><li><span>Energy</span>Is there a sequence of commitments that still finances the project?</li><li><span>Reserves</span>Which mix of routes and contingency terms meets redemptions at acceptable cost?</li><li><span>Supply</span>Could staged orders and milestone funding make this contract viable?</li></ul>
+                  </div>
+                </li>
+              </ol>
             </div>
-            <p class="note">Illustrative examples, not customer results.</p>
           </section>
+        </div>
+      </section>
         </div>
       </section>
 
       <section class="band band--ink" id="how" data-screen>
         <div class="wrap">
-          <section class="blk blk--split">
-            <div class="blk__side">
+          <section class="blk">
+            <header class="blk__head2">
               <h2 class="h2">A model to explore with. A record to improve from.</h2>
-              <ol class="steps">
-                <li><b>Model the system.</b><span>Resources, obligations, rules and dependencies, built from your records and contracts.</span></li>
-                <li><b>Project it forward.</b><span>Run it under changing conditions and see what each commitment depends on.</span></li>
-                <li><b>Discover what could work.</b><span>Search allocations, terms and sequences, and test what defeats each one.</span></li>
-                <li><b>Learn from outcomes.</b><span>Compare what happens with what was expected, and adopt only tested revisions.</span></li>
-              </ol>
-            </div>
-            <figure class="blk__main view">
-              <div class="view__frame"><div class="world" data-world="plate"></div></div>
-              <figcaption><span class="view__cap">Simulation tests alternatives. Observations test the model.</span><span class="view__sub">The institution sets the objectives and keeps authority over every commitment.</span></figcaption>
+              <p class="lead">The institution supplies the objectives and the authority. The machine models the system, searches it, and learns from what happens.</p>
+            </header>
+            <figure class="panel panel--ink" data-f1>
+              <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b>Figure 01</span>
+              <span class="hero__mark hero__mark--br">Evidence → Decision<b><u></u><u></u></b><i class="hero__cross"></i></span>
+              <div class="f1__art" data-f1-art></div>
+              <figcaption class="sr-only">Evidence feeds a system model. The model is searched and simulated, alternatives are evaluated, and a decision is made with the institution's objectives and constraints. A search loop returns from evaluation to search; a learning loop returns from the decision's outcomes to the model.</figcaption>
             </figure>
+            <p class="f1__cap">Simulation tests alternatives. Observations test the model.</p>
           </section>
+        </div>
+      </section>
         </div>
       </section>
 
@@ -170,16 +178,17 @@
 
       <section class="band band--paper" id="journal" data-screen>
         <div class="wrap">
-          <section class="blk blk--split">
-            <div class="blk__side">
+          <section class="blk">
+            <header class="jhead">
               <h2 class="h2">Ideas behind the machines.</h2>
               <p class="lead">On modeling, simulation and discovery.</p>
-            </div>
-            <ul class="ruled ruled--links blk__main">
-              <li><a href="/journal/introducing-foresight-machines/"><b>Introducing Foresight Machines</b><span>Why we are building AI to model real systems and discover better arrangements for the world.</span><em>Essay <i aria-hidden="true">→</i></em></a></li>
-              <li><a href="/journal/the-future-should-be-engineered-with-foresight/"><b>The Future Should Be Engineered With Foresight</b><span>Our founding manifesto.</span><em>Manifesto <i aria-hidden="true">→</i></em></a></li>
+            </header>
+            <ul class="jtable">
+              <li class="jtable__head" aria-hidden="true"><span>Title</span><span>Type</span><span>From</span><span>Length</span></li><li><a href="/journal/introducing-foresight-machines/"><span class="jtable__t">Introducing Foresight Machines</span><span>Essay</span><span>Foresight Machines</span><span>4 min read</span><i aria-hidden="true">→</i></a></li><li><a href="/journal/the-future-should-be-engineered-with-foresight/"><span class="jtable__t">The Future Should Be Engineered With Foresight</span><span>Manifesto</span><span>Foresight Machines</span><span>2 min read</span><i aria-hidden="true">→</i></a></li>
             </ul>
           </section>
+        </div>
+      </section>
         </div>
       </section>
 

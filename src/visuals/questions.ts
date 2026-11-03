@@ -1,232 +1,214 @@
 /**
- * The three questions, each with a field that shows its answer.
+ * The three questions, each answered on a plate drawn in the hero's own
+ * language: a surveyed plan of parcels, seen from above, with one amber story
+ * told on it and at most two labels.
  *
- * The fields borrow the hero's parts in a flat, diagrammatic form: resources,
- * agreements, capacity and obligations. Charcoal is the established
- * structure; orange marks what the question changes. Every field is an
- * illustration of the kind of result, not a customer result: no figures,
- * no rankings.
+ *   1. Conditions change — a delay at one parcel travels along its
+ *      dependencies until the first constraint binds.
+ *   2. Act differently — the same plan twice: commit now, or commit later,
+ *      with the cost shifted.
+ *   3. A better arrangement — the original route runs through a blocked
+ *      parcel; a new one is found around it, committed in three stages.
  *
- *   1. Conditions change — a delay moves toward its limit; obligations come to
- *      overlap; capacity is the first constraint to bind.
- *   2. Act differently — two ways to make the same commitment, compared on
- *      cost, timing and what each requires.
- *   3. A better arrangement — commit in stages as capacity becomes available,
- *      with its condition and its trade-off.
- *
- * On wide screens the questions are tabs beside one field; on narrow ones all
- * three stand in order, each with its question, field and result together.
+ * Labels are HTML, laid over the drawing, so they keep a readable size at
+ * every width. The drawings are illustrations of the kind of result a model
+ * gives, not results. On wide screens the questions are tabs beside one
+ * plate; on a phone all three stand, and each plays when it comes into view.
  */
 
-const VB = 'viewBox="0 0 640 360"';
+import { divide, rng } from './world';
 
-const label = (x: number, y: number, t: string, cls = 'q-txt', anchor = 'start'): string =>
-  `<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${t}</text>`;
+type P = { x: number; y: number; w: number; h: number; kind: number; tone: number };
+type Tag = { x: number; y: number; text: string; at: 'tl' | 'tr' | 'bl' | 'br'; tone?: 'am' | 'ink' };
 
-/** An annotation: a short orange pill with a leader to what it explains. */
-const note = (x: number, y: number, t: string, lx?: number, ly?: number): string => {
-  const w = t.length * 6.6 + 16;
-  const leader = lx !== undefined && ly !== undefined ? `<path class="q-leader" d="M${x + w / 2} ${y + 9}L${lx} ${ly}"/>` : '';
-  return `${leader}<g class="q-note"><rect x="${x}" y="${y - 9}" width="${w}" height="18"/><text x="${x + 8}" y="${y + 4}">${t}</text></g>`;
-};
+const VW = 420;
+const VH = 300;
 
-function conditions(): string {
-  return `<svg ${VB} class="q-svg q-svg--1" role="img" aria-label="A supplier delay moves toward its limit; two obligations come to overlap; capacity is the first constraint to bind.">
-    ${label(40, 30, 'CONDITION · SUPPLIER DELAY')}
-    <path class="q-track" d="M40 50H600"/>
-    <path class="q-tick" d="M40 44v12M180 46v8M320 46v8M460 46v8M600 44v12"/>
-    <path class="q-limit" d="M440 38V62"/>${label(446, 36, 'LIMIT', 'q-txt q-txt--am')}
-    <g class="q1-marker" style="--dx:380px"><rect class="q-am" x="54" y="44" width="12" height="12" transform="rotate(45 60 50)"/></g>
+const c = (p: P): [number, number] => [p.x + p.w / 2, p.y + p.h / 2];
 
-    <rect class="q-pp" x="40" y="92" width="96" height="30"/>${label(50, 111, 'SUPPLIER')}
-    <path class="q-dep" d="M136 107H160V163H282"/>
-    <g class="q1-late">${note(150, 82, 'dependency exposed', 160, 120)}</g>
-
-    <rect class="q-pp" x="262" y="96" width="160" height="26"/>${label(270, 113, 'OBLIGATION A')}
-    <g class="q1-shift" style="--dx:100px"><rect class="q-pp q-pp--move" x="182" y="150" width="150" height="26"/>${label(190, 167, 'OBLIGATION B')}</g>
-
-    ${label(40, 214, 'CAPACITY', 'q-txt')}
-    <path class="q-cap" d="M110 210H600"/>
-    <rect class="q-load" x="262" y="232" width="160" height="38"/>
-    <g class="q1-shift" style="--dx:100px"><rect class="q-load q-load--b" x="182" y="250" width="150" height="20"/></g>
-    <g class="q1-late">
-      <rect class="q-hatch" x="282" y="196" width="140" height="36"/>
-      <rect class="q-am" x="282" y="196" width="140" height="14"/>
-      ${note(434, 200, 'first constraint to bind', 422, 203)}
-    </g>
-    <path class="q-axis" d="M40 270H600"/>${label(600, 290, 'TIME →', 'q-txt', 'end')}
-
-    <g class="q-chain">${label(40, 330, 'DELAY')}<text class="q-txt" x="96" y="330">→</text>${label(118, 330, 'OBLIGATIONS OVERLAP')}<text class="q-txt" x="282" y="330">→</text>${label(304, 330, 'CAPACITY FALLS SHORT', 'q-txt q-txt--am')}</g>
-  </svg>`;
+/** The parcel under a point, or failing that the nearest whole parcel. */
+function at(ps: P[], x: number, y: number): P {
+  const whole = ps.filter((p) => p.kind !== 5 && p.w > 18 && p.h > 18);
+  const hit = whole.find((p) => x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h);
+  if (hit) return hit;
+  return whole.reduce((best, p) => {
+    const [bx, by] = c(best);
+    const [px, py] = c(p);
+    return (px - x) ** 2 + (py - y) ** 2 < (bx - x) ** 2 + (by - y) ** 2 ? p : best;
+  });
 }
 
-/** A small arrangement in elevation: resources, an agreement, capacity. */
-function arrangement(x: number, y: number, late: boolean): string {
-  const shift = late ? 34 : 0;
-  return `<rect class="q-pp" x="${x}" y="${y + 26}" width="44" height="40"/><rect class="q-am" x="${x}" y="${y + 26}" width="44" height="9"/>
-    <path class="q-deck${late ? ' q-deck--late' : ''}" d="M${x + 44} ${y + 34}H${x + 108 + shift}"/>
-    <rect class="q-pp" x="${x + 108 + shift}" y="${y + 6}" width="18" height="60"/><rect class="q-pp" x="${x + 132 + shift}" y="${y + 18}" width="18" height="48"/><rect class="q-pp" x="${x + 156 + shift}" y="${y}" width="18" height="66"/>
-    <path class="q-axis" d="M${x - 6} ${y + 66}H${x + 214}"/>`;
+function plan(seed: number, w = VW - 16, h = VH - 16, x = 8, y = 8, block = 104): P[] {
+  return divide({ x, y, w, h }, block, rng(seed)) as P[];
 }
 
-function rows(x: number, y: number, vals: [string, string, string], changed: boolean): string {
-  const names = ['COST', 'TIMING', 'REQUIRES'];
-  return names
-    .map((n, i) => `${label(x, y + i * 30, n)}<text class="q-val${changed && i < 2 ? ' q-val--am' : ''}" x="${x + 76}" y="${y + i * 30}">${vals[i]}</text><path class="q-rule" d="M${x} ${y + i * 30 + 10}H${x + 250}"/>`)
+const rect = (p: P, cls: string, extra = ''): string =>
+  `<rect class="${cls}" x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" width="${p.w.toFixed(1)}" height="${p.h.toFixed(1)}"${extra}/>`;
+
+function base(ps: P[]): string {
+  return ps
+    .map((p) => rect(p, p.kind === 2 ? 'pl-p pl-p--hatch' : p.kind === 1 || p.kind === 3 ? 'pl-p pl-p--shade' : p.kind === 5 ? 'pl-p pl-p--strip' : 'pl-p'))
     .join('');
 }
 
+/** An orthogonal route between two parcels' centres. */
+function route(a: P, b: P, bend: 'hv' | 'vh'): string {
+  const [ax, ay] = c(a);
+  const [bx, by] = c(b);
+  return bend === 'hv' ? `M${ax} ${ay}H${bx}V${by}` : `M${ax} ${ay}V${by}H${bx}`;
+}
+
+const pct = (v: number, of: number): string => `${((v / of) * 100).toFixed(2)}%`;
+
+function tags(list: Tag[]): string {
+  return list
+    .map((t) => `<span class="pl-tag pl-tag--${t.at}${t.tone === 'ink' ? ' pl-tag--ink' : ''}" style="left:${pct(t.x, VW)};top:${pct(t.y, VH)}">${t.text}</span>`)
+    .join('');
+}
+
+const svg = (body: string, label: string): string => `<svg class="pl" viewBox="0 0 ${VW} ${VH}" role="img" aria-label="${label}">${body}</svg>`;
+
+function conditions(): string {
+  const ps = plan(11);
+  const s = at(ps, 64, 236);
+  const c1 = at(ps, 168, 214);
+  const c2 = at(ps, 252, 132);
+  const c3 = at(ps, 344, 70);
+  const [sx, sy] = c(s);
+  return (
+    svg(
+      base(ps) +
+        rect(c1, 'pl-hit', ' style="--i:1"') +
+        rect(c2, 'pl-hit', ' style="--i:2"') +
+        rect(c3, 'pl-bind', ' style="--i:3"') +
+        `<path class="pl-route" style="--i:0" d="${route(s, c1, 'hv')}"/>` +
+        `<path class="pl-route" style="--i:1" d="${route(c1, c2, 'vh')}"/>` +
+        `<path class="pl-route" style="--i:2" d="${route(c2, c3, 'hv')}"/>` +
+        rect(s, 'pl-src') +
+        `<rect class="pl-node" x="${sx - 3}" y="${sy - 3}" width="6" height="6"/>`,
+      'A delay at one parcel travels along its dependencies until capacity, the first constraint, binds.',
+    ) +
+    tags([
+      { x: s.x, y: s.y - 6, text: 'Delay', at: 'bl' },
+      { x: c3.x - 8, y: c3.y + 2, text: 'First constraint to bind', at: 'tr' },
+    ])
+  );
+}
+
 function alternatives(): string {
-  return `<svg ${VB} class="q-svg q-svg--2" role="img" aria-label="Two ways to make the same commitment: commit now, with cost up front and full capacity needed at the start; or commit later, with the cost shifted and the timing changed.">
-    <path class="q-bracket" d="M40 34V26H600V34"/>${label(320, 18, 'SAME DECISION · SAME OBJECTIVES AND CONSTRAINTS', 'q-txt', 'middle')}
-    ${label(40, 62, 'A · COMMIT NOW', 'q-txt q-txt--ink')}
-    ${label(340, 62, 'B · COMMIT LATER', 'q-txt q-txt--ink')}
-    <g transform="translate(0 6)">${arrangement(46, 80, false)}</g>
-    <g class="q2-b" transform="translate(0 6)">${arrangement(346, 80, true)}</g>
-    ${rows(40, 196, ['Up front', 'As planned', 'Full capacity at the start'], false)}
-    ${rows(340, 196, ['Shifts later', 'One quarter later', 'A later delivery window'], true)}
-    ${note(476, 166, 'cost shifts here', 480, 190)}
-    ${note(500, 300, 'timing changed', 470, 226)}
-  </svg>`;
+  const half = (VW - 30) / 2;
+  const ph = VH - 46;
+  const ps = plan(5, half, ph, 0, 0, 92);
+  const near = (x: number, y: number, r: number): P[] =>
+    ps.filter((p) => p.kind !== 5 && p.w > 14 && p.h > 14 && Math.hypot(c(p)[0] - x, c(p)[1] - y) < r);
+  const now = near(half * 0.55, ph * 0.58, 44);
+  const later = near(half * 0.3, ph * 0.3, 30);
+  const draw = (dx: number, body: string): string => `<g transform="translate(${dx} 38)">${base(ps)}${body}</g>`;
+  const a = draw(8, now.map((p) => rect(p, 'pl-src pl-now')).join(''));
+  const b = draw(22 + half, now.map((p) => rect(p, 'pl-ghost')).join('') + later.map((p) => rect(p, 'pl-src pl-late')).join(''));
+  const g = now.reduce((m, p) => ({ x: Math.min(m.x, p.x), y: Math.max(m.y, p.y + p.h) }), { x: Infinity, y: 0 });
+  return (
+    svg(`${a}${b}<path class="pl-split" d="M${VW / 2} 0V${VH}"/>`, 'The same plan twice: commit now, or commit later with the cost shifted to a later window.') +
+    tags([
+      { x: 8, y: 10, text: 'A · Commit now', at: 'tl', tone: 'ink' },
+      { x: 22 + half, y: 10, text: 'B · Commit later', at: 'tl', tone: 'ink' },
+      { x: 22 + half + g.x, y: 38 + g.y + 6, text: 'Cost shifts here', at: 'tl' },
+    ])
+  );
 }
 
-function arrangementChange(): string {
-  return `<svg ${VB} class="q-svg q-svg--3" role="img" aria-label="Original arrangement: one commitment made all at once. Proposed: commit in stages as capacity becomes available; requires revised terms and may extend completion.">
-    ${label(40, 30, 'ORIGINAL ARRANGEMENT', 'q-txt q-txt--ink')}
-    <rect class="q-pp q-pp--dim" x="40" y="70" width="52" height="56"/>
-    <path class="q-deck q-deck--dim" d="M92 82H220"/>
-    <rect class="q-pp q-pp--dim" x="220" y="52" width="20" height="74"/><rect class="q-pp q-pp--dim" x="246" y="64" width="20" height="62"/><rect class="q-pp q-pp--dim" x="272" y="44" width="20" height="82"/>
-    <path class="q-axis" d="M34 126H300"/>
-    ${label(40, 150, 'All at once')}
-
-    ${label(340, 30, 'PROPOSED CHANGE', 'q-txt q-txt--am')}
-    <rect class="q-pp" x="340" y="70" width="52" height="56"/><rect class="q-am" x="340" y="70" width="52" height="10"/>
-    <path class="q-stage q3-s1" d="M392 112H468"/><path class="q-stage q3-s2" d="M392 96Q470 96 494 96H520"/><path class="q-stage q3-s3" d="M392 80Q500 80 546 80H572"/>
-    <rect class="q-pp" x="468" y="88" width="20" height="38"/><rect class="q-pp" x="520" y="72" width="20" height="54"/><rect class="q-pp" x="572" y="56" width="20" height="70"/>
-    <path class="q-axis" d="M334 126H600"/>
-    ${label(470, 146, 'T1', 'q-txt q-txt--am')}${label(522, 146, 'T2', 'q-txt q-txt--am')}${label(574, 146, 'T3', 'q-txt q-txt--am')}
-    ${note(398, 186, 'new terms required', 420, 112)}
-
-    <path class="q-rule" d="M40 226H600"/>
-    ${label(40, 254, 'PROPOSAL')}<text class="q-val" x="150" y="254">Commit in stages as capacity becomes available.</text>
-    ${label(40, 284, 'CONDITION')}<text class="q-val q-val--am" x="150" y="284">Requires revised terms.</text>
-    ${label(40, 314, 'TRADE-OFF')}<text class="q-val" x="150" y="314">May extend completion.</text>
-  </svg>`;
-}
-
-
-// --- narrow: the same three answers, composed to stand on a phone -------------------
-
-const VBN = 'viewBox="0 0 360 470"';
-const nlabel = (x: number, y: number, t: string, cls = 'q-txt q-txt--n', anchor = 'start'): string => label(x, y, t, cls, anchor);
-const nnote = (x: number, y: number, t: string, lx?: number, ly?: number): string => {
-  const w = t.length * 7.6 + 16;
-  const leader = lx !== undefined && ly !== undefined ? `<path class="q-leader" d="M${x + w / 2} ${y + 10}L${lx} ${ly}"/>` : '';
-  return `${leader}<g class="q-note q-note--n"><rect x="${x}" y="${y - 10}" width="${w}" height="20"/><text x="${x + 8}" y="${y + 5}">${t}</text></g>`;
-};
-
-function conditionsNarrow(): string {
-  return `<svg ${VBN} class="q-svg q-svg--1 q-svg--n" role="img" aria-label="A supplier delay moves toward its limit; two obligations come to overlap; capacity is the first constraint to bind.">
-    ${nlabel(16, 24, 'CONDITION · SUPPLIER DELAY')}
-    <path class="q-track" d="M16 44H344"/><path class="q-tick" d="M16 38v12M344 38v12"/>
-    <path class="q-limit" d="M262 32V56"/>${nlabel(268, 30, 'LIMIT', 'q-txt q-txt--n q-txt--am')}
-    <g class="q1-marker" style="--dx:228px"><rect class="q-am" x="22" y="38" width="12" height="12" transform="rotate(45 28 44)"/></g>
-
-    <rect class="q-pp" x="16" y="86" width="104" height="32"/>${nlabel(26, 107, 'SUPPLIER')}
-    <path class="q-dep" d="M120 102H134V188H150"/>
-    <g class="q1-late">${nnote(150, 84, 'dependency exposed', 160, 108)}</g>
-
-    <rect class="q-pp" x="150" y="128" width="178" height="30"/>${nlabel(160, 148, 'OBLIGATION A')}
-    <g class="q1-shift" style="--dx:96px"><rect class="q-pp q-pp--move" x="54" y="174" width="178" height="30"/>${nlabel(64, 194, 'OBLIGATION B')}</g>
-
-    ${nlabel(16, 252, 'CAPACITY')}
-    <path class="q-cap" d="M110 248H344"/>
-    <rect class="q-load" x="150" y="272" width="178" height="40"/>
-    <g class="q1-shift" style="--dx:96px"><rect class="q-load q-load--b" x="54" y="290" width="178" height="22"/></g>
-    <g class="q1-late">
-      <rect class="q-hatch" x="150" y="232" width="178" height="40"/>
-      <rect class="q-am" x="150" y="232" width="178" height="16"/>
-      ${nnote(120, 214, 'first constraint to bind', 200, 232)}
-    </g>
-    <path class="q-axis" d="M16 312H344"/>${nlabel(344, 334, 'TIME →', 'q-txt q-txt--n', 'end')}
-
-    ${nlabel(16, 382, 'DELAY →')}
-    ${nlabel(16, 408, 'OBLIGATIONS OVERLAP →')}
-    ${nlabel(16, 434, 'CAPACITY FALLS SHORT', 'q-txt q-txt--n q-txt--am')}
-  </svg>`;
-}
-
-function alternativesNarrow(): string {
-  const block = (y: number, title: string, late: boolean, vals: [string, string, string]): string => `
-    ${nlabel(16, y, title, late ? 'q-txt q-txt--n q-txt--am' : 'q-txt q-txt--n q-txt--ink')}
-    <g transform="translate(0 ${y + 4})"${late ? ' class="q2-b"' : ''}>${arrangement(22, 0, late)}</g>
-    ${['COST', 'TIMING', 'REQUIRES'].map((n, i) => `${nlabel(16, y + 104 + i * 26, n)}<text class="q-val q-val--n${late && i < 2 ? ' q-val--am' : ''}" x="116" y="${y + 104 + i * 26}">${vals[i]}</text>`).join('')}`;
-  return `<svg ${VBN} class="q-svg q-svg--2 q-svg--n" role="img" aria-label="Two ways to make the same commitment: commit now, with cost up front and full capacity needed at the start; or commit later, with the cost shifted and the timing changed.">
-    ${nlabel(16, 20, 'SAME DECISION · SAME CONSTRAINTS')}
-    ${block(52, 'A · COMMIT NOW', false, ['Up front', 'As planned', 'Full capacity at once'])}
-    <path class="q-rule" d="M16 252H344"/>
-    ${block(282, 'B · COMMIT LATER', true, ['Shifts later', 'One quarter later', 'A later window'])}
-    ${nnote(244, 272, 'timing changed')}
-  </svg>`;
-}
-
-function arrangementChangeNarrow(): string {
-  return `<svg ${VBN} class="q-svg q-svg--3 q-svg--n" role="img" aria-label="Original arrangement: one commitment made all at once. Proposed: commit in stages as capacity becomes available; requires revised terms and may extend completion.">
-    ${nlabel(16, 22, 'ORIGINAL ARRANGEMENT', 'q-txt q-txt--n q-txt--ink')}
-    <rect class="q-pp q-pp--dim" x="16" y="52" width="56" height="58"/>
-    <path class="q-deck q-deck--dim" d="M72 64H220"/>
-    <rect class="q-pp q-pp--dim" x="220" y="34" width="24" height="76"/><rect class="q-pp q-pp--dim" x="252" y="46" width="24" height="64"/><rect class="q-pp q-pp--dim" x="284" y="26" width="24" height="84"/>
-    <path class="q-axis" d="M12 110H340"/>${nlabel(16, 132, 'All at once')}
-
-    ${nlabel(16, 176, 'PROPOSED CHANGE', 'q-txt q-txt--n q-txt--am')}
-    <rect class="q-pp" x="16" y="206" width="56" height="58"/><rect class="q-am" x="16" y="206" width="56" height="10"/>
-    <path class="q-stage q3-s1" d="M72 250H200"/><path class="q-stage q3-s2" d="M72 234H252"/><path class="q-stage q3-s3" d="M72 218H304"/>
-    <rect class="q-pp" x="200" y="226" width="24" height="38"/><rect class="q-pp" x="252" y="210" width="24" height="54"/><rect class="q-pp" x="304" y="194" width="24" height="70"/>
-    <path class="q-axis" d="M12 264H340"/>
-    ${nlabel(202, 286, 'T1', 'q-txt q-txt--n q-txt--am')}${nlabel(254, 286, 'T2', 'q-txt q-txt--n q-txt--am')}${nlabel(306, 286, 'T3', 'q-txt q-txt--n q-txt--am')}
-    ${nnote(16, 300, 'new terms required', 110, 250)}
-
-    <path class="q-rule" d="M16 334H344"/>
-    ${nlabel(16, 360, 'PROPOSAL')}<text class="q-val q-val--n" x="16" y="380">Commit in stages as capacity arrives.</text>
-    ${nlabel(16, 410, 'CONDITION')}<text class="q-val q-val--n q-val--am" x="116" y="410">Requires revised terms.</text>
-    ${nlabel(16, 440, 'TRADE-OFF')}<text class="q-val q-val--n" x="116" y="440">May extend completion.</text>
-  </svg>`;
+function arrangement(): string {
+  const ps = plan(7);
+  const s = at(ps, 60, 240);
+  const x = at(ps, 200, 150);
+  const t = at(ps, 352, 64);
+  const a1 = at(ps, 300, 250);
+  const [sx, sy] = c(s);
+  const [xx, xy] = c(x);
+  const [tx, ty] = c(t);
+  const [ax] = c(a1);
+  const k = 7;
+  const stages = [
+    [ax, sy, 1],
+    [ax, ty, 2],
+    [tx, ty, 3],
+  ] as const;
+  return (
+    svg(
+      base(ps) +
+        rect(x, 'pl-block') +
+        `<path class="pl-x" d="M${xx - k} ${xy - k}l${2 * k} ${2 * k}M${xx + k} ${xy - k}l${-2 * k} ${2 * k}"/>` +
+        `<path class="pl-old" d="M${sx} ${sy}V${xy}H${tx}V${ty}"/>` +
+        rect(t, 'pl-target') +
+        `<path class="pl-route" style="--i:0" d="M${sx} ${sy}H${ax}"/>` +
+        `<path class="pl-route" style="--i:1" d="M${ax} ${sy}V${ty}"/>` +
+        `<path class="pl-route" style="--i:2" d="M${ax} ${ty}H${tx}"/>` +
+        rect(s, 'pl-src') +
+        stages
+          .map(([px, py, n], i) => `<g class="pl-stage" style="--i:${i}"><rect x="${px - 8}" y="${py - 8}" width="16" height="16"/><text x="${px}" y="${py + 4}">${n}</text></g>`)
+          .join(''),
+      'The original route runs through a blocked parcel. A new arrangement goes around it, committed in three stages.',
+    ) +
+    tags([
+      { x: xx + 12, y: xy - 12, text: 'Original', at: 'bl', tone: 'ink' },
+      { x: ax - 12, y: sy + 14, text: 'New terms required', at: 'tr' },
+    ])
+  );
 }
 
 function trust(): string {
-  return `<svg viewBox="0 0 560 230" class="q-svg t-svg" aria-hidden="true">
-    <path class="q-axis" d="M30 190H540"/>${label(540, 212, 'TIME →', 'q-txt', 'end')}
-    <path class="q-limit" d="M200 30V190"/>${label(206, 40, 'DECISION', 'q-txt')}
-    <path class="t-exp" d="M200 120C260 113 330 102 420 88"/>${label(426, 86, 'EXPECTED', 'q-txt q-txt--ink')}
-    <path class="t-obs" d="M200 120C255 128 330 148 420 158"/>${label(426, 166, 'OBSERVED', 'q-txt q-txt--ink')}
-    <path class="t-gap" d="M200 120C260 113 330 102 420 88V158C330 148 255 128 200 120Z"/>
-    ${note(240, 152, 'difference', 300, 128)}
-    <path class="t-rev" d="M200 120C260 124 330 134 420 144"/>${label(426, 128, 'REVISED, TESTED', 'q-txt q-txt--am')}
-    <path class="q-tick" d="M30 120H200"/>${label(30, 110, 'RECORD', 'q-txt')}
-  </svg>`;
+  // Before the decision, the record; after it, what was expected, what was
+  // observed, and the revision that was tested.
+  const W = 1000;
+  const H = 260;
+  const d = 330;
+  const e = W - 150;
+  const exp = `M${d} 140C${d + 180} 128 ${d + 380} 104 ${e} 70`;
+  const obs = `M${d} 140C${d + 160} 152 ${d + 360} 190 ${e} 206`;
+  const rev = `M${d} 140C${d + 180} 146 ${d + 380} 168 ${e} 186`;
+  const gap = `M${d} 140C${d + 180} 128 ${d + 380} 104 ${e} 70V206C${d + 360} 190 ${d + 160} 152 ${d} 140Z`;
+  const ticks = Array.from({ length: 21 }, (_, i) => `M${40 + i * 46} 236v6`).join('');
+  const lab = (x: number, y: number, t: string, cls = ''): string =>
+    `<span class="pl-tag pl-tag--plain ${cls}" style="left:${((x / W) * 100).toFixed(2)}%;top:${((y / H) * 100).toFixed(2)}%">${t}</span>`;
+  return (
+    `<svg class="pl" viewBox="0 0 ${W} ${H}" aria-hidden="true">
+      <path class="pl-axis" d="M40 236H${W - 40}"/><path class="pl-ticks" d="${ticks}"/>
+      <path class="pl-record" d="M40 140H${d}"/>
+      <path class="pl-decide" d="M${d} 24V236"/>
+      <path class="pl-gap" d="${gap}"/>
+      <path class="pl-exp" d="${exp}"/>
+      <path class="pl-obs" d="${obs}"/>
+      <path class="pl-rev" d="${rev}"/>
+      <rect class="pl-node" x="${d - 4}" y="136" width="8" height="8"/>
+    </svg>` +
+    lab(40, 118, 'Record') +
+    lab(d + 12, 24, 'Decision') +
+    lab(e + 12, 70, 'Expected', 'pl-tag--end') +
+    lab(e + 12, 186, 'Revised, tested', 'pl-tag--am pl-tag--end') +
+    lab(e + 12, 206, 'Observed', 'pl-tag--end')
+  );
 }
 
 export function initQuestions(root: ParentNode = document): void {
-  // Each field is drawn twice: wide beside the questions, and standing for a phone.
-  const make: Record<string, [() => string, () => string]> = {
-    '1': [conditions, conditionsNarrow],
-    '2': [alternatives, alternativesNarrow],
-    '3': [arrangementChange, arrangementChangeNarrow],
-  };
-  for (const host of root.querySelectorAll<HTMLElement>('[data-field]')) {
-    const pair = make[host.dataset['field'] ?? ''];
-    if (pair) host.innerHTML = pair[0]() + pair[1]();
-  }
+  const make: Record<string, () => string> = { '1': conditions, '2': alternatives, '3': arrangement };
+  for (const host of root.querySelectorAll<HTMLElement>('[data-field]')) host.innerHTML = make[host.dataset['field'] ?? '']?.() ?? '';
   const t = root.querySelector<HTMLElement>('[data-trust]');
   if (t) t.innerHTML = trust();
 
-  // Tabs on wide screens; on narrow ones every panel stands.
   const box = root.querySelector<HTMLElement>('[data-questions]');
   if (!box) return;
   const tabs = Array.from(box.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
   const panels = Array.from(box.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
   const wide = window.matchMedia('(min-width: 900px)');
   let current = 0;
+
+  /** Play a plate's story from the start. */
+  const play = (panel: HTMLElement): void => {
+    panel.classList.remove('is-run');
+    void panel.offsetWidth;
+    panel.classList.add('is-run');
+  };
+
   const show = (i: number, focus = false): void => {
     current = i;
     tabs.forEach((tab, k) => {
@@ -235,21 +217,24 @@ export function initQuestions(root: ParentNode = document): void {
     });
     panels.forEach((p, k) => {
       p.hidden = wide.matches && k !== i;
-      // Restart the panel's motion when it is chosen.
-      if (k !== i) return;
-      for (const svg of p.querySelectorAll<SVGElement>('svg')) {
-        svg.classList.remove('is-run');
-        void svg.getBoundingClientRect();
-        svg.classList.add('is-run');
-      }
     });
+    if (wide.matches) play(panels[i]!);
     if (focus) tabs[i]?.focus();
   };
   tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => show(i));
     tab.addEventListener('keydown', (e) => {
       const n = tabs.length;
-      const go = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+      const go =
+        e.key === 'ArrowDown' || e.key === 'ArrowRight'
+          ? (i + 1) % n
+          : e.key === 'ArrowUp' || e.key === 'ArrowLeft'
+            ? (i - 1 + n) % n
+            : e.key === 'Home'
+              ? 0
+              : e.key === 'End'
+                ? n - 1
+                : -1;
       if (go < 0) return;
       e.preventDefault();
       show(go, true);
@@ -257,16 +242,19 @@ export function initQuestions(root: ParentNode = document): void {
   });
   box.classList.add('is-tabs');
   wide.addEventListener('change', () => show(current));
-  show(0);
 
-  // Figure 01: highlight one loop at a time.
-  const f1 = root.querySelector<HTMLElement>('[data-f1]');
-  f1?.querySelectorAll<HTMLButtonElement>('[data-loop]').forEach((b) =>
-    b.addEventListener('click', () => {
-      const on = b.getAttribute('aria-pressed') !== 'true';
-      f1.querySelectorAll<HTMLButtonElement>('[data-loop]').forEach((o) => o.setAttribute('aria-pressed', 'false'));
-      b.setAttribute('aria-pressed', String(on));
-      f1.dataset['loop'] = on ? (b.dataset['loop'] ?? '') : '';
-    }),
+  // Each plate plays when it is first seen; on a phone, each in turn.
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const panel = e.target as HTMLElement;
+        if (!panel.hidden) play(panel);
+        io.unobserve(panel);
+      }
+    },
+    { threshold: 0.35 },
   );
+  panels.forEach((p) => io.observe(p));
+  show(0);
 }

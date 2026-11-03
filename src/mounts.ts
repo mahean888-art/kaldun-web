@@ -6,8 +6,8 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { initWorld } from './visuals/world';
-import { initSystem } from './visuals/system';
 import { initQuestions } from './visuals/questions';
+import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
 import { EMAIL, FORM_ENDPOINT } from './data/site';
 
@@ -165,11 +165,11 @@ export function mountHome(root: ParentNode = document): void {
   wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
-  const system = qs<HTMLElement>('[data-system]', root);
-  if (system) initSystem(system);
   initQuestions(root);
+  const fig = qs<HTMLElement>('[data-f1]', root);
+  if (fig) initFigure(fig);
   for (const world of qsa<HTMLElement>('[data-world]', root)) {
     const plate = world.dataset['world'] === 'plate';
-    initWorld(world, plate ? { seed: 2023, drift: 5, every: 3.6, view: 'above' } : { seed: 1654, drift: 12, every: 4.2, view: 'ground' });
+    initWorld(world, plate ? { seed: 2023, drift: 5, every: 3.6, view: 'above' } : { seed: 1654, drift: 8, every: 7.2, view: 'ground', phases: world.closest<HTMLElement>('.hero__panel') });
   }
 }

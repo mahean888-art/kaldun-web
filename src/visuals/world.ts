@@ -26,6 +26,8 @@ type Route = { a: number; b: number; len: number; bend: 'hv' | 'vh' };
 type Pulse = { route: Route; from: number; to: number; t0: number; dur: number; depth: number };
 type Glow = { site: Site; t0: number };
 type Future = { site: Site; t0: number; seed: number };
+/** A changed arrangement: a new connection found between two institutions. */
+type Find = { a: Site; b: Site; bend: 'hv' | 'vh'; t0: number };
 
 export type WorldOptions = {
   seed?: number;
@@ -37,6 +39,8 @@ export type WorldOptions = {
   view?: 'ground' | 'above';
   /** The finest pixel ratio drawn. */
   maxDpr?: number;
+  /** Report the move being made (model, futures, discovery) on this element. */
+  phases?: HTMLElement | null;
 };
 
 const INK = '23, 20, 16';
@@ -44,7 +48,7 @@ const AMBER = '243, 146, 0';
 const FRAME_MS = 1000 / 30;
 const BANDS = 5;
 
-function rng(seed: number): () => number {
+export function rng(seed: number): () => number {
   let a = seed >>> 0;
   return () => {
     a = (a + 0x6d2b79f5) >>> 0;
@@ -56,7 +60,7 @@ function rng(seed: number): () => number {
 }
 
 /** Cut land the way it is divided: a survey of blocks, then streets, lots, strips. */
-function divide(bounds: Rect, block: number, rand: () => number): Parcel[] {
+export function divide(bounds: Rect, block: number, rand: () => number): Parcel[] {
   const out: Parcel[] = [];
   const push = (r: Rect, kind: number): void => {
     if (r.w > 3 && r.h > 3) out.push({ ...r, kind, tone: rand() });
@@ -135,6 +139,9 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
   let pulses: Pulse[] = [];
   let glows: Glow[] = [];
   let futures: Future[] = [];
+  let finds: Find[] = [];
+  let lastShock = -1e9;
+  let phase = '';
   let offset = 0;
   let last = 0;
   let drawn = 0;
@@ -429,6 +436,55 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
       glows.push({ site: sites[pu.to]!, t0: now });
       spread(pu.to, now, pu.depth + 1, new Set([pu.from, pu.to]));
     }
+
+    // Discovery: the new connection draws itself, holds, and fades.
+    finds = finds.filter((f) => now - f.t0 < 4200);
+    for (const f of finds) {
+      const age = now - f.t0;
+      if (age < 0) continue;
+      const grow = 1 - (1 - Math.min(1, age / 1300)) ** 3;
+      const fade = age < 3200 ? 1 : 1 - (age - 3200) / 1000;
+      const va = depthOf(f.a.y);
+      const vb = va + (f.b.y - f.a.y);
+      const pts: Array<[number, number]> =
+        f.bend === 'hv' ? [[f.a.x, va], [f.b.x, va], [f.b.x, vb]] : [[f.a.x, va], [f.a.x, vb], [f.b.x, vb]];
+      const seg1 = Math.abs(pts[1]![0] - pts[0]![0]) + Math.abs(pts[1]![1] - pts[0]![1]);
+      const seg2 = Math.abs(pts[2]![0] - pts[1]![0]) + Math.abs(pts[2]![1] - pts[1]![1]);
+      let left = (seg1 + seg2) * grow;
+      ctx.strokeStyle = `rgba(${AMBER}, ${fade})`;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      let [px, py] = project(pts[0]![0], pts[0]![1]);
+      ctx.moveTo(px, py);
+      let end: [number, number] = [pts[0]![0], pts[0]![1]];
+      for (let k = 1; k < 3 && left > 0; k++) {
+        const [ax, av] = pts[k - 1]!;
+        const [bx, bv] = pts[k]!;
+        const len = Math.abs(bx - ax) + Math.abs(bv - av);
+        const t = len ? Math.min(1, left / len) : 1;
+        end = [ax + (bx - ax) * t, av + (bv - av) * t];
+        for (let i = 1; i <= 12; i++) {
+          const u = (t * i) / 12;
+          [px, py] = project(ax + (bx - ax) * u, av + (bv - av) * u);
+          ctx.lineTo(px, py);
+        }
+        left -= len;
+      }
+      ctx.stroke();
+      const [ex, ey] = project(end[0], end[1]);
+      ctx.fillStyle = `rgba(${AMBER}, ${fade})`;
+      ctx.fillRect(ex - 3.5, ey - 3.5, 7, 7);
+      if (grow >= 1) {
+        const p = f.b.parcel;
+        const path = new Path2D();
+        for (const v of placements(p)) if (seen(p.x, v, p.w, p.h)) quad(path, p.x, v, p.w, p.h);
+        ctx.fillStyle = `rgba(${AMBER}, ${0.28 * fade})`;
+        ctx.fill(path);
+        ctx.strokeStyle = `rgba(${AMBER}, ${fade})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke(path);
+      }
+    }
   };
 
   const draw = (now: number): void => {
@@ -461,6 +517,22 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
     glows.push({ site: s, t0: now });
     futures.push({ site: s, t0: now, seed: rand() });
     spread(pick, now, 0, new Set([pick]));
+    lastShock = now;
+
+    // Then discovery: a connection the plan did not have, to an institution
+    // near enough to matter, drawn after the futures have been explored.
+    const linked = new Set(links[pick]!.map((k) => (routes[k]!.a === pick ? routes[k]!.b : routes[k]!.a)));
+    const cands = sites
+      .map((t, j) => ({ t, j, d: Math.abs(t.x - s.x) + Math.abs(t.y - s.y) }))
+      .filter((o) => o.j !== pick && !linked.has(o.j) && o.d > 140 && o.d < 420)
+      .filter((o) => {
+        const [sx, sy] = project(o.t.x, depthOf(s.y) + (o.t.y - s.y));
+        return sx > W * 0.06 && sx < W * 0.94 && sy > H * 0.2 && sy < H * 0.98;
+      });
+    if (cands.length) {
+      const o = cands[Math.floor(rand() * cands.length)]!;
+      finds.push({ a: s, b: o.t, bend: rand() < 0.5 ? 'hv' : 'vh', t0: now + 2300 });
+    }
   };
 
   const spread = (from: number, now: number, depth: number, reached: Set<number>): void => {
@@ -487,6 +559,14 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
     if (now >= next) {
       disrupt(now);
       next = now + every;
+    }
+    if (opts.phases) {
+      const since = now - lastShock;
+      const p = since < 2300 ? 'futures' : since < 5800 ? 'discovery' : 'model';
+      if (p !== phase) {
+        phase = p;
+        opts.phases.dataset['phase'] = p;
+      }
     }
     draw(now);
   };
@@ -515,7 +595,9 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
         }
       }
     }
+    for (const f of finds) f.t0 = t0;
     draw(t0 + 1500);
+    if (opts.phases) opts.phases.dataset['phase'] = 'discovery';
   };
 
   const fit = (): void => {
@@ -523,6 +605,7 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
     pulses = [];
     glows = [];
     futures = [];
+    finds = [];
     build();
     if (!W) return;
     if (reduced) still();

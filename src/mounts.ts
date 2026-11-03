@@ -170,7 +170,12 @@ export function mountHome(root: ParentNode = document): void {
   const fig = qs<HTMLElement>('[data-f1]', root);
   if (fig) initFigure(fig);
   const model = qs<HTMLElement>('[data-model]', root);
-  if (model) initModel(model);
+  if (model) {
+    // The rendered model where WebGL is available; the drawn one otherwise.
+    import('./visuals/model3d')
+      .then((m) => (m.canRender3d() ? m.initModel3d(model) : initModel(model)))
+      .catch(() => initModel(model));
+  }
   initDialog();
   initJournalReturn();
   initBack();

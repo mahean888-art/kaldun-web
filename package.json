@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Kaldun \u2014 machine foresight. Marketing site.",
+  "description": "Kaldun — machine foresight. Marketing site.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -13,7 +13,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/three": "^0.170.0",
     "typescript": "~5.7.2",
     "vite": "^6.0.7"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
   }
 }

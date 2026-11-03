@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 
 /**
- * One static document. All copy is in index.html, so the page is readable
- * without JavaScript and indexable by crawlers; TypeScript only enhances.
+ * Static documents: the homepage and the Journal. All copy is in the HTML, so
+ * each page is readable without JavaScript and indexable by crawlers;
+ * TypeScript only enhances.
  */
 export default defineConfig({
   base: './',
@@ -12,7 +13,10 @@ export default defineConfig({
     cssMinify: true,
     assetsInlineLimit: 0,
     rollupOptions: {
-      input: { home: 'index.html' },
+      input: {
+        home: 'index.html',
+        introducing: 'journal/introducing-foresight-machines/index.html',
+      },
     },
   },
   server: {

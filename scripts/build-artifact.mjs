@@ -60,6 +60,9 @@ const main = async () => {
     shell = shell.replace(new RegExp(`(?:\\./|/)?${name.replace('.', '\\.')}`, 'g'), data);
   }
 
+  // The Journal lives on the site; the single file links to it there.
+  shell = shell.split('href="/journal/').join('target="_blank" rel="noopener" href="https://foresightmachines.com/journal/');
+
   const cssPath = await findOne(OUT_DIR, '.css');
   const jsPath = await findOne(OUT_DIR, '.js');
   const css = await inlineFonts(await readFile(cssPath, 'utf8'));

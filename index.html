@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Foresight Machines — Run the world forward before you decide.</title>
+    <title>Foresight Machines — Simulate what could happen. Discover what could work.</title>
     <meta
       name="description"
-      content="Foresight Machines builds AI systems that model the world around an institution so it can decide which risks to take, which commitments to make, and how much capital they require."
+      content="We’re building AI that models financial and physical systems, projects how they could unfold, and searches for better ways to allocate capital and coordinate resources."
     />
     <meta name="theme-color" content="#f3f1ec" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -17,16 +17,16 @@
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content="Foresight Machines" />
-    <meta property="og:description" content="Run the world forward before you decide." />
+    <meta property="og:description" content="Simulate what could happen. Discover what could work." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://foresightmachines.com/" />
     <meta property="og:image" content="https://foresightmachines.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Foresight Machines. Run the world forward before you decide." />
+    <meta property="og:image:alt" content="Foresight Machines. Simulate what could happen. Discover what could work." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Foresight Machines" />
-    <meta name="twitter:description" content="Run the world forward before you decide." />
+    <meta name="twitter:description" content="Simulate what could happen. Discover what could work." />
     <meta name="twitter:image" content="https://foresightmachines.com/og.png" />
     <script type="module" src="/src/pages/home.ts"></script>
   </head>
@@ -42,14 +42,13 @@
       <nav class="lamps" aria-label="Sections" data-lamps>
         <a href="#top" title="Top" aria-label="Top"></a>
         <span class="lamps__group">
-          <a href="#launch" title="01 · Foresight, made a machine" aria-label="01 · Foresight, made a machine"></a>
-          <a href="#challenge" title="02 · The challenge" aria-label="02 · The challenge"></a>
-          <a href="#unlock-1" title="03 · Models that stay current" aria-label="03 · Models that stay current"></a>
-          <a href="#unlock-2" title="04 · Learning from outcomes" aria-label="04 · Learning from outcomes"></a>
-          <a href="#capability" title="05 · Institutional capability" aria-label="05 · Institutional capability"></a>
-          <a href="#mission" title="06 · The mission" aria-label="06 · The mission"></a>
+          <a href="#foresight" title="01 · Forecasting and foresight" aria-label="01 · Forecasting and foresight"></a>
+          <a href="#questions" title="02 · Three questions" aria-label="02 · Three questions"></a>
+          <a href="#how" title="03 · How it works" aria-label="03 · How it works"></a>
+          <a href="#evidence" title="04 · Evidence" aria-label="04 · Evidence"></a>
+          <a href="#journal" title="05 · Journal" aria-label="05 · Journal"></a>
         </span>
-        <a href="#decision" title="Decision" aria-label="Decision"></a>
+        <a href="#decision" title="Discuss a decision" aria-label="Discuss a decision"></a>
       </nav>
       <a class="bar__domain" href="#top" aria-label="Foresight Machines — top of page">foresightmachines.com</a>
     </header>
@@ -57,17 +56,17 @@
 
     <section class="hero" id="top">
       <div class="hero__panel" aria-hidden="true">
-        <div class="hero__photo hero__world"><div class="world" data-world="hero"></div></div>
-        <div class="hero__shade"></div>
         <div class="hero__grid"></div>
-        <span class="hero__mark hero__mark--tl"><i class="hero__cross"></i><b><u></u><u></u></b>Model</span>
-        <span class="hero__mark hero__mark--br">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
+        <div class="hero__art" data-system></div>
+        <span class="hero__mark hero__mark--tl" data-mark="model"><i class="hero__cross"></i><b><u></u><u></u></b>Model</span>
+        <span class="hero__mark hero__mark--tr" data-mark="discovery">Discovery<b><u></u><u></u></b><i class="hero__cross"></i></span>
+        <span class="hero__mark hero__mark--br" data-mark="futures">Futures<b><u></u><u></u></b><i class="hero__cross"></i></span>
       </div>
       <div class="hero__copy">
         <p class="hero__name"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p>
-        <h1 class="hero__line">Run the world forward before you&nbsp;decide.</h1>
-        <p class="hero__sub"><span>Self-correcting AI that models your institution and its world, tests every option across thousands of futures, and hands you the commitment that holds.</span></p>
-        <a class="hero__next" href="#launch">Read the launch essay <span aria-hidden="true">↓</span></a>
+        <h1 class="hero__line"><span>Simulate what could happen.</span> <span>Discover what could work.</span></h1>
+        <p class="hero__sub">We’re building AI that models financial and physical systems, projects how they could unfold, and searches for better ways to allocate capital and coordinate resources.</p>
+        <p class="hero__actions"><a class="btn hero__act" href="#decision">Discuss a decision</a><a class="hero__next" href="#how">See how it works <span aria-hidden="true">↓</span></a></p>
       </div>
       <div class="hero__strip" aria-hidden="true" data-hero-lamps>
         <span class="lc"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="a"></i><i class="d"></i><i class="a"></i></span></span></span>
@@ -82,94 +81,152 @@
     </section>
 
     <main class="main" id="main">
-      <section class="screen" id="essay-screen" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The launch</span><i class="screen__cross" aria-hidden="true"></i></p>
+      <section class="screen" id="foresight" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">Foresight</span><i class="screen__cross" aria-hidden="true"></i></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
-          <article class="essay">
-            <h2 class="essay__title" id="launch" data-move><span class="essay__code" aria-hidden="true">01</span>Foresight, made a machine.</h2>
-            <p>Today we are introducing Foresight Machines. We are building AI systems that model the world around an institution so it can decide which risks to take, which commitments to make, and how much capital they require.</p>
-            <p>A bank should be able to prepare for a run, an insurer to underwrite a hard-to-price specialty risk, a developer to weigh a power delay before committing capital. Our ambition is to make that foresight a permanent capability of institutions.</p>
-            <p>Every institution already has a model of the future. A quant expresses it in equations, an analyst in a forecast, an investment committee in the assumptions behind an approval. Demand will hold. Funding will remain available. A supplier will deliver. These beliefs determine what gets financed, insured, and built. An institution can understand each exposure in isolation and still miss what connects them.</p>
-            <p>A super El Niño can disrupt harvests, lift food prices, and provoke export restrictions. The AI buildout can strain power supply, delay construction, and put financing at risk. A digital dollar can carry a bank&rsquo;s failure into markets that trade around the clock. Each changes the conditions under which other commitments were made.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://www.fao.org/el-nino/en" target="_blank" rel="noopener">El Niño and agriculture</a><a href="https://apnews.com/article/aa7135b3a7f5ef9df440e94825880346" target="_blank" rel="noopener">Food markets and export restrictions</a><a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" target="_blank" rel="noopener">AI and energy</a><a href="https://www.circle.com/pressroom/3-3-billion-of-usdc-reserve-risk-removed-dollar-de-peg-closes" target="_blank" rel="noopener">Circle&rsquo;s account</a></p>
-            <p>An institution needs a way to follow those connections and test its choices against them. The model behind a consequential decision should be something it can inspect, run, and improve.</p>
-
-            <h3 id="challenge" data-move><span class="essay__code" aria-hidden="true">02</span>The challenge: turn foresight into an instrument</h3>
-            <p>Superforecasting showed that judgment about the future can be measured and improved. In the Summer 2026 Metaculus Cup, AI systems finished first and second overall, ahead of every human entrant. The opportunity is to bring that discipline to the decisions that allocate capital and shape the economy.</p>
-            <p class="essay__src"><span>Source</span><a href="https://www.metaculus.com/notebooks/45734/announcing-the-metaculus-cup-summer-2026-winners/" target="_blank" rel="noopener">Metaculus results</a></p>
-            <p>Prediction markets such as Kalshi aggregate beliefs into prices. Robin Hanson&rsquo;s futarchy goes further, proposing that decisions be guided by markets estimating outcomes under alternative policies. Both make expectations explicit and give people a reason to improve them.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://news.kalshi.com/p/how-to-read-probabilities" target="_blank" rel="noopener">Kalshi</a><a href="https://mason.gmu.edu/~rhanson/futarchy.html" target="_blank" rel="noopener">Futarchy</a></p>
-            <p>An institution must connect those expectations to its own choices. A forecast of higher interest rates is an input; deciding whether to refinance requires a model of its debt, cash flows, and alternatives. The same forecast can justify different actions for different institutions. What matters is how an event reaches the institution, what it can do in response, and how that response changes the outcome.</p>
-            <p>Weather forecasting offers a precedent. Observations feed models of the atmosphere; forecasts are checked against the weather that arrives; errors inform the next improvement. This discipline creates value wherever a better view of tomorrow changes what people do today: routing aircraft, dispatching power, planning harvests, and moving goods.</p>
-            <p class="essay__src"><span>Sources</span><a href="https://weather.metoffice.gov.uk/learn-about/how-forecasts-are-made" target="_blank" rel="noopener">How forecasts are made</a><a href="https://www.metoffice.gov.uk/about-us/who-we-are/impact" target="_blank" rel="noopener">Forecasts in use</a></p>
-            <p>Markets and institutions introduce a further difficulty: people respond. A depositor withdraws because others might, a lender tightens terms as risk rises, a government intervenes to contain a shortage. Their responses change the conditions under which other decisions are made.</p>
-            <p>We want to bring the discipline of weather forecasting to this world of interacting decisions. Two capabilities are opening the way: maintaining models as the world changes, and improving them through a record of what they get right and wrong.</p>
-
-            <h3 id="unlock-1" data-move><span class="essay__code" aria-hidden="true">03</span>Unlock 1: Models that stay current</h3>
-            <p>Much of the knowledge needed to model an institution sits in contracts, filings, operating reports, and the heads of specialists. Turning it into a working model has required painstaking translation. Keeping it current has required doing that work again.</p>
-            <p>Language models can take on more of this translation: extracting an obligation from a contract, a dependency from an operating report, a constraint from a regulation. Connected to current observations, these capabilities make it more practical to maintain a model as the world changes.</p>
-            <p>A contractual payment is an obligation; a power limit is a physical constraint; expected withdrawals are an estimate of behavior. Each needs a traceable basis. The machine must distinguish them while calculating how they interact: whether funds arrive before a payment falls due, or a power delay threatens a project&rsquo;s financing.</p>
-            <p>It must preserve what was known when a decision was made, along with what changed afterward. An institution should be able to examine both its current understanding and the evidence on which an earlier commitment rested.</p>
-            <p>Together, these relationships form a shared model of the institution and the systems it depends on. Different choices can be compared against the same evidence. When an assumption changes, the machine should show which commitments need another look&mdash;and which missing information could change the decision.</p>
-
-            <h3 id="unlock-2" data-move><span class="essay__code" aria-hidden="true">04</span>Unlock 2: Learning from outcomes</h3>
-            <p>A model earns trust by exposing itself to correction. Its expectations must be recorded before events unfold, its errors preserved after they do, its revisions tested before they are relied upon.</p>
-            <p>History can accelerate that process. Past events provide situations to reconstruct, expectations to test, and outcomes to learn from. We are building the machinery to recover the evidence available at each point and test a model without giving it knowledge of what followed. This would let successive versions learn from a body of experience already available, while reserving separate cases to test whether they have improved. Expectations recorded ahead of new events provide the continuing test.</p>
-            <p>For a reserve model, that means recording estimates of withdrawals, cash availability, and funding costs, then comparing them with what follows. If withdrawals repeatedly arrive faster than expected, the record should expose the error. A proposed correction must improve performance on cases that were not used to develop it.</p>
-            <p>This is what we mean by self-correcting: a process that makes mistakes visible and tests whether a change remedies them.</p>
-            <p>Judging a decision requires another distinction. We observe what followed the action taken; the effects of alternatives must be estimated. A fortunate outcome can reward a poor decision, and an unlucky one can punish a sound decision. The machine therefore needs a record across many cases, with forecast accuracy assessed separately from evidence about what its actions changed.</p>
-            <figure class="fig fig--loop plate">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 01 — The learning loop</span></figcaption>
-              <div class="instrument" data-instrument><div class="instrument__figure" data-instrument-figure></div></div>
-              <ol class="sr-only">
-                <li>Observe: evidence, with its source and time.</li>
-                <li>Model: the institution and its dependencies.</li>
-                <li>Compare actions: consequences under stated assumptions.</li>
-                <li>Record expectations: the action, the model version, and what was expected. This record is never altered.</li>
-                <li>Score expectations: against what actually happened.</li>
-                <li>Test revisions: on separate cases. A revision that proves better becomes the new model; otherwise the model stays as it was.</li>
-              </ol>
-              <p class="plate__caption">Every choice leaves a record that outcomes can score. A revision changes the model only if it proves better on cases it has not seen, and the original record is never altered.</p>
-            </figure>
-
-            <h3 id="capability" data-move><span class="essay__code" aria-hidden="true">05</span>Foresight as an institutional capability</h3>
-            <p>An institution should be able to carry what it learns from one decision into the next. A model built to assess a counterparty can inform a financing choice. Evidence gathered for a supply commitment can inform the next investment. As tested relationships accumulate, the institution gains a more coherent understanding of the systems it depends on.</p>
-            <p>Better foresight can change which risks an institution takes and how much capital it commits. An insurer could find terms that make a hard-to-price specialty risk worth carrying. A business could make a new market viable by changing its partner, timing, or initial investment. The machine should reveal what makes an opportunity worth pursuing&mdash;and when those conditions no longer hold.</p>
-            <p>As their record earns an institution&rsquo;s trust, the machines should take responsibility within defined mandates: propose an allocation, carry it out, and monitor the conditions that justified it. When those conditions weaken, the machine should identify what needs to change. Each expansion of its authority should rest on demonstrated competence.</p>
-            <aside class="mission fig" id="mission" data-move aria-labelledby="mission-title">
-              <p class="mission__strip" aria-hidden="true"><span>06<span class="bar__squares"><i></i><i></i></span></span><span class="mission__lamps"><i class="is-lit"></i><i></i></span></p>
-              <div class="mission__body">
-                <div class="mission__image mission__world" aria-hidden="true"><div class="world" data-world="plate"></div></div>
-                <div class="mission__main">
-                  <div class="mission__head">
-                    <h4 class="mission__title" id="mission-title">The Foresight Machines mission</h4>
-                  </div>
-                  <div class="mission__copy">
-                    <div class="mission__words">
-                      <p class="mission__text mission__text--lead">We want every consequential institution to be able to run the world forward before it acts.</p>
-                      <p class="mission__text">We are building self-correcting machines that can earn the trust to go further: to allocate capital, underwrite risk, hedge exposure, and secure supply on the strength of their own record.</p>
-                      <p class="mission__text">Their models should remain open to challenge, their mistakes visible, and their judgment capable of improving with experience.</p>
-                      <p class="mission__text mission__text--goal"><em class="essay__mark">Foresight should be a permanent capability of every consequential institution.</em></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </aside>
-            <figure class="fig fig--actions">
-              <figcaption class="plate__head"><span class="plate__fig">Fig. 03 — Where foresight meets action</span></figcaption>
-              <p class="acts__head" aria-hidden="true"><span></span><span>Decision</span><span>The question it should help answer</span></p>
-              <ol class="acts" data-actions aria-label="Decisions and the questions they should help answer"></ol>
-              <p class="plate__caption">A shared model supports different institutional decisions.</p>
-            </figure>
-            <p>Weather forecasting earned its place in the economy through use, measurement, and improvement. We want foresight about the systems people build to earn the same standing.</p>
-            <p class="essay__close">The hardest decisions are not unknowable. <em>They are unrun.</em></p>
+          <article class="passage">
+            <h2 class="passage__title">There’s forecasting, and there’s foresight.</h2>
+            <p>Forecasting anticipates the conditions ahead, and machines now do it <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">about as well as the best people</a>.</p>
+            <p>But every commitment depends on a system larger than the decision itself: other participants, agreements, constraints, and the conditions they meet. What happens depends on how they move together.</p>
+            <p>Foresight runs that system forward, then searches for a better arrangement: a different allocation, new terms, a sequence that makes a project possible.</p>
+            <p>Building models like these used to take months of specialist work. AI is changing the economics of that work.</p>
+            <p class="passage__close">Foresight Machines is building AI to expand the choices institutions can make, and the futures those choices make possible.</p>
           </article>
         </div>
       </section>
 
+      <section class="screen" id="questions" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Three questions</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <header class="sec__head">
+            <h2 class="sec__title">From what could happen to what could work.</h2>
+            <p class="sec__lead">Three questions a model of your system can answer.</p>
+          </header>
+          <div class="qs" data-questions>
+            <div class="qs__list" role="tablist" aria-label="Three questions">
+              <button class="qs__q" type="button" role="tab" id="q-1-tab" aria-controls="q-1" aria-selected="true"><span class="qs__no">01</span><b>What happens if conditions change?</b><span class="qs__x">Follow a change through the system to see which dependencies and commitments it affects.</span></button>
+              <button class="qs__q" type="button" role="tab" id="q-2-tab" aria-controls="q-2" aria-selected="false" tabindex="-1"><span class="qs__no">02</span><b>What changes if we act differently?</b><span class="qs__x">Compare allocations, terms and timing to understand their costs and consequences.</span></button>
+              <button class="qs__q" type="button" role="tab" id="q-3-tab" aria-controls="q-3" aria-selected="false" tabindex="-1"><span class="qs__no">03</span><b>What arrangement could make this work?</b><span class="qs__x">Search for combinations the original plan did not consider, and examine what they require.</span></button>
+            </div>
+            <div class="qs__panels">
+              <div class="qs__panel" role="tabpanel" id="q-1" aria-labelledby="q-1-tab" data-q="1">
+                <p class="qs__mq"><span class="qs__no">01</span><b>What happens if conditions change?</b><span class="qs__x">Follow a change through the system to see which dependencies and commitments it affects.</span></p>
+                <figure class="qs__field"><div class="qs__art" data-field="1"></div><figcaption class="qs__result"><span>Illustrative example</span>A supplier delay moves two obligations into the same weeks. Capacity is the first constraint to bind.</figcaption></figure>
+              </div>
+              <div class="qs__panel" role="tabpanel" id="q-2" aria-labelledby="q-2-tab" data-q="2">
+                <p class="qs__mq"><span class="qs__no">02</span><b>What changes if we act differently?</b><span class="qs__x">Compare allocations, terms and timing to understand their costs and consequences.</span></p>
+                <figure class="qs__field"><div class="qs__art" data-field="2"></div><figcaption class="qs__result"><span>Illustrative example</span>Two ways to make the same commitment, compared on cost, timing and what each requires.</figcaption></figure>
+              </div>
+              <div class="qs__panel" role="tabpanel" id="q-3" aria-labelledby="q-3-tab" data-q="3">
+                <p class="qs__mq"><span class="qs__no">03</span><b>What arrangement could make this work?</b><span class="qs__x">Search for combinations the original plan did not consider, and examine what they require.</span></p>
+                <figure class="qs__field"><div class="qs__art" data-field="3"></div><figcaption class="qs__result"><span>Illustrative example</span>Commit in stages as capacity becomes available. Requires revised terms; may extend completion.</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="how" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-03</span><span class="screen__name">How it works</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <figure class="f1" data-f1>
+            <figcaption class="f1__head"><span class="f1__fig">Figure 01</span><h2 class="sec__title">A model to explore with. A record to improve from.</h2></figcaption>
+            <div class="f1__body">
+            <p class="f1__keys" role="group" aria-label="Highlight a loop"><button type="button" class="f1__key" data-loop="search" aria-pressed="false"><i aria-hidden="true"></i>Search loop</button><button type="button" class="f1__key" data-loop="learning" aria-pressed="false"><i aria-hidden="true"></i>Learning loop</button></p>
+            <p class="f1__input"><span class="f1__input-box"><b>Objectives and constraints</b><span>Supplied by the institution</span></span></p>
+            <ol class="f1__flow">
+              <li class="f1__stage f1__stage--evidence">
+                <span class="f1__no">01</span>
+                <span class="f1__art"><svg viewBox="0 0 64 48" aria-hidden="true"><rect class="ln" x="6" y="10" width="30" height="34"/><rect class="ln" x="14" y="6" width="30" height="34"/><rect class="pp" x="22" y="2" width="30" height="34"/><path class="ln" d="M28 12h18M28 18h18M28 24h12"/><rect class="am" x="40" y="28" width="16" height="7"/></svg></span>
+                <b class="f1__name">Evidence</b>
+                <span class="f1__line">Records, contracts, observations and forecasts, with their sources.</span>
+              </li>
+              <li class="f1__stage f1__stage--model">
+                <span class="f1__no">02</span>
+                <span class="f1__art"><svg viewBox="0 0 64 48" aria-hidden="true"><path class="ln" d="M10 34 L32 22 L54 34 L32 46 Z"/><rect class="am" x="14" y="18" width="8" height="12"/><rect class="pp" x="28" y="10" width="8" height="18"/><rect class="pp" x="40" y="16" width="8" height="12"/><path class="dash" d="M18 18 Q32 2 44 16"/></svg></span>
+                <b class="f1__name">System model</b>
+                <span class="f1__line">Resources, mechanisms, dependencies and uncertainty, assembled into a working representation.</span>
+              </li>
+              <li class="f1__stage f1__stage--search">
+                <span class="f1__no">03</span>
+                <span class="f1__art"><svg viewBox="0 0 64 48" aria-hidden="true"><rect class="ghost" x="6" y="12" width="28" height="28"/><rect class="ghost" x="14" y="8" width="28" height="28"/><rect class="ghost" x="22" y="4" width="28" height="28"/><rect class="pp am-ln" x="30" y="14" width="28" height="28"/><path class="am-ln" d="M36 34 L44 24 L52 30"/></svg></span>
+                <b class="f1__name">Search and simulate</b>
+                <span class="f1__line">Candidate arrangements explored across different conditions.</span>
+              </li>
+              <li class="f1__stage f1__stage--evaluate">
+                <span class="f1__no">04</span>
+                <span class="f1__art"><svg viewBox="0 0 64 48" aria-hidden="true"><path class="ln" d="M6 42H58"/><rect class="pp" x="10" y="20" width="9" height="22"/><rect class="pp" x="24" y="12" width="9" height="30"/><rect class="am" x="38" y="16" width="9" height="26"/><path class="lim" d="M4 14H60"/></svg></span>
+                <b class="f1__name">Evaluate alternatives</b>
+                <span class="f1__line">Costs, consequences, constraints and breaking points compared.</span>
+              </li>
+              <li class="f1__stage f1__stage--decision">
+                <span class="f1__no">05</span>
+                <span class="f1__art"><svg viewBox="0 0 64 48" aria-hidden="true"><path class="ln" d="M8 24H22M42 24H56"/><rect class="seal" x="24" y="16" width="16" height="16" transform="rotate(45 32 24)"/><path class="ln" d="M32 6V12M32 36V42"/></svg></span>
+                <b class="f1__name">Decision</b>
+                <span class="f1__line">A chosen action or arrangement, with its rationale and expectations recorded.</span>
+              </li>
+            </ol>
+            <p class="f1__loop f1__loop--search"><b>Search loop</b><span>Evaluation informs the next candidate. This improves alternatives within the model.</span></p>
+            <div class="f1__loop f1__loop--learning">
+              <p class="f1__world"><span>Decision point · the institution acts</span></p>
+              <ol class="f1__learn">
+                <li>Outcomes observed</li>
+                <li>Compared with recorded expectations</li>
+                <li>Revisions tested before they are relied on</li>
+              </ol>
+              <p><b>Learning loop</b><span>Operating outcomes are compared with recorded expectations; proposed revisions are tested before they become the basis for subsequent decisions. This improves the model against evidence.</span></p>
+            </div>
+          </div>
+            <p class="f1__caption">Simulation tests alternatives. Observations test the model.</p>
+          </figure>
+        </div>
+      </section>
+
+      <section class="screen" id="evidence" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-04</span><span class="screen__name">Evidence</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <header class="sec__head">
+            <h2 class="sec__title">Models earn trust against reality.</h2>
+            <p class="sec__lead">Our standard is evidence: traceable assumptions, comparisons with real alternatives, and a record of what happened after the decision.</p>
+          </header>
+          <div class="trust">
+            <figure class="trust__fig" data-trust aria-label="An expectation recorded before events, the observation that followed, the difference between them, and a revision tested on separate cases"></figure>
+            <ol class="trust__list">
+              <li><span class="qs__no">01</span><b>Ground the model.</b> Connect its rules and relationships to operating records, contracts and observed behavior. Make uncertainty and missing evidence visible.</li>
+              <li><span class="qs__no">02</span><b>Challenge the result.</b> Compare alternatives under the same objectives and constraints. Investigate the conditions under which a recommendation changes or fails.</li>
+              <li><span class="qs__no">03</span><b>Improve from outcomes.</b> Record expectations before events unfold. Use the resulting errors to propose revisions, then test those revisions on separate cases.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="journal" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-05</span><span class="screen__name">Journal</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <header class="sec__head">
+            <h2 class="sec__title">Ideas behind the machines.</h2>
+            <p class="sec__lead">On modeling, simulation and discovery.</p>
+          </header>
+          <ul class="jn">
+            <li class="jn__entry">
+              <a class="jn__link" href="/journal/introducing-foresight-machines/">
+                <span class="jn__meta"><span class="qs__no">01</span><span>Essay</span></span>
+                <span class="jn__title">Introducing Foresight Machines</span>
+                <span class="jn__desc">Why we are building AI to model real systems and discover better arrangements for the world.</span>
+                <span class="jn__go">Read <span aria-hidden="true">→</span></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <section class="screen" id="decision" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Decision</span><i class="screen__cross" aria-hidden="true"></i></p>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-06</span><span class="screen__name">Decision</span><i class="screen__cross" aria-hidden="true"></i></p>
         <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
         <div class="screen__body">
           <h2 class="screen__title">Bring us a consequential decision.</h2>

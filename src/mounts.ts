@@ -6,7 +6,7 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { initModel } from './visuals/model';
-import { initTrust } from './visuals/trust';
+import { initDialog, initJournalReturn, initBack } from './lib/dialog';
 import { initSim } from './visuals/sim';
 import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
@@ -171,5 +171,7 @@ export function mountHome(root: ParentNode = document): void {
   if (fig) initFigure(fig);
   const model = qs<HTMLElement>('[data-model]', root);
   if (model) initModel(model);
-  initTrust(root);
+  initDialog();
+  initJournalReturn();
+  initBack();
 }

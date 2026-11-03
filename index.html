@@ -48,7 +48,6 @@
           <a href="#evidence" title="05 · Trust" aria-label="05 · Trust"></a>
           <a href="#journal" title="06 · Journal" aria-label="06 · Journal"></a>
         </span>
-        <a href="#decision" title="07 · Decision" aria-label="07 · Decision"></a>
       </nav>
       <nav class="bar__nav" aria-label="Site"><a href="#journal">Journal</a><a href="mailto:hello@foresightmachines.com?subject=Careers">Careers</a><a class="bar__cta" href="#decision">Discuss a decision</a></nav>
     </header>
@@ -94,11 +93,14 @@
               <p class="prose__close">Foresight Machines is building AI to expand the choices institutions can make, and the futures those choices make possible.</p>
             </div>
           </section>
-          <ol class="tri" aria-label="What kind of thing this is">
-            <li><p class="tri__k">Dashboards</p><p class="tri__a">Show what happened.</p><p class="tri__b">You read them.</p></li>
-            <li><p class="tri__k">Forecasts</p><p class="tri__a">Estimate what is likely.</p><p class="tri__b">You interpret them.</p></li>
-            <li class="is-ours"><p class="tri__k">Foresight Machines</p><p class="tri__a">Project what could happen and find what could work.</p><p class="tri__b">You set the goal and decide.</p></li>
-          </ol>
+          <div class="tri" aria-label="What kind of thing this is">
+            <div class="tri__rail" aria-hidden="true"><span></span><span>What it does</span><span>Your part</span></div>
+            <ol class="tri__cols">
+              <li><p class="tri__k"><span class="tri__n">01</span>Dashboards</p><p class="tri__a">Show what happened.</p><p class="tri__b">You read them.</p></li>
+              <li><p class="tri__k"><span class="tri__n">02</span>Forecasts</p><p class="tri__a">Estimate what is likely.</p><p class="tri__b">You interpret them.</p></li>
+              <li class="is-ours"><p class="tri__k"><span class="tri__n">03</span><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p><p class="tri__a">Project what could happen and find what could work.</p><p class="tri__b">You set the goal and decide.</p></li>
+            </ol>
+          </div>
         </div>
       </section>
 
@@ -111,123 +113,124 @@
               <p class="lead">Ask what could happen, compare what you could do, or start from the outcome you need.</p>
             </header>
             <div class="qs" data-qs>
-              <div class="qs__tabs" role="tablist" aria-label="Kinds of decision"><button type="button" role="tab" class="qs__tab" id="t-reserves-liquidity" aria-controls="p-reserves-liquidity" aria-selected="true">Reserves &amp; liquidity</button><button type="button" role="tab" class="qs__tab" id="t-credit-collateral" aria-controls="p-credit-collateral" aria-selected="false" tabindex="-1">Credit &amp; collateral</button><button type="button" role="tab" class="qs__tab" id="t-risk-insurance" aria-controls="p-risk-insurance" aria-selected="false" tabindex="-1">Risk &amp; insurance</button><button type="button" role="tab" class="qs__tab" id="t-projects-supply-chains" aria-controls="p-projects-supply-chains" aria-selected="false" tabindex="-1">Projects &amp; supply chains</button></div>
+              <div class="qs__tabs" role="tablist" aria-label="Kinds of decision"><button type="button" role="tab" class="qs__tab" id="t-reserves-liquidity" aria-controls="p-reserves-liquidity" aria-selected="true"><span class="qs__tn">A</span>Reserves &amp; liquidity</button><button type="button" role="tab" class="qs__tab" id="t-credit-collateral" aria-controls="p-credit-collateral" aria-selected="false" tabindex="-1"><span class="qs__tn">B</span>Credit &amp; collateral</button><button type="button" role="tab" class="qs__tab" id="t-risk-insurance" aria-controls="p-risk-insurance" aria-selected="false" tabindex="-1"><span class="qs__tn">C</span>Risk &amp; insurance</button><button type="button" role="tab" class="qs__tab" id="t-projects-supply-chains" aria-controls="p-projects-supply-chains" aria-selected="false" tabindex="-1"><span class="qs__tn">D</span>Projects &amp; supply chains</button></div>
               <div class="qs__panel" role="tabpanel" id="p-reserves-liquidity" aria-labelledby="t-reserves-liquidity">
-                <div class="qs__col"><h3 class="qs__ct">What happens if conditions change?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>01</span>Conditions</p><h3 class="qs__ct">What happens if conditions change?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Multi-brand digital-dollar issuer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Multi-brand digital-dollar issuer</p>
                     <h4 class="qc__q">If our largest reserve bank failed, could we still meet every redemption on time?</h4>
-                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Reserves are spread across four banks, none above the concentration limit.</p></div>
-                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>Two of the four banks move money through the same correspondent; losing it freezes more than half the cash at once.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Reserves sit across four banks, none above the concentration limit.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>Two of the four route payments through the same correspondent. Lose it, and more than half the cash freezes at once.</p></div>
                     <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>The concentration is in the plumbing, not the balances.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What changes if we act differently?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>02</span>Choices</p><h3 class="qs__ct">What changes if we act differently?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Bank treasury</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Bank treasury</p>
                     <h4 class="qc__q">Hold a larger liquid-asset buffer, or secure a committed funding line?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Grow the buffer by a fifth.</p></div>
-                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>In the stresses that matter, the buffer is large enough but slow to turn into cash; a committed line covers the gap at lower carrying cost.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>A smaller buffer plus a committed line whose draw is tested regularly.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>In the stresses that matter, the buffer is large enough but slow to turn into cash. A committed line closes the gap at lower carrying cost.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>A smaller buffer, plus a committed line whose draw is tested regularly.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What arrangement could make this work?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>03</span>Arrangements</p><h3 class="qs__ct">What arrangement could make this work?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Digital-dollar issuer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Digital-dollar issuer</p>
                     <h4 class="qc__q">What would let us offer same-day redemption to institutional holders?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Same-day redemption only below a fixed size.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>Large redemptions cluster in stressed markets, exactly when Treasury bills are slowest to turn into cash.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>A standing repo agreement that turns bills into cash within the day, sized to the largest tested cluster.</p></div><div class="qc__beat qc__beat--req"><p class="qc__k">Requires</p><p>A repo counterparty and an operating test.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>A standing repo agreement that turns bills into cash within the day, sized to the largest cluster tested.</p><p class="qc__req"><span>Requires</span>A repo counterparty and an operating test.</p></div>
                   </article>
                 </div>
               </div>
               <div class="qs__panel" role="tabpanel" id="p-credit-collateral" aria-labelledby="t-credit-collateral" hidden>
-                <div class="qs__col"><h3 class="qs__ct">What happens if conditions change?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>01</span>Conditions</p><h3 class="qs__ct">What happens if conditions change?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Private credit fund</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Private credit fund</p>
                     <h4 class="qc__q">What if rates stay high for two more years?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Borrowers refinance as rates fall.</p></div>
-                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>Without refinancing, covenant breaches arrive first in one sector, within eighteen months.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>Without refinancing, covenant breaches begin in one sector within eighteen months.</p></div>
                     <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>The risk is one sector’s refinancing wall, not the portfolio average.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What changes if we act differently?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>02</span>Choices</p><h3 class="qs__ct">What changes if we act differently?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Asset manager</span><span class="qc__tag">Illustrative</span></p>
-                    <h4 class="qc__q">Sell bonds or borrow against them when margin calls spike?</h4>
+                    <p class="qc__who">Asset manager</p>
+                    <h4 class="qc__q">When margin calls spike, sell bonds or borrow against them?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Sell bonds when cash runs short.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>In a rate shock, calls peak just as bond prices fall, so forced sales lock in the losses.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Borrow against the bonds through repo, and sell only after the calls subside.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Borrow against the bonds through repo, and sell only once the calls subside.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What arrangement could make this work?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>03</span>Arrangements</p><h3 class="qs__ct">What arrangement could make this work?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Equipment lender</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Equipment lender</p>
                     <h4 class="qc__q">What terms would let us lend to operators we decline today?</h4>
-                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Decline fleet operators with under two years of history.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Decline fleet operators with less than two years of history.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>Losses track the equipment’s resale value far more than the borrower’s age.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Lend against the equipment with a manufacturer buy-back, raising the advance rate as payment history builds.</p></div><div class="qc__beat qc__beat--req"><p class="qc__k">Requires</p><p>The manufacturer’s buy-back agreement.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Lend against the equipment with a manufacturer buy-back, and raise the advance rate as payment history builds.</p><p class="qc__req"><span>Requires</span>The manufacturer’s buy-back agreement.</p></div>
                   </article>
                 </div>
               </div>
               <div class="qs__panel" role="tabpanel" id="p-risk-insurance" aria-labelledby="t-risk-insurance" hidden>
-                <div class="qs__col"><h3 class="qs__ct">What happens if conditions change?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>01</span>Conditions</p><h3 class="qs__ct">What happens if conditions change?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Regional property insurer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Regional property insurer</p>
                     <h4 class="qc__q">What if two storms hit in the same season?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Reinsurance covers the largest single event.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>The second storm lands after the limit is spent, just as the renewal is priced.</p></div>
                     <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>The exposure is the second event, not the larger one.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What changes if we act differently?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>02</span>Choices</p><h3 class="qs__ct">What changes if we act differently?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Regional property insurer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Regional property insurer</p>
                     <h4 class="qc__q">Buy a higher limit, or hold more capital?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Raise the reinsurance limit.</p></div>
-                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>A reinstatement provision costs less and covers the two-storm case the higher limit misses.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Buy the reinstatement; keep the limit.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>A reinstatement provision costs less, and covers the two-storm case the higher limit misses.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Keep the limit. Buy the reinstatement.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What arrangement could make this work?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>03</span>Arrangements</p><h3 class="qs__ct">What arrangement could make this work?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Specialty insurer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Specialty insurer</p>
                     <h4 class="qc__q">Could we cover coastal homes we decline today?</h4>
-                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Decline homes within a mile of the coast.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The plan</p><p>Decline every home within a mile of the coast.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>Losses concentrate in homes without roof retrofits.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Offer cover conditional on a retrofit, with a premium credit.</p></div><div class="qc__beat qc__beat--req"><p class="qc__k">Requires</p><p>An inspection partner.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Offer cover on condition of a retrofit, with a premium credit for it.</p><p class="qc__req"><span>Requires</span>An inspection partner.</p></div>
                   </article>
                 </div>
               </div>
               <div class="qs__panel" role="tabpanel" id="p-projects-supply-chains" aria-labelledby="t-projects-supply-chains" hidden>
-                <div class="qs__col"><h3 class="qs__ct">What happens if conditions change?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>01</span>Conditions</p><h3 class="qs__ct">What happens if conditions change?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Solar-and-storage developer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Solar-and-storage developer</p>
                     <h4 class="qc__q">What if the transformers arrive six months late?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Operations start before the first debt payment.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>Revenue slips past the first payment, and the storage contract’s delay penalty starts the same month.</p></div>
                     <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>The binding constraint is the penalty clause, not the loan.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What changes if we act differently?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>02</span>Choices</p><h3 class="qs__ct">What changes if we act differently?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Electronics manufacturer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Electronics manufacturer</p>
                     <h4 class="qc__q">Hold more inventory, or qualify a second supplier?</h4>
                     <div class="qc__beat"><p class="qc__k">The plan</p><p>Double the safety stock.</p></div>
-                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>A second source for one controller chip covers most of the exposure at a fraction of the carrying cost.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Qualify the second source for that one part.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The simulation</p><p>A second source for one controller chip covers most of the exposure, at a fraction of the carrying cost.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Qualify a second source for that one part.</p></div>
                   </article>
                 </div>
-                <div class="qs__col"><h3 class="qs__ct">What arrangement could make this work?</h3>
+                <div class="qs__col"><p class="qs__kick"><span>03</span>Arrangements</p><h3 class="qs__ct">What arrangement could make this work?</h3>
                   <article class="qc">
-                    <p class="qc__who"><span>Infrastructure developer</span><span class="qc__tag">Illustrative</span></p>
+                    <p class="qc__who">Infrastructure developer</p>
                     <h4 class="qc__q">What would make this project financeable at today’s rates?</h4>
-                    <div class="qc__beat"><p class="qc__k">The plan</p><p>One construction loan sized for the full build.</p></div>
+                    <div class="qc__beat"><p class="qc__k">The plan</p><p>One construction loan, sized for the full build.</p></div>
                     <div class="qc__beat"><p class="qc__k">The simulation</p><p>Debt coverage fails in the high-rate cases.</p></div>
-                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Draw the loan in stages with equipment deliveries, and pre-sell storage capacity to the utility.</p></div><div class="qc__beat qc__beat--req"><p class="qc__k">Requires</p><p>The utility’s agreement.</p></div>
+                    <div class="qc__beat qc__beat--find"><p class="qc__k">What it finds</p><p>Draw the loan in stages with equipment deliveries, and pre-sell storage capacity to the utility.</p><p class="qc__req"><span>Requires</span>The utility’s agreement.</p></div>
                   </article>
                 </div>
               </div>
+              <p class="qs__note">Composite examples, for illustration.</p>
             </div>
           </section>
         </div>
@@ -252,20 +255,16 @@
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-05 · Trust</span><span class="band__no" aria-hidden="true">05</span>
         <div class="wrap">
           <section class="blk trust">
-            <figure class="trust__fig" aria-label="Fig 02 · Record and revision. A recorded expectation band, observed outcomes as dots, one miss ringed, and the revised band beside it. A diagram of the method, not a result.">
-              <div class="trust__art" data-trust></div>
-              <figcaption class="trust__cap">Fig 02 · Record and revision</figcaption>
-            </figure>
-            <div class="trust__text">
+            <header class="jhead trust__head">
               <h2 class="h2">Models earn trust against reality.</h2>
               <p class="lead">Every recommendation shows its sources, its assumptions, and how confident the model is.</p>
-              <ul class="trust__list">
-                <li><b>Built from evidence.</b> Rules and relationships trace to operating records, contracts and observed behavior. Missing evidence is marked, not filled in.</li>
-                <li><b>Tested against alternatives.</b> Each recommendation is compared with current practice and strong conventional methods under the same objectives and constraints, including the conditions under which it fails.</li>
-                <li><b>Kept current.</b> The model is updated as contracts, counterparties and conditions change. Every version is archived, so any past recommendation can be reproduced.</li>
-                <li><b>Corrected by outcomes.</b> Expectations are recorded before events unfold. Misses become proposed revisions, and a revision must improve results on separate cases before it is used.</li>
-              </ul>
-            </div>
+            </header>
+            <ol class="trust__grid">
+              <li><p class="trust__n"><span>01</span><i aria-hidden="true"></i></p><h3 class="trust__t">Built from evidence.</h3><p>Rules and relationships trace to operating records, contracts and observed behavior. Missing evidence is marked, not filled in.</p></li>
+              <li><p class="trust__n"><span>02</span><i aria-hidden="true"></i></p><h3 class="trust__t">Tested against alternatives.</h3><p>Each recommendation is compared with current practice and strong conventional methods under the same objectives and constraints, including the conditions under which it fails.</p></li>
+              <li><p class="trust__n"><span>03</span><i aria-hidden="true"></i></p><h3 class="trust__t">Kept current.</h3><p>The model is updated as contracts, counterparties and conditions change. Every version is archived, so any past recommendation can be reproduced.</p></li>
+              <li><p class="trust__n"><span>04</span><i aria-hidden="true"></i><b aria-hidden="true">↺ 01</b></p><h3 class="trust__t">Corrected by outcomes.</h3><p>Expectations are recorded before events unfold. Misses become proposed revisions, and a revision must improve results on separate cases before it is used.</p></li>
+            </ol>
           </section>
         </div>
       </section>
@@ -279,23 +278,55 @@
               <p class="lead">On modeling, simulation and discovery.</p>
             </header>
             <ul class="jtable">
-              <li class="jtable__head" aria-hidden="true"><span>Date</span><span>Title</span><span>Type</span><span>Length</span></li>
-              <li><a href="/journal/introducing-foresight-machines/"><span>Nov 3, 2026</span><span class="jtable__t">Introducing Foresight Machines</span><span>Essay</span><span>6 min</span><i aria-hidden="true">→</i></a></li>
-              <li><a href="/journal/the-future-should-be-engineered-with-foresight/"><span>Nov 3, 2026</span><span class="jtable__t">The future should be engineered with foresight</span><span>Manifesto</span><span>3 min</span><i aria-hidden="true">→</i></a></li>
+              <li class="jtable__head" aria-hidden="true"><span>Title</span><span>Type</span><span>Length</span></li>
+              <li><a data-jlink href="/journal/introducing-foresight-machines/"><span class="jtable__t">Introducing Foresight Machines</span><span>Essay</span><span>6 min</span><i aria-hidden="true">→</i></a></li>
+              <li><a data-jlink href="/journal/the-future-should-be-engineered-with-foresight/"><span class="jtable__t">The future should be engineered with foresight</span><span>Manifesto</span><span>3 min</span><i aria-hidden="true">→</i></a></li>
             </ul>
           </section>
         </div>
       </section>
 
-      <section class="band band--paper" id="decision" data-screen>
-        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="hero__mark band__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Sec-07 · Decision</span><span class="band__no" aria-hidden="true">07</span>
-        <div class="wrap">
-          <section class="blk blk--split">
-            <div class="blk__side">
-              <h2 class="h2">What decision are you facing?</h2>
-              <p class="lead">Tell us what you’re weighing, what’s at stake, and what would change your mind.</p>
-            </div>
-            <div class="blk__main">
+      <footer class="foot">
+        <div class="foot__top">
+          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="wm">foresight machines</span></p>
+          <p class="foot__clock" aria-live="off"><span>T₀ · NYC</span><b data-clock>--:--:--</b><span data-clock-zone>ET</span></p>
+          <p class="foot__end"><a href="#top">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
+        </div>
+        <div class="foot__cols">
+          <div class="foot__col foot__col--lead">
+            <p class="foot__mission"><a href="/journal/the-future-should-be-engineered-with-foresight/"><span class="foot__belief">The future should be engineered with foresight.</span><span class="foot__read">Read the manifesto <span aria-hidden="true">→</span></span></a></p>
+            <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
+          </div>
+          <nav class="foot__col" aria-label="Contact">
+            <p class="foot__head">Contact</p>
+            <ul class="foot__links">
+              <li><a href="#decision">Discuss a decision<span aria-hidden="true">→</span></a></li>
+              <li><a href="#journal">Journal<span aria-hidden="true">→</span></a></li>
+              <li><a href="mailto:hello@foresightmachines.com?subject=Careers">Careers<span aria-hidden="true">→</span></a></li>
+            </ul>
+            <p class="foot__copy">© 2026 Foresight Machines</p>
+          </nav>
+        </div>
+        <div class="foot__mark" data-foot-mark aria-hidden="true">
+          <svg viewBox="0 0 2000 150" preserveAspectRatio="xMidYMid meet">
+            <rect class="foot__sq" x="0" y="52" width="58" height="58" />
+            <rect class="foot__sq" x="78" y="52" width="58" height="58" />
+            <text class="foot__wm" x="186" y="112" textLength="1814" lengthAdjust="spacingAndGlyphs">foresight machines</text>
+          </svg>
+        </div>
+      </footer>
+    </main>
+
+    <dialog class="dlg" id="decision" aria-labelledby="dlg-title" data-dialog>
+      <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <p class="dlg__bar"><span class="hero__mark band__mark dlg__mark" aria-hidden="true"><i class="hero__cross"></i><b><u></u><u></u></b>Discuss a decision</span><button class="dlg__close" type="button" data-dialog-close>Close <span aria-hidden="true">×</span></button></p>
+      <div class="dlg__body">
+        <div class="dlg__side">
+          <h2 class="h2" id="dlg-title">What decision are you facing?</h2>
+          <p class="lead">Tell us what you’re weighing, what’s at stake, and what would change your mind.</p>
+          <p class="dlg__mail">Or write to <a data-email href="#"></a></p>
+        </div>
+        <div class="dlg__main">
           <form class="form" data-decision-form>
             <div class="form__row">
               <label>Name
@@ -320,40 +351,8 @@
             <pre class="form__done-text" data-done-text></pre>
             <p class="form__done-actions" data-done-actions><button class="btn" type="button" data-done-copy>Copy message</button><a class="form__done-link" data-done-mail href="#">Open in mail app &rarr;</a></p>
           </div>
-            </div>
-          </section>
         </div>
-      </section>
-
-      <footer class="foot">
-        <div class="foot__top">
-          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="wm">foresight machines</span></p>
-          <p class="foot__clock" aria-live="off"><span>T₀ · NYC</span><b data-clock>--:--:--</b><span data-clock-zone>ET</span></p>
-          <p class="foot__end"><a href="#top">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
-        </div>
-        <div class="foot__cols">
-          <div class="foot__col foot__col--lead">
-            <p class="foot__mission"><a href="/journal/the-future-should-be-engineered-with-foresight/">The future should be engineered with foresight.</a></p>
-            <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
-          </div>
-          <nav class="foot__col" aria-label="Contact">
-            <p class="foot__head">Contact</p>
-            <ul class="foot__links">
-              <li><a href="#decision">Discuss a decision<span aria-hidden="true">→</span></a></li>
-              <li><a href="#journal">Journal<span aria-hidden="true">→</span></a></li>
-              <li><a href="mailto:hello@foresightmachines.com?subject=Careers">Careers<span aria-hidden="true">→</span></a></li>
-            </ul>
-            <p class="foot__copy">© 2026 Foresight Machines</p>
-          </nav>
-        </div>
-        <div class="foot__mark" data-foot-mark aria-hidden="true">
-          <svg viewBox="0 0 2000 150" preserveAspectRatio="xMidYMid meet">
-            <rect class="foot__sq" x="0" y="52" width="58" height="58" />
-            <rect class="foot__sq" x="78" y="52" width="58" height="58" />
-            <text class="foot__wm" x="186" y="112" textLength="1814" lengthAdjust="spacingAndGlyphs">foresight machines</text>
-          </svg>
-        </div>
-      </footer>
-    </main>
+      </div>
+    </dialog>
   </body>
 </html>

@@ -68,11 +68,4 @@
 
 /* Archivo — the display face: the wordmark, the headings, the verbs. One
    variable file; the semi-expanded width is set where it is used. */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 100 900;
-  font-stretch: 62.5% 125%;
-  font-display: swap;
-  src: url('/fonts/archivo-latin.woff2') format('woff2');
-}
+

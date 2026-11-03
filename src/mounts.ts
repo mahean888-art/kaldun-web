@@ -5,7 +5,8 @@
 
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
-import { initWorld } from './visuals/world';
+import { initModel } from './visuals/model';
+import { initTrust } from './visuals/trust';
 import { initSim } from './visuals/sim';
 import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
@@ -58,7 +59,7 @@ function wireForm(root: ParentNode): void {
   const actions = qs<HTMLElement>('[data-done-actions]', done);
   const copy = qs<HTMLButtonElement>('[data-done-copy]', done);
   const mail = qs<HTMLAnchorElement>('[data-done-mail]', done);
-  const subject = 'Bring us a decision';
+  const subject = 'Discuss a decision';
   let message = '';
 
   const reveal = (): void => {
@@ -101,12 +102,12 @@ function wireForm(root: ParentNode): void {
     event.preventDefault();
     const data = new FormData(form);
     const get = (k: string): string => String(data.get(k) ?? '').trim();
-    const fields = { decision: get('decision'), stake: get('stake'), change: get('change'), reply: get('reply') };
+    const fields = { name: get('name'), reply: get('reply'), org: get('org'), decision: get('decision') };
     const body = [
+      `Name: ${fields.name}`,
+      `Organization: ${fields.org}`,
+      `Work email: ${fields.reply}`,
       `The decision:\n${fields.decision}`,
-      `What is at stake:\n${fields.stake}`,
-      `What would change my mind:\n${fields.change}`,
-      `Reply to: ${fields.reply}`,
     ].join('\n\n');
     const href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     form.dataset['mailto'] = href;
@@ -133,10 +134,10 @@ function wireForm(root: ParentNode): void {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
+        Name: fields.name,
+        Organization: fields.org,
+        'Work email': fields.reply,
         'The decision': fields.decision,
-        'What is at stake': fields.stake,
-        'What would change my mind': fields.change || '(not given)',
-        'Reply to': fields.reply,
         _subject: `Decision: ${fields.decision.replace(/\s+/g, ' ').slice(0, 60)}${fields.decision.length > 60 ? '…' : ''}`,
         _replyto: fields.reply,
         _template: 'table',
@@ -168,8 +169,7 @@ export function mountHome(root: ParentNode = document): void {
   initSim(root);
   const fig = qs<HTMLElement>('[data-f1]', root);
   if (fig) initFigure(fig);
-  for (const world of qsa<HTMLElement>('[data-world]', root)) {
-    const plate = world.dataset['world'] === 'plate';
-    initWorld(world, plate ? { seed: 2023, drift: 4, every: 6.5, view: 'above', ink: world.closest('.band--ink') ? '236, 228, 214' : undefined } : { seed: 1654, drift: 8, every: 7.2, view: 'ground' });
-  }
+  const model = qs<HTMLElement>('[data-model]', root);
+  if (model) initModel(model);
+  initTrust(root);
 }

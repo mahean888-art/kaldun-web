@@ -111,97 +111,38 @@ export function initFigure(fig: HTMLElement): void {
   if (!art) return;
   const reduced = prefersReducedMotion();
   const narrow = window.matchMedia('(max-width: 759px)');
+  let seen = false;
 
-  let raf = 0;
-  let visible = false;
-  let route: SVGPathElement | null = null;
-  let token: SVGRectElement | null = null;
-  let marks: number[] = [];
-  let total = 0;
-  let pos = 0;
-  let next = 0;
-  let hold = 0;
-  let last = 0;
-
-  const light = (i: number): void => {
-    art.querySelectorAll<SVGGElement>('[data-st]').forEach((g) => g.toggleAttribute('data-live', g.dataset['st'] === String(i)));
+  /** One tracing pulse along each loop, once, when the figure is first seen. */
+  const pulse = (): void => {
+    if (reduced) return;
+    for (const loop of art.querySelectorAll<SVGPathElement>('.fg-loop-s, .fg-loop-l')) {
+      const p = loop.cloneNode() as SVGPathElement;
+      p.setAttribute('class', `fg-pulse${loop.classList.contains('fg-loop-s') ? ' fg-pulse--s' : ''}`);
+      p.setAttribute('pathLength', '100');
+      loop.after(p);
+    }
   };
 
   const build = (): void => {
-    cancelAnimationFrame(raf);
-    raf = 0;
     const l = narrow.matches ? portrait() : landscape();
     art.innerHTML = l.svg;
     art.classList.toggle('is-portrait', narrow.matches);
-    route = art.querySelector('[data-route]');
-    token = art.querySelector('[data-token]');
-    if (!route || !token) return;
-    total = route.getTotalLength();
-    marks = l.stops.map(([x, y]) => {
-      let best = 0;
-      let bd = Infinity;
-      for (let s = 0; s <= total; s += 2) {
-        const p = route!.getPointAtLength(s);
-        const d = (p.x - x) ** 2 + (p.y - y) ** 2;
-        if (d < bd) {
-          bd = d;
-          best = s;
-        }
-      }
-      return best;
-    });
-    if (reduced) {
-      token.remove();
-      return;
-    }
-    pos = 0;
-    next = 1;
-    hold = performance.now() + 900;
-    light(0);
-    run();
+    art.querySelector('[data-token]')?.remove();
+    if (seen) art.classList.add('is-seen');
   };
 
-  const tick = (now: number): void => {
-    raf = requestAnimationFrame(tick);
-    const dt = Math.min(50, now - (last || now));
-    last = now;
-    if (!route || !token || now < hold) return;
-    const target = next < marks.length ? marks[next]! : total;
-    pos = Math.min(target, pos + dt * 0.22);
-    const p = route.getPointAtLength(pos);
-    token.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);
-    token.style.opacity = '1';
-    if (pos >= target) {
-      if (next >= marks.length) {
-        // Back through the learning loop into the model: round again from there.
-        pos = marks[1]!;
-        next = 2;
-        light(1);
-      } else {
-        light(next);
-        next += 1;
-      }
-      hold = now + 1000;
-    } else light(-1);
-  };
-
-  const run = (): void => {
-    if (reduced || raf || !visible || document.hidden) return;
-    last = 0;
-    raf = requestAnimationFrame(tick);
-  };
-  const stop = (): void => {
-    cancelAnimationFrame(raf);
-    raf = 0;
-  };
-
-  new IntersectionObserver((e) => {
-    visible = e.some((x) => x.isIntersecting);
-    if (visible) run();
-    else stop();
-  }).observe(art);
-  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : run()));
+  const io = new IntersectionObserver(
+    (e) => {
+      if (!e.some((x) => x.isIntersecting)) return;
+      io.disconnect();
+      seen = true;
+      pulse();
+      art.classList.add('is-seen');
+    },
+    { threshold: 0.4 },
+  );
+  io.observe(art);
   narrow.addEventListener('change', build);
   build();
-
 }

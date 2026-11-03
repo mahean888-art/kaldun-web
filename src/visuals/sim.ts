@@ -1,12 +1,12 @@
 /**
- * "From what could happen to what could work." — set as Simile sets its own
- * use cases: a row of decision tabs, and for each, three cards: who asks, the
- * question in their words, the alternatives compared, and related decisions.
- * The three cards follow the three questions in order.
+ * "Three questions before every commitment." — a row of decision tabs, and
+ * for each, three cards under the three questions. Each card is a three-beat
+ * story: the plan, the simulation, what it finds (and, for an arrangement,
+ * what it requires).
  */
 
 export function initSim(root: ParentNode = document): void {
-  const box = root.querySelector<HTMLElement>('[data-sim]');
+  const box = root.querySelector<HTMLElement>('[data-qs]');
   if (!box) return;
   const tabs = Array.from(box.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
   const panels = Array.from(box.querySelectorAll<HTMLElement>('[role="tabpanel"]'));

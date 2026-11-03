@@ -165,6 +165,6 @@ export function mountHome(root: ParentNode = document): void {
   if (instrument) initInstrument(instrument);
   for (const world of qsa<HTMLElement>('[data-world]', root)) {
     const plate = world.dataset['world'] === 'plate';
-    initWorld(world, plate ? { seed: 2023, drift: 4, every: 6.5, view: 'above' } : { seed: 1654, drift: 8, every: 7.2, view: 'ground' });
+    initWorld(world, plate ? { seed: 2023, drift: 4, every: 6.5, view: 'above', ink: world.closest('.band--ink') ? '236, 228, 214' : undefined } : { seed: 1654, drift: 8, every: 7.2, view: 'ground' });
   }
 }

@@ -462,10 +462,7 @@
 
 .ruled--links a:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
 
-/* The decision screen: aligned with the blocks above. */
-#decision .screen__body {
-  padding-top: clamp(3rem, 7vw, 6rem);
-}
+
 
 /* --- the Journal pages ------------------------------------------------------------ */
 
@@ -522,3 +519,138 @@
 .essay__cta {
   margin-top: 2.5rem !important;
 }
+
+/* --- bands: the page in three grounds --------------------------------------------
+   Paper, ink and amber, edge to edge inside the frame. Each band redefines the
+   ink tokens, so every component below reads correctly on its ground. */
+
+.main {
+  padding-inline: 0;
+}
+
+.band {
+  position: relative;
+  margin-inline: var(--inset);
+  scroll-margin-top: var(--header-h);
+}
+
+.wrap {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.band .blk {
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+
+.band--paper {
+  background: var(--clay);
+}
+
+.band--ink {
+  --ink: #f3ede3;
+  --ink-2: #ddd5c8;
+  --ink-3: #a99f92;
+  --ink-4: #7d7468;
+  --hair: rgba(243, 237, 227, 0.14);
+  --clay: #16120e;
+  background-color: #16120e;
+  /* The drafting grid, in amber, barely there: the machine's own ground. */
+  background-image:
+    linear-gradient(rgba(243, 146, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 146, 0, 0.07) 1px, transparent 1px);
+  background-size: 120px 120px;
+  background-position: center top;
+  color: var(--ink);
+}
+
+.band--amber {
+  --ink: #1a0d00;
+  --ink-2: #2b1700;
+  --ink-3: rgba(26, 13, 0, 0.74);
+  --ink-4: rgba(26, 13, 0, 0.55);
+  --hair: rgba(26, 13, 0, 0.24);
+  background: var(--amber);
+  color: var(--ink);
+}
+
+/* On ink, the statement and the link carry the amber. */
+.band--ink .prose p.prose__close {
+  color: var(--amber);
+}
+
+.band--ink .prose a {
+  color: var(--ink);
+}
+
+.band--ink .h2 {
+  color: var(--ink);
+}
+
+/* The questions: white answers on paper. */
+.band--paper .out {
+  background: #fffdf9;
+  border-color: rgba(23, 20, 16, 0.1);
+  box-shadow: 0 1px 2px rgba(23, 20, 16, 0.04), 0 18px 40px -30px rgba(23, 20, 16, 0.25);
+}
+
+/* How it works: the model glows on ink. */
+.band--ink .view__frame {
+  border-color: rgba(243, 237, 227, 0.22);
+  background: #1d1813;
+}
+
+.band--ink .steps li::before {
+  color: var(--amber);
+}
+
+/* The evidence, set large on amber. */
+.band--amber .h2 {
+  font-size: clamp(2.5rem, 4.4vw, 4rem);
+}
+
+.band--amber .ruled b {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.band--amber .lead {
+  color: var(--ink-2);
+}
+
+/* The decision: the last band, on ink, the form beside its question. */
+.band--ink .form textarea,
+.band--ink .form input {
+  color: var(--ink);
+  border-color: rgba(243, 237, 227, 0.28);
+}
+
+.band--ink .form textarea::placeholder,
+.band--ink .form input::placeholder {
+  color: rgba(243, 237, 227, 0.4);
+}
+
+.band--ink .form label {
+  color: var(--ink);
+}
+
+.band--ink .form__done,
+.band--ink .form__done-text {
+  color: var(--ink-2);
+}
+
+#decision .form {
+  margin-top: 0;
+}
+
+.foot {
+  margin: clamp(3rem, 6vw, 5rem) var(--gutter) 0;
+}
+
+/* Selection and focus read on every ground. */
+.band--ink ::selection { background: rgba(243, 146, 0, 0.5); color: #fff; }
+.band--amber ::selection { background: #1a0d00; color: var(--amber); }
+.band a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

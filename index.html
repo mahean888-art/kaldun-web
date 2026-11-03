@@ -82,11 +82,9 @@
     </section>
 
     <main class="main" id="main">
-      <section class="screen" id="machine" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-01</span><span class="screen__name">The machine</span><i class="screen__cross" aria-hidden="true"></i></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <section class="blk blk--center" id="foresight">
+      <section class="band band--ink" id="foresight" data-screen>
+        <div class="wrap">
+          <section class="blk blk--center">
             <h2 class="h2">There’s forecasting, and there’s foresight.</h2>
             <div class="prose">
               <p>Forecasting anticipates the conditions ahead, and machines now do it <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">about as well as the best people</a>.</p>
@@ -96,10 +94,12 @@
               <p class="prose__close">Foresight Machines is building AI to expand the choices institutions can make, and the futures those choices make possible.</p>
             </div>
           </section>
+        </div>
+      </section>
 
-          <div class="divide" aria-hidden="true"><i></i></div>
-
-          <section class="blk" id="questions">
+      <section class="band band--paper" id="questions" data-screen>
+        <div class="wrap">
+          <section class="blk">
             <header class="blk__head blk__head--center">
               <h2 class="h2">From what could happen to what could work.</h2>
               <p class="lead">Three questions a model of your system can answer.</p>
@@ -129,10 +129,12 @@
             </div>
             <p class="note">Illustrative examples, not customer results.</p>
           </section>
+        </div>
+      </section>
 
-          <div class="divide" aria-hidden="true"><i></i></div>
-
-          <section class="blk blk--split" id="how">
+      <section class="band band--ink" id="how" data-screen>
+        <div class="wrap">
+          <section class="blk blk--split">
             <div class="blk__side">
               <h2 class="h2">A model to explore with. A record to improve from.</h2>
               <ol class="steps">
@@ -147,10 +149,12 @@
               <figcaption><span class="view__cap">Simulation tests alternatives. Observations test the model.</span><span class="view__sub">The institution sets the objectives and keeps authority over every commitment.</span></figcaption>
             </figure>
           </section>
+        </div>
+      </section>
 
-          <div class="divide" aria-hidden="true"><i></i></div>
-
-          <section class="blk blk--split" id="evidence">
+      <section class="band band--amber" id="evidence" data-screen>
+        <div class="wrap">
+          <section class="blk blk--split">
             <div class="blk__side">
               <h2 class="h2">Models earn trust against reality.</h2>
               <p class="lead">Our standard is evidence: traceable assumptions, comparisons with real alternatives, and a record of what happened after the decision.</p>
@@ -164,10 +168,8 @@
         </div>
       </section>
 
-      <section class="screen" id="journal" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-02</span><span class="screen__name">Journal</span><i class="screen__cross" aria-hidden="true"></i></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
+      <section class="band band--paper" id="journal" data-screen>
+        <div class="wrap">
           <section class="blk blk--split">
             <div class="blk__side">
               <h2 class="h2">Ideas behind the machines.</h2>
@@ -181,12 +183,14 @@
         </div>
       </section>
 
-      <section class="screen" id="decision" data-screen>
-        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Sec-03</span><span class="screen__name">Decision</span><i class="screen__cross" aria-hidden="true"></i></p>
-        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
-        <div class="screen__body">
-          <h2 class="screen__title">Bring us a consequential decision.</h2>
-          <p class="screen__lead">One you are preparing to make, or one you need to understand better. Tell us what is at stake, what you are considering, and what would change your mind.</p>
+      <section class="band band--ink" id="decision" data-screen>
+        <div class="wrap">
+          <section class="blk blk--split">
+            <div class="blk__side">
+              <h2 class="h2">Bring us a consequential decision.</h2>
+              <p class="lead">One you are preparing to make, or one you need to understand better. Tell us what is at stake, what you are considering, and what would change your mind.</p>
+            </div>
+            <div class="blk__main">
           <form class="form" data-decision-form>
             <label>The decision
               <textarea name="decision" placeholder="The action you are weighing, and when it has to be made" required></textarea>
@@ -209,6 +213,8 @@
             <pre class="form__done-text" data-done-text></pre>
             <p class="form__done-actions" data-done-actions><button class="btn" type="button" data-done-copy>Copy message</button><a class="form__done-link" data-done-mail href="#">Open in mail app &rarr;</a></p>
           </div>
+            </div>
+          </section>
         </div>
       </section>
 

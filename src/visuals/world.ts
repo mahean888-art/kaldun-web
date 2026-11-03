@@ -39,11 +39,13 @@ export type WorldOptions = {
   view?: 'ground' | 'above';
   /** The finest pixel ratio drawn. */
   maxDpr?: number;
+  /** The colour of the plan's lines, as 'r, g, b' (charcoal on paper by default). */
+  ink?: string | undefined;
   /** Report the move being made (model, futures, discovery) on this element. */
   phases?: HTMLElement | null;
 };
 
-const INK = '23, 20, 16';
+const PAPER_INK = '23, 20, 16';
 const AMBER = '243, 146, 0';
 const FRAME_MS = 1000 / 30;
 const BANDS = 5;
@@ -116,6 +118,7 @@ export function initWorld(host: HTMLElement, opts: WorldOptions = {}): { destroy
   const ctx = canvas.getContext('2d');
   if (!ctx) return { destroy: () => undefined };
 
+  const INK = opts.ink ?? PAPER_INK;
   const reduced = prefersReducedMotion();
   const seed = opts.seed ?? 1654;
   const ground = (opts.view ?? 'ground') === 'ground';

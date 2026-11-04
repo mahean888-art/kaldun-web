@@ -615,3 +615,6 @@
   .ws-crumbs { font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
 }
 .ws-dot i { font-style: normal; }
+#domains > .wrap { padding-bottom: 160px; }
+@media (max-width: 759px) { #domains > .wrap { padding-bottom: 96px; } }
+.ws-center .ws-head { padding-top: 22px; }

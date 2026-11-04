@@ -6,8 +6,9 @@
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
 import { initModel } from './visuals/model';
-import { initDialog, initJournalReturn, initBack } from './lib/dialog';
-import { initSim } from './visuals/sim';
+import { initJournalReturn, initBack } from './lib/journal-return';
+import { initConsole } from './visuals/console';
+import { initFan, initDots } from './visuals/dots';
 import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
 import { EMAIL, FORM_ENDPOINT } from './data/site';
@@ -102,10 +103,11 @@ function wireForm(root: ParentNode): void {
     event.preventDefault();
     const data = new FormData(form);
     const get = (k: string): string => String(data.get(k) ?? '').trim();
-    const fields = { name: get('name'), reply: get('reply'), org: get('org'), decision: get('decision') };
+    const fields = { name: get('name'), reply: get('reply'), org: get('org'), role: get('role'), decision: get('decision') };
     const body = [
       `Name: ${fields.name}`,
       `Organization: ${fields.org}`,
+      `Role: ${fields.role}`,
       `Work email: ${fields.reply}`,
       `The decision:\n${fields.decision}`,
     ].join('\n\n');
@@ -136,6 +138,7 @@ function wireForm(root: ParentNode): void {
       body: JSON.stringify({
         Name: fields.name,
         Organization: fields.org,
+        Role: fields.role,
         'Work email': fields.reply,
         'The decision': fields.decision,
         _subject: `Decision: ${fields.decision.replace(/\s+/g, ' ').slice(0, 60)}${fields.decision.length > 60 ? '…' : ''}`,
@@ -166,7 +169,11 @@ export function mountHome(root: ParentNode = document): void {
   wireForm(root);
   const instrument = qs<HTMLElement>('[data-instrument]', root);
   if (instrument) initInstrument(instrument);
-  initSim(root);
+  const cons = qs<HTMLElement>('[data-console]', root);
+  if (cons) initConsole(cons);
+  const fan = qs<HTMLElement>('[data-fan]', root);
+  if (fan) initFan(fan);
+  initDots(root);
   const fig = qs<HTMLElement>('[data-f1]', root);
   if (fig) initFigure(fig);
   const model = qs<HTMLElement>('[data-model]', root);
@@ -176,7 +183,6 @@ export function mountHome(root: ParentNode = document): void {
       .then((m) => (m.canRender3d() ? m.initModel3d(model) : initModel(model)))
       .catch(() => initModel(model));
   }
-  initDialog();
   initJournalReturn();
   initBack();
 }

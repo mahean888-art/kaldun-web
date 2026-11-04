@@ -53,6 +53,7 @@ export function canRender3d(): boolean {
 
 export function initModel3d(host: HTMLElement): void {
   const panel = host.closest('.hero')?.querySelector<HTMLElement>('.hero__panel') ?? null;
+  const readout = host.closest('.hero')?.querySelector<HTMLElement>('[data-readout]') ?? null;
   const reduced = prefersReducedMotion();
   const narrowQ = window.matchMedia('(max-width: 759px)');
 
@@ -441,7 +442,7 @@ export function initModel3d(host: HTMLElement): void {
       ['Solar', [3.4, 9.4, 0]],
       ['Storage', [8.2, 8.6, 0]],
       ['Substation', [11.3, 8.6, 0]],
-      ['Lender', [10.6, 3.4, 0]],
+      ['Bank', [10.6, 3.4, 0]],
       ['Factory', [19.6, 8.8, 0]],
       ['Warehouse', [24, 8.2, 0]],
       ['Port', [26.4, 7.9, 0]],
@@ -535,6 +536,39 @@ export function initModel3d(host: HTMLElement): void {
     n.dot.style.opacity = String(o);
   };
 
+  /**
+   * The readout under the hero reports the pass as it plays: dots fill as each
+   * stage completes; f filled, p tinted (in progress), o a ring (pending).
+   */
+  const cluster = (key: string): { dots: HTMLElement[]; lab: HTMLElement | null; el: HTMLElement | null } => {
+    const el = readout?.querySelector<HTMLElement>(`[data-rc="${key}"]`) ?? null;
+    return { el, dots: el ? Array.from(el.querySelectorAll<HTMLElement>('.rc__dots i')) : [], lab: el?.querySelector<HTMLElement>('.rc__lab b') ?? null };
+  };
+  const rcs = { model: cluster('model'), futures: cluster('futures'), discovery: cluster('discovery'), condition: cluster('condition'), found: cluster('found') };
+  const fill = (dots: HTMLElement[], k: number): void => {
+    dots.forEach((d, i) => {
+      const x = k * dots.length - i;
+      d.className = x >= 1 ? 'f' : x > 0 ? 'p' : 'o';
+    });
+  };
+  const say = (c: { lab: HTMLElement | null }, text: string): void => {
+    if (c.lab && c.lab.textContent !== text) c.lab.textContent = text;
+  };
+  const report = (t: number): void => {
+    if (!readout) return;
+    const m = span(t, 150, 3500);
+    fill(rcs.model.dots, m);
+    say(rcs.model, m >= 1 ? 'Built' : 'Building');
+    const fu = span(t, 3900, 7400);
+    fill(rcs.futures.dots, fu);
+    say(rcs.futures, `${Math.min(4, Math.max(1, Math.ceil(fu * 4)))} of 4`);
+    const d = span(t, 8200, 11200);
+    fill(rcs.discovery.dots, d);
+    say(rcs.discovery, d >= 1 ? 'Found' : t >= 8200 ? 'Searching' : 'Pending');
+    rcs.condition.el?.classList.toggle('is-lit', t >= 5000);
+    rcs.found.el?.classList.toggle('is-lit', t >= 10600);
+  };
+
   /** The scene at a moment of the pass, t in milliseconds. */
   const at = (t: number): void => {
     sorted.forEach((p, i) => {
@@ -576,6 +610,7 @@ export function initModel3d(host: HTMLElement): void {
     (node.material as THREE.MeshBasicMaterial).opacity = ease(span(t, 9400, 9800));
     ov.style.setProperty('--lab', String(ease(span(t, 3200, 4000))));
     phase(t < 3800 ? 'model' : t < 8200 ? 'futures' : t < 12600 ? 'discovery' : '');
+    report(t);
     renderer.render(scene, camera);
   };
 

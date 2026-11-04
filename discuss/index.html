@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Discuss a decision — Foresight Machines</title>
+    <meta
+      name="description"
+      content="Tell us what you’re weighing, what’s at stake, and what would change your mind."
+    />
+    <meta name="theme-color" content="#f3f1ec" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://foresightmachines.com/discuss/" />
+    <link rel="preload" href="/fonts/audiowide-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:title" content="Discuss a decision" />
+    <meta property="og:description" content="Tell us what you’re weighing, what’s at stake, and what would change your mind." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://foresightmachines.com/discuss/" />
+    <meta property="og:image" content="https://foresightmachines.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Foresight Machines. Simulate what could happen. Discover what could work." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Discuss a decision" />
+    <meta name="twitter:description" content="Tell us what you’re weighing, what’s at stake, and what would change your mind." />
+    <meta name="twitter:image" content="https://foresightmachines.com/og.png" />
+    <script type="module" src="/src/pages/home.ts"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="cap" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="bar" id="top">
+      <a class="bar__brand" href="/" aria-label="Foresight Machines — home"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="wm">foresight machines</span></a>
+      <nav class="bar__nav" aria-label="Site"><a href="/#journal" data-back>Journal</a><a class="bar__cta" href="/discuss/" aria-current="page">Discuss a decision</a></nav>
+    </header>
+
+    <main class="main main--page" id="main">
+      <section class="screen screen--discuss" data-screen>
+        <p class="screen__bar"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="screen__code">Discuss a decision</span><a class="screen__back" href="/">← foresightmachines.com</a><span class="win__lamps" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="o"></i></span></p>
+        <span class="screen__corner screen__corner--tl" aria-hidden="true"></span><span class="screen__corner screen__corner--tr" aria-hidden="true"></span><span class="screen__corner screen__corner--bl" aria-hidden="true"></span><span class="screen__corner screen__corner--br" aria-hidden="true"></span>
+        <div class="screen__body">
+          <div class="disc">
+            <div class="disc__side">
+              <h1 class="h2">What decision are you facing?</h1>
+              <p class="lead">Tell us what you’re weighing, what’s at stake, and what would change your mind.</p>
+              <p class="disc__mail">Or write to <a data-email href="#"></a></p>
+            </div>
+            <div class="disc__main">
+            <form class="form" data-decision-form>
+              <div class="form__row">
+                <label>Name
+                  <input name="name" type="text" autocomplete="name" required />
+                </label>
+                <label>Work email
+                  <input name="reply" type="email" autocomplete="email" required />
+                </label>
+              </div>
+              <div class="form__row">
+                <label>Organization
+                  <input name="org" type="text" autocomplete="organization" required />
+                </label>
+                <label>Role
+                  <input name="role" type="text" autocomplete="organization-title" />
+                </label>
+              </div>
+              <label>The decision
+                <textarea name="decision" required></textarea>
+              </label>
+              <input class="form__honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <p><button class="btn" type="submit">Discuss a decision</button></p>
+            </form>
+            <div class="form__done" data-form-done role="status" aria-live="polite" hidden>
+              <p class="form__done-head" data-done-head>Message ready</p>
+              <p class="form__done-lead" data-done-lead>Your mail app should open with the message written. If it didn&rsquo;t, copy it and send it to <a data-email href="#"></a>.</p>
+              <pre class="form__done-text" data-done-text></pre>
+              <p class="form__done-actions" data-done-actions><button class="btn" type="button" data-done-copy>Copy message</button><a class="form__done-link" data-done-mail href="#">Open in mail app &rarr;</a></p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <div class="foot__top">
+          <p class="foot__brand"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="wm">foresight machines</span><span class="foot__tag">Simulation · Discovery</span></p>
+          <p class="foot__clock" aria-live="off"><span>T₀ · NYC</span><b data-clock>--:--:--</b><span data-clock-zone>ET</span><span class="foot__geo">40.71° N · 74.01° W</span></p>
+          <p class="foot__end"><a href="/">foresightmachines.com</a><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><i class="foot__cross" aria-hidden="true"></i></p>
+        </div>
+        <div class="foot__cols">
+          <div class="foot__col foot__col--lead">
+            <p class="foot__mission"><a href="/journal/the-future-should-be-engineered-with-foresight/"><span class="foot__belief">The future should be engineered with foresight.</span><span class="foot__read">Read the manifesto <span aria-hidden="true">→</span></span></a></p>
+            <a class="foot__field" data-email href="#"><span data-email-text></span><span class="foot__arrow" aria-hidden="true">→</span></a>
+          </div>
+          <nav class="foot__col" aria-label="Site">
+            <p class="foot__head">Index</p>
+            <ul class="foot__links">
+              <li><a href="/discuss/">Discuss a decision<span aria-hidden="true">→</span></a></li>
+              <li><a href="/#journal">Journal<span aria-hidden="true">→</span></a></li>
+              <li><a data-mail="Contact" href="mailto:hello@foresightmachines.com">Contact<span aria-hidden="true">→</span></a></li>
+            </ul>
+            <p class="foot__copy">© 2026 Foresight Machines</p>
+          </nav>
+        </div>
+        <div class="foot__mark" data-foot-mark aria-hidden="true">
+          <svg viewBox="0 0 2000 150" preserveAspectRatio="xMidYMid meet">
+            <text class="foot__wm" x="0" y="112" textLength="1820" lengthAdjust="spacingAndGlyphs">foresight machines</text>
+            <rect class="foot__sq" x="1864" y="54" width="58" height="58" />
+            <rect class="foot__sq" x="1942" y="54" width="58" height="58" />
+          </svg>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -62,6 +62,7 @@ const main = async () => {
 
   // The Journal lives on the site; the single file links to it there.
   shell = shell.split('href="/journal/').join('target="_blank" rel="noopener" href="https://foresightmachines.com/journal/');
+  shell = shell.split('href="/discuss/"').join('target="_blank" rel="noopener" href="https://foresightmachines.com/discuss/"');
 
   const cssPath = await findOne(OUT_DIR, '.css');
   const jsPath = await findOne(OUT_DIR, '.js');

@@ -17,6 +17,7 @@ export default defineConfig({
         home: 'index.html',
         introducing: 'journal/introducing-foresight-machines/index.html',
         manifesto: 'journal/the-future-should-be-engineered-with-foresight/index.html',
+        discuss: 'discuss/index.html',
       },
     },
   },

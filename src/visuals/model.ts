@@ -216,7 +216,7 @@ function scene(): { parts: Part[]; lines: string; money: string; found: string; 
   const lab = (t: string, x: number, y: number, anchor = 'start'): string =>
     `<text x="${f(sx(x, y))}" y="${f(sy(x, y, 0))}" text-anchor="${anchor}">${t}</text>`;
   const labels =
-    lab('SOLAR', 0.6, 9.75) + lab('STORAGE', 7.4, 8.85) + lab('SUBSTATION', 10, 8.75) + lab('LENDER', 9.2, 1.5, 'end') +
+    lab('SOLAR', 0.6, 9.75) + lab('STORAGE', 7.4, 8.85) + lab('SUBSTATION', 10, 8.75) + lab('BANK', 9.2, 1.5, 'end') +
     lab('FACTORY', 17.6, 8.95) + lab('WAREHOUSE', 22.4, 8.35) + lab('PORT', 25.9, 8.1);
 
   return { parts: parts.sort((m, n) => m.key - n.key), lines, money, found, slack, notes, labels };

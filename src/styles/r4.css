@@ -605,7 +605,6 @@
 .dom__serves { margin-top: 10px; min-height: 0; font-size: 15px; line-height: 1.45; color: var(--ink-3); }
 .dom__ex { align-self: start; margin-top: 18px; padding: 12px 14px; border: 1px solid #e7e2d8; border-radius: 6px; background: #fff; }
 .dom__exq { font-size: 14px; line-height: 1.4; color: var(--ink); }
-.dom__exa { margin-top: 8px; padding-left: 10px; border-left: 2px solid #f0900a; font-size: 13.5px; line-height: 1.45; color: #4a463f; }
 .dom__qs { margin-top: 18px; list-style: none; border-top: 1px solid var(--hair); }
 .dom__qs li { display: block; padding: 10px 0; border-top: 0; border-bottom: 1px solid var(--hair); font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
 @media (max-width: 699px) { .dom__cell { flex: 0 0 86%; } }

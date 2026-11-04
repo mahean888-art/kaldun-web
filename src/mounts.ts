@@ -5,12 +5,11 @@
 
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
-import { initLit } from './visuals/lit';
+import { initDeck } from './visuals/deck';
 import { initJournalReturn, initBack } from './lib/journal-return';
 import { initConsole } from './visuals/console';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
-import { initFigure } from './visuals/figure';
 import { ACTIONS } from './data/actions';
 import { EMAIL, FORM_ENDPOINT } from './data/site';
 
@@ -174,10 +173,8 @@ export function mountHome(root: ParentNode = document): void {
   if (cons) initConsole(cons);
   initFields(root);
   initManifesto();
-  const fig = qs<HTMLElement>('[data-f1]', root);
-  if (fig) initFigure(fig);
-  const hero = qs<HTMLElement>('[data-lit]', root);
-  if (hero) initLit(hero);
+  const hero = qs<HTMLElement>('[data-deck]', root);
+  if (hero) initDeck(hero);
   initJournalReturn();
   initBack();
 }

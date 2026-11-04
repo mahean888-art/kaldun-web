@@ -39,9 +39,10 @@ function initClock(): void {
   const tz = 'America/New_York';
   const fmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const zone = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'short' });
+  const hm = out.dataset['fmt'] === 'hm';
   const tick = (): void => {
     const now = new Date();
-    out.textContent = fmt.format(now);
+    out.textContent = hm ? fmt.format(now).slice(0, 5) : fmt.format(now);
     const name = zone.formatToParts(now).find((p) => p.type === 'timeZoneName')?.value;
     if (zoneOut && name && /^E[SD]T$/.test(name)) zoneOut.textContent = name;
   };

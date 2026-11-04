@@ -20,7 +20,7 @@
 
 import { prefersReducedMotion } from '../lib/prefers';
 
-const PITCH = 8;
+const PITCH = 7;
 const AMBER: [number, number, number] = [240, 144, 10];
 const INK = '#171410';
 
@@ -71,7 +71,7 @@ function futures(w: number, h: number): Art {
   const r = rng(42);
   const ox = 3;
   const oy = Math.round(g.rows * 0.58);
-  const N = 1400;
+  const N = 2400;
   // Each future keeps its own heading, with noise that compounds with time:
   // together they fan out from the origin, densest along the likely corridor.
   const gauss = (): number => Math.sqrt(-2 * Math.log(r() + 1e-9)) * Math.cos(2 * Math.PI * r());
@@ -297,7 +297,8 @@ export function initFields(root: ParentNode = document): void {
       const cs = getComputedStyle(box);
       const w = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const ratio = Number(canvas.dataset['ratio'] ?? (560 / 520));
-      const h = canvas.dataset['field'] === 'futures' ? w / ratio : box.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      const fill = canvas.dataset['fill'] !== undefined;
+      const h = fill ? box.clientHeight : canvas.dataset['field'] === 'futures' ? w / ratio : box.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
       if (w < 8 || Math.abs(w - lastW) < 2) return;
       lastW = w;
       art = make(w, h);

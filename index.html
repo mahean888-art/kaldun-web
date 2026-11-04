@@ -67,7 +67,16 @@
         <p class="hero__sub">We’re building AI that models financial and physical systems, projects how they could unfold, and searches for better ways to allocate capital and coordinate resources.</p>
         <p class="hero__actions"><a class="btn hero__act" href="/discuss/">Discuss a decision</a><a class="hero__next" href="#how">See how it works <span aria-hidden="true">↓</span></a></p>
       </div>
-      <div class="hero__model" data-model role="img" aria-label="A white model of one connected system: a solar field with battery storage, a substation and transmission line, a factory, a warehouse beside a port crane, and a bank. One money line is redrawn in orange: the loan now runs in two stages with equipment deliveries."></div>
+      <div class="hero__model lit" data-lit role="img" aria-label="A white model of one connected system on a single plate: a bank, a solar field with storage, a factory, a warehouse and port, and a city block of offices, joined by channels etched into the plate. Light runs along them: money from the bank, goods and power along the front. One new channel, lit in orange, runs from the bank to the solar field: the loan, staged with deliveries.">
+        <div class="lit__stage" data-lit-stage>
+          <picture>
+            <source media="(max-width: 759px)" srcset="/lit-narrow-750.webp 750w, /lit-narrow-1400.webp 1400w" sizes="100vw" />
+            <img src="/lit-wide-1600.webp" srcset="/lit-wide-1600.webp 1600w, /lit-wide-3000.webp 3000w" sizes="90vw" width="3000" height="840" alt="" decoding="async" fetchpriority="high" />
+          </picture>
+          <canvas class="lit__fx" aria-hidden="true"></canvas>
+          <p class="lit__tag" data-lit-tag aria-hidden="true"><span>Found · Stage the loan with deliveries</span></p>
+        </div>
+      </div>
       <div class="hero__strip hero__clusters b1 b2 b3" aria-hidden="true" data-clusters>
         <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span></span>
         <span class="lc" style="--c:3" data-third="1"><span class="lc__label">Foresight Machines</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
@@ -219,33 +228,6 @@
                 <ol class="dom__qs"><li><span>01</span>What if equipment arrives six months late?</li><li><span>02</span>More inventory, or a second supplier?</li><li><span>03</span>What makes this financeable at today’s rates?</li></ol>
                 <p class="dom__find"><span><i aria-hidden="true"></i>Typical finding</span>The penalty clause binds, not the loan.</p>
                 <p class="dom__who"><span>Who</span>Head of project finance</p>
-              </li>
-            </ol>
-                <p class="dom__find"><span><i aria-hidden="true"></i>Typical finding</span>Cash sits where redemptions don’t come from.</p>
-              </li>
-              <li class="dom__cell">
-                <div class="dom__art" data-dot="cred" aria-hidden="true"></div>
-                <p class="dom__key"><b>B</b></p>
-                <h3 class="dom__name">Credit &amp; collateral</h3>
-                <p class="dom__serves">Lenders and managers whose obligations move with rates and prices</p>
-                <ol class="dom__qs"><li><span>01</span>What if rates stay high two more years?</li><li><span>02</span>Sell or borrow when margin calls spike?</li><li><span>03</span>What terms let us lend where we decline?</li></ol>
-                <p class="dom__find"><span><i aria-hidden="true"></i>Typical finding</span>One sector’s refinancing wall, not the portfolio average.</p>
-              </li>
-              <li class="dom__cell">
-                <div class="dom__art" data-dot="risk" aria-hidden="true"></div>
-                <p class="dom__key"><b>C</b></p>
-                <h3 class="dom__name">Risk &amp; insurance</h3>
-                <p class="dom__serves">Insurers deciding which risks to carry, and on what terms</p>
-                <ol class="dom__qs"><li><span>01</span>What if repair costs keep outpacing premiums?</li><li><span>02</span>Higher limit, or more capital?</li><li><span>03</span>Could we cover homes we decline today?</li></ol>
-                <p class="dom__find"><span><i aria-hidden="true"></i>Typical finding</span>The squeeze is in renewals priced last year.</p>
-              </li>
-              <li class="dom__cell">
-                <div class="dom__art" data-dot="proj" aria-hidden="true"></div>
-                <p class="dom__key"><b>D</b></p>
-                <h3 class="dom__name">Projects &amp; supply chains</h3>
-                <p class="dom__serves">Developers and manufacturers whose plans depend on physical delivery</p>
-                <ol class="dom__qs"><li><span>01</span>What if equipment arrives six months late?</li><li><span>02</span>More inventory, or a second supplier?</li><li><span>03</span>What makes this financeable at today’s rates?</li></ol>
-                <p class="dom__find"><span><i aria-hidden="true"></i>Typical finding</span>The penalty clause binds, not the loan.</p>
               </li>
             </ol>
             <p class="dom__legend" aria-hidden="true"><span>01 · Conditions</span><span>02 · Choices</span><span>03 · Arrangements</span></p>

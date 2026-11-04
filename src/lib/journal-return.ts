@@ -43,7 +43,12 @@ export function initJournalReturn(root: Document = document): void {
   const fromEntry = /\/journal\//.test(document.referrer);
   if (y !== null && (nav?.type === 'back_forward' || (fromEntry && location.hash === '#return'))) {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    requestAnimationFrame(() => window.scrollTo({ top: y, behavior: 'instant' }));
+    // Restore now, and again once images and fonts have settled the layout.
+    const go = (): void => window.scrollTo({ top: y, behavior: 'instant' });
+    requestAnimationFrame(go);
+    window.addEventListener('load', () => requestAnimationFrame(go), { once: true });
+    void document.fonts?.ready.then(() => requestAnimationFrame(go));
+    window.setTimeout(go, 350);
     if (location.hash === '#return') history.replaceState(null, '', location.pathname);
   }
 }

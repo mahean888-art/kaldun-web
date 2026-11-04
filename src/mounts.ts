@@ -5,7 +5,7 @@
 
 import { qs, qsa, el } from './lib/dom';
 import { initInstrument } from './visuals/instrument';
-import { initModel } from './visuals/model';
+import { initLit } from './visuals/lit';
 import { initJournalReturn, initBack } from './lib/journal-return';
 import { initConsole } from './visuals/console';
 import { initFields } from './visuals/field';
@@ -176,13 +176,8 @@ export function mountHome(root: ParentNode = document): void {
   initManifesto();
   const fig = qs<HTMLElement>('[data-f1]', root);
   if (fig) initFigure(fig);
-  const model = qs<HTMLElement>('[data-model]', root);
-  if (model) {
-    // The rendered model where WebGL is available; the drawn one otherwise.
-    import('./visuals/model3d')
-      .then((m) => (m.canRender3d() ? m.initModel3d(model) : initModel(model)))
-      .catch(() => initModel(model));
-  }
+  const hero = qs<HTMLElement>('[data-lit]', root);
+  if (hero) initLit(hero);
   initJournalReturn();
   initBack();
 }

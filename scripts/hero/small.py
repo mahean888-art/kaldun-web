@@ -88,7 +88,7 @@ def mats():
     M['road'] = mat('road', '#e9e4da', 0.7)
     M['panel'] = mat('panel', '#c3c0ba', 0.25)
     M['steel'] = mat('steel', '#d8d4cc', 0.4)
-    M['warm'] = mat('warm', '#f2a24a', 0.4, '#e8810c', 0.9)
+    M['warm'] = mat('warm', '#f2a24a', 0.4, '#e8810c', 1.1)
     M['frost'] = frost(False, 0.05)
     M['frost_hi'] = frost(False, 1.1)
     M['frost_lit'] = frost(True)
@@ -104,6 +104,28 @@ def frost(lit, glow=0.12):
     b.inputs['Emission Color'].default_value = (*lin('#ef8a10' if lit else '#fffaf0'), 1)
     b.inputs['Emission Strength'].default_value = 1.2 if lit else glow
     return m
+
+
+def frost_tex(tex, glow, alpha):
+    m = bpy.data.materials.new('frost_tex')
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes['Principled BSDF']
+    b.inputs['Base Color'].default_value = (*lin('#f7f6f3'), 1)
+    b.inputs['Roughness'].default_value = 0.35
+    img = nt.nodes.new('ShaderNodeTexImage')
+    img.image = bpy.data.images.load(tex)
+    mx = nt.nodes.new('ShaderNodeMath'); mx.operation = 'MAXIMUM'; mx.inputs[1].default_value = alpha
+    nt.links.new(img.outputs['Alpha'], mx.inputs[0])
+    nt.links.new(mx.outputs['Value'], b.inputs['Alpha'])
+    mix = nt.nodes.new('ShaderNodeMixRGB'); mix.blend_type = 'MIX'
+    mix.inputs['Color1'].default_value = (*lin('#ffffff'), 1)
+    nt.links.new(img.outputs['Alpha'], mix.inputs['Fac'])
+    nt.links.new(img.outputs['Color'], mix.inputs['Color2'])
+    nt.links.new(mix.outputs['Color'], b.inputs['Emission Color'])
+    b.inputs['Emission Strength'].default_value = glow
+    return m
+TEX = '/tmp/claude-0/-home-user-kaldun-web/fd930541-fe09-5744-8e47-e77ab427b4b2/scratchpad/blender/tex-compare.png'
 
 def box(x0, y0, z0, w, d, h, m='card', bevel=0.02, rot=None):
     bpy.ops.mesh.primitive_cube_add(size=1, location=(x0 + w / 2, y0 + d / 2, z0 + h / 2))
@@ -231,7 +253,7 @@ def v_res():
     for (x, y) in ((1.2, -0.9), (2.0, -0.9), (1.2, 0.1), (2.0, 0.1), (1.6, 1.0)):
         box(x, y, 0, 0.55, 0.55, 0.42)
         box(x + 0.05, y + 0.05, 0.42, 0.45, 0.45, 0.05, 'road', bevel=0)
-    box(-0.5, -0.12, 0.01, 1.7, 0.16, 0.04, 'warm', bevel=0.005)   # the route between them
+    box(-0.5, -0.14, 0.0, 1.7, 0.28, 0.16, 'warm', bevel=0.02)   # the route between them, raised and lit
 def v_cred():
     plate(6.0, 4.5)
     tower(-2.6, -0.4, 1.1, 1.1, 3.2)
@@ -294,8 +316,10 @@ def f_simulate():
     for k in range(6):
         slice_card(0.2, 2.6 + k * 0.35, 5.2, 2.8, 'frost', math.radians((k - 2.5) * 7.5))
 def f_compare():
-    slice_card(-1.7, 0.0, 3.0, 3.6, 'frost')
-    slice_card(1.7, 0.0, 3.0, 3.6, 'frost_hi')
+    M['ft_lo'] = frost_tex(TEX, 0.18, 0.1)
+    M['ft_hi'] = frost_tex(TEX, 1.05, 0.34)
+    slice_card(-1.75, 0.0, 3.3, 3.0, 'ft_lo', math.radians(-3))
+    slice_card(1.75, -0.3, 3.3, 3.0, 'ft_hi', math.radians(3))
 def f_decide():
     box(-1.4, -0.9, 0, 2.8, 1.8, 0.5, 'card', bevel=0.04)
     slice_card(0.0, 0.0, 2.6, 3.4, 'frost_lit')
@@ -308,7 +332,7 @@ def f_decide():
             o.location.z = 0.5
 
 FILM = {'f-evidence': (f_evidence, (0.25, 0, 0.5), 7.4), 'f-model': (f_model, (0.1, 0.2, 0.8), 12.0), 'f-simulate': (f_simulate, (0.1, 1.2, 1.8), 13.0),
-        'f-compare': (f_compare, (0, 0, 1.8), 8.0), 'f-decide': (f_decide, (0, 0, 2.0), 6.4)}
+        'f-compare': (f_compare, (0, 0, 1.5), 9.3), 'f-decide': (f_decide, (0, 0, 2.0), 6.4)}
 
 if ONLY in ('v', 'all'):
     for name, build in VIGNETTES.items():

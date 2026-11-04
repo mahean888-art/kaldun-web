@@ -29,7 +29,7 @@ type P = [number, number, number];
 type View = { w: number; h: number; paths: Record<string, P[][]> };
 const DATA = deck as unknown as Record<'wide' | 'narrow', View>;
 const N = 8;
-const LIT = 2;
+const LIT = 3;
 
 const ease = (t: number): number => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - (1 - t) ** 3);
 const span = (t: number, a: number, b: number): number => Math.max(0, Math.min(1, (t - a) / (b - a)));
@@ -122,7 +122,7 @@ export function initDeck(host: HTMLElement): void {
     const ar = v.w / v.h;
     let w = r.width;
     let h = w / ar;
-    const room = r.height * (narrowQ.matches ? 1.0 : 1.66);
+    const room = r.height * (narrowQ.matches ? 1.0 : 1.15);
     if (h > room && room > 40) {
       h = room;
       w = h * ar;

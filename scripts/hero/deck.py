@@ -178,16 +178,17 @@ FOUND = [(-4.1, -2.6), (-0.2, -2.6), (0.4, -2.4)]
 
 # --- the futures: eight frosted slices ---------------------------------------------------------
 TEX_W, TEX_H = 2048, 820
-SL_W, SL_H = 11.0, 5.2
+SL_W, SL_H = 10.0, 5.0
 def silhouette(path, variant, lit=False):
     """The world's profile, etched: thin lines, front elevation, in one state."""
     im = Image.new('RGBA', (TEX_W, TEX_H), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    LA = 255 if lit else 150
+    LA = 235
     X = lambda x: int((x * 0.68 - (-SL_W / 2)) / SL_W * TEX_W)
     Z = lambda z: int(TEX_H - (z + 0.5) / SL_H * TEX_H)
-    ink = (255, 255, 255, LA)
-    soft = (255, 255, 255, LA // 2)
+    tone = (196, 104, 18) if lit else (168, 162, 152)
+    ink = (*tone, LA)
+    soft = (*tone, LA // 2)
     w = 7
     ground = Z(0)
     # The slice's own edge, etched: it reads as a card, not a haze.
@@ -233,7 +234,7 @@ def slice_material(name, tex, lit=False):
     nt = m.node_tree
     nodes, links = nt.nodes, nt.links
     bsdf = nodes['Principled BSDF']
-    bsdf.inputs['Base Color'].default_value = (*lin('#f6b45c' if lit else '#ffffff'), 1)
+    bsdf.inputs['Base Color'].default_value = (*lin('#f39a2a' if lit else '#f7f6f3'), 1)
     bsdf.inputs['Roughness'].default_value = 0.35
     img = nodes.new('ShaderNodeTexImage')
     img.image = bpy.data.images.load(tex)
@@ -245,11 +246,11 @@ def slice_material(name, tex, lit=False):
     ramp = nodes.new('ShaderNodeMapRange')
     links.new(sep.outputs['Y'], ramp.inputs['Value'])
     ramp.inputs['To Min'].default_value = 1.0
-    ramp.inputs['To Max'].default_value = 0.35
+    ramp.inputs['To Max'].default_value = 0.7
     body = nodes.new('ShaderNodeMath')
     body.operation = 'MULTIPLY'
     links.new(ramp.outputs['Result'], body.inputs[0])
-    body.inputs[1].default_value = 0.42 if lit else 0.1
+    body.inputs[1].default_value = 0.92 if lit else 0.3
     alpha = nodes.new('ShaderNodeMath')
     alpha.operation = 'MAXIMUM'
     links.new(body.outputs['Value'], alpha.inputs[0])
@@ -258,14 +259,15 @@ def slice_material(name, tex, lit=False):
     em = nodes.new('ShaderNodeMath')
     em.operation = 'MULTIPLY'
     links.new(ramp.outputs['Result'], em.inputs[0])
-    em.inputs[1].default_value = 1.15 if lit else 0.12
+    em.inputs[1].default_value = 0.85 if lit else 0.06
     links.new(em.outputs['Value'], bsdf.inputs['Emission Strength'])
     bsdf.inputs['Emission Color'].default_value = (*lin('#ef8a10' if lit else '#fffaf0'), 1)
     return m
 
 N = 8
-LIT = 2
+LIT = 3
 slices = []
+edges_of = {}
 for k in range(N):
     tex = os.path.join(OUT, f'tex{k}.png')
     silhouette(tex, k if k != LIT else 0, lit=(k == LIT))
@@ -279,12 +281,29 @@ for k in range(N):
     o.location = (0, 0, SL_H / 2)
     bpy.ops.object.transform_apply(location=True)
     # Then fan it from a pivot at its foot, receding in depth.
-    a = math.radians((k - (N - 1) / 2) * 7.6)
+    a = math.radians((k - (N - 1) / 2) * 8.2)
     o.rotation_euler = (0, a, 0)
-    o.location = (0.6, PY1 + 1.0 + k * 0.55, -PT)
+    o.location = (0.6, PY1 + 0.7 + k * 0.5, -PT)
     o.data.materials.append(slice_material(f'slice{k}', tex, lit=(k == LIT)))
     o.visible_shadow = False
+    em_edge = bpy.data.materials.new(f'edge{k}')
+    em_edge.use_nodes = True
+    eb = em_edge.node_tree.nodes['Principled BSDF']
+    eb.inputs['Base Color'].default_value = (*lin('#ffb547' if k == LIT else '#ffffff'), 1)
+    eb.inputs['Emission Color'].default_value = (*lin('#f08a10' if k == LIT else '#fff6e6'), 1)
+    eb.inputs['Emission Strength'].default_value = 1.6 if k == LIT else 0.9
+    edge = o.copy()
+    edge.data = o.data.copy()
+    bpy.context.collection.objects.link(edge)
+    wf = edge.modifiers.new('wf', 'WIREFRAME')
+    wf.thickness = 0.045
+    edge.data.materials.clear()
+    edge.data.materials.append(em_edge)
+    edge.visible_shadow = False
+    edge.parent = None
+    o['edge'] = edge.name
     slices.append(o)
+    edges_of[o.name] = edge
 
 # --- light: one area light from the upper left, a soft sky, the paper ground -------------------
 world = bpy.data.worlds.new('world')
@@ -319,8 +338,8 @@ def camera(az, el, target, scale):
     return cam
 
 VIEWS = {
-    'wide': (camera(math.radians(10), math.radians(28), (0.0, 2.4, 2.0), 23.5), 2400, 1060),
-    'narrow': (camera(math.radians(10), math.radians(28), (-0.6, 2.4, 2.2), 15.0), 1200, 1000),
+    'wide': (camera(math.radians(10), math.radians(26), (0.0, 2.0, 1.75), 22.5), 2400, 980),
+    'narrow': (camera(math.radians(10), math.radians(26), (-0.4, 2.0, 1.9), 14.2), 1200, 1000),
 }
 
 def poly(points, z=0.06, step=0.1):
@@ -363,6 +382,8 @@ def render(path):
 def show(objs_on):
     for o in world_set + slices:
         o.hide_render = o not in objs_on
+    for o in slices:
+        edges_of[o.name].hide_render = o not in objs_on
     ground.hide_render = False
 
 data = {}

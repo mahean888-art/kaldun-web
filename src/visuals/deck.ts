@@ -103,8 +103,6 @@ export function initDeck(host: HTMLElement): void {
       }
     }
     world = layer('world', 'deck__world');
-    // If the layers can't load, the still stays: the picture never goes blank.
-    world.addEventListener('error', () => host.classList.remove('is-live'), { once: true });
     stage.append(world);
     stage.append(canvas);
   };
@@ -254,24 +252,35 @@ export function initDeck(host: HTMLElement): void {
     new ResizeObserver(layout).observe(host);
     return;
   }
-  layers();
+  // The still shows at once. The layers load behind it; only when every one is
+  // decoded does the scene switch over and the pass begin, so nothing pops in.
   layout();
-  host.classList.add('is-live');
-  new ResizeObserver(() => {
-    layout();
-  }).observe(host);
+  new ResizeObserver(() => layout()).observe(host);
   narrowQ.addEventListener('change', () => {
     layers();
     layout();
   });
-  clusters?.classList.remove('b1', 'b2', 'b3');
-  frame(0, 0);
   const io = new IntersectionObserver((e) => {
     visible = e.some((x) => x.isIntersecting);
-    if (visible) start();
+    if (visible && host.classList.contains('is-live')) start();
   });
-  io.observe(host);
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && visible) start();
+    if (!document.hidden && visible && host.classList.contains('is-live')) start();
   });
+  const go = (): void => {
+    layers();
+    const imgs = Array.from(stage.querySelectorAll<HTMLImageElement>('.deck__l'));
+    void Promise.all(imgs.map((im) => im.decode().catch(() => undefined))).then(() => {
+      if (imgs.some((im) => !im.naturalWidth)) return; // keep the still if any layer failed
+      layout();
+      clusters?.classList.remove('b1', 'b2', 'b3');
+      frame(0, 0);
+      host.classList.add('is-live');
+      t0 = 0;
+      io.observe(host);
+    });
+  };
+  // Start fetching as soon as the page is interactive, without competing with the still.
+  if (document.readyState === 'complete') go();
+  else window.addEventListener('load', go, { once: true });
 }

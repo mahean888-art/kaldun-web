@@ -65,7 +65,7 @@ CARD = mat('card', '#fbf9f4', 0.6)        # warm white card
 CARD2 = mat('card2', '#f2eee6', 0.65)     # the plate, a shade warmer
 CARD3 = mat('card3', '#e9e4da', 0.7)      # roads and quays
 PANEL = mat('panel', '#c3c0ba', 0.25)     # solar glass
-WATER = mat('water', '#eef0ee', 0.32)     # still water, the same white family
+WATER = mat('water', '#e4eaec', 0.18)     # still water, the same white family
 STEEL = mat('steel', '#d8d4cc', 0.4)
 
 world_objs = []
@@ -163,13 +163,38 @@ for (x, y, n) in ((3.9, -0.9, 3), (3.9, 0.1, 2), (3.9, 1.1, 3), (4.75, -0.4, 2),
         box(x, y, j * 0.3, 0.75, 0.8, 0.28, CARD if j % 2 else CARD3, bevel=0.008)
 for (x, y) in ((5.0, -1.6), (5.0, 2.2), (6.3, -1.6), (6.3, 2.2)):
     box(x, y, 0 if x < COAST else -0.22, 0.1, 0.1, 2.5 if x < COAST else 2.72, CARD, bevel=0.005)
-box(4.8, -1.75, 2.5, 3.2, 0.3, 0.16)
-box(4.8, 2.05, 2.5, 3.2, 0.3, 0.16)
-box(5.5, -1.75, 2.66, 0.7, 4.1, 0.25)
-box(6.9, -1.4, -0.22, 2.4, 4.8, 0.55)                    # the hull
-for k in range(4):
-    box(7.05, -1.1 + k * 1.1, 0.33, 2.1, 0.95, 0.3 + (k % 2) * 0.28, CARD if k % 2 else CARD3, bevel=0.008)
-box(7.1, 2.75, 0.33, 2.0, 0.5, 0.9)
+# The crane: a gantry on the quay, its boom reaching out over the ship.
+box(4.8, -1.75, 2.5, 4.6, 0.22, 0.14)
+box(4.8, 2.05, 2.5, 4.6, 0.22, 0.14)
+box(5.3, -1.75, 2.64, 0.75, 4.02, 0.28)
+for y in (-1.75, 2.05):
+    box(8.9, y, 2.2, 0.08, 0.22, 0.3, CARD, bevel=0.004)
+
+# The ship alongside: a slim hull with a pointed bow, rows of containers, the bridge aft.
+def hull(x0, x1, y0, y1, bow, z0, h):
+    me = bpy.data.meshes.new('hull')
+    xm = (x0 + x1) / 2
+    ring = [(x0, y0 + bow), (xm, y0), (x1, y0 + bow), (x1, y1), (x0, y1)]
+    v = [(x, y, z0) for x, y in ring] + [(x, y, z0 + h) for x, y in ring]
+    n = len(ring)
+    f = [tuple(range(n - 1, -1, -1)), tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
+    me.from_pydata(v, [], f)
+    o = bpy.data.objects.new('hull', me)
+    bpy.context.collection.objects.link(o)
+    o.data.materials.append(CARD)
+    bv = o.modifiers.new('bv', 'BEVEL'); bv.width = 0.03; bv.segments = 2
+    return track(o)
+hull(7.05, 8.75, -3.4, 2.9, 0.9, -0.22, 0.5)
+for r in range(6):
+    for c in range(3):
+        h = 1 + ((r * 3 + c) % 3 == 0)
+        for j in range(h):
+            box(7.2 + c * 0.5, -2.2 + r * 0.66, 0.28 + j * 0.22, 0.44, 0.58, 0.2, CARD if (r + c + j) % 2 else CARD3, bevel=0.006)
+box(7.35, 2.15, 0.28, 1.1, 0.55, 0.95)
+box(7.45, 2.05, 1.23, 0.9, 0.75, 0.12)
+for k in range(5):
+    box(COAST + 0.6, -3.6 + k * 1.6, -0.19, 0.04, 1.1, 0.008, CARD3, bevel=0)      # still water, a few ripples
+    box(9.2, -3.0 + k * 1.5, -0.19, 0.04, 0.9, 0.008, CARD3, bevel=0)
 
 world_set = list(world_objs)
 

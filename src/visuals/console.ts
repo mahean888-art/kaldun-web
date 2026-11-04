@@ -1,108 +1,203 @@
 /**
- * Where we start: the machine doing the work, in four steps.
+ * Where we start: the decision workspace.
  *
- *   Model       214 records become one model; every value shows its source,
- *               and the one estimate is admitted.
- *   Replay      a real week, hour by hour, then 78 weeks under today's policy.
- *   Look ahead  the year ahead under four conditions, 1,000 futures each.
- *   Propose     the policy rewritten as a diff, tested against all of the
- *               above, and handed to the reserve committee.
+ * A treasury team asks a question; the machine works through four steps in
+ * the open (Model, Replay, Look ahead, Discover) and the answer builds beside
+ * the work. The Model tab shows the model itself, with recent changes in the
+ * answer column.
  *
- * It plays once, about seven seconds a step, when the window comes into view.
- * Choosing a step jumps there and pauses. The only motion is in each step's
- * own content (cards slide in, squares fill, the diff strikes and rewrites);
- * under reduced motion every step shows its final state.
+ * Decision 1 plays once, about fifteen seconds, when the window is 40% in view.
+ * Only the running (or chosen) step is expanded; finished steps collapse to
+ * their heading. Any click on a step, decision or tab stops the run and shows
+ * the finished state. Decisions 2–4 open finished, like saved work. Under
+ * reduced motion decision 1 is shown finished at once.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
 
-const HOLD = 7000;
+type Timer = ReturnType<typeof setTimeout>;
 
-export function initPlayer(root: HTMLElement): void {
+// When each step of decision 1 starts and finishes, in milliseconds.
+const RUN: Array<[number, number]> = [[400, 3400], [3800, 6800], [7200, 10600], [11000, 14400]];
+const ANSWER_AT = 14600;
+
+export function initWorkspace(root: HTMLElement): void {
   const reduced = prefersReducedMotion();
-  const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('.pl__step'));
-  const views = Array.from(root.querySelectorAll<HTMLElement>('.pl__view'));
-  const play = root.querySelector<HTMLButtonElement>('[data-play]');
-  const track = root.querySelector<HTMLElement>('[data-track]');
-  const n = views.length;
-  let step = 0;
-  let playing = false;
-  let t0 = 0;
-  let raf = 0;
-  let ended = false;
+  const decs = Array.from(root.querySelectorAll<HTMLButtonElement>('.ws-dec'));
+  const pick = root.querySelector<HTMLSelectElement>('[data-pick]');
+  const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.ws-tabs [role="tab"]'));
+  const centers = Array.from(root.querySelectorAll<HTMLElement>('.ws-d'));
+  const answers = Array.from(root.querySelectorAll<HTMLElement>('.ws-a[data-a]'));
+  const modelView = root.querySelector<HTMLElement>('[data-model-view]');
+  const modelAside = root.querySelector<HTMLElement>('[data-a-model]');
+  const first = decs[0]?.dataset['dec'] ?? '';
+  const firstStatus = decs[0]?.querySelector<HTMLElement>('[data-status]');
+  const statusText = firstStatus?.textContent ?? '';
+  let current = first;
+  let tab: 'decision' | 'model' = 'decision';
+  let timers: Timer[] = [];
+  let running = false;
+  let played = false;
 
-  const show = (i: number): void => {
-    step = i;
-    buttons.forEach((b, k) => {
-      b.classList.toggle('is-on', k === i);
-      b.classList.toggle('is-done', k < i);
-      b.setAttribute('aria-current', k === i ? 'step' : 'false');
+  const stepsOf = (id: string): HTMLElement[] => Array.from(root.querySelectorAll<HTMLElement>(`.ws-d[data-d="${id}"] .ws-step`));
+
+  /** Expand one step; collapse the rest to their heading. */
+  const expand = (id: string, i: number): void => {
+    stepsOf(id).forEach((s, k) => {
+      const on = k === i;
+      s.classList.toggle('is-open', on);
+      s.querySelector('.ws-step__head')?.setAttribute('aria-expanded', String(on));
     });
-    views.forEach((v, k) => {
-      v.hidden = k !== i;
-      v.classList.remove('is-in');
+  };
+
+  /** The step to show expanded when a decision opens finished: the last done, or the running one. */
+  const defaultStep = (id: string): number => {
+    const st = stepsOf(id);
+    const run = st.findIndex((s) => s.dataset['state'] === 'running');
+    if (run >= 0) return Math.max(0, run - 1);
+    return st.length - 1;
+  };
+
+  const finish = (): void => {
+    timers.forEach(clearTimeout);
+    timers = [];
+    running = false;
+    stepsOf(first).forEach((s) => (s.dataset['state'] = 'done'));
+    const a = root.querySelector<HTMLElement>(`.ws-a[data-a="${first}"]`);
+    a?.querySelector<HTMLElement>('[data-run]')?.setAttribute('hidden', '');
+    a?.querySelector<HTMLElement>('[data-final]')?.removeAttribute('hidden');
+    a?.classList.remove('is-running');
+    if (firstStatus) firstStatus.textContent = statusText;
+    root.classList.remove('is-running');
+  };
+
+  const open = (id: string, step?: number): void => {
+    current = id;
+    decs.forEach((d) => {
+      const on = d.dataset['dec'] === id;
+      d.classList.toggle('is-on', on);
+      d.setAttribute('aria-pressed', String(on));
     });
-    // Restart this step's own motion.
-    void views[i]?.offsetWidth;
-    views[i]?.classList.add('is-in');
-    root.dataset['step'] = views[i]?.dataset['view'] ?? '';
+    if (pick) pick.value = id;
+    centers.forEach((c) => (c.hidden = tab !== 'decision' || c.dataset['d'] !== id));
+    answers.forEach((a) => (a.hidden = tab !== 'decision' || a.dataset['a'] !== id));
+    if (modelView) modelView.hidden = tab !== 'model';
+    if (modelAside) modelAside.hidden = tab !== 'model';
+    expand(id, step ?? defaultStep(id));
   };
 
-  const setPlaying = (on: boolean): void => {
-    playing = on;
-    play?.classList.toggle('is-paused', !on);
-    play?.setAttribute('aria-label', on ? 'Pause' : 'Play');
-    if (on && !raf) {
-      t0 = performance.now() - (track ? (parseFloat(track.style.width || '0') / 100) * n * HOLD - step * HOLD : 0);
-      raf = requestAnimationFrame(tick);
-    }
+  const interrupt = (): void => {
+    if (running || !played) finish();
+    played = true;
   };
 
-  const tick = (now: number): void => {
-    raf = 0;
-    if (!playing) return;
-    const t = now - t0;
-    const k = Math.min(n - 1, Math.floor(t / HOLD));
-    if (k !== step) show(k);
-    if (track) track.style.width = `${Math.min(100, (t / (HOLD * n)) * 100).toFixed(2)}%`;
-    if (t >= HOLD * n) {
-      ended = true;
-      setPlaying(false);
-      return;
-    }
-    raf = requestAnimationFrame(tick);
+  /** Decision 1, once: steps run in order, the answer builds beside them. */
+  const play = (): void => {
+    if (played) return;
+    played = true;
+    running = true;
+    root.classList.add('is-running');
+    const steps = stepsOf(first);
+    const a = root.querySelector<HTMLElement>(`.ws-a[data-a="${first}"]`)!;
+    const run = a.querySelector<HTMLElement>('[data-run]');
+    const final = a.querySelector<HTMLElement>('[data-final]');
+    const bar = a.querySelector<HTMLElement>('[data-bar]');
+    const so = a.querySelector<HTMLElement>('[data-so]');
+    const lines = (root.dataset['progress'] ? JSON.parse(root.dataset['progress']) : []) as string[];
+    steps.forEach((s) => (s.dataset['state'] = 'waiting'));
+    expand(first, -1);
+    run?.removeAttribute('hidden');
+    final?.setAttribute('hidden', '');
+    a.classList.add('is-running');
+    if (bar) bar.style.width = '0%';
+    if (so) so.textContent = lines[0] ?? '';
+    if (firstStatus) firstStatus.textContent = 'Running';
+    const at = (ms: number, f: () => void): void => {
+      timers.push(setTimeout(f, ms));
+    };
+    RUN.forEach(([start, end], i) => {
+      at(start, () => {
+        steps[i]!.dataset['state'] = 'running';
+        expand(first, i);
+      });
+      at(end, () => {
+        steps[i]!.dataset['state'] = 'done';
+        if (bar) bar.style.width = `${(i + 1) * 25}%`;
+        if (so && lines[i + 1]) so.textContent = lines[i + 1]!;
+      });
+    });
+    at(ANSWER_AT, () => {
+      a.classList.add('is-fading');
+      finish();
+      timers.push(setTimeout(() => a.classList.remove('is-fading'), 450));
+    });
   };
 
-  buttons.forEach((b, i) =>
-    b.addEventListener('click', () => {
-      setPlaying(false);
-      show(i);
-      if (track) track.style.width = `${(((i + 1) / n) * 100).toFixed(2)}%`;
+  // --- input --------------------------------------------------------------------------
+  decs.forEach((d) =>
+    d.addEventListener('click', () => {
+      interrupt();
+      if (tab !== 'decision') setTab('decision');
+      open(d.dataset['dec']!);
     }),
   );
-  play?.addEventListener('click', () => {
-    if (playing) return setPlaying(false);
-    if (ended || step === n - 1) {
-      ended = false;
-      show(0);
-      if (track) track.style.width = '0%';
-    }
-    setPlaying(true);
+  pick?.addEventListener('change', () => {
+    interrupt();
+    if (tab !== 'decision') setTab('decision');
+    open(pick.value);
+  });
+  root.querySelectorAll<HTMLElement>('.ws-d').forEach((c) => {
+    c.querySelectorAll<HTMLButtonElement>('.ws-step__head').forEach((h, i) =>
+      h.addEventListener('click', () => {
+        interrupt();
+        expand(c.dataset['d']!, i);
+      }),
+    );
+  });
+  const setTab = (t: 'decision' | 'model'): void => {
+    tab = t;
+    tabs.forEach((b) => {
+      const on = b.dataset['tab'] === t;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    root.querySelector('#ws-center-panel')?.setAttribute('aria-labelledby', t === 'model' ? 'ws-t-model' : 'ws-t-dec');
+    open(current);
+  };
+  tabs.forEach((b) =>
+    b.addEventListener('click', () => {
+      interrupt();
+      setTab(b.dataset['tab'] as 'decision' | 'model');
+    }),
+  );
+  root.querySelector('.ws-tabs')?.addEventListener('keydown', (ev) => {
+    const k = (ev as KeyboardEvent).key;
+    if (k !== 'ArrowLeft' && k !== 'ArrowRight') return;
+    const i = tabs.findIndex((b) => b.getAttribute('aria-selected') === 'true');
+    const n = tabs[(i + 1) % tabs.length]!;
+    n.focus();
+    n.click();
+    ev.preventDefault();
   });
 
-  show(0);
+  open(first);
   if (reduced) {
-    root.classList.add('is-still');
-    play?.classList.add('is-paused');
-    if (track) track.style.width = '25%';
+    played = true;
     return;
   }
-  play?.classList.add('is-paused');
+  // Show the waiting state until the run begins, so the first sight is the work starting.
+  const steps = stepsOf(first);
+  steps.forEach((s) => (s.dataset['state'] = 'waiting'));
+  expand(first, -1);
+  const a = root.querySelector<HTMLElement>(`.ws-a[data-a="${first}"]`);
+  a?.querySelector('[data-run]')?.removeAttribute('hidden');
+  a?.querySelector('[data-final]')?.setAttribute('hidden', '');
   const io = new IntersectionObserver(
-    (e) => {
-      if (!e.some((x) => x.isIntersecting)) return;
+    (en) => {
+      if (!en.some((x) => x.isIntersecting)) return;
       io.disconnect();
-      if (!ended && step === 0) setPlaying(true);
+      if (!played && current === first && tab === 'decision') play();
+      else finish();
     },
     { threshold: 0.4 },
   );

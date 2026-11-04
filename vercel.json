@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/journal/introducing-foresight-machines",
+      "destination": "/journal/the-future-should-be-engineered-with-foresight/",
+      "permanent": true
+    },
+    {
+      "source": "/journal/introducing-foresight-machines/",
+      "destination": "/journal/the-future-should-be-engineered-with-foresight/",
+      "permanent": true
+    }
+  ]
+}

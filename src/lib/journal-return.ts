@@ -60,7 +60,7 @@ export function initBack(root: Document = document): void {
       }
       e.preventDefault();
       if (ref && ref.origin === location.origin && ref.pathname === '/' && history.length > 1) history.back();
-      else location.href = store.get() !== null ? '/#return' : '/#journal';
+      else location.href = store.get() !== null ? '/#return' : '/#manifesto';
     });
   }
 }

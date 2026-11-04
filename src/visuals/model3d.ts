@@ -54,6 +54,7 @@ export function canRender3d(): boolean {
 export function initModel3d(host: HTMLElement): void {
   const panel = host.closest('.hero')?.querySelector<HTMLElement>('.hero__panel') ?? null;
   const readout = host.closest('.hero')?.querySelector<HTMLElement>('[data-readout]') ?? null;
+  const clusters = host.closest('.hero')?.querySelector<HTMLElement>('[data-clusters]') ?? null;
   const reduced = prefersReducedMotion();
   const narrowQ = window.matchMedia('(max-width: 759px)');
 
@@ -555,6 +556,10 @@ export function initModel3d(host: HTMLElement): void {
     if (c.lab && c.lab.textContent !== text) c.lab.textContent = text;
   };
   const report = (t: number): void => {
+    // The cluster row brightens third by third with the beats, then holds.
+    clusters?.classList.toggle('b1', t >= 150);
+    clusters?.classList.toggle('b2', t >= 3900);
+    clusters?.classList.toggle('b3', t >= 8200);
     if (!readout) return;
     const m = span(t, 150, 3500);
     fill(rcs.model.dots, m);

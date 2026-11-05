@@ -63,7 +63,7 @@
 
 /* --- nothing below 12px ---------------------------------------------------------------- */
 .skip-link, .bar a, .bar__cta, .hero__mark, .hero__dispatch-k, .tri__k, .tri__n, .trust__n span,
-.foot__read, .foot__copy, .foot__nyc, footer span, footer b, kbd, #mission span { font-size: 12px !important; }
+.foot__read, .foot__copy, .foot__nyc, kbd { font-size: 12px !important; }
 /* the workspace: app text 13px at least; status lines, labels and table heads 12px */
 .ws-crumbs, .ws-ver, .ws-meta, .ws-t td:nth-child(2), .ws-t--src th, .ws-cmp td:nth-child(3), .ws-tip { font-size: 13px !important; }
 .ws-t, .ws-t--src td:nth-child(2), .ws-cmp, .ws-mc li { font-size: 13.5px !important; }

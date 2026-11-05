@@ -6,6 +6,7 @@
 import './styles/index.css';
 
 import { initHeader } from './components/header';
+import { initFit } from './lib/fit';
 import { initReveal } from './lib/reveal';
 import { initScrollLink } from './lib/scrollLink';
 import { ready } from './lib/dom';
@@ -19,6 +20,7 @@ export function enhance(root: ParentNode = document, mount?: (root: ParentNode) 
 
   initReveal(root);
   initScrollLink(root);
+  if (root === document) initFit();
 }
 
 export function bootstrap(mount?: (root: ParentNode) => void): void {

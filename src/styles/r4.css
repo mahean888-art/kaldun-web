@@ -194,31 +194,8 @@
 /* --- method: the filmstrip --------------------------------------------------------- */
 
 .film { margin: 0; }
-.film__strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); column-gap: 1.4%; list-style: none; }
-.film__f img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; background: #050403; }
-.film__f p { margin-top: 0.9rem; font-family: var(--serif); font-size: 21px; color: #f4efe6; }
-.film__f span { display: block; margin-top: 0.3rem; font-size: 13px; line-height: 1.4; color: rgba(244, 239, 230, 0.62); }
-.film__loops { position: relative; }
-.film__loops--up { height: 120px; margin-bottom: 6px; }
-.film__loops--down { height: 110px; margin-top: 0.75rem; }
-.film__loops svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.film__search { fill: none; stroke: #f0900a; stroke-width: 1.6; filter: drop-shadow(0 0 4px rgba(240, 144, 10, 0.7)); vector-effect: non-scaling-stroke; }
-.film__learn { fill: none; stroke: rgba(255, 255, 255, 0.7); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.film__lab, .film__pill { position: absolute; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding-inline: 6px; background: #15120d; }
-.film__lab--o { color: #f0a640; }
-.film__lab--w { color: rgba(244, 239, 230, 0.72); }
-.film__pill { transform: translate(-50%, -50%); padding: 5px 10px; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px; background: #15120d; color: #f4efe6; }
-.film__legend { display: none; list-style: none; margin-top: 1.25rem; }
-.film__legend li { position: relative; padding-left: 28px; font-size: 14px; line-height: 1.5; color: rgba(244, 239, 230, 0.75); }
-.film__legend li + li { margin-top: 0.6rem; }
-.film__legend li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 18px; height: 0; border-top: 1px solid rgba(255, 255, 255, 0.7); }
-.film__legend li.is-o::before { border-top: 2px solid #f0900a; }
 .film .f1__cap { margin-top: 1.25rem; }
 @media (max-width: 759px) {
-  .film__strip { display: flex; column-gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
-  .film__f { flex: 0 0 62%; scroll-snap-align: start; }
-  .film__loops { display: none; }
-  .film__legend { display: block; }
 }
 
 /* --- trust: four short steps ----------------------------------------------------------- */
@@ -631,3 +608,41 @@
 #domains > .wrap { padding-bottom: 160px; }
 @media (max-width: 759px) { #domains > .wrap { padding-bottom: 96px; } }
 .ws-center .ws-head { padding-top: 22px; }
+
+/* --- method: the cycle --------------------------------------------------------------- */
+.cyc { margin: 0; }
+.cyc__stage { position: relative; max-width: 1100px; margin: 8px auto 0; aspect-ratio: 1100 / 960; }
+.cyc__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cyc__ring { fill: none; stroke: rgba(244, 239, 230, 0.5); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.cyc__search { fill: none; stroke: #f0900a; stroke-width: 1.6; filter: drop-shadow(0 0 4px rgba(240, 144, 10, 0.65)); vector-effect: non-scaling-stroke; }
+.cyc__nodes { list-style: none; }
+.cyc__n { position: absolute; width: 10.55%; transform: translate(-50%, -50%); }
+.cyc__n img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 56%; border-radius: 8px; border: 1px solid rgba(244, 239, 230, 0.14); background: #050403; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9); }
+.cyc__t { position: absolute; width: 168px; }
+.cyc__t p { font-family: var(--serif); font-size: clamp(17px, 1.7vw, 21px); line-height: 1.15; color: #f4efe6; }
+.cyc__t span { display: block; margin-top: 0.3rem; font-size: 13px; line-height: 1.4; color: rgba(244, 239, 230, 0.62); }
+.cyc__n--r .cyc__t { left: calc(100% + 18px); top: 50%; transform: translateY(-50%); }
+.cyc__n--l .cyc__t { right: calc(100% + 18px); top: 50%; transform: translateY(-50%); text-align: right; }
+.cyc__n--t .cyc__t { bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%); text-align: center; }
+.cyc__n--b .cyc__t { top: calc(100% + 14px); left: 50%; transform: translateX(-50%); text-align: center; }
+.cyc__lab { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; padding: 2px 6px; background: #15120d; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; }
+.cyc__lab--o { color: #f0a640; }
+.cyc__lab--w { color: rgba(244, 239, 230, 0.7); }
+.cyc__lab--p { padding: 5px 11px; border: 1px solid rgba(244, 239, 230, 0.5); border-radius: 999px; color: #f4efe6; }
+.cyc__cap { position: absolute; left: 50%; top: 46%; width: 30%; transform: translate(-50%, -50%); text-align: center; font-family: var(--serif); font-size: clamp(20px, 2.3vw, 28px); line-height: 1.2; color: #f0900a; }
+.cyc__legend { display: none; list-style: none; }
+.cyc__legend li { position: relative; padding-left: 28px; font-size: 14px; line-height: 1.5; color: rgba(244, 239, 230, 0.75); }
+.cyc__legend li + li { margin-top: 0.6rem; }
+.cyc__legend li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 18px; border-top: 1px solid rgba(244, 239, 230, 0.7); }
+.cyc__legend li.is-o::before { border-top: 2px solid #f0900a; }
+@media (max-width: 1023px) {
+  .cyc__stage { aspect-ratio: auto; display: flex; flex-direction: column; }
+  .cyc__svg, .cyc__labs { display: none; }
+  .cyc__nodes { position: relative; display: grid; gap: 14px; }
+  .cyc__nodes::before { content: ""; position: absolute; left: 44px; top: 20px; bottom: 20px; border-left: 1px solid rgba(244, 239, 230, 0.3); }
+  .cyc__n { position: relative; left: auto !important; top: auto !important; width: auto; transform: none; display: grid; grid-template-columns: 88px 1fr; gap: 16px; align-items: center; }
+  .cyc__n .cyc__t { position: static; width: auto; transform: none; text-align: left; }
+  .cyc__cap { position: static; order: 2; width: auto; transform: none; margin-top: 1.75rem; text-align: left; }
+  .cyc__legend { display: block; margin-top: 1.25rem; }
+  .cyc__nodes { max-width: 560px; }
+}

@@ -11,7 +11,7 @@ Method, five frames on black (4:5), lit like product photography:
   f-evidence  a stack of documents and a ledger, glowing faintly at the edges
   f-model     the white world model, assembled
   f-simulate  the model with its fan of frosted futures
-  f-compare   two futures side by side, one brighter
+  f-compare   today's arrangement beside the changed one, its change lit
   f-decide    one lit future, alone on a plinth
   f-search    the model with proposed changes drawn in light above it
   f-observe   the chosen future beside the record of what actually happened
@@ -317,11 +317,24 @@ def f_simulate():
     mini_world()
     for k in range(6):
         slice_card(0.2, 2.6 + k * 0.35, 5.2, 2.8, 'frost', math.radians((k - 2.5) * 7.5))
+def placed(build, k, x, y):
+    """Build a piece at the origin, then scale it by k and move it to (x, y)."""
+    before = set(bpy.context.scene.objects)
+    build()
+    bpy.ops.object.empty_add(location=(0, 0, 0))
+    e = bpy.context.active_object
+    for o in set(bpy.context.scene.objects) - before - {e}:
+        o.parent = e
+    e.scale = (k, k, k)
+    e.location = (x, y, 0)
 def f_compare():
-    M['ft_lo'] = frost_tex(TEX, 0.18, 0.1)
-    M['ft_hi'] = frost_tex(TEX, 1.05, 0.34)
-    slice_card(-1.75, 0.0, 3.3, 3.0, 'ft_lo', math.radians(-3))
-    slice_card(1.75, -0.3, 3.3, 3.0, 'ft_hi', math.radians(3))
+    """Current practice beside the changed arrangement: the same world, one lit change."""
+    placed(mini_world, 0.36, -1.6, 0.5)
+    def changed():
+        mini_world()
+        box(-0.4, -1.55, 0.0, 2.9, 0.14, 0.14, 'warm', bevel=0.01)     # the new link, built
+        box(3.0, -1.45, 0.0, 0.55, 0.5, 0.5, 'warm', bevel=0.01)       # and the storage it needs
+    placed(changed, 0.36, 1.6, -0.5)
 def f_decide():
     box(-1.4, -0.9, 0, 2.8, 1.8, 0.5, 'card', bevel=0.04)
     slice_card(0.0, 0.0, 2.6, 3.4, 'frost_lit')
@@ -362,7 +375,7 @@ def f_observe():
     box(-1.45, -0.6, 0.205, 2.9, 0.06, 0.014, 'warm', bevel=0)   # what actually happened
 
 FILM = {'f-evidence': (f_evidence, (0.25, 0, 0.5), 7.4), 'f-model': (f_model, (0.1, 0.2, 0.8), 12.0), 'f-simulate': (f_simulate, (0.1, 1.2, 1.8), 13.0),
-        'f-compare': (f_compare, (0, 0, 1.5), 9.3), 'f-decide': (f_decide, (0, 0, 2.0), 6.4),
+        'f-compare': (f_compare, (0, 0, 0.4), 7.4), 'f-decide': (f_decide, (0, 0, 2.0), 6.4),
         'f-search': (f_search, (0.1, 0.2, 0.8), 12.0), 'f-observe': (f_observe, (0, -0.5, 1.4), 7.8)}
 
 if ONLY in ('v', 'all'):

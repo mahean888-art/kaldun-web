@@ -72,7 +72,7 @@
   padding: 6px 9px;
   background: var(--amber);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   line-height: 1;
   text-transform: uppercase;
@@ -157,7 +157,7 @@
 }
 .hero__clusters .lc__label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   line-height: 10px;
   text-transform: uppercase;
@@ -181,7 +181,7 @@
 .feat__meta { display: flex; align-items: center; gap: 1.5rem; }
 .feat__meta > span {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -200,7 +200,7 @@
   gap: 0.55rem;
   padding: 0.35rem 0.65rem;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -262,7 +262,7 @@
   flex-wrap: wrap;
   gap: 0.5rem 1.4rem;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -290,7 +290,7 @@
   border-bottom: 1px solid var(--hair);
   background: #f7f4ee;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -312,7 +312,7 @@
 .cons__line span {
   margin-right: 0.75rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -323,7 +323,7 @@
 .hm__c { fill: #f0900a; }
 .hm__o { fill: none; stroke: #171410; stroke-width: 0.9; stroke-opacity: 0.55; }
 .hm__s { fill: none; stroke: #171410; stroke-width: 1.6; }
-.hm__t { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; fill: #8d8881; }
+.hm__t { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; fill: #8d8881; }
 .hm__fig figcaption { max-width: 38rem; font-size: 0.9375rem; line-height: 1.5; color: var(--ink-2); }
 .rp__key i.hm-k { background: #f0900a; border-color: #f0900a; box-shadow: 0 0 6px rgba(240, 144, 10, 0.6); }
 .rp__key i.hm-o { border-radius: 2px; background: transparent; border: 1px solid rgba(23, 20, 16, 0.55); }
@@ -341,7 +341,7 @@
   padding: 0.5rem 0.8rem;
   border: 1px solid rgba(23, 20, 16, 0.22);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-2);
@@ -357,7 +357,7 @@
 .dom__who {
   margin-top: 0.75rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
@@ -384,7 +384,7 @@
 .man__toc p, .man__share span {
   margin-bottom: 0.6rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -504,7 +504,7 @@
   background: rgba(240, 144, 10, 0.8);
 }
 @media (max-width: 759px) {
-  .lit__tag span { font-size: 10px; letter-spacing: 0.08em; padding: 5px 7px; }
+  .lit__tag span { font-size: 12px; letter-spacing: 0.08em; padding: 5px 7px; }
   .lit__tag { transform: translate(-12%, calc(-100% - 40px)); }
   .lit__tag::after { left: 12%; height: 40px; }
 }

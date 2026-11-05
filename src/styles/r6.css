@@ -1,0 +1,75 @@
+/* --- spacing and type, set rather than scaled -----------------------------------------
+   Only the hero holds one screen. Every band takes its natural height with fixed
+   padding; type follows one scale, with breakpoints on width only. */
+.band > .wrap { padding-top: 128px !important; padding-bottom: 128px !important; }
+@media (max-width: 759px) { .band > .wrap { padding-top: 80px !important; padding-bottom: 80px !important; } }
+.hero { min-height: 100svh; }
+
+/* the scale */
+.hero__line { font-size: 64px !important; }
+.h2, .mw__mission, .feat__title { font-size: 56px !important; line-height: 1.04 !important; }
+.lead, .mw__def, #start .ws-intro .lead, .feat__lede { font-size: 18px !important; line-height: 1.55 !important; }
+.prose p, .mw__text .prose p { font-size: 16px !important; line-height: 1.6 !important; }
+@media (max-width: 759px) {
+  .hero__line { font-size: 40px !important; }
+  .h2, .mw__mission, .feat__title { font-size: 36px !important; }
+  .lead, .mw__def, #start .ws-intro .lead, .feat__lede { font-size: 17px !important; }
+}
+
+/* section heads: centred, except Trust */
+.band > .wrap > .chip { justify-self: center; }
+.band .blk__head2, #how .blk__head2 { text-align: center; justify-items: center; }
+#how .h2 { margin-inline: auto; }
+#manifesto > .wrap > .chip { justify-self: center; }
+#trust > .wrap > .chip { justify-self: start; }
+.win--mission { margin-bottom: 96px !important; }
+.tri { margin-bottom: 0 !important; }
+
+/* Where we start: a wider window */
+#start > .wrap { max-width: 1356px; }
+#start .ws { max-width: 1260px; margin-inline: auto; }
+
+/* --- method: two loops through the model ---------------------------------------------- */
+.lp { margin: 56px 0 0; }
+.lp__stage { position: relative; max-width: 1200px; margin: 0 auto; aspect-ratio: 1200 / 600; }
+.lp__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.lp__line { fill: none; stroke: rgba(244, 239, 230, 0.55); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.lp__nodes { list-style: none; }
+.lp__n { position: absolute; width: 10%; transform: translate(-50%, -50%); }
+.lp__n--hub { width: 12.33%; }
+.lp__n img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 56%; border-radius: 8px; border: 1px solid rgba(244, 239, 230, 0.16); background: #050403; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9); }
+.lp__n--hub img { border-color: rgba(244, 239, 230, 0.4); }
+.lp__n p { position: absolute; white-space: nowrap; font-family: var(--serif); font-size: 22px; line-height: 1; color: #f4efe6; }
+.lp__n--t p { bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
+.lp__n--b p { top: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
+.lp__n--l p { right: calc(100% + 18px); top: 50%; transform: translateY(-50%); }
+.lp__n--r p { left: calc(100% + 18px); top: 50%; transform: translateY(-50%); }
+.lp__n--hub p { font-size: 26px; }
+.lp__loop { position: absolute; width: 15%; transform: translate(-50%, -50%); text-align: center; }
+.lp__k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 239, 230, 0.9); }
+.lp__d { margin-top: 8px; font-size: 14px; line-height: 1.45; color: rgba(244, 239, 230, 0.66); }
+.lp__legend { display: none; list-style: none; }
+@media (max-width: 1023px) {
+  .lp__stage { aspect-ratio: auto; }
+  .lp__svg, .lp__loop { display: none; }
+  .lp__nodes { position: relative; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 28px 20px; }
+  .lp__n, .lp__n--hub { position: static; width: auto; transform: none; }
+  .lp__n p, .lp__n--hub p { position: static; transform: none; margin-top: 12px; font-size: 20px; }
+  .lp__legend { display: block; margin-top: 40px; }
+  .lp__legend li { font-size: 16px; line-height: 1.55; color: rgba(244, 239, 230, 0.75); }
+  .lp__legend li + li { margin-top: 12px; }
+  .lp__legend b { font-weight: 500; color: #f4efe6; }
+}
+
+/* --- nothing below 12px ---------------------------------------------------------------- */
+.skip-link, .bar a, .bar__cta, .hero__mark, .hero__dispatch-k, .tri__k, .tri__n, .trust__n span,
+.foot__read, .foot__copy, .foot__nyc, footer span, footer b, kbd, #mission span { font-size: 12px !important; }
+/* the workspace: app text 13px at least; status lines, labels and table heads 12px */
+.ws-crumbs, .ws-ver, .ws-meta, .ws-t td:nth-child(2), .ws-t--src th, .ws-cmp td:nth-child(3), .ws-tip { font-size: 13px !important; }
+.ws-t, .ws-t--src td:nth-child(2), .ws-cmp, .ws-mc li { font-size: 13.5px !important; }
+.ws-dec__t, .ws-ml li span:first-child, .ws-ask input, .ws-rc li { font-size: 14px !important; }
+.ws-step__body, .ws-after, .ws-lead, .ws-ch li, .ws-so, .ws-mc__t { font-size: 14.5px !important; }
+.ws-step__name { font-size: 15px !important; }
+.ws-av, .ws-lab, .ws-dec__s, .ws-ml li span:last-child, .ws-crumb, .ws-dot, .ws-step__sum, .ws-step[data-state='done'] .ws-dot::after,
+.ws-chips span, .ws-t thead th, .ws-ch li span, .ws-cmp thead th, .ws-ask kbd, .ws-rc li span, .ws-mc__l, .ws-t--src th { font-size: 12px !important; }
+.ws-t--src th { font-size: 13px !important; }

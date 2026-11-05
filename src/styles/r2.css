@@ -73,7 +73,7 @@
 
 .rc__lab {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -97,7 +97,7 @@
   .rc { gap: 6px; }
   .rc__dots { gap: 4px; }
   .rc__dots i { width: 7px; height: 7px; }
-  .rc__lab { font-size: 9px; letter-spacing: 0.1em; }
+  .rc__lab { font-size: 12px; letter-spacing: 0.1em; }
 }
 
 /* --- 02 · the mission window --------------------------------------------------- */
@@ -133,7 +133,7 @@
 .mw__k {
   margin-bottom: 1.5rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -230,7 +230,7 @@
   border: 0;
   background: none;
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -244,7 +244,7 @@
 .cons__who {
   margin-bottom: 0.75rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -260,7 +260,7 @@
 .cons__rk {
   margin-bottom: 0.5rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -270,7 +270,7 @@
 .cons__fields > div { display: grid; gap: 0.25rem; padding: 0.75rem 0; border-top: 1px solid var(--hair); }
 .cons__fields dt {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -291,7 +291,7 @@
   line-height: 1.5;
   color: var(--ink-2);
 }
-.cons__finds li span { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.1em; padding-top: 0.25rem; color: var(--amber-deep); }
+.cons__finds li span { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; padding-top: 0.25rem; color: var(--amber-deep); }
 
 .cons__pane { padding: clamp(1.25rem, 2.6vw, 2rem); }
 .cons__view { display: grid; gap: 1.5rem; align-content: start; }
@@ -303,7 +303,7 @@
   padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--hair);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -319,7 +319,7 @@
   padding: 0.35rem 0.6rem;
   border: 1px solid rgba(23, 20, 16, 0.2);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-2);
@@ -333,7 +333,7 @@
 .rp__row { display: grid; gap: 0.45rem; }
 .rp__name {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -349,7 +349,7 @@
   flex-wrap: wrap;
   gap: 0.4rem 1.25rem;
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -362,7 +362,7 @@
 .cons__table thead th {
   border-top: 0;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -383,7 +383,7 @@
   align-items: center;
   gap: 0.5rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -472,7 +472,7 @@
   line-height: 1.45;
   color: var(--ink-2);
 }
-.dom__qs li span { padding-top: 0.2rem; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.1em; color: var(--ink-4); }
+.dom__qs li span { padding-top: 0.2rem; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--ink-4); }
 .dom__find {
   margin-top: 1rem;
   padding-top: 0.85rem;
@@ -488,7 +488,7 @@
   gap: 0.45rem;
   margin-bottom: 0.35rem;
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -501,13 +501,13 @@
   gap: 1.75rem;
   margin-top: 1.5rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
 }
 @media (max-width: 640px) {
-  .dom__legend { gap: 0.9rem; font-size: 0.5625rem; }
+  .dom__legend { gap: 0.9rem; font-size: 12px; }
 }
 
 /* --- 06 · trust: state dots in the bar, nothing beside the numbers --------------- */
@@ -536,7 +536,7 @@
   padding: 0.25rem 0.5rem;
   border: 1px solid rgba(23, 20, 16, 0.3);
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-2);
@@ -544,7 +544,7 @@
 .foot__geo {
   margin-left: 1rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   color: var(--ink-3);
 }
@@ -582,7 +582,7 @@
 .entry__meta > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-top: 1px solid var(--hair); }
 .entry__meta dt {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);

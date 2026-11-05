@@ -54,7 +54,7 @@
   align-items: center;
   gap: clamp(14px, 2vw, 28px);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -161,7 +161,7 @@
   gap: 0.75em;
   margin: 0;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -175,7 +175,7 @@
   left: 0;
   top: 0;
   font-family: var(--mono);
-  font-size: 0.625rem;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -184,7 +184,7 @@
 }
 @media (max-width: 759px) {
   .m3-note { flex-direction: column; align-items: center; gap: 0.25em; }
-  .m3-lab { font-size: 0.5625rem; letter-spacing: 0.12em; }
+  .m3-lab { font-size: 12px; letter-spacing: 0.12em; }
 }
 
 /* The corner labels: unlit by default; the beat lights its own, quietly. */
@@ -250,7 +250,7 @@
 .mdl .m-labels { opacity: 0; }
 .mdl .m-labels text {
   font-family: var(--mono);
-  font-size: 9.5px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   fill: rgba(23, 20, 16, 0.5);
 }
@@ -259,7 +259,7 @@
 .mdl .m-note circle { fill: var(--ink); }
 .mdl .m-note text {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   fill: var(--ink);
 }
@@ -352,7 +352,7 @@
   gap: 0.7rem;
   margin-bottom: clamp(2rem, 4vw, 3.25rem);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -399,7 +399,7 @@
   .tri__rail {
     padding: clamp(1.5rem, 2.6vw, 2.25rem) 0 clamp(1.75rem, 3vw, 2.5rem);
     font-family: var(--mono);
-    font-size: 0.6875rem;
+    font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-4);
@@ -435,7 +435,7 @@
 
 .qs__tn {
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.12em;
   color: var(--ink-4);
 }
@@ -492,7 +492,7 @@
   gap: 0.6rem;
   margin-bottom: 0.6rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -522,7 +522,7 @@
 .qc__who {
   margin-bottom: 1rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -548,7 +548,7 @@
 .qc__k {
   margin-bottom: 0.4rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -574,7 +574,7 @@
 .qc__req span {
   margin-right: 0.6rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -583,7 +583,7 @@
 .qs__note {
   margin-top: 1.5rem;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
@@ -673,7 +673,7 @@
   gap: 0.75rem;
   margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   color: var(--ink-3);
 }
@@ -798,7 +798,7 @@
   border: 0;
   background: none;
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
@@ -889,7 +889,7 @@
   padding-bottom: 3px;
   border-bottom: 1px solid var(--amber);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -924,7 +924,7 @@
   .bar { padding-inline: 12px 10px; }
   .bar__brand { gap: 7px; }
   .bar__brand .wm { font-size: 13.5px; }
-  .bar .bar__nav a.bar__cta { padding: 5px 8px 4px; letter-spacing: 0.1em; font-size: 0.625rem; }
+  .bar .bar__nav a.bar__cta { padding: 5px 8px 4px; letter-spacing: 0.1em; font-size: 12px; }
 }
 
 .essay__back {
@@ -934,7 +934,7 @@
   padding: 0.55rem 0.9rem;
   border: 1px solid rgba(23, 20, 16, 0.18);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
@@ -973,7 +973,7 @@
   padding: 0 14px;
   background: var(--amber);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #1a1006;
@@ -1004,7 +1004,7 @@
   padding: 11px 14px;
   border-top: 1px solid var(--hair);
   font-family: var(--mono);
-  font-size: 0.6875rem;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);

@@ -244,9 +244,28 @@
               <h2 class="h2">A model to explore with. A record to improve from.</h2>
             </header>
             <figure class="film" data-film>
-              <ol class="film__strip"><li class="film__f"><img src="/f-evidence-640.webp" width="640" height="800" alt="A neat stack of documents and a ledger, glowing faintly at the edges." loading="lazy" decoding="async" /><p>Evidence</p></li><li class="film__f"><img src="/f-model-640.webp" width="640" height="800" alt="The white world model, assembled." loading="lazy" decoding="async" /><p>Model</p></li><li class="film__f"><img src="/f-simulate-640.webp" width="640" height="800" alt="The model with its fan of frosted futures behind it." loading="lazy" decoding="async" /><p>Simulate</p></li><li class="film__f"><img src="/f-compare-640.webp" width="640" height="800" alt="Two futures side by side, one brighter." loading="lazy" decoding="async" /><p>Compare</p></li><li class="film__f"><img src="/f-decide-640.webp" width="640" height="800" alt="One lit future, alone on a plinth." loading="lazy" decoding="async" /><p>Decide</p></li></ol>
-              <svg class="film__loops" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true"><path class="film__search" d="M700 6C700 70 500 70 500 6"/><path class="film__learn" d="M900 6C900 84 300 84 300 6"/></svg>
-              <figcaption class="f1__cap">Simulation tests alternatives. Observations test the model.</figcaption>
+              <div class="film__loops film__loops--up" aria-hidden="true">
+                <svg viewBox="0 0 1000 120" preserveAspectRatio="none"><defs><marker id="ah-w" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="rgba(255,255,255,0.75)"/></marker></defs>
+                  <path class="film__learn" d="M935 116C935 -10 210 -10 210 108" marker-end="url(#ah-w)"/>
+                </svg>
+                <span class="film__lab film__lab--w" style="left:81%;top:62px">outcomes return</span>
+                <span class="film__pill" style="left:57.25%;top:21px">a revision, tested on the past</span>
+                <span class="film__lab film__lab--w" style="left:39%;top:62px">a new version of the model</span>
+              </div>
+              <ol class="film__strip"><li class="film__f"><img src="/f-evidence-640.webp" width="640" height="800" alt="A neat stack of documents and a ledger, glowing faintly at the edges." loading="lazy" decoding="async" /><p>Evidence</p><span>Records, contracts and rules.</span></li><li class="film__f"><img src="/f-model-640.webp" width="640" height="800" alt="The white world model, assembled." loading="lazy" decoding="async" /><p>Model</p><span>The system as it runs today.</span></li><li class="film__f"><img src="/f-search-640.webp" width="640" height="800" alt="The world model with proposed changes drawn in orange light above it: a tower, a link, more storage." loading="lazy" decoding="async" /><p>Search</p><span>Proposes changes no one listed.</span></li><li class="film__f"><img src="/f-simulate-640.webp" width="640" height="800" alt="The model with its fan of frosted futures behind it." loading="lazy" decoding="async" /><p>Simulate</p><span>Tests each one across 1,000 futures.</span></li><li class="film__f"><img src="/f-compare-640.webp" width="640" height="800" alt="Two futures side by side, one brighter." loading="lazy" decoding="async" /><p>Compare</p><span>Against current practice, under the same rules.</span></li><li class="film__f"><img src="/f-decide-640.webp" width="640" height="800" alt="One lit future, alone on a plinth." loading="lazy" decoding="async" /><p>Decide</p><span>One arrangement, with its reasons.</span></li><li class="film__f"><img src="/f-observe-640.webp" width="640" height="800" alt="The expected future on a plinth, and in front of it a record with one line drawn in light." loading="lazy" decoding="async" /><p>Observe</p><span>What actually happened.</span></li></ol>
+              <div class="film__loops film__loops--down" aria-hidden="true">
+                <svg viewBox="0 0 1000 110" preserveAspectRatio="none"><defs><marker id="ah-o" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f0900a"/></marker></defs>
+                  <path class="film__search" d="M370 4C370 46 500 46 500 10" marker-end="url(#ah-o)"/>
+                  <path class="film__search" d="M645 4C645 100 340 100 340 10" marker-end="url(#ah-o)"/>
+                </svg>
+                <span class="film__lab film__lab--o" style="left:43.5%;top:42px">proposes changes</span>
+                <span class="film__lab film__lab--o" style="left:49.25%;top:84px">results steer the next search</span>
+              </div>
+              <ul class="film__legend">
+                <li class="is-o">Search proposes changes. Simulation tests them, and the results steer the next search.</li>
+                <li>Outcomes return to the model as revisions, each tested on the past before it is adopted.</li>
+              </ul>
+              <figcaption class="f1__cap">Search proposes changes. Simulation tests them. Outcomes revise the model.</figcaption>
             </figure>
           </section>
         </div>

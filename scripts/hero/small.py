@@ -13,6 +13,8 @@ Method, five frames on black (4:5), lit like product photography:
   f-simulate  the model with its fan of frosted futures
   f-compare   two futures side by side, one brighter
   f-decide    one lit future, alone on a plinth
+  f-search    the model with proposed changes drawn in light above it
+  f-observe   the chosen future beside the record of what actually happened
 
 Run: python small.py -- OUTDIR   (env: SAMPLES, PCT, ONLY=v|f|all, NAMES=a,b)
 """
@@ -331,8 +333,37 @@ def f_decide():
         if o.modifiers.get('wf'):
             o.location.z = 0.5
 
+def ghost(x0, y0, z0, w, d, h, bright=False):
+    """A proposed change: a box drawn in warm light, with a faint frosted fill."""
+    f = box(x0, y0, z0, w, d, h, 'frost_lit' if bright else 'frost', bevel=0)
+    f.visible_shadow = False
+    o = box(x0, y0, z0, w, d, h, 'warm', bevel=0)
+    mod = o.modifiers.new('wf', 'WIREFRAME')
+    mod.thickness = 0.03
+    o.visible_shadow = False
+    return o
+def f_search():
+    mini_world()
+    ghost(-2.75, 0.55, 0.3, 0.6, 0.6, 2.2)               # another tower
+    ghost(3.0, -1.45, 0.3, 0.55, 0.5, 0.5)                # more storage at the port
+    ghost(-0.4, -1.55, 0.35, 2.9, 0.12, 0.12, True)       # a new link, factory to port
+def f_observe():
+    box(-1.4, 0.3, 0, 2.8, 1.6, 0.5, 'card', bevel=0.04)
+    slice_card(0.0, 1.1, 2.6, 3.0, 'frost_hi')   # what was expected
+    for o in bpy.context.scene.objects:
+        if o.type == 'MESH' and (o.modifiers.get('wf') or (o.data.materials and o.data.materials[0].name.startswith('frost'))):
+            o.location.z = 0.5
+    # in front, the record: a few sheets, the newest with its line drawn in light
+    for k in range(4):
+        j = math.radians([0.0, 1.4, -0.9, 0.5][k])
+        box(-1.7, -2.3, k * 0.05, 3.4, 2.0, 0.035, 'card', bevel=0.003, rot=(0, 0, j))
+    for r in range(6):
+        box(-1.45, -2.1 + r * 0.26, 0.205, 1.9 - (r % 2) * 0.6, 0.03, 0.006, 'road', bevel=0)
+    box(-1.45, -0.6, 0.205, 2.9, 0.06, 0.014, 'warm', bevel=0)   # what actually happened
+
 FILM = {'f-evidence': (f_evidence, (0.25, 0, 0.5), 7.4), 'f-model': (f_model, (0.1, 0.2, 0.8), 12.0), 'f-simulate': (f_simulate, (0.1, 1.2, 1.8), 13.0),
-        'f-compare': (f_compare, (0, 0, 1.5), 9.3), 'f-decide': (f_decide, (0, 0, 2.0), 6.4)}
+        'f-compare': (f_compare, (0, 0, 1.5), 9.3), 'f-decide': (f_decide, (0, 0, 2.0), 6.4),
+        'f-search': (f_search, (0.1, 0.2, 0.8), 12.0), 'f-observe': (f_observe, (0, -0.5, 1.4), 7.8)}
 
 if ONLY in ('v', 'all'):
     for name, build in VIGNETTES.items():

@@ -194,17 +194,31 @@
 /* --- method: the filmstrip --------------------------------------------------------- */
 
 .film { margin: 0; }
-.film__strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(0.5rem, 1.2vw, 1rem); list-style: none; }
+.film__strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); column-gap: 1.4%; list-style: none; }
 .film__f img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; background: #050403; }
-.film__f p { margin-top: 0.9rem; font-family: var(--serif); font-size: 22px; color: #f4efe6; }
-.film__loops { display: block; width: 100%; height: 70px; margin-top: 0.5rem; overflow: visible; }
-.film__search { fill: none; stroke: #f0900a; stroke-width: 1.6; filter: drop-shadow(0 0 4px rgba(240, 144, 10, 0.8)); vector-effect: non-scaling-stroke; }
+.film__f p { margin-top: 0.9rem; font-family: var(--serif); font-size: 21px; color: #f4efe6; }
+.film__f span { display: block; margin-top: 0.3rem; font-size: 13px; line-height: 1.4; color: rgba(244, 239, 230, 0.62); }
+.film__loops { position: relative; }
+.film__loops--up { height: 120px; margin-bottom: 6px; }
+.film__loops--down { height: 110px; margin-top: 0.75rem; }
+.film__loops svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.film__search { fill: none; stroke: #f0900a; stroke-width: 1.6; filter: drop-shadow(0 0 4px rgba(240, 144, 10, 0.7)); vector-effect: non-scaling-stroke; }
 .film__learn { fill: none; stroke: rgba(255, 255, 255, 0.7); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.film__lab, .film__pill { position: absolute; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding-inline: 6px; background: #15120d; }
+.film__lab--o { color: #f0a640; }
+.film__lab--w { color: rgba(244, 239, 230, 0.72); }
+.film__pill { transform: translate(-50%, -50%); padding: 5px 10px; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px; background: #15120d; color: #f4efe6; }
+.film__legend { display: none; list-style: none; margin-top: 1.25rem; }
+.film__legend li { position: relative; padding-left: 28px; font-size: 14px; line-height: 1.5; color: rgba(244, 239, 230, 0.75); }
+.film__legend li + li { margin-top: 0.6rem; }
+.film__legend li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 18px; height: 0; border-top: 1px solid rgba(255, 255, 255, 0.7); }
+.film__legend li.is-o::before { border-top: 2px solid #f0900a; }
 .film .f1__cap { margin-top: 1.25rem; }
 @media (max-width: 759px) {
-  .film__strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
+  .film__strip { display: flex; column-gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
   .film__f { flex: 0 0 62%; scroll-snap-align: start; }
   .film__loops { display: none; }
+  .film__legend { display: block; }
 }
 
 /* --- trust: four short steps ----------------------------------------------------------- */

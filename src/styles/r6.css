@@ -22,8 +22,7 @@
 #how .h2 { margin-inline: auto; }
 #manifesto > .wrap > .chip { justify-self: center; }
 #trust > .wrap > .chip { justify-self: start; }
-.win--mission { margin-bottom: 96px !important; }
-.tri { margin-bottom: 0 !important; }
+.win--mission { margin-bottom: 0 !important; }
 
 /* Where we start: a wider window */
 #start > .wrap { max-width: 1356px; }
@@ -73,3 +72,30 @@
 .ws-av, .ws-lab, .ws-dec__s, .ws-ml li span:last-child, .ws-crumb, .ws-dot, .ws-step__sum, .ws-step[data-state='done'] .ws-dot::after,
 .ws-chips span, .ws-t thead th, .ws-ch li span, .ws-cmp thead th, .ws-ask kbd, .ws-rc li span, .ws-mc__l, .ws-t--src th { font-size: 12px !important; }
 .ws-t--src th { font-size: 13px !important; }
+
+/* --- the compact triptych, flush under the mission window ------------------------------ */
+.ct { margin-top: 14px; }
+.ct__cells, .ct__bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; }
+.ct__c { position: relative; min-height: 150px; padding: 28px 32px; border: 1px solid #ddd6c8; background: #fbf9f4; }
+.ct__c.is-ours { border-color: rgba(240, 144, 10, 0.75); background: #fbf1e3; }
+.ct__br i { position: absolute; width: 6px; height: 6px; background: var(--ink); }
+.ct__br i:nth-child(1) { top: -3px; left: -3px; }
+.ct__br i:nth-child(2) { top: -3px; right: -3px; }
+.ct__br i:nth-child(3) { bottom: -3px; left: -3px; }
+.ct__br i:nth-child(4) { bottom: -3px; right: -3px; }
+.ct__c.is-ours .ct__br i { background: var(--amber); }
+.ct__k { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+.ct__k .bar__squares { display: inline-flex; gap: 3px; }
+.ct__k .bar__squares i { width: 7px; height: 7px; background: var(--amber); box-shadow: none; }
+.ct__a { margin-top: 14px; font-family: var(--serif); font-size: 28px; line-height: 1.1; color: var(--ink); }
+.ct__b { margin-top: 10px; font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.3; color: var(--ink-3); }
+.ct__c.is-ours .ct__b { color: var(--ink); }
+.ct__bar { margin-top: 18px; }
+.ct__bar i { display: block; height: 54px; background: repeating-linear-gradient(180deg, #dcd6ca 0 3px, transparent 3px 9px); }
+.ct__bar i.is-ours { background: repeating-linear-gradient(180deg, #ef9a33 0 3px, transparent 3px 9px); }
+@media (max-width: 899px) {
+  .ct__cells { grid-template-columns: minmax(0, 1fr); }
+  .ct__c { min-height: 0; padding: 24px; }
+  .ct__a { font-size: 24px; }
+  .ct__bar { display: none; }
+}

@@ -99,3 +99,4 @@
   .ct__a { font-size: 24px; }
   .ct__bar { display: none; }
 }
+.mw__mission { max-width: 30ch !important; margin-inline: auto; }

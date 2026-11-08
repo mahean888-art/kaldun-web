@@ -232,7 +232,9 @@
 .hero .hero__model.deck { display: grid; place-items: end center; margin-inline: 0; overflow: visible; position: relative; z-index: 0; }
 .deck__stage { position: relative; }
 .deck__still img { display: block; width: 100%; height: 100%; }
-.deck.is-live .deck__still { display: none; }
+.deck__still { position: absolute; inset: 0; }
+.deck__live { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+.deck.is-live .deck__live { opacity: 1; }
 .deck__l { position: absolute; inset: 0; width: 100%; height: 100%; will-change: clip-path, opacity, transform; }
 /* The fan may rise behind the buttons: its top fades into the paper. */
 .deck__slice { -webkit-mask-image: linear-gradient(to top, #000 52%, rgba(0, 0, 0, 0.28) 92%); mask-image: linear-gradient(to top, #000 52%, rgba(0, 0, 0, 0.28) 92%); }
@@ -442,7 +444,7 @@
 .ws-brand { display: inline-flex; align-items: center; gap: 8px; }
 .ws-brand .bar__squares { gap: 3px; }
 .ws-brand .bar__squares i { width: 8px; height: 8px; background: var(--ws-or); box-shadow: none; }
-.ws-brand .wm { font-size: 14px; color: var(--ws-ink); }
+.ws-brand .wm { font-size: 13px; color: var(--ws-ink); }
 .ws-crumbs { font-size: 13px; color: var(--ws-mut); }
 .ws-crumbs b { font-weight: 400; color: var(--ws-ink); }
 .ws-ver { margin-left: auto; font-size: 12.5px; color: var(--ws-mut); }

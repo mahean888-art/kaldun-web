@@ -12,9 +12,9 @@
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" as="image" href="/deck-rest-wide.webp" media="(min-width: 760px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/deck-rest-narrow.webp" media="(max-width: 759px)" fetchpriority="high" />
-    <link rel="preload" href="/fonts/audiowide-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href="/deck-rest-wide.avif" type="image/avif" media="(min-width: 760px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/deck-rest-narrow.avif" type="image/avif" media="(max-width: 759px)" fetchpriority="high" />
+    <link rel="preload" href="/fonts/unbounded-500-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geistmono-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -63,7 +63,6 @@
         <span class="hero__mark hero__mark--br" data-mark="discovery">Discovery<b><u></u><u></u></b><i class="hero__cross"></i></span>
       </div>
       <div class="hero__copy">
-        <p class="hero__lockup"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><span class="wm">foresight machines</span></p>
         <a class="hero__dispatch" href="/journal/the-future-should-be-engineered-with-foresight/"><span class="hero__dispatch-k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Manifesto</span><span class="hero__dispatch-t">The future should be engineered with foresight</span><span class="hero__dispatch-a" aria-hidden="true">→</span></a>
         <h1 class="hero__line"><span>Simulate what could happen.</span> <span>Discover what could work.</span></h1>
         <p class="hero__sub">Foresight Machines model the financial and physical systems behind every commitment, project how they could unfold, and find better ways to allocate capital and coordinate resources.</p>
@@ -72,8 +71,10 @@
       <div class="hero__model deck" data-deck role="img" aria-label="A small white model of one world on a plate: a coast and a port, towers, a solar field with storage, a factory, a data center, a road and a rail line. Behind it, a fan of frosted slices, each the same world in a slightly different state. One slice glows warm orange: the same world, with one changed connection.">
         <div class="deck__stage" data-deck-stage>
           <picture class="deck__still">
+            <source media="(max-width: 759px)" type="image/avif" srcset="/deck-rest-narrow.avif" />
             <source media="(max-width: 759px)" srcset="/deck-rest-narrow.webp" />
-            <img src="/deck-rest-wide.webp" width="2400" height="980" alt="" decoding="async" fetchpriority="high" />
+            <source type="image/avif" srcset="/deck-rest-wide.avif" />
+            <img src="/deck-rest-wide.webp" width="2400" height="980" alt="" fetchpriority="high" />
           </picture>
           <canvas class="deck__fx" aria-hidden="true"></canvas>
         </div>
@@ -103,18 +104,15 @@
               <h2 class="mw__mission">Make foresight infrastructure for the financial and physical world.</h2>
             </div>
             <div class="mw">
-              <figure class="mw__art">
-                <canvas class="field" data-field="futures" data-fill role="img" aria-label="Fig 02. A luminous field of simulated futures fanning out from one origin; it glows densest along the likely corridor. One charcoal path climbs out of the corridor to a lit endpoint: the arrangement found."></canvas>
-                
-              </figure>
+              <figure class="mw__art mw__art--stack"><img src="/m-stack-900.webp" width="900" height="1200" alt="A stack of frosted sheets on a white plinth, each one a possible future. One sheet is drawn out of the stack and lit orange: the arrangement found." loading="lazy" decoding="async" /></figure>
               <div class="mw__text">
                 <h3 class="mw__h">There’s forecasting, and there’s foresight.</h3>
                 <div class="prose">
                   <p>Forecasting anticipates the conditions ahead, and machines now do it <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">about as well as the best people</a>.</p>
                   <p>But every commitment sits inside a system larger than the decision itself: other participants, agreements, constraints, and the conditions they meet. The outcome turns on how they move together.</p>
-                  <p class="mw__foil">Today those systems are modeled on spreadsheets, one scenario at a time.</p>
+                  <p>Today those systems are modeled on spreadsheets, one scenario at a time.</p>
                   <p>Foresight runs the whole system forward, then searches for a better arrangement: a different allocation, new terms, a sequence that makes a project possible.</p>
-                  <p>Models like these took specialists months to build. AI is making them fast to build and practical to keep current.</p>
+                  <p>AI now makes models like these fast to build and practical to keep current.</p>
                 </div>
               </div>
             </div>

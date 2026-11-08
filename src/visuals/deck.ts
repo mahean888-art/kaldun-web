@@ -12,14 +12,12 @@
  * and move them. Fine lines of warm light run along the roads, rails and links,
  * on paths projected through the same camera (scripts/hero/deck.py).
  *
- * One pass of ten seconds, then rest:
- *   0–2 s   the world rests in light; the flows move.            MODEL
- *   2–6 s   the slices rise out of the plate one by one and fan
- *           open, their silhouettes flickering through states.    FUTURES
- *   6–8 s   they settle; one ignites, and the flows brighten
- *           along the changed connection.                         DISCOVERY
- * Then it holds, and only the flows keep moving. Under reduced motion, or on a
- * slow device, the still is shown instead.
+ * The first paint is the finished scene: a still of the world, the fan and the lit
+ * slice. The live layers load behind it, are drawn in that same final state, and
+ * cross-fade in on top once every one is decoded, so nothing is ever missing. Then
+ * one short pass of three seconds: the fan dims and the lit slice relights, while
+ * light runs along the roads, rails and links. Under reduced motion, on a slow
+ * connection or a slow device, the still is all there is.
  */
 
 import deck from '../data/deck.json';
@@ -67,8 +65,9 @@ export function initDeck(host: HTMLElement): void {
   const c = canvas.getContext('2d');
   if (!c) return;
   const narrowQ = window.matchMedia('(max-width: 759px)');
-  const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-  const still = prefersReducedMotion() || (navigator.hardwareConcurrency ?? 4) <= 2 || !!nav.connection?.saveData;
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  const slow = !!conn?.saveData || (!!conn?.effectiveType && conn.effectiveType !== '4g');
+  const still = prefersReducedMotion() || (navigator.hardwareConcurrency ?? 4) <= 2 || slow;
 
   const view = (): 'wide' | 'narrow' => (narrowQ.matches ? 'narrow' : 'wide');
   const slices: HTMLImageElement[] = [];
@@ -76,35 +75,39 @@ export function initDeck(host: HTMLElement): void {
   let lit: HTMLImageElement | null = null;
   let world: HTMLImageElement | null = null;
 
+  const live = document.createElement('div');
+  live.className = 'deck__live';
   /** Build the layers for the current framing: slices behind, the world in front. */
   const layers = (): void => {
     const v = view();
+    if (!live.parentNode) stage.append(live);
     const layer = (src: string, cls: string): HTMLImageElement => {
       const im = new Image();
       im.src = `/deck-${src}-${v}.webp`;
       im.alt = '';
       im.decoding = 'async';
+      im.loading = 'lazy';
       im.className = `deck__l ${cls}`;
       im.setAttribute('aria-hidden', 'true');
       return im;
     };
-    stage.querySelectorAll('.deck__l').forEach((n) => n.remove());
+    live.querySelectorAll('.deck__l').forEach((n) => n.remove());
     slices.length = 0;
     for (let k = N - 1; k >= 0; k--) {
       const im = layer(k === LIT ? `slice${k}p` : `slice${k}`, 'deck__slice');
       im.style.setProperty('--k', String(k));
       slices[k] = im;
-      stage.append(im);
+      live.append(im);
       if (k === LIT) {
         plain = im;
         lit = layer(`slice${k}`, 'deck__slice deck__lit');
         lit.style.setProperty('--k', String(k));
-        stage.append(lit);
+        live.append(lit);
       }
     }
     world = layer('world', 'deck__world');
-    stage.append(world);
-    stage.append(canvas);
+    live.append(world);
+    live.append(canvas);
   };
 
   let W = 1;
@@ -229,13 +232,53 @@ export function initDeck(host: HTMLElement): void {
     clusters?.classList.toggle('b3', t >= 6200);
   };
 
+  /** The finished scene, with an optional dim-and-relight: p runs 0 → 1 over the pass. */
+  const settled = (p: number, clock: number): void => {
+    const dim = Math.sin(Math.PI * Math.max(0, Math.min(1, p)));
+    slices.forEach((im) => {
+      if (!im) return;
+      im.style.clipPath = 'none';
+      im.style.transform = 'none';
+      im.style.opacity = String(1 - 0.4 * dim);
+    });
+    const glow = 1 - 0.65 * dim;
+    if (lit && plain) {
+      lit.style.clipPath = 'none';
+      lit.style.transform = 'none';
+      lit.style.opacity = String(glow);
+      plain.style.opacity = String((1 - glow) * (1 - 0.4 * dim));
+    }
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.clearRect(0, 0, W, H);
+    c.lineCap = 'round';
+    for (const tr of tracks['rail'] ?? []) comets(tr, clock, 5, 60, 90, 0.75, 1.6);
+    for (const tr of tracks['road'] ?? []) comets(tr, clock, 4, 48, 60, 0.7, 1.4);
+    for (const tr of tracks['link'] ?? []) comets(tr, clock, 2, 36, 40, 0.6, 1.2);
+    const f = tracks['found']?.[0];
+    if (f) {
+      c.globalAlpha = glow;
+      c.shadowColor = 'rgba(240,144,10,0.9)';
+      c.shadowBlur = 10 * scale;
+      c.strokeStyle = 'rgba(240,144,10,0.95)';
+      c.lineWidth = 2 * scale;
+      c.beginPath();
+      f.pts.forEach(([x, y], i) => (i ? c.lineTo(x, y) : c.moveTo(x, y)));
+      c.stroke();
+      c.shadowBlur = 0;
+      comets(f, clock, 3, 70, 50, 1, 2.6);
+      c.globalAlpha = 1;
+    }
+  };
+  const PASS = 3000;
+
   let t0 = 0;
   let raf = 0;
   let held = -1;
   let visible = true;
   const loop = (now: number): void => {
     if (!t0) t0 = now;
-    frame(held >= 0 ? held : now - t0, now);
+    if (held >= 0) frame(held, now);
+    else settled((now - t0) / PASS, now);
     raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0;
   };
   const start = (): void => {
@@ -269,13 +312,13 @@ export function initDeck(host: HTMLElement): void {
   });
   const go = (): void => {
     layers();
-    const imgs = Array.from(stage.querySelectorAll<HTMLImageElement>('.deck__l'));
+    const imgs = Array.from(live.querySelectorAll<HTMLImageElement>('.deck__l'));
+    imgs.forEach((im) => (im.loading = 'eager'));
     void Promise.all(imgs.map((im) => im.decode().catch(() => undefined))).then(() => {
       if (imgs.some((im) => !im.naturalWidth)) return; // keep the still if any layer failed
       layout();
-      clusters?.classList.remove('b1', 'b2', 'b3');
-      frame(0, 0);
-      host.classList.add('is-live');
+      settled(0, performance.now());
+      host.classList.add('is-live'); // the live layers cross-fade in over the still, at the same frame
       t0 = 0;
       io.observe(host);
     });

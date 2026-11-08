@@ -10,23 +10,23 @@
    ========================================================================== */
 
 @font-face {
-  font-family: 'Audiowide';
+  font-family: 'Unbounded';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-display: swap;
-  src: url('/fonts/audiowide-latin.woff2') format('woff2');
+  src: url('/fonts/unbounded-500-latin.woff2') format('woff2');
 }
 
 :root {
-  --display: 'Audiowide', 'Geist', sans-serif;
+  --display: var(--sans);
   --amber-deep: #b86a00;
 }
 
 /* --- the wordmark: one mark, everywhere --------------------------------------- */
 
 .wm {
-  font-family: 'Audiowide', var(--sans);
-  font-weight: 400;
+  font-family: 'Unbounded', var(--sans);
+  font-weight: 500;
   letter-spacing: -0.01em;
   text-transform: none;
   line-height: 1;
@@ -45,8 +45,8 @@
 }
 
 .bar__brand .wm {
-  font-size: 17px;
-  letter-spacing: 0;
+  font-size: 15px;
+  letter-spacing: -0.01em;
 }
 
 .bar__nav {
@@ -80,7 +80,7 @@
 
 @media (max-width: 560px) {
   .bar__nav a:not(.bar__cta) { display: none; }
-  .bar__brand .wm { font-size: 15px; }
+  .bar__brand .wm { font-size: 14px; }
 }
 
 /* --- the hero --------------------------------------------------------------------- */
@@ -853,7 +853,7 @@
 }
 
 .foot__mark text.foot__wm {
-  font-family: 'Audiowide', var(--sans);
+  font-family: var(--sans);
   font-size: 150px;
   font-weight: 400;
   stroke: var(--amber);
@@ -923,7 +923,7 @@
 @media (max-width: 430px) {
   .bar { padding-inline: 12px 10px; }
   .bar__brand { gap: 7px; }
-  .bar__brand .wm { font-size: 13.5px; }
+  .bar__brand .wm { font-size: 12.5px; }
   .bar .bar__nav a.bar__cta { padding: 5px 8px 4px; letter-spacing: 0.1em; font-size: 12px; }
 }
 

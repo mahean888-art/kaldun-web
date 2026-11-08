@@ -127,6 +127,7 @@ def frost_tex(tex, glow, alpha):
     nt.links.new(mix.outputs['Color'], b.inputs['Emission Color'])
     b.inputs['Emission Strength'].default_value = glow
     return m
+ETCH = '/tmp/claude-0/-home-user-kaldun-web/fd930541-fe09-5744-8e47-e77ab427b4b2/scratchpad/blender/tex-etch.png'
 TEX = '/tmp/claude-0/-home-user-kaldun-web/fd930541-fe09-5744-8e47-e77ab427b4b2/scratchpad/blender/tex-compare.png'
 
 def box(x0, y0, z0, w, d, h, m='card', bevel=0.02, rot=None):
@@ -261,7 +262,9 @@ def v_cred():
     tower(-2.6, -0.4, 1.1, 1.1, 3.2)
     hs = [0.4, 0.7, 1.0, 1.35, 2.3, 1.2]
     for i, h in enumerate(hs):
-        box(-1.0 + i * 0.6, -0.7, 0, 0.5, 1.2, h, 'warm' if i == 4 else 'card')
+        box(-1.0 + i * 0.6, -0.7, 0, 0.5, 1.2, h, 'card')
+        if i == 4:
+            box(-1.0 + i * 0.6 - 0.005, -0.705, h - 0.16, 0.51, 1.21, 0.07, 'warm', bevel=0)   # one lit band
 def v_risk():
     plate(6.0, 4.5)
     box(-0.8, 0.9, 0, 1.6, 1.0, 0.75)              # the data center
@@ -297,7 +300,51 @@ def v_proj():
     for i in range(10):
         box(-0.65 + i * 0.19, -1.72, 0, 0.06, 0.24, 0.02, 'road', bevel=0)
 
-VIGNETTES = {'v-res': v_res, 'v-cred': v_cred, 'v-risk': v_risk, 'v-proj': v_proj}
+def v_trade():
+    plate(6.0, 4.5)
+    # a ship-to-shore crane: four legs, a cab, and a boom reaching out over the water
+    for (x, y) in ((-2.7, -0.7), (-2.0, -0.7), (-2.7, 0.1), (-2.0, 0.1)):
+        box(x, y, 0, 0.09, 0.09, 2.5, bevel=0)
+    box(-2.75, -0.75, 1.2, 0.84, 0.95, 0.07, 'steel', bevel=0)
+    box(-2.5, -2.05, 2.5, 0.34, 2.75, 0.14)            # the boom
+    box(-2.6, 0.0, 2.64, 0.5, 0.55, 0.3)               # the machinery house
+    box(-2.36, -1.55, 1.25, 0.03, 0.03, 1.25, 'road', bevel=0)   # the hoist line
+    box(-2.5, -1.68, 1.0, 0.32, 0.26, 0.25, 'card', bevel=0.01)  # a container on the hook
+    # containers, stacked
+    for r in range(3):
+        for c in range(4):
+            for z in range(3 - (c % 2)):
+                box(-0.9 + c * 0.62, -0.1 + r * 0.5, z * 0.3, 0.58, 0.44, 0.28, 'card' if (r + c + z) % 3 else 'road', bevel=0.01)
+    # a small tank farm
+    for (x, y) in ((1.9, 0.9), (2.5, 0.9), (1.9, 1.5), (2.5, 1.5)):
+        cyl(x, y, 0, 0.26, 0.55)
+    # the lane, lit, along the water's edge
+    box(-2.9, -1.75, 0.0, 5.8, 0.12, 0.05, 'warm', bevel=0)
+    box(-2.9, -1.35, 0, 5.8, 0.06, 0.03, 'road', bevel=0)
+def v_energy():
+    plate(6.0, 4.5)
+    for r in range(4):
+        p = box(-2.75, -1.6 + r * 0.6, 0, 1.7, 0.4, 0.04, 'panel', bevel=0.006)
+        p.rotation_euler = (math.radians(28), 0, 0)
+        p.location.z = 0.28
+    for i in range(4):
+        box(-0.75, -1.5 + i * 0.42, 0, 0.55, 0.34, 0.42)          # storage
+    # the substation: a frame of posts over two transformers
+    for (x, y) in ((0.15, -0.5), (0.95, -0.5), (0.15, 0.3), (0.95, 0.3)):
+        box(x, y, 0, 0.05, 0.05, 1.0, 'steel', bevel=0)
+    box(0.12, -0.5, 1.0, 0.9, 0.06, 0.05, 'steel', bevel=0)
+    box(0.12, 0.3, 1.0, 0.9, 0.06, 0.05, 'steel', bevel=0)
+    box(0.3, -0.3, 0, 0.3, 0.3, 0.4); box(0.65, -0.05, 0, 0.3, 0.3, 0.4)
+    # the data center
+    box(1.6, -0.9, 0, 1.3, 1.9, 0.8)
+    for i in range(4):
+        cyl(1.85 + (i % 2) * 0.7, -0.5 + (i // 2) * 1.0, 0.8, 0.13, 0.1, 'steel', v=16)
+    # the line to it, lit
+    box(1.0, -0.12, 0.0, 0.6, 0.1, 0.06, 'warm', bevel=0)
+    box(0.95, -0.12, 0.0, 0.05, 0.1, 0.06, 'warm', bevel=0)
+
+VIGNETTES = {'v-res': v_res, 'v-cred': v_cred, 'v-risk': v_risk, 'v-proj': v_proj, 'v-trade': v_trade, 'v-energy': v_energy}
+DOMAINS = {'d-res': v_res, 'd-cred': v_cred, 'd-risk': v_risk, 'd-trade': v_trade, 'd-energy': v_energy}
 
 # --- the filmstrip --------------------------------------------------------------------------------
 def f_evidence():
@@ -328,16 +375,14 @@ def placed(build, k, x, y):
     e.scale = (k, k, k)
     e.location = (x, y, 0)
 def f_compare():
-    """Current practice beside the changed arrangement: the same world, one lit change."""
-    placed(mini_world, 0.36, -1.6, 0.5)
-    def changed():
-        mini_world()
-        box(-0.4, -1.55, 0.0, 2.9, 0.14, 0.14, 'warm', bevel=0.01)     # the new link, built
-        box(3.0, -1.45, 0.0, 0.55, 0.5, 0.5, 'warm', bevel=0.01)       # and the storage it needs
-    placed(changed, 0.36, 1.6, -0.5)
+    """Two frosted futures with the world etched in, side by side; one brighter."""
+    M['ft_lo'] = frost_tex(ETCH, 0.25, 0.14)
+    M['ft_hi'] = frost_tex(ETCH, 1.4, 0.3)
+    slice_card(-1.75, 0.0, 3.3, 2.6, 'ft_lo', math.radians(-3))
+    slice_card(1.75, -0.3, 3.3, 2.6, 'ft_hi', math.radians(3))
 def f_decide():
     box(-1.4, -0.9, 0, 2.8, 1.8, 0.5, 'card', bevel=0.04)
-    slice_card(0.0, 0.0, 2.6, 3.4, 'frost_lit')
+    slice_card(0.0, 0.0, 2.6, 3.4, 'frost_hi')
     for o in bpy.context.scene.objects:
         if o.type == 'MESH' and o.location.z == 0 and o.data.materials and o.data.materials[0].name.startswith('frost'):
             o.location.z = 0.5
@@ -375,9 +420,43 @@ def f_observe():
     box(-1.45, -0.6, 0.205, 2.9, 0.06, 0.014, 'warm', bevel=0)   # what actually happened
 
 FILM = {'f-evidence': (f_evidence, (0.25, 0, 0.5), 7.4), 'f-model': (f_model, (0.1, 0.2, 0.8), 12.0), 'f-simulate': (f_simulate, (0.1, 1.2, 1.8), 13.0),
-        'f-compare': (f_compare, (0, 0, 0.4), 7.4), 'f-decide': (f_decide, (0, 0, 2.0), 6.4),
+        'f-compare': (f_compare, (0, 0, 1.3), 9.0), 'f-decide': (f_decide, (0, 0, 2.0), 6.4),
         'f-search': (f_search, (0.1, 0.2, 0.8), 12.0), 'f-observe': (f_observe, (0, -0.5, 1.4), 7.8)}
 
+def m_stack():
+    """The mission figure: many futures, stacked like sheets of frosted acrylic; one drawn out and lit."""
+    sheet = bpy.data.materials.new('sheet'); sheet.use_nodes = True
+    g = sheet.node_tree.nodes['Principled BSDF']
+    g.inputs['Base Color'].default_value = (*lin('#ffffff'), 1)
+    g.inputs['Roughness'].default_value = 0.35
+    g.inputs['Alpha'].default_value = 0.55
+    g.inputs['Emission Strength'].default_value = 0.0
+    M['sheet'] = sheet
+    box(-1.7, -1.2, -0.5, 3.4, 2.4, 0.5, 'card', bevel=0.05)          # the plinth, on the ground
+    n = 18
+    for k in range(n):
+        z = 0.12 + k * 0.13
+        if k == 12:
+            box(-1.45, -2.05, z, 2.9, 1.9, 0.035, 'warm', bevel=0.004)   # the one found, drawn out
+        else:
+            box(-1.45, -0.95, z, 2.9, 1.9, 0.03, 'sheet', bevel=0.004)
+            box(-1.45, -0.952, z, 2.9, 0.008, 0.03, 'panel', bevel=0)         # a fine edge
+
+if ONLY in ('m', 'all'):
+    sc = reset()
+    mats()
+    m_stack()
+    camera(sc, (0, -0.5, 1.0), 6.6, 900, 1200, az=24, el=22)
+    render(sc, 'm-stack')
+if ONLY in ('d', 'all'):
+    for name, build in DOMAINS.items():
+        if NAMES and name not in NAMES:
+            continue
+        sc = reset()
+        mats()
+        build()
+        camera(sc, (0, 0.2, 0.9), 8.6, 960, 1200)
+        render(sc, name)
 if ONLY in ('v', 'all'):
     for name, build in VIGNETTES.items():
         if NAMES and name not in NAMES:

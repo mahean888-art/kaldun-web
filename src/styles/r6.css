@@ -100,3 +100,11 @@
   .ct__bar { display: none; }
 }
 .mw__mission { max-width: 30ch !important; margin-inline: auto; }
+
+/* the mission figure: a still render, cover-fit to the column */
+.mw__art--stack { position: relative; min-height: 420px; margin: 0; background: #fdfcf9; overflow: hidden; }
+.mw__art--stack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+@media (max-width: 759px) { .mw__art--stack { min-height: 0; aspect-ratio: 3 / 4; } }
+
+/* --- the footer monument: a lattice of dots, no stripe mask or glow ------------------- */
+.foot__mark--lattice svg { filter: none; -webkit-mask-image: none; mask-image: none; }

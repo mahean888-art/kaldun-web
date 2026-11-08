@@ -234,7 +234,7 @@ export function initDeck(host: HTMLElement): void {
 
   /** The finished scene, with an optional dim-and-relight: p runs 0 → 1 over the pass. */
   const settled = (p: number, clock: number): void => {
-    const dim = Math.sin(Math.PI * Math.max(0, Math.min(1, p)));
+    const dim = p >= 1 ? 0 : Math.sin(Math.PI * Math.max(0, p));
     slices.forEach((im) => {
       if (!im) return;
       im.style.clipPath = 'none';

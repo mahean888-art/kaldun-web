@@ -3,19 +3,21 @@
  *
  * A treasury team asks a question; the machine works through four steps in
  * the open (Model, Replay, Look ahead, Discover) and the answer builds beside
- * the work. The Model tab shows the model itself, with recent changes in the
- * answer column.
+ * the work. Three views: the decision, the model itself, and the record of what
+ * was recommended before the outcome and how the model was revised.
  *
- * Decision 1 plays once, about fifteen seconds, when the window is 40% in view.
- * Only the running (or chosen) step is expanded; finished steps collapse to
- * their heading. Any click on a step, decision or tab stops the run and shows
- * the finished state. Decisions 2–4 open finished, like saved work. Under
- * reduced motion decision 1 is shown finished at once.
+ * At first paint decision 1 is shown finished. When the window is 40% in view
+ * the run plays once, about fifteen seconds. Only the running (or chosen) step is
+ * expanded. Any click on a step, decision or tab stops the run and shows the
+ * finished state, and so does scrolling away mid-run: a half-finished state is
+ * never shown on return. "Replay the run" plays it again on request. Under
+ * reduced motion nothing plays.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
 
 type Timer = ReturnType<typeof setTimeout>;
+type Tab = 'decision' | 'model' | 'record';
 
 // When each step of decision 1 starts and finishes, in milliseconds.
 const RUN: Array<[number, number]> = [[400, 3400], [3800, 6800], [7200, 10600], [11000, 14400]];
@@ -28,13 +30,16 @@ export function initWorkspace(root: HTMLElement): void {
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.ws-tabs [role="tab"]'));
   const centers = Array.from(root.querySelectorAll<HTMLElement>('.ws-d'));
   const answers = Array.from(root.querySelectorAll<HTMLElement>('.ws-a[data-a]'));
-  const modelView = root.querySelector<HTMLElement>('[data-model-view]');
-  const modelAside = root.querySelector<HTMLElement>('[data-a-model]');
+  const views: Record<Exclude<Tab, 'decision'>, [HTMLElement | null, HTMLElement | null]> = {
+    model: [root.querySelector('[data-model-view]'), root.querySelector('[data-a-model]')],
+    record: [root.querySelector('[data-record-view]'), root.querySelector('[data-a-record]')],
+  };
+  const panel = root.querySelector<HTMLElement>('#ws-center-panel');
   const first = decs[0]?.dataset['dec'] ?? '';
   const firstStatus = decs[0]?.querySelector<HTMLElement>('[data-status]');
   const statusText = firstStatus?.textContent ?? '';
   let current = first;
-  let tab: 'decision' | 'model' = 'decision';
+  let tab: Tab = 'decision';
   let timers: Timer[] = [];
   let running = false;
   let played = false;
@@ -50,7 +55,7 @@ export function initWorkspace(root: HTMLElement): void {
     });
   };
 
-  /** The step to show expanded when a decision opens finished: the last done, or the running one. */
+  /** The step to show expanded when a decision opens finished: the last done, or the one before the running one. */
   const defaultStep = (id: string): number => {
     const st = stepsOf(id);
     const run = st.findIndex((s) => s.dataset['state'] === 'running');
@@ -58,17 +63,20 @@ export function initWorkspace(root: HTMLElement): void {
     return st.length - 1;
   };
 
+  /** Decision 1, finished: every step done, the answer in place. */
   const finish = (): void => {
     timers.forEach(clearTimeout);
     timers = [];
+    const was = running;
     running = false;
     stepsOf(first).forEach((s) => (s.dataset['state'] = 'done'));
     const a = root.querySelector<HTMLElement>(`.ws-a[data-a="${first}"]`);
     a?.querySelector<HTMLElement>('[data-run]')?.setAttribute('hidden', '');
     a?.querySelector<HTMLElement>('[data-final]')?.removeAttribute('hidden');
-    a?.classList.remove('is-running');
+    a?.classList.remove('is-running', 'is-fading');
     if (firstStatus) firstStatus.textContent = statusText;
     root.classList.remove('is-running');
+    if (was && current === first) expand(first, defaultStep(first));
   };
 
   const open = (id: string, step?: number): void => {
@@ -81,19 +89,17 @@ export function initWorkspace(root: HTMLElement): void {
     if (pick) pick.value = id;
     centers.forEach((c) => (c.hidden = tab !== 'decision' || c.dataset['d'] !== id));
     answers.forEach((a) => (a.hidden = tab !== 'decision' || a.dataset['a'] !== id));
-    if (modelView) modelView.hidden = tab !== 'model';
-    if (modelAside) modelAside.hidden = tab !== 'model';
+    (Object.keys(views) as Array<keyof typeof views>).forEach((k) => views[k].forEach((v) => v && (v.hidden = tab !== k)));
     expand(id, step ?? defaultStep(id));
   };
 
   const interrupt = (): void => {
-    if (running || !played) finish();
+    if (running) finish();
     played = true;
   };
 
-  /** Decision 1, once: steps run in order, the answer builds beside them. */
+  /** Decision 1: the steps run in order, and the answer builds beside them. */
   const play = (): void => {
-    if (played) return;
     played = true;
     running = true;
     root.classList.add('is-running');
@@ -129,8 +135,21 @@ export function initWorkspace(root: HTMLElement): void {
     at(ANSWER_AT, () => {
       a.classList.add('is-fading');
       finish();
+      expand(first, defaultStep(first));
       timers.push(setTimeout(() => a.classList.remove('is-fading'), 450));
     });
+  };
+
+  const setTab = (t: Tab): void => {
+    tab = t;
+    tabs.forEach((b) => {
+      const on = b.dataset['tab'] === t;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    const btn = tabs.find((b) => b.dataset['tab'] === t);
+    if (btn) panel?.setAttribute('aria-labelledby', btn.id);
+    open(current);
   };
 
   // --- input --------------------------------------------------------------------------
@@ -154,52 +173,45 @@ export function initWorkspace(root: HTMLElement): void {
       }),
     );
   });
-  const setTab = (t: 'decision' | 'model'): void => {
-    tab = t;
-    tabs.forEach((b) => {
-      const on = b.dataset['tab'] === t;
-      b.setAttribute('aria-selected', String(on));
-      b.tabIndex = on ? 0 : -1;
-    });
-    root.querySelector('#ws-center-panel')?.setAttribute('aria-labelledby', t === 'model' ? 'ws-t-model' : 'ws-t-dec');
-    open(current);
-  };
   tabs.forEach((b) =>
     b.addEventListener('click', () => {
       interrupt();
-      setTab(b.dataset['tab'] as 'decision' | 'model');
+      setTab(b.dataset['tab'] as Tab);
     }),
   );
   root.querySelector('.ws-tabs')?.addEventListener('keydown', (ev) => {
     const k = (ev as KeyboardEvent).key;
     if (k !== 'ArrowLeft' && k !== 'ArrowRight') return;
     const i = tabs.findIndex((b) => b.getAttribute('aria-selected') === 'true');
-    const n = tabs[(i + 1) % tabs.length]!;
+    const n = tabs[(i + (k === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]!;
     n.focus();
     n.click();
     ev.preventDefault();
   });
+  root.querySelector<HTMLButtonElement>('[data-replay]')?.addEventListener('click', () => {
+    finish();
+    if (tab !== 'decision') setTab('decision');
+    open(first);
+    play();
+  });
 
+  // First paint: decision 1, finished.
   open(first);
   if (reduced) {
     played = true;
     return;
   }
-  // Show the waiting state until the run begins, so the first sight is the work starting.
-  const steps = stepsOf(first);
-  steps.forEach((s) => (s.dataset['state'] = 'waiting'));
-  expand(first, -1);
-  const a = root.querySelector<HTMLElement>(`.ws-a[data-a="${first}"]`);
-  a?.querySelector('[data-run]')?.removeAttribute('hidden');
-  a?.querySelector('[data-final]')?.setAttribute('hidden', '');
+  // Play once at 40% in view; if the visitor scrolls away mid-run, finish at once.
   const io = new IntersectionObserver(
     (en) => {
-      if (!en.some((x) => x.isIntersecting)) return;
-      io.disconnect();
-      if (!played && current === first && tab === 'decision') play();
-      else finish();
+      const e = en[en.length - 1]!;
+      if (e.intersectionRatio >= 0.4) {
+        if (!played && current === first && tab === 'decision') play();
+      } else if (!e.isIntersecting || e.intersectionRatio < 0.1) {
+        if (running) finish();
+      }
     },
-    { threshold: 0.4 },
+    { threshold: [0, 0.1, 0.4] },
   );
   io.observe(root);
 }

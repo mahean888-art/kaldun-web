@@ -21,7 +21,7 @@
 .band .blk__head2, #how .blk__head2 { text-align: center; justify-items: center; }
 #how .h2 { margin-inline: auto; }
 #manifesto > .wrap > .chip { justify-self: center; }
-#trust > .wrap > .chip { justify-self: start; }
+#validation > .wrap > .chip { justify-self: start; }
 .win--mission { margin-bottom: 0 !important; }
 
 /* Where we start: a wider window */
@@ -38,12 +38,12 @@
 .lp__n--hub { width: 12.33%; }
 .lp__n img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 56%; border-radius: 8px; border: 1px solid rgba(244, 239, 230, 0.16); background: #050403; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9); }
 .lp__n--hub img { border-color: rgba(244, 239, 230, 0.4); }
-.lp__n p { position: absolute; white-space: nowrap; font-family: var(--serif); font-size: 22px; line-height: 1; color: #f4efe6; }
+.lp__n p { position: absolute; white-space: nowrap; font-family: var(--serif); font-size: 20px; line-height: 1; color: #f4efe6; }
 .lp__n--t p { bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
 .lp__n--b p { top: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
 .lp__n--l p { right: calc(100% + 18px); top: 50%; transform: translateY(-50%); }
 .lp__n--r p { left: calc(100% + 18px); top: 50%; transform: translateY(-50%); }
-.lp__n--hub p { font-size: 26px; }
+.lp__n--hub p { font-size: 20px; }
 .lp__loop { position: absolute; width: 15%; transform: translate(-50%, -50%); text-align: center; }
 .lp__k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 239, 230, 0.9); }
 .lp__d { margin-top: 8px; font-size: 14px; line-height: 1.45; color: rgba(244, 239, 230, 0.66); }
@@ -57,7 +57,7 @@
   .lp__legend { display: block; margin-top: 40px; }
   .lp__legend li { font-size: 16px; line-height: 1.55; color: rgba(244, 239, 230, 0.75); }
   .lp__legend li + li { margin-top: 12px; }
-  .lp__legend b { font-weight: 500; color: #f4efe6; }
+  .lp__legend b { font-weight: 400; color: #f4efe6; }
 }
 
 /* --- nothing below 12px ---------------------------------------------------------------- */
@@ -170,3 +170,35 @@
   .dm__q { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }
 .ct__br { display: contents; }
+
+/* --- validation: four cells and the revision they prove ------------------------------ */
+.va__head { margin-bottom: 48px; }
+.va__cells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; list-style: none; }
+.va__c { position: relative; padding: 26px 26px 30px; border: 1px solid var(--hair); background: #fbf9f4; }
+.va__k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.va__t { margin-top: 16px; font-family: var(--serif); font-size: 24px; font-weight: 400; line-height: 1.12; color: var(--ink); }
+.va__b { margin-top: 10px; font-size: 15px; line-height: 1.5; color: var(--ink-3); }
+.va__strip { position: relative; display: grid; grid-template-columns: 1fr 2.2fr 1.7fr 1.5fr auto; gap: 24px; margin-top: 10px; padding: 22px 26px; border: 1px solid rgba(240, 144, 10, 0.8); background: #fff; }
+.va__strip .ct__br i { background: var(--amber); }
+.va__f dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.va__f dd { margin: 6px 0 0; font-size: 14.5px; line-height: 1.45; color: var(--ink); }
+.va__f--status { align-self: center; }
+.va__f--status dd { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-deep, #b86a00); }
+.va__sq { width: 8px; height: 8px; background: var(--amber); }
+@media (max-width: 1023px) {
+  .va__cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .va__strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 599px) {
+  .va__cells, .va__strip { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- one rule between sections: each frame runs to the shared edge; the next drops its top -- */
+.band:has(+ .band) > .band__frame { bottom: 0; }
+.band + .band > .band__frame { top: 0; border-top: 0; }
+.band + .band > .band__frame i:nth-child(1), .band + .band > .band__frame i:nth-child(2) { display: none; }
+.band > .band__frame { z-index: 2; }
+
+/* --- the nav's progress dots: seven sections, evenly spaced -------------------------- */
+.lamps { gap: 10px; }
+.lamps__group { display: contents; }

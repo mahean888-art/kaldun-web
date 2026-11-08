@@ -442,6 +442,34 @@ def m_stack():
             box(-1.45, -0.95, z, 2.9, 1.9, 0.03, 'sheet', bevel=0.004)
             box(-1.45, -0.952, z, 2.9, 0.008, 0.03, 'panel', bevel=0)         # a fine edge
 
+def link(a, b, m='road', w=0.035, z=0.012):
+    """A fine connection on the plate, from point a to point b."""
+    v = Vector((b[0] - a[0], b[1] - a[1], 0)); L = v.length
+    o = box(-L / 2, -w / 2, 0, L, w, w * 0.6, m, bevel=0)
+    bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
+    o.rotation_euler = (0, 0, math.atan2(v.y, v.x))
+    o.location = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, z)
+    return o
+def m_system():
+    """The mission figure: the world as a system, its connections drawn, one changed and lit."""
+    mini_world()
+    hubs = [(-1.3, -0.3), (-0.55, 0.55), (-0.05, -0.45), (1.3, 0.9), (2.65, 0.1), (3.2, -0.4), (-3.0, -0.7), (-2.9, 0.6), (1.0, -1.5), (2.4, -1.4)]
+    pairs = [(0, 1), (0, 2), (1, 3), (2, 3), (3, 4), (4, 5), (6, 0), (7, 1), (6, 7), (2, 8), (8, 9), (9, 5), (1, 2)]
+    M['flow'] = mat('flow', '#f6c48a', 0.5, '#f0a040', 0.35)
+    for i, j in pairs:
+        link(hubs[i], hubs[j], 'flow', w=0.022)
+    for (x, y) in hubs:
+        cyl(x, y, 0, 0.06, 0.04, 'flow', v=16)
+    link(hubs[6], hubs[4], 'warm', w=0.07, z=0.02)       # the one changed connection, lit end to end
+    for (x, y) in (hubs[6], hubs[4]):
+        cyl(x, y, 0, 0.11, 0.08, 'warm', v=24)
+
+if ONLY in ('s', 'all'):
+    sc = reset()
+    mats()
+    m_system()
+    camera(sc, (-0.2, 0.0, 0.5), 7.6, 900, 1200, az=-32, el=34)
+    render(sc, 'm-system')
 if ONLY in ('m', 'all'):
     sc = reset()
     mats()

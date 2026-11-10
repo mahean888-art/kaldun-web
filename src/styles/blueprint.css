@@ -9,13 +9,6 @@
    frame; labels say only true things.
    ========================================================================== */
 
-@font-face {
-  font-family: 'Unbounded';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/unbounded-500-latin.woff2') format('woff2');
-}
 
 :root {
   --display: var(--sans);
@@ -25,7 +18,7 @@
 /* --- the wordmark: one mark, everywhere --------------------------------------- */
 
 .wm {
-  font-family: 'Unbounded', var(--sans);
+  font-family: var(--sans);
   font-weight: 500;
   letter-spacing: -0.01em;
   text-transform: none;

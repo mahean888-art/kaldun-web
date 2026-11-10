@@ -184,8 +184,8 @@
 
 /* --- the wordmark, drawn: wide geometric capitals --------------------------------------- */
 .wm--svg { display: block; width: auto; height: 1em; overflow: visible; }
-.bar__brand .wm--svg { height: 17px; color: var(--ink); }
-.ws-brand .wm--svg { height: 12px; }
+.bar__brand .wm--svg { height: 15px; color: var(--ink); }
+.ws-brand .wm--svg { height: 11.5px; }
 .hero .hero__lockup { gap: 0.5em; margin-bottom: 26px; font-size: clamp(22px, 2vw, 30px) !important; }
 .hero .hero__lockup .wm--svg { height: 1em; }
 .hero .hero__lockup .bar__squares i { width: 0.5em; height: 0.5em; }
@@ -237,4 +237,10 @@
 @media (max-width: 1023px) { .lp__start { position: static; display: inline-block; transform: none; margin-bottom: 8px; } }
 
 /* the wordmark, a touch heavier so it holds its own at small sizes */
-.wm--svg path { stroke-width: 13; }
+
+
+.hero__copy { max-width: 920px; }
+.hero__sub { max-width: 62ch; margin-inline: auto; }
+
+/* manifesto: each section's heading matches the side navigation */
+h2.man__num { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }

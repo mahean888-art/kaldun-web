@@ -6,12 +6,9 @@
  * the work. Three views: the decision, the model itself, and the record of what
  * was recommended before the outcome and how the model was revised.
  *
- * At first paint decision 1 is shown finished. When the window is 40% in view
- * the run plays once, about fifteen seconds. Only the running (or chosen) step is
- * expanded. Any click on a step, decision or tab stops the run and shows the
- * finished state, and so does scrolling away mid-run: a half-finished state is
- * never shown on return. "Replay the run" plays it again on request. Under
- * reduced motion nothing plays.
+ * Decision 1 is always shown finished, the answer in place. The run, about
+ * fifteen seconds, plays only when the visitor presses "Replay the run". Any
+ * click on a step, decision or tab stops it and shows the finished state.
  */
 
 import { prefersReducedMotion } from '../lib/prefers';
@@ -42,7 +39,6 @@ export function initWorkspace(root: HTMLElement): void {
   let tab: Tab = 'decision';
   let timers: Timer[] = [];
   let running = false;
-  let played = false;
 
   const stepsOf = (id: string): HTMLElement[] => Array.from(root.querySelectorAll<HTMLElement>(`.ws-d[data-d="${id}"] .ws-step`));
 
@@ -95,12 +91,10 @@ export function initWorkspace(root: HTMLElement): void {
 
   const interrupt = (): void => {
     if (running) finish();
-    played = true;
   };
 
   /** Decision 1: the steps run in order, and the answer builds beside them. */
   const play = (): void => {
-    played = true;
     running = true;
     root.classList.add('is-running');
     const steps = stepsOf(first);
@@ -195,23 +189,8 @@ export function initWorkspace(root: HTMLElement): void {
     play();
   });
 
-  // First paint: decision 1, finished.
+  // First paint: decision 1, finished. The run plays only when asked, from
+  // "Replay the run"; under reduced motion the replay control is hidden.
   open(first);
-  if (reduced) {
-    played = true;
-    return;
-  }
-  // Play once at 40% in view; if the visitor scrolls away mid-run, finish at once.
-  const io = new IntersectionObserver(
-    (en) => {
-      const e = en[en.length - 1]!;
-      if (e.intersectionRatio >= 0.4) {
-        if (!played && current === first && tab === 'decision') play();
-      } else if (!e.isIntersecting || e.intersectionRatio < 0.1) {
-        if (running) finish();
-      }
-    },
-    { threshold: [0, 0.1, 0.4] },
-  );
-  io.observe(root);
+  if (reduced) root.querySelector<HTMLElement>('[data-replay]')?.setAttribute('hidden', '');
 }

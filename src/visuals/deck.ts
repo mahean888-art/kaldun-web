@@ -123,7 +123,7 @@ export function initDeck(host: HTMLElement): void {
     const ar = v.w / v.h;
     let w = r.width;
     let h = w / ar;
-    const room = r.height * (narrowQ.matches ? 1.0 : 1.15);
+    const room = r.height;
     if (h > room && room > 40) {
       h = room;
       w = h * ar;

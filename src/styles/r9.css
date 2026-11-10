@@ -21,20 +21,6 @@
 .chip { font-family: var(--mono) !important; font-size: 12px !important; font-weight: 500 !important; letter-spacing: 0.16em !important; text-transform: uppercase !important; }
 .chip::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: #f39200; box-shadow: 10px 0 0 #f39200; margin-right: 18px; vertical-align: 1px; }
 
-/* --- the hero's lamp strip: live LEDs on the page itself, no plate ---------------------- */
-.hero__clusters .lc { align-self: center; }
-.hero__clusters .lc i { width: 10px !important; height: 10px !important; transition: background 0.35s ease-out, box-shadow 0.35s ease-out !important; }
-.hero__clusters .lc i.d, .hero__clusters .lc i.l { background: radial-gradient(circle at 35% 30%, #f6c98a 0, #e9a248 60%, #d98e2c 100%) !important; opacity: 0.42; box-shadow: none !important; }
-.hero__clusters .lc i.o { background: transparent !important; box-shadow: inset 0 0 0 1.5px #e68a00 !important; }
-.hero__clusters.b1 [data-third='1'] i.l, .hero__clusters.b2 [data-third='2'] i.l, .hero__clusters.b3 [data-third='3'] i.l, .hero__clusters .lc i.is-on {
-  opacity: 1; background: radial-gradient(circle at 35% 30%, #fff1d6 0, #ffb347 28%, #f39200 62%, #c96c00 100%) !important;
-  box-shadow: 0 0 0 1px rgba(201, 108, 0, 0.35), 0 0 6px 1px rgba(243, 146, 0, 0.7), 0 0 16px 2px rgba(243, 146, 0, 0.35) !important; }
-.hero__clusters .lc i.is-off { opacity: 0.32 !important; background: radial-gradient(circle at 35% 30%, #f6c98a 0, #e9a248 60%, #d98e2c 100%) !important; box-shadow: none !important; }
-.hero__clusters .lc i.is-pulse { animation: led-pulse 2.6s ease-in-out infinite; }
-@keyframes led-pulse { 50% { box-shadow: 0 0 0 1px rgba(201, 108, 0, 0.35), 0 0 10px 2px rgba(243, 146, 0, 0.95), 0 0 26px 4px rgba(243, 146, 0, 0.45); } }
-.lc__tag { margin-left: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #c47800; opacity: 0.85; white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) { .hero__clusters .lc i.is-pulse { animation: none; } }
-
 /* --- mission: a statement on a measured grid -------------------------------------------- */
 .ms { position: relative; padding: clamp(48px, 7vw, 104px) clamp(28px, 5.5vw, 96px); border: 1px solid rgba(20, 18, 16, 0.16); background:
   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Cpath d='M0 -6V6M-6 0H6M192 186V198M186 192H198M0 186V198M-6 192H6M192 -6V6M186 0H198' stroke='%23f39200' stroke-width='1'/%3E%3C/svg%3E") 0 0 / 192px 192px,

@@ -4,7 +4,6 @@
 
 import { qsa } from '../lib/dom';
 import { initLamps } from './lamps';
-import { initLeds } from './leds';
 import { initHeroGrid } from './heroGrid';
 
 /** Astromech's scroll-in: opacity 0, y 24, once, as each enters. */
@@ -55,7 +54,6 @@ export function initHeader(): void {
   initEnter();
   initClock();
   initLamps();
-  initLeds();
   initHeroGrid();
   document.documentElement.classList.add('is-loaded');
 }

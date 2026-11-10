@@ -1,5 +1,5 @@
 /**
- * Method: four steps beside one large figure. The steps advance on their own
+ * Method: four steps over one figure, the hero's world and its fan of futures. The steps advance on their own
  * while the section is in view, a bar filling under the active one; choosing a
  * step holds it there. Under reduced motion nothing advances.
  */
@@ -9,7 +9,7 @@ const DWELL = 4800;
 
 export function initSteps(root: HTMLElement): void {
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-  const figs = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+  const stage = root.querySelector<HTMLElement>('.mt__stage');
   if (!tabs.length) return;
   let i = 0;
   let timer = 0;
@@ -22,7 +22,7 @@ export function initSteps(root: HTMLElement): void {
       t.tabIndex = on ? 0 : -1;
       t.classList.remove('is-running');
     });
-    figs.forEach((f, k) => (f.hidden = k !== n));
+    if (stage) stage.dataset['step'] = String(n);
     if (focus) tabs[n]!.focus();
     if (!held) {
       void tabs[n]!.offsetWidth;

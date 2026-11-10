@@ -36,7 +36,7 @@
   --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --mono: 'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --inset: 14px;
   --bar-h: 40px;

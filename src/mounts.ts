@@ -9,6 +9,7 @@ import { initDeck } from './visuals/deck';
 import { initJournalReturn, initBack } from './lib/journal-return';
 import { initWorkspace } from './visuals/console';
 import { initDomains } from './visuals/domains';
+import { initSteps } from './visuals/steps';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -174,6 +175,8 @@ export function mountHome(root: ParentNode = document): void {
   if (cons) initWorkspace(cons);
   const dm = qs<HTMLElement>('[data-domains]', root);
   if (dm) initDomains(dm);
+  const mt = qs<HTMLElement>('[data-steps]', root);
+  if (mt) initSteps(mt);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

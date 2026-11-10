@@ -69,3 +69,8 @@
 /* Archivo — the display face: the wordmark, the headings, the verbs. One
    variable file; the semi-expanded width is set where it is used. */
 
+
+/* IBM Plex Mono: the machine voice. Wordmark, labels, buttons, data. */
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/plexmono-400-latin.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/plexmono-500-latin.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/plexmono-600-latin.woff2') format('woff2'); }

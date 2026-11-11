@@ -234,3 +234,27 @@
 .dm--tabs .dm__qs { margin-top: auto; padding-top: 24px; }
 .dm--tabs .dm__q { min-height: 132px !important; }
 @media (max-width: 899px) { .dm__facts { grid-template-columns: minmax(0, 1fr); gap: 14px; } .dm--tabs .dm__panel { height: auto !important; } }
+
+/* --- text that lights up as it is read ---------------------------------------------------- */
+.is-lightup .lu { opacity: 0.22; transition: opacity 0.35s ease-out; }
+.is-lightup .lu.on { opacity: 1; }
+.is-lightup a .lu { opacity: inherit; }
+
+/* --- ambient glow on the outer ground: warm, faint, only at the edges -------------------- */
+.hero { background-image:
+  radial-gradient(60% 55% at 0% 100%, rgba(243, 146, 0, 0.10) 0%, transparent 70%),
+  radial-gradient(50% 50% at 100% 0%, rgba(243, 146, 0, 0.07) 0%, transparent 70%) !important; }
+.hero__panel { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset, 0 24px 80px -40px rgba(243, 146, 0, 0.28) !important; }
+.foot { position: relative; }
+.foot::before { content: ''; position: absolute; inset: 0; pointer-events: none; background:
+  radial-gradient(70% 60% at 50% 100%, rgba(243, 146, 0, 0.12) 0%, transparent 70%); }
+.foot > * { position: relative; }
+.band--ink { background-image:
+  radial-gradient(60% 50% at 50% 0%, rgba(243, 146, 0, 0.07) 0%, transparent 70%) !important; }
+.ws { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02), 0 30px 70px -40px rgba(15, 15, 20, 0.3), 0 40px 120px -60px rgba(243, 146, 0, 0.35) !important; }
+
+/* --- fit and finish ------------------------------------------------------------------------ */
+.mt__scene { width: min(100%, max(520px, calc((100svh - 570px) * 2.45))) !important; }
+.ws-left { padding-bottom: 20px; }
+.ws-decs li + li { margin-top: 2px; }
+.hero, .band--ink { background-size: 100% 100% !important; background-position: 0 0 !important; background-repeat: no-repeat !important; }

@@ -203,3 +203,23 @@
 .hero__dispatch-a { color: #b86a00; }
 @media (max-width: 1023px) { .hero .hero__dispatch { margin: 0 0 18px; } .hero__dispatch-t { font-size: 16px; } }
 @media (max-width: 480px) { .hero__dispatch-t { display: none; } }
+
+/* --- hero: one sentence split around the render, both halves the same size ----------------- */
+.hero .hero__line { display: contents !important; }
+.hl { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 4.5vw, 78px); line-height: 0.98; letter-spacing: -0.01em; color: var(--ink); position: relative; z-index: 2; }
+.hl u { text-decoration: none; background: linear-gradient(#f39200, #f39200) 0 94% / 100% 2px no-repeat; }
+@media (min-width: 1024px) {
+  .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) auto auto !important; row-gap: 0; }
+  .hero .hero__dispatch { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; margin: 4px 0 0 !important; }
+  .hl--a { grid-column: 1 / -1; grid-row: 1; max-width: 22ch; text-align: left; }
+  .hero .hero__model.deck { grid-column: 1 / -1 !important; grid-row: 2 !important; margin: 10px 0 14px !important; z-index: 0; }
+  .hl--b { grid-column: 2; grid-row: 3 / 5; align-self: end; justify-self: end; max-width: 21ch; text-align: right; margin-bottom: 30px; }
+  .hero .hero__sub { grid-column: 1 !important; grid-row: 3 !important; align-self: end; max-width: 46ch !important; font-size: 16px !important; }
+  .hero .hero__actions { grid-column: 1 !important; grid-row: 4 !important; margin: 20px 0 30px !important; }
+}
+@media (max-width: 1023px) {
+  .hero__copy { display: contents !important; }
+  .hero .hero__dispatch { order: 0; } .hl--a { order: 1; } .hero .hero__model.deck { order: 2; } .hl--b { order: 3; margin-top: 12px; } .hero .hero__sub { order: 4; margin-top: 16px !important; } .hero .hero__actions { order: 5; }
+  .hl { font-size: clamp(36px, 9vw, 56px); text-align: left; }
+}
+.hero .hero__dispatch, .hero .hero__sub, .hero .hero__actions { position: relative; z-index: 2; }

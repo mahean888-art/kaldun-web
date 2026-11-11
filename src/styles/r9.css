@@ -258,3 +258,7 @@
 .ws-left { padding-bottom: 20px; }
 .ws-decs li + li { margin-top: 2px; }
 .hero, .band--ink { background-size: 100% 100% !important; background-position: 0 0 !important; background-repeat: no-repeat !important; }
+
+/* a few lit lamps in the hero strip blink on and off, like the nav's active lamp */
+.hero__clusters .lc i.is-blink { animation: lamp-beep var(--bd, 1.6s) steps(1, end) var(--bt, 0s) infinite; }
+@media (prefers-reduced-motion: reduce) { .hero__clusters .lc i.is-blink { animation: none; } }

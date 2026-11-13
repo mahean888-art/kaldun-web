@@ -109,31 +109,36 @@
         </div>
       </section>
 
-      <section class="band band--paper lm-band" id="start" data-screen>
+      <section class="band band--paper wk-band" id="start" data-screen>
         <div class="wrap">
-          <div class="lm" data-run data-step="0">
-            <div class="lm__top">
+          <div class="wk" data-run>
+            <div class="wk__top">
               <div><p class="chip">Where we start</p><h2 class="h2">Every digital dollar is a promise.</h2></div>
-              <p class="lm__sub">To pay anyone, at any hour, through any partner. That promise runs through a world of issuers, banks, payment companies, exchanges, lenders and funds, each depending on the others. We model that world once. Each institution in it gets its own Foresight Machine.</p>
+              <p class="wk__sub">To pay anyone, at any hour, through any partner. That promise runs through a world of issuers, banks, payment companies, exchanges, lenders and funds, each depending on the others. We model that world once. Each institution in it gets its own Foresight Machine.</p>
             </div>
-            <div class="lm__win" role="region" aria-label="A decision, run in a Foresight Machine">
-              <div class="lm__bar">
-                <p class="lm__q"><span class="lm__k">Decision</span> Can we offer instant redemption to Partner N’s merchants?</p>
-                <p class="lm__count" aria-live="polite"><span data-n>01</span> / 06</p>
-              </div>
-              <div class="lm__body">
-                <nav class="lm__rail" aria-label="Steps of the run"><ol><li><button type="button" data-go="0"><span>01</span>Question</button></li><li><button type="button" data-go="1"><span>02</span>Model</button></li><li><button type="button" data-go="2"><span>03</span>Replay</button></li><li><button type="button" data-go="3"><span>04</span>Look ahead</button></li><li><button type="button" data-go="4"><span>05</span>Discover</button></li><li><button type="button" data-go="5"><span>06</span>Answer</button></li></ol></nav>
-                <div class="lm__stage">
-                  <div class="lm__map" data-map aria-hidden="true"></div>
-                  <div class="lm__foot">
-                    <ol class="lm__caps"><li data-cap="0">Treasury asks whether Partner N’s merchants can redeem instantly, at any hour.</li><li data-cap="1">The issuer in its world: the reserve, the four instant banks, 140 partners and the rules.</li><li data-cap="2">The past, replayed with Partner N included. Bank B falls short in 7 of 78 weeks.</li><li data-cap="3">A thousand futures. If adoption is fast, bank B strains within five months.</li><li data-cap="4">312 arrangements tried. Three terms keep every redemption on time.</li><li data-cap="5">The answer, with its evidence, recorded before the outcome.</li></ol>
-                    <div class="lm__nav"><button type="button" class="lm__btn" data-prev aria-label="Previous step">‹ Back</button><button type="button" class="lm__btn lm__btn--next" data-next>Next ›</button></div>
-                  </div>
+            <div class="wk__tabs" role="tablist" aria-label="Decision">
+              <button type="button" role="tab" data-tab="discover" aria-selected="true">Instant redemption</button>
+              <button type="button" role="tab" data-tab="optimize" aria-selected="false" tabindex="-1">Liquidity buffer</button>
+              <button type="button" role="tab" data-tab="coordinate" aria-selected="false" tabindex="-1">Terms with Exchange E</button>
+            </div>
+            <div class="wk__win" role="region" aria-label="A Foresight Machine at work">
+              <aside class="wk__side">
+                <p class="wk__ws"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span> Dollar issuer</p>
+                <nav aria-label="Sections" data-nav></nav>
+              </aside>
+              <div class="wk__main">
+                <div class="wk__head">
+                  <p class="wk__crumb">Machines / Dollar issuer</p>
+                  <div class="wk__ctl"><span class="wk__ver" data-ver>Model v15</span><button type="button" class="wk__btn" data-pause aria-label="Pause">Pause</button><button type="button" class="wk__btn" data-replay aria-label="Replay from the start">Replay</button></div>
                 </div>
-                <aside class="lm__insp" data-insp aria-live="polite"></aside>
+                <div class="wk__pane" data-pane tabindex="0" aria-live="polite">
+                  <h3 class="wk__h1">The issuer, in its world</h3>
+                  <p>A dollar issuer with $41.2B in circulation. Every dollar is redeemable for cash, at any hour, through any of its 140 partners.</p>
+                </div>
+                <p class="wk__status" data-status aria-hidden="true"></p>
               </div>
             </div>
-            <p class="lm__ask"><span>In a Foresight Machine, any question can be asked of the model.</span> <a href="/discuss/">Ask your own <span aria-hidden="true">→</span></a></p>
+            <p class="wk__ask"><span>In a Foresight Machine, any question can be asked of the model.</span> <a href="/discuss/">Ask your own <span aria-hidden="true">→</span></a></p>
           </div>
         </div>
       </section>

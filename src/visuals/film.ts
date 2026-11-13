@@ -99,24 +99,36 @@ export function initFilm(root: HTMLElement): void {
 
   if (reduced) {
     root.style.setProperty('--p', '1');
-    root.classList.add('is-still');
+    root.classList.add('is-still', 'is-open', 'is-playing');
     setScene(5);
     paused = true;
     if (play) play.hidden = true;
     return;
   }
 
-  // The screen opens with the scroll, then the film starts.
+  // The screen opens with the scroll, eased toward where the scroll is, then the film starts.
+  let target = 0;
+  let shown = -1;
+  let frame = 0;
+  const paint = (): void => {
+    frame = 0;
+    shown = shown < 0 ? target : shown + (target - shown) * 0.22;
+    if (Math.abs(target - shown) < 0.002) shown = target;
+    root.style.setProperty('--p', shown.toFixed(4));
+    const open = shown >= OPEN_AT;
+    root.classList.toggle('is-open', open);
+    if (open) start();
+    if (shown !== target) frame = requestAnimationFrame(paint);
+  };
   const onScroll = (): void => {
     if (!track || !desktop.matches) {
-      root.style.setProperty('--p', '1');
-      return;
+      target = 1;
+    } else {
+      const r = track.getBoundingClientRect();
+      const run = Math.max(1, track.offsetHeight - window.innerHeight);
+      target = Math.min(1, Math.max(0, -r.top / (run * 0.6)));
     }
-    const r = track.getBoundingClientRect();
-    const run = Math.max(1, track.offsetHeight - window.innerHeight);
-    const p = Math.min(1, Math.max(0, -r.top / (run * 0.6)));
-    root.style.setProperty('--p', p.toFixed(4));
-    if (p >= OPEN_AT) start();
+    if (!frame) frame = requestAnimationFrame(paint);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);

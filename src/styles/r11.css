@@ -129,3 +129,27 @@
 #mission .ms__cols .prose p { font-family: var(--serif) !important; font-size: clamp(26px, 2.5vw, 38px) !important; line-height: 1.2 !important; max-width: none !important; }
 @media (max-width: 899px) { #mission .ms__cols .prose p { font-size: 24px !important; } }
 @media (max-width: 1023px), (max-height: 699px) { .fm__n { display: none; } }
+
+/* --- refinements ------------------------------------------------------------------------- */
+.hl u { background: none !important; }
+
+/* mission: the grid sits behind the line only; the argument reads on plain paper */
+#mission .ms { padding: clamp(44px, 6vw, 88px) clamp(28px, 5.5vw, 96px); }
+#mission .ms__line { font-size: clamp(46px, 5.2vw, 84px) !important; }
+#mission .ms__cols { margin: clamp(56px, 7vw, 96px) auto 0; padding: 0 clamp(0px, 5.5vw, 96px); max-width: none; }
+#mission .ms__h { margin: 0 0 0.6em; font-family: var(--serif); font-size: clamp(26px, 2.5vw, 38px); line-height: 1.2; letter-spacing: -0.005em; text-transform: none; color: var(--ink); max-width: 30em; }
+#mission .ms__cols .prose { max-width: 30em; }
+#mission .ct { margin-top: clamp(56px, 7vw, 96px); }
+@media (max-width: 899px) { #mission .ms__h { font-size: 24px; } }
+
+/* where we start: how a task is checked */
+.ps-kv em.v { border-color: rgba(243, 146, 0, 0.45); background: #fff7ea; color: #7a4600; }
+
+/* film: the caption waits for the screen to open; the screen gains depth as it opens */
+.fm__cap { opacity: 0; transition: opacity 0.4s ease-out; }
+.fm.is-open.is-playing .fm__cap { opacity: 1; }
+.fm__frame { box-shadow: 0 40px 90px -50px rgba(40, 60, 80, calc(0.45 * var(--p))); }
+.fm__frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 40%, transparent 62%, rgba(29, 26, 23, 0.08) 100%); border-radius: inherit; }
+.fm__svg { transform-origin: 50% 70%; transition: transform 1.2s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.fm.is-playing[data-s="1"] .fm__svg { transform: scale(1.035); transition: transform 7s linear; }
+@media (prefers-reduced-motion: reduce) { .fm__svg { transition: none; transform: none !important; } }

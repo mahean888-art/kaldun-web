@@ -43,8 +43,7 @@ def house(x, y, s=1.0, roof='#c9553a', fill='#f6efe2'):
 def tree(x, y, s=1.0):
     o(f'<g transform="translate({x} {y}) scale({s})"><path d="M0 0v30" {st(2.4)}/><circle cx="0" cy="-8" r="17" fill="#a7c98f" {st()}/></g>')
 
-o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fm-title">')
-o('<title id="fm-title">An illustrated film. A landscape of four worlds: a city of banks, a port with a ship and silos, wind turbines and solar fields, and a neighbourhood under an umbrella, all joined by a road, a river bridge and power lines. A small machine with two square eyes models the landscape, tries it across a thousand futures, adds a second bridge, storage and another layer of cover, and records its answer before the outcome.</title>')
+o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a small machine that models it, tries it across a thousand futures, finds what holds, and records its answer before the outcome.">')
 o('<defs>')
 o('<filter id="fm-hand" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>')
 o('<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd9ee"/><stop offset=".72" stop-color="#e6f0f5"/></linearGradient>')

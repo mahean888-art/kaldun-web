@@ -268,3 +268,35 @@
   .hero .hero__actions { margin-bottom: 92px !important; }
 }
 .dm--tabs .dm__q dt { min-height: 0 !important; }
+
+/* --- hero: the render settles into the paper; a denser sub-line ---------------------------- */
+.hero .deck__stage { -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 99%); mask-image: linear-gradient(to bottom, #000 76%, transparent 99%); }
+.hero .hero__sub { color: #2a2622 !important; letter-spacing: -0.006em; font-weight: 400; }
+@media (min-width: 1024px) {
+  .hero .hero__model.deck { margin: 4px 0 26px !important; }
+  .hero .hero__sub { font-size: 17.5px !important; line-height: 1.48 !important; max-width: 43ch !important; }
+}
+
+/* --- method: steps on the left, the picture of the current step on the right --------------- */
+@media (min-width: 1024px) {
+  .mt { display: grid; grid-template-columns: 340px minmax(0, 1fr); column-gap: 56px; align-items: stretch; }
+  .mt__steps { grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; align-content: start; }
+  .mt__s { padding: 18px 0 18px 24px; gap: 6px; border-bottom: 1px solid rgba(244, 239, 230, 0.1); color: rgba(244, 239, 230, 0.55); }
+  .mt__steps li:first-child .mt__s { border-top: 1px solid rgba(244, 239, 230, 0.1); }
+  .mt__bar { left: 0; right: auto; top: 18px; bottom: 18px; width: 2px; height: auto; }
+  .mt__bar i { width: 100%; height: 0; }
+  .mt__s.is-running .mt__bar i { animation-name: mt-fill-v; }
+  .mt__s[aria-selected='true']:not(.is-running) .mt__bar i { height: 100%; }
+  .mt__t { font-size: clamp(28px, 2.3vw, 36px); }
+  .mt__d { max-width: 36ch; font-size: 15px; }
+  .mt__s:not([aria-selected='true']) .mt__d { display: none; }
+  .mt__stage { margin-top: 0 !important; display: flex; flex-direction: column; justify-content: center; min-height: 100%; }
+  .mt__scene { width: 100% !important; }
+}
+@keyframes mt-fill-v { from { height: 0; } to { height: 100%; } }
+.mt__scene { -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); }
+.mt__stage::after { position: absolute; left: 20px; bottom: 16px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a857c; }
+.mt__stage[data-step='0']::after { content: '01 · One world, modeled once'; }
+.mt__stage[data-step='1']::after { content: '02 · The decision across a thousand futures'; }
+.mt__stage[data-step='2']::after { content: '03 · One arrangement holds'; }
+.mt__stage[data-step='3']::after { content: '04 · Recorded before the outcome'; }

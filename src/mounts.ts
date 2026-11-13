@@ -11,6 +11,7 @@ import { initWorkspace } from './visuals/console';
 import { initDomains } from './visuals/domains';
 import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
+import { initFilm } from './visuals/film';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -180,6 +181,8 @@ export function mountHome(root: ParentNode = document): void {
   if (mt) initSteps(mt);
   const rn = qs<HTMLElement>('[data-run]', root);
   if (rn) initRun(rn);
+  const fm = qs<HTMLElement>('[data-film]', root);
+  if (fm) initFilm(fm);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

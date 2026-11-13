@@ -270,10 +270,9 @@
 .dm--tabs .dm__q dt { min-height: 0 !important; }
 
 /* --- hero: the render settles into the paper; a denser sub-line ---------------------------- */
-.hero .deck__stage { -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 99%); mask-image: linear-gradient(to bottom, #000 76%, transparent 99%); }
 .hero .hero__sub { color: #2a2622 !important; letter-spacing: -0.006em; font-weight: 400; }
 @media (min-width: 1024px) {
-  .hero .hero__model.deck { margin: 4px 0 26px !important; }
+  .hero .hero__model.deck { margin: 8px 0 18px !important; }
   .hero .hero__sub { font-size: 17.5px !important; line-height: 1.48 !important; max-width: 43ch !important; }
 }
 
@@ -300,3 +299,4 @@
 .mt__stage[data-step='1']::after { content: '02 · The decision across a thousand futures'; }
 .mt__stage[data-step='2']::after { content: '03 · One arrangement holds'; }
 .mt__stage[data-step='3']::after { content: '04 · Recorded before the outcome'; }
+@media (min-width: 1024px) { .hero .deck__stage { transform: translateX(-50%) scale(1.16); transform-origin: 50% 58%; } }

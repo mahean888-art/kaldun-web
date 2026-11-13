@@ -1,0 +1,131 @@
+/* ==========================================================================
+   The film: four worlds, one machine, five scenes. Keyed on .fm[data-s].
+   ========================================================================== */
+
+.fm-band > .fm-track > .fm-sticky > .wrap { max-width: 1280px; }
+.fm-band { overflow: clip; }
+.fm-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
+.fm-head .chip { margin: 0; }
+.fm-head .h2 { margin: 0; font-size: clamp(30px, 3vw, 46px) !important; }
+
+.fm { --p: 0; --ink: #1d1a17; }
+.fm__frame { position: relative; margin: 0 auto; width: 100%; aspect-ratio: 16 / 9; background: #bcd9ee; overflow: hidden; }
+.fm__svg { display: block; width: 100%; height: 100%; }
+.fm-t { font-family: var(--mono); font-size: 21px; fill: var(--ink); letter-spacing: 0.02em; }
+.fm-t--k { font-size: 18px; letter-spacing: 0.14em; fill: #a85f00; }
+.fm-t--b { font-family: var(--serif); font-size: 34px; letter-spacing: 0; }
+
+.fm__cap { position: absolute; left: 3%; top: 5%; max-width: min(62%, 640px); margin: 0; padding: 12px 18px 13px; background: rgba(255, 253, 248, 0.94); border: 1.5px solid var(--ink); border-radius: 12px; font-family: var(--serif); font-size: clamp(17px, 1.65vw, 24px); line-height: 1.22; color: var(--ink); box-shadow: 0 10px 30px -18px rgba(20, 18, 16, 0.4); }
+.fm__cap.is-in { animation: fm-cap 0.45s ease-out both; }
+@keyframes fm-cap { from { opacity: 0; transform: translateY(8px); } }
+
+.fm__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 16px auto 0; }
+.fm__ch { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; flex: 1; margin: 0; padding: 0; }
+.fm__ch button { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; width: 100%; padding: 0 0 10px; border: 0; background: none; font: inherit; font-size: 14px; color: #8a857c; text-align: left; cursor: pointer; position: relative; transition: color 0.2s ease-out; }
+.fm__ch button:hover, .fm__ch button.is-on { color: var(--ink); }
+.fm__n { font-family: var(--mono); font-size: 12px; }
+.fm__ch button.is-on .fm__n { color: #a85f00; }
+.fm__ch i { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(20, 18, 16, 0.12); }
+.fm__ch b { display: block; height: 100%; width: 0; background: #f39200; }
+.fm__ch button.is-done b { width: 100% !important; }
+.fm__ch button:focus-visible, .fm__play:focus-visible { outline: 2px solid #f39200; outline-offset: 3px; }
+.fm__play { flex: none; padding: 7px 14px; border: 1px solid #d9d6cf; border-radius: 999px; background: #fff; font: inherit; font-size: 13px; color: var(--ink); cursor: pointer; }
+.fm__play:hover { border-color: var(--ink); }
+
+/* opening: a band that widens and opens into the full screen */
+@media (min-width: 1024px) and (min-height: 700px) {
+  .fm-track { height: 230svh; }
+  .fm-sticky { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); display: flex; align-items: center; }
+  .fm-band > .fm-track > .fm-sticky > .wrap { width: 100%; padding-top: 0 !important; padding-bottom: 0 !important; }
+  .fm__frame, .fm__bar { width: min(calc(54% + 46% * var(--p)), calc((100svh - var(--header-h) - 190px) * 16 / 9)); }
+  .fm__frame { clip-path: inset(calc((1 - var(--p)) * 20%) 0 round calc(40px - 26px * var(--p))); border-radius: 14px; }
+  .fm__bar { opacity: calc(var(--p) * 1.6 - 0.6); }
+  .fm-head { opacity: calc(1 - var(--p) * 0.15); }
+}
+@media (max-width: 1023px), (max-height: 699px) {
+  .fm-band > .fm-track > .fm-sticky > .wrap { padding-top: 88px !important; padding-bottom: 72px !important; }
+  .fm__frame { border-radius: 12px; }
+  .fm__cap { position: static; max-width: none; margin-top: 10px; border-radius: 10px; }
+  .fm__frame { overflow: visible; aspect-ratio: auto; background: none; }
+  .fm__svg { aspect-ratio: 16 / 9; height: auto; border-radius: 12px; }
+  .fm__ch { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .fm__ch button { font-size: 12px; }
+}
+
+/* --- always moving ------------------------------------------------------------------ */
+.fm-cl { animation: fm-drift var(--dur) ease-in-out infinite alternate; }
+@keyframes fm-drift { to { transform: translateX(var(--dx)); } }
+.fm-blades { animation: fm-spin 5s linear infinite; transform-box: view-box; }
+@keyframes fm-spin { to { transform: rotate(360deg); } }
+.fm-ship { animation: fm-bob 3.6s ease-in-out infinite alternate; }
+@keyframes fm-bob { to { transform: translate(-30px, 3px); } }
+.fm-coin { animation: fm-move 10.4s linear infinite; animation-delay: calc(var(--d) * -1); offset-rotate: 0deg; }
+.fm-spark { animation: fm-move 5.1s linear infinite; animation-delay: calc(var(--d) * -1); }
+@keyframes fm-move { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+.fm-eyes { animation: fm-blink 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes fm-blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.12); } }
+
+/* --- scene machinery ------------------------------------------------------------------ */
+.fm-world { transform-box: view-box; transform-origin: 800px 470px; transition: transform 1.3s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.fm-gridfill { opacity: 0; transition: opacity 1.2s ease-out; }
+.fm-cards { opacity: 0; transition: opacity 0.8s ease-out; }
+.fm-cardk { transform-box: view-box; transform-origin: 800px 760px; transition: transform 1.2s cubic-bezier(0.3, 0.7, 0.2, 1); transition-delay: calc(var(--k) * 70ms); }
+.fm-trace path { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset 1.6s ease-out, opacity 0.4s ease-out; transition-delay: calc(var(--n) * 0.5s + 0.6s); }
+.fm-tags g, .fm-stress, .fm-rec, .fm-stamp { opacity: 0; transition: opacity 0.5s ease-out, transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.fm-tags g { transition-delay: calc(var(--n) * 0.45s + 1.6s); }
+.fm-found path { stroke-dasharray: 1; stroke-dashoffset: 1; fill-opacity: 0; transition: stroke-dashoffset 1.2s ease-out, fill-opacity 0.6s ease-out; transition-delay: calc(var(--n) * 1.1s + 1.2s); }
+.fm-mbody { transform: translateX(-340px); transition: transform 1.2s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.fm-machine { transform: translate(34px, 682px) scale(0.84); }
+.fm-arm { transform-box: fill-box; transform-origin: 0 100%; }
+.fm-rec { transform: translateY(340px); transform-box: view-box; }
+.fm-stamp { transform-box: fill-box; transform-origin: center; transform: scale(1.6); }
+
+/* 2 · Model: the world turns into a model; its links are traced and named */
+.fm-base { transition: filter 1.3s ease-out; }
+.fm[data-s="2"] .fm-base, .fm[data-s="3"] .fm-base, .fm[data-s="4"] .fm-base { filter: grayscale(1) brightness(1.08) contrast(0.92); }
+.fm[data-s="2"] .fm-gridfill, .fm[data-s="3"] .fm-gridfill, .fm[data-s="4"] .fm-gridfill { opacity: 0.6; }
+.fm[data-s="2"] .fm-trace path { stroke-dashoffset: 0; opacity: 1; }
+.fm[data-s="2"] .fm-tags g { opacity: 1; }
+.fm:not([data-s="1"]) .fm-mbody { transform: none; }
+
+/* 3 · Simulate: the model, copied across futures; where they break */
+.fm[data-s="3"] .fm-world, .fm[data-s="4"] .fm-world { transform: translateY(-40px) scale(0.64); }
+.fm[data-s="3"] .fm-cards, .fm[data-s="4"] .fm-cards { opacity: 1; }
+.fm[data-s="3"] .fm-cardk { transform: translateY(-40px) scale(0.64) rotate(calc((var(--k) - 2.5) * 5deg)); }
+.fm[data-s="4"] .fm-cardk { transform: translate(calc(var(--k) * 9px), calc(var(--k) * -9px - 40px)) scale(0.64); }
+.fm[data-s="3"] .fm-stress { opacity: 1; transition-delay: 1.4s; }
+.fm-ring { transform-box: fill-box; transform-origin: center; animation: fm-pulse 1.4s ease-in-out infinite; }
+@keyframes fm-pulse { 50% { transform: scale(1.18); opacity: 0.55; } }
+.fm-wirehot { animation: fm-dash 1s linear infinite; }
+@keyframes fm-dash { to { stroke-dashoffset: -40; } }
+.fm[data-s="3"] .fm-blades { animation-duration: 20s; }
+
+/* 4 · Discover: what the machine found, drawn in orange; the futures line up */
+.fm[data-s="4"] .fm-found path, .fm[data-s="5"] .fm-found path { stroke-dashoffset: 0; fill-opacity: 1; }
+.fm[data-s="5"] .fm-found path { transition: none; }
+.fm[data-s="4"] .fm-arm { animation: fm-wave 0.9s ease-in-out 4 alternate; }
+@keyframes fm-wave { to { transform: rotate(-22deg); } }
+
+/* 5 · Record: back to the world; the answer, written down first */
+.fm[data-s="5"] .fm-rec { opacity: 1; transform: none; transition-delay: 0.8s; }
+.fm[data-s="5"] .fm-stamp { opacity: 1; transform: none; transition-delay: 2.2s; }
+
+/* still: reduced motion shows the last scene at rest */
+.fm.is-still *, .fm.is-still *::before { animation: none !important; transition: none !important; }
+.fm.is-still .fm-coin, .fm.is-still .fm-spark { offset-distance: 30%; }
+
+.fm:not([data-s="2"]) .fm-tags g, .fm:not([data-s="2"]) .fm-trace path { transition-delay: 0s; }
+.fm-birds { animation: fm-birds 14s ease-in-out infinite alternate; }
+@keyframes fm-birds { to { transform: translate(60px, -14px); } }
+
+/* --- mission, after the film: the line, then the argument in large type, lit as it is read --- */
+#mission .ms__line { font-size: clamp(52px, 6.4vw, 104px) !important; max-width: 20ch; }
+#mission .ms__cols { display: block; max-width: 1000px; margin-top: clamp(48px, 6vw, 88px); padding: 0; border: 0; background: none; box-shadow: none; }
+#mission .ms__h { margin: 0 0 22px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #a85f00; }
+#mission .ms__cols .prose { max-width: 30em; font-family: var(--serif); font-size: clamp(26px, 2.5vw, 38px); line-height: 1.18; letter-spacing: -0.005em; }
+#mission .ms__cols .prose p + p { margin-top: 0.6em; }
+#mission .ms__cols .prose a { text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
+@media (max-width: 899px) { #mission .ms__cols .prose { font-size: 24px; } }
+#mission .ms__cols .prose p { font-family: var(--serif) !important; font-size: clamp(26px, 2.5vw, 38px) !important; line-height: 1.2 !important; max-width: none !important; }
+@media (max-width: 899px) { #mission .ms__cols .prose p { font-size: 24px !important; } }
+@media (max-width: 1023px), (max-height: 699px) { .fm__n { display: none; } }

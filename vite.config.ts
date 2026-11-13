@@ -4,7 +4,10 @@ import { readFileSync } from 'node:fs';
 /** One footer for every page: src/partials/footer.html, injected at <!-- @footer -->. */
 const footer = (): Plugin => ({
   name: 'fm-footer',
-  transformIndexHtml: (html) => html.replace('<!-- @footer -->', readFileSync('src/partials/footer.html', 'utf8')),
+  transformIndexHtml: (html) =>
+    html
+      .replace('<!-- @footer -->', readFileSync('src/partials/footer.html', 'utf8'))
+      .replace('<!-- @film -->', readFileSync('src/partials/film.svg', 'utf8')),
 });
 
 /**

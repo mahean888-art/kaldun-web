@@ -1,745 +1,431 @@
 /**
- * Where we start: the run, step by step.
+ * Where we start: the run.
  *
- * Six steps (Question, Model, Replay, Look ahead, Discover / Optimize /
- * Coordinate, Answer), each with one figure that shows the evidence behind it.
- * Three kinds of decision share the same steps; the tabs swap the data.
+ * One app window plays a decision from question to answer, in six steps, for
+ * three kinds of decision: Optimize, Discover (the default) and Coordinate.
  *
- * Every chart is drawn at its real pixel size and redrawn on resize, so the
- * labels stay legible at any width. Numbers are computed from the series they
- * describe (the replay error, the weeks that fall short), never typed in apart
- * from them.
+ * On a desktop-sized window the section holds still for about three screens
+ * and scrolling advances the run a step at a time. If the visitor stops for
+ * four seconds with the run in view, it plays on by itself, a step every 2.5
+ * seconds; at the end it holds the answer for five seconds, then moves to the
+ * next tab. On a phone it plays when tapped. Under reduced motion each tab shows
+ * its finished answer.
  */
 import { prefersReducedMotion } from '../lib/prefers';
+import { RUNS as CH, OBS_B, REP_B, WITH_N, LIMIT_B, IDLE_NOW, IDLE_OPT, OBS_E, REP_E, meanErr, lines, intervals, scatter, route, live, legend, mn } from './runcharts';
 
-type Kind = 'optimize' | 'discover' | 'coordinate';
-type Iv = { m: number; lo: number; hi: number };
-type IvRow = { label: string; a: Iv; b: Iv; note: string };
-type Pt = { x: number; y: number };
-type Mark = Pt & { label: string; tone: 'grey' | 'ink' | 'orange'; short?: string };
-type Effect = { label: string; v: number; fmt: string; ghost?: Pt };
-
-const NS = 'http://www.w3.org/2000/svg';
-const INK = '#141210';
-const MUT = '#8a857c';
-const GRID = 'rgba(20,18,16,0.08)';
-const OR = '#f39200';
-const ORD = '#b86a00';
-const GREY = '#bdb7ac';
-
-/* ------------------------------------------------------------------ helpers */
-
-const el = (tag: string, cls?: string, html?: string): HTMLElement => {
-  const e = document.createElement(tag);
-  if (cls) e.className = cls;
-  if (html !== undefined) e.innerHTML = html;
-  return e;
-};
-const sv = (tag: string, a: Record<string, string | number>, parent?: Element): SVGElement => {
-  const e = document.createElementNS(NS, tag);
-  for (const k in a) e.setAttribute(k, String(a[k]));
-  parent?.appendChild(e);
-  return e;
-};
-const txt = (parent: Element, x: number, y: number, s: string, o: Record<string, string | number> = {}): SVGElement => {
-  const { 'font-family': ff = 'var(--mono)', ...rest } = o;
-  const t = sv('text', { x, y, 'font-size': 12, fill: MUT, ...rest, style: `font-family:${ff}` }, parent);
-  t.textContent = s;
-  return t;
-};
-const rng = (seed: number) => (): number => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-const svgOf = (w: number, h: number): SVGSVGElement => {
-  const s = sv('svg', { width: w, height: h, viewBox: `0 0 ${w} ${h}`, role: 'img' }) as SVGSVGElement;
-  return s;
+type Tab = 'optimize' | 'discover' | 'coordinate';
+type Row = { cells: string[]; win?: boolean };
+type RunData = {
+  kind: Tab;
+  q: string;
+  goal: string;
+  step5: string;
+  model: 'three' | 'two';
+  replay: string[];
+  tableLead: string;
+  head: string[];
+  rows: Row[];
+  tried: string;
+  answer: string;
+  items?: string[];
+  compare?: Array<[string, string, string]>;
+  stamp: string;
 };
 
-/* ------------------------------------------------------------------- series */
 
-const WEEKS = 78;
-const XL: Array<[number, string]> = [[0, 'May 2025'], [26, 'Nov 2025'], [52, 'May 2026'], [77, 'Nov 2026']];
-
-/** An observed weekly series, and the model's replay of it, scaled to a set mean error. */
-function observed(seed: number, base: number, amp: number, trend: number): number[] {
-  const r = rng(seed);
-  return Array.from({ length: WEEKS }, (_, i) => base + trend * i + amp * Math.sin(i / 6.3) + amp * 0.5 * Math.sin(i / 2.1 + 1) + (r() - 0.5) * amp * 0.8);
-}
-function replayOf(obs: number[], seed: number, mae: number): number[] {
-  const r = rng(seed);
-  const e = obs.map(() => r() - 0.5);
-  const k = mae / (e.reduce((s, v) => s + Math.abs(v), 0) / e.length);
-  return obs.map((v, i) => v * (1 + e[i]! * k));
-}
-const meanErr = (a: number[], b: number[]): number => a.reduce((s, v, i) => s + Math.abs(b[i]! - v) / v, 0) / a.length;
-
-const OBS_B = observed(11, 430, 46, 1.1);
-const REP_B = replayOf(OBS_B, 5, 0.018);
-const WITH_N = (() => {
-  const r = rng(23);
-  return OBS_B.map((v, i) => v * (1.22 + 0.1 * Math.sin(i / 3.7) + (r() - 0.5) * 0.12));
-})();
-const LIMIT_B = (() => {
-  const s = [...WITH_N].sort((a, b) => b - a);
-  return (s[6]! + s[7]!) / 2; // exactly seven weeks above
-})();
-const IDLE_NOW = observed(31, 2.1, 0.09, 0);
-const IDLE_OPT = IDLE_NOW.map((v, i) => v - 0.6 + 0.03 * Math.sin(i / 2.7));
-const OBS_E = observed(41, 8.4, 0.18, 0.012);
-const REP_E = replayOf(OBS_E, 9, 0.017);
-
-/* ------------------------------------------------------------------- charts */
-
-type LineCfg = {
-  series: Array<{ v: number[]; color: string; dash?: string; w?: number }>;
-  min: number; max: number; ticks: number[]; fmt: (v: number) => string;
-  limit?: { v: number; label: string }; over?: number[]; h?: number;
-};
-function lines(w: number, c: LineCfg): SVGSVGElement {
-  const h = c.h ?? 220;
-  const L = 52, R = 12, T = 10, B = 28;
-  const s = svgOf(w, h);
-  const X = (i: number) => L + (i / (WEEKS - 1)) * (w - L - R);
-  const Y = (v: number) => T + (1 - (v - c.min) / (c.max - c.min)) * (h - T - B);
-  c.ticks.forEach((t) => {
-    sv('line', { x1: L, x2: w - R, y1: Y(t), y2: Y(t), stroke: GRID }, s);
-    txt(s, L - 8, Y(t) + 4, c.fmt(t), { 'text-anchor': 'end' });
-  });
-  XL.forEach(([i, l], k) => txt(s, X(i), h - 8, w < 480 && k % 2 ? '' : l, { 'text-anchor': k === 0 ? 'start' : k === XL.length - 1 ? 'end' : 'middle' }));
-  (c.over ?? []).forEach((i) => sv('rect', { x: X(i) - 2.5, y: T, width: 5, height: h - T - B, fill: 'rgba(243,146,0,0.14)' }, s));
-  if (c.limit) {
-    sv('line', { x1: L, x2: w - R, y1: Y(c.limit.v), y2: Y(c.limit.v), stroke: INK, 'stroke-dasharray': '3 3' }, s);
-    txt(s, w - R, Y(c.limit.v) - 6, c.limit.label, { 'text-anchor': 'end', fill: INK });
-  }
-  c.series.forEach((se) => {
-    const d = se.v.map((v, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join('');
-    sv('path', { d, fill: 'none', stroke: se.color, 'stroke-width': se.w ?? 1.5, 'stroke-dasharray': se.dash ?? '', 'stroke-linejoin': 'round' }, s);
-  });
-  (c.over ?? []).forEach((i) => sv('circle', { cx: X(i), cy: Y(c.series[c.series.length - 1]!.v[i]!), r: 3, fill: OR }, s));
-  return s;
-}
-
-type IvCfg = { rows: IvRow[]; min: number; max: number; ticks: number[]; fmt: (v: number) => string; a?: string; b?: string };
-function intervals(w: number, c: IvCfg): SVGSVGElement {
-  const narrow = w < 560;
-  const L = narrow ? 8 : 230, R = narrow ? 112 : 150, rowH = narrow ? 82 : 60, T = 26, B = 26;
-  const h = T + rowH * c.rows.length + B;
-  const s = svgOf(w, h);
-  const X = (v: number) => L + ((v - c.min) / (c.max - c.min)) * (w - L - R);
-  const ca = w - (narrow ? 64 : 84), cb = w - 4;
-  txt(s, ca, 12, c.a ?? '', { 'text-anchor': 'end' });
-  txt(s, cb, 12, c.b ?? '', { 'text-anchor': 'end', fill: ORD });
-  c.ticks.forEach((t) => {
-    sv('line', { x1: X(t), x2: X(t), y1: T, y2: h - B, stroke: GRID }, s);
-    txt(s, X(t), h - 8, c.fmt(t), { 'text-anchor': 'middle' });
-  });
-  c.rows.forEach((r, k) => {
-    const y0 = T + k * rowH;
-    sv('line', { x1: 0, x2: w, y1: y0, y2: y0, stroke: GRID }, s);
-    const ly = y0 + 24;
-    txt(s, narrow ? L : 0, ly, r.label, { fill: INK, 'font-family': 'var(--sans)', 'font-size': 14 });
-    txt(s, narrow ? L : 0, ly + 18, r.note, { 'font-family': 'var(--sans)', 'font-size': 12 });
-    const ya = narrow ? y0 + 56 : y0 + 24, yb = ya + 14;
-    ([[r.a, ya, false], [r.b, yb, true]] as Array<[Iv, number, boolean]>).forEach(([iv, y, strong]) => {
-      const col = strong ? OR : GREY;
-      sv('line', { x1: X(iv.lo), x2: X(iv.hi), y1: y, y2: y, stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round' }, s);
-      sv('circle', { cx: X(iv.m), cy: y, r: 4.5, fill: strong ? OR : '#fff', stroke: col, 'stroke-width': 1.5 }, s);
-    });
-    txt(s, ca, (ya + yb) / 2 + 4, c.fmt(r.a.m), { 'text-anchor': 'end', fill: MUT, 'font-size': 13 });
-    txt(s, cb, (ya + yb) / 2 + 4, c.fmt(r.b.m), { 'text-anchor': 'end', fill: ORD, 'font-size': 13 });
-  });
-  return s;
-}
-
-type ScCfg = {
-  pts: Pt[]; marks: Mark[]; xmin: number; xmax: number; ymin: number; ymax: number;
-  xt: number[]; yt: number[]; xf: (v: number) => string; yf: (v: number) => string;
-  xlab: string; ylab: string; quad?: boolean; ghost?: { from: Pt; to: Pt; label: string } | undefined;
-};
-function scatter(w: number, c: ScCfg): SVGSVGElement {
-  const h = Math.max(260, Math.min(340, w * 0.5));
-  const L = 52, R = 16, T = 18, B = 44;
-  const s = svgOf(w, h);
-  const X = (v: number) => L + ((v - c.xmin) / (c.xmax - c.xmin)) * (w - L - R);
-  const Y = (v: number) => T + (1 - (v - c.ymin) / (c.ymax - c.ymin)) * (h - T - B);
-  if (c.quad) {
-    sv('rect', { x: X(0), y: T, width: w - R - X(0), height: Y(0) - T, fill: 'rgba(243,146,0,0.07)' }, s);
-    txt(s, w - R - 8, T + 16, 'Both sides gain', { 'text-anchor': 'end', fill: ORD });
-  }
-  c.yt.forEach((t) => {
-    sv('line', { x1: L, x2: w - R, y1: Y(t), y2: Y(t), stroke: c.quad && t === 0 ? 'rgba(20,18,16,0.3)' : GRID }, s);
-    txt(s, L - 8, Y(t) + 4, c.yf(t), { 'text-anchor': 'end' });
-  });
-  c.xt.forEach((t) => {
-    sv('line', { x1: X(t), x2: X(t), y1: T, y2: h - B, stroke: c.quad && t === 0 ? 'rgba(20,18,16,0.3)' : GRID }, s);
-    txt(s, X(t), h - B + 18, c.xf(t), { 'text-anchor': 'middle' });
-  });
-  txt(s, w - R, h - 6, c.xlab, { 'text-anchor': 'end' });
-  txt(s, L, T - 6, c.ylab, {});
-  c.pts.forEach((p) => sv('circle', { cx: X(p.x), cy: Y(p.y), r: 2.6, fill: 'rgba(20,18,16,0.22)' }, s));
-  if (c.ghost) {
-    const g = c.ghost;
-    sv('line', { x1: X(g.from.x), y1: Y(g.from.y), x2: X(g.to.x), y2: Y(g.to.y), stroke: INK, 'stroke-dasharray': '3 3' }, s);
-    sv('circle', { cx: X(g.to.x), cy: Y(g.to.y), r: 6, fill: '#fff', stroke: INK, 'stroke-width': 1.5 }, s);
-    txt(s, X(g.to.x) + 11, Y(g.to.y) + 4, g.label, { fill: INK });
-  }
-  c.marks.forEach((m) => {
-    const col = m.tone === 'orange' ? OR : m.tone === 'ink' ? INK : '#9e978b';
-    sv('circle', { cx: X(m.x), cy: Y(m.y), r: m.tone === 'orange' ? 7 : 5.5, fill: col, stroke: '#fff', 'stroke-width': 2 }, s);
-    const label = w < 560 ? m.short ?? m.label : m.label;
-    const len = label.length * 7.3;
-    const right = X(m.x) + 12 + len < w - R || X(m.x) - 12 - len < L;
-    const t = txt(s, X(m.x) + (right ? 12 : -12), Y(m.y) + (m.tone === 'orange' ? (Y(m.y) < T + 20 ? 18 : -10) : 4), label, { 'text-anchor': right ? 'start' : 'end', fill: m.tone === 'orange' ? ORD : INK });
-    t.setAttribute('paint-order', 'stroke');
-    t.setAttribute('stroke', '#fff');
-    t.setAttribute('stroke-width', '4');
-  });
-  return s;
-}
-
-/** Effects as bars from zero; a selected row is marked. */
-function effects(rows: Effect[], max: number, sel: number, onPick: ((i: number) => void) | null): HTMLElement {
-  const box = el('div', 'rx-ef');
-  rows.forEach((r, i) => {
-    const b = el(onPick ? 'button' : 'div', 'rx-ef__r' + (i === sel ? ' is-on' : ''));
-    if (onPick) {
-      (b as HTMLButtonElement).type = 'button';
-      b.setAttribute('aria-pressed', String(i === sel));
-      b.addEventListener('click', () => onPick(i === sel ? -1 : i));
-    }
-    const pct = Math.min(50, (Math.abs(r.v) / max) * 50);
-    b.append(
-      el('span', 'rx-ef__l', r.label),
-      el('span', 'rx-ef__t', `<i class="rx-ef__z"></i><i class="rx-ef__b ${r.v < 0 ? 'is-neg' : ''}" style="${r.v < 0 ? `right:50%` : `left:50%`};width:${pct}%"></i>`),
-      el('span', 'rx-ef__v', r.fmt),
-    );
-    box.append(b);
-  });
-  return box;
-}
-
-/* --------------------------------------------------------------------- data */
-
-const pct = (v: number) => `${Math.round(v)}%`;
-const bn = (v: number) => `$${v.toFixed(1)}B`;
-const mn = (v: number) => `$${Math.round(v)}M`;
-const sm = (v: number) => (v === 0 ? '0' : `${v > 0 ? '+' : '−'}$${Math.abs(v)}M`);
-
-function cloud(seed: number, n: number, f: (r: () => number) => Pt | null): Pt[] {
-  const r = rng(seed);
-  const out: Pt[] = [];
-  while (out.length < n) {
-    const p = f(r);
-    if (p) out.push(p);
-  }
-  return out;
-}
-
-type Step5 = {
-  name: string; h: string; p: string; title: string; sub: string; cap: string;
-  sc: Omit<ScCfg, 'ghost'>; efTitle: string; efSub: string; ef: Effect[]; efMax: number; pick: boolean;
-};
-type Run = {
-  q: string; goal: string; may: Array<[string, boolean]>; hold: string[]; files: string[]; asked: string;
-  p: string[]; // prose for steps 1–4 and 6 (index by step)
-  model: 'one' | 'two'; unknown: string; routeCap: string;
-  replay: 'counterfactual' | 'idle' | 'two';
-  iv: IvCfg & { a: string; b: string; title: string; sub: string; cap: string };
-  s5: Step5;
-  answer: string; items: string[]; cmp: Array<[string, string, string]>; cmpH: [string, string];
-  futures: string; change: string; stamp: string;
-};
-
-const DISCOVER_PTS = cloud(3, 309, (r) => {
-  const x = r() * 1.6;
-  const y = 58 + r() * 40 * (0.35 + 0.65 * Math.min(1, x / 1.2)) * (0.55 + r() * 0.45) + (r() < 0.06 ? 8 : 0);
-  return y < 99.4 && !(x < 0.45 && y > 93) ? { x, y } : null;
-});
-const OPT_PTS = cloud(7, 198, (r) => {
-  const x = 1.2 + r() * 1.4;
-  const cap = x >= 1.5 ? 100 : 100 - (1.5 - x) * 26;
-  const y = cap - r() ** 1.8 * 9;
-  return y > 90.5 && y <= 100 && !(Math.abs(x - 1.5) < 0.03 && y > 99.6) ? { x, y: Math.min(y, 99.95) } : null;
-});
-const COORD_PTS = cloud(13, 45, (r) => {
-  const x = -50 + r() * 70, y = -12 + r() * 58;
-  const ok = x + y < 18 && !(x > 4 && y > 6);
-  return ok ? { x, y } : null;
-});
-
-const RUNS: Record<Kind, Run> = {
-  discover: {
-    q: 'Can we offer instant redemption to Partner N’s merchants?',
-    goal: 'every redemption paid within minutes, at any hour',
-    may: [['Reserve mix', true], ['Cash by bank', true], ['Timing', true], ['Partner limits', true], ['Partner terms', true]],
-    hold: ['Reserve policy', 'OCC rule', 'Service promises'],
-    files: ['partner_n_draft_v3.pdf', 'partner_n_merchants.csv'],
-    asked: 'Treasury',
-    p: [
-      'A question, a goal, what may change and what must hold. Anything outside ‘What may change’ stays fixed.',
-      'The world is shared by every machine: banks and their settlement windows, partners, rates, chains. The issuer’s records and policy stay its own. What is not known is kept in view.',
-      'The model replays past events and is checked against what happened. Then it replays them again with Partner N included.',
-      'Slow and fast adoption, a partner doubling, a bank leaving. Each range is the spread across what the model does not know.',
-      '',
-      'Written down before the outcome, then scored against it.',
-    ],
-    model: 'one',
-    unknown: 'How Partner N’s merchants will redeem. Estimated from two similar partners until their own activity is in.',
-    routeCap: 'Share of instant redemptions by bank, last 90 days',
-    replay: 'counterfactual',
-    iv: {
-      title: 'Promise holds', sub: 'Share of futures in which every redemption is paid within minutes, by condition.',
-      a: 'The draft', b: 'Found by the machine', cap: '1,000 futures over two years · dot is the median, line the 90% range',
-      min: 60, max: 100, ticks: [60, 70, 80, 90, 100], fmt: pct,
-      rows: [
-        { label: 'Adoption is slow', note: 'First to strain: nothing, until year two', a: { m: 96, lo: 93, hi: 98 }, b: { m: 100, lo: 99, hi: 100 } },
-        { label: 'Adoption is fast', note: 'First to strain: bank B, within five months', a: { m: 73, lo: 66, hi: 79 }, b: { m: 100, lo: 98, hi: 100 } },
-        { label: 'Partner N doubles in a year', note: 'First to strain: bank B, within eight months', a: { m: 81, lo: 75, hi: 86 }, b: { m: 100, lo: 98, hi: 100 } },
-        { label: 'A bank leaves', note: 'First to strain: the other instant banks, within days', a: { m: 88, lo: 83, hi: 92 }, b: { m: 99, lo: 97, hi: 100 } },
-      ],
-    },
-    s5: {
-      name: 'Discover', h: 'Then, a search.',
-      p: 'From the draft, the machine tries arrangements no one listed, and keeps the ones that hold in the past and in every future.',
-      title: '312 arrangements tried', sub: 'Each dot is one arrangement, scored in the fast-adoption futures.',
-      cap: 'Promise holds against extra cash held at banks',
-      sc: {
-        pts: DISCOVER_PTS,
-        marks: [
-          { x: 1.2, y: 73, label: 'The draft', tone: 'grey' },
-          { x: 0.7, y: 91, label: 'A fifth instant bank · Treasury’s idea', tone: 'ink', short: 'Fifth bank' },
-          { x: 0.4, y: 100, label: 'Found by the machine', tone: 'orange' },
-        ],
-        xmin: 0, xmax: 1.6, ymin: 55, ymax: 102, xt: [0, 0.4, 0.8, 1.2, 1.6], yt: [60, 70, 80, 90, 100],
-        xf: (v) => `$${v.toFixed(1)}B`, yf: pct, xlab: 'Extra cash at banks', ylab: 'Promise holds',
-      },
-      efTitle: 'What each term adds', efSub: 'Remove one term from the found arrangement and run the same futures again. Select a term to see it on the chart.',
-      ef: [
-        { label: 'Daily instant limit per merchant', v: -16, fmt: '−16 pts', ghost: { x: 0.4, y: 84 } },
-        { label: 'Morning redemption from the fund', v: -11, fmt: '−11 pts', ghost: { x: 0.4, y: 89 } },
-        { label: 'Notice before very large redemptions', v: -7, fmt: '−7 pts', ghost: { x: 0.4, y: 93 } },
-      ],
-      efMax: 20, pick: true,
-    },
-    answer: 'Yes, with three terms.',
-    items: ['A daily instant limit per merchant.', 'Notice from Partner N before very large redemptions.', 'A morning redemption from the reserve fund, sized to the day’s expected flow.'],
-    cmpH: ['The draft', 'With the terms'],
-    cmp: [['Promise holds, fast adoption', '73%', '100%'], ['Extra cash at banks', '$1.2B', '$0.4B']],
-    futures: '100%',
-    change: 'Partner N moves its volume to weekends, or a bank changes its limits.',
-    stamp: 'Recorded Nov 6 · before outcome · Model v15',
-  },
+const RUNS: Record<Tab, RunData> = {
   optimize: {
+    kind: 'optimize',
     q: 'How much cash should we keep at each bank next week?',
     goal: 'every redemption paid within minutes, at any hour',
-    may: [['Reserve mix', false], ['Cash by bank', true], ['Timing', true], ['Partner limits', false], ['Partner terms', false]],
-    hold: ['Reserve policy', 'OCC rule', 'Service promises'],
-    files: ['bank_balances_hourly.csv'],
-    asked: 'Treasury',
-    p: [
-      'A weekly question with the same goal. Only cash by bank and timing may change.',
-      'The same world, updated this morning: a bank changed its settlement window, and every machine took the change.',
-      'The model replays past weeks and is checked against what happened. Then it replays them again under the optimized plan.',
-      'Redemptions rising, the largest partner redeeming at once, a bank closing its window early. Each range is the spread across what the model does not know.',
-      '',
-      'Written down before the week starts, then scored against it.',
+    step5: 'Optimize',
+    model: 'three',
+    replay: ['Replayed past events. Within 2% of what happened.'],
+    tableLead: 'Cash by bank, tried across the same futures.',
+    head: ['Plan', 'Idle cash', 'Promise holds'],
+    rows: [
+      { cells: ['Current plan', '$2.1B', '100%'] },
+      { cells: ['Optimized', '$1.5B', '100%'], win: true },
     ],
-    model: 'one',
-    unknown: 'Next week’s redemptions. Taken from the futures, not from a single forecast.',
-    routeCap: 'Share of instant redemptions by bank, last 90 days',
-    replay: 'idle',
-    iv: {
-      title: 'Promise holds', sub: 'Share of futures in which every redemption is paid within minutes, by condition.',
-      a: 'Current plan', b: 'Optimized plan', cap: '1,000 futures over next week · dot is the median, line the 90% range',
-      min: 94, max: 100, ticks: [94, 96, 98, 100], fmt: pct,
-      rows: [
-        { label: 'Redemptions rise 30%', note: 'First to strain: nothing', a: { m: 100, lo: 99, hi: 100 }, b: { m: 100, lo: 99, hi: 100 } },
-        { label: 'The largest partner redeems at once', note: 'First to strain: the instant banks, for an hour', a: { m: 100, lo: 98.6, hi: 100 }, b: { m: 100, lo: 98.2, hi: 100 } },
-        { label: 'A bank closes its window early', note: 'First to strain: nothing', a: { m: 100, lo: 99.2, hi: 100 }, b: { m: 99.6, lo: 97.8, hi: 100 } },
-        { label: 'Rates move a point', note: 'First to strain: nothing', a: { m: 100, lo: 99.5, hi: 100 }, b: { m: 100, lo: 99.3, hi: 100 } },
-      ],
-    },
-    s5: {
-      name: 'Optimize', h: 'Then, the best plan.',
-      p: 'The machine tries cash by bank across the same futures and keeps the plan with the least idle cash that still keeps the promise.',
-      title: '200 cash plans tried', sub: 'Each dot is one plan for next week, scored across the futures.',
-      cap: 'Promise holds against idle cash at banks',
-      sc: {
-        pts: OPT_PTS,
-        marks: [
-          { x: 2.1, y: 100, label: 'Current plan', tone: 'grey' },
-          { x: 1.5, y: 100, label: 'Optimized', tone: 'orange' },
-        ],
-        xmin: 1.2, xmax: 2.6, ymin: 90, ymax: 100.8, xt: [1.2, 1.6, 2.0, 2.4], yt: [90, 92, 94, 96, 98, 100],
-        xf: (v) => `$${v.toFixed(1)}B`, yf: pct, xlab: 'Idle cash at banks', ylab: 'Promise holds',
-      },
-      efTitle: 'Where the $0.6B comes from', efSub: 'Change in cash held, by bank, next week. The four instant banks keep today’s balances.',
-      ef: [
-        { label: 'Bank E', v: -0.25, fmt: '−$0.25B' },
-        { label: 'Bank F', v: -0.2, fmt: '−$0.20B' },
-        { label: 'Bank G', v: -0.15, fmt: '−$0.15B' },
-        { label: 'Instant banks A–D', v: 0, fmt: '$0' },
-      ],
-      efMax: 0.3, pick: false,
-    },
+    tried: '',
     answer: 'Hold $0.6B less at banks next week.',
-    items: ['Draw it from banks E, F and G, which carry the least redemption volume.', 'Keep the instant banks at today’s balances.', 'Move it back if redemptions rise more than 30%.'],
-    cmpH: ['Current', 'Optimized'],
-    cmp: [['Idle cash at banks', '$2.1B', '$1.5B'], ['Promise holds', '100%', '100%']],
-    futures: '100%',
-    change: 'Redemptions rise more than 30%, or a bank changes its window again.',
-    stamp: 'Recorded Nov 13 · before outcome · Model v15',
+    compare: [
+      ['Idle cash', '$2.1B', '$1.5B'],
+      ['Promise holds', '100%', '100%'],
+    ],
+    stamp: 'Recorded before outcome · Model v15',
+  },
+  discover: {
+    kind: 'discover',
+    q: 'Can we offer instant redemption to Partner N’s merchants?',
+    goal: 'every redemption paid within minutes, at any hour',
+    step5: 'Discover',
+    model: 'three',
+    replay: ['Replayed past events. Within 2% of what happened.'],
+    tableLead: 'Started from the draft, then searched terms no one had listed.',
+    head: ['Arrangement', 'From', 'Promise holds', 'Extra cash'],
+    rows: [
+      { cells: ['The draft', 'The draft', '73%', '$1.2B'] },
+      { cells: ['A fifth instant bank', 'Treasury’s idea', '91%', '$0.7B'] },
+      { cells: ['Merchant limit, notice, morning funding', 'Found by the machine', '100%', '$0.4B'], win: true },
+    ],
+    tried: '312 arrangements tried.',
+    answer: 'Yes, with three terms.',
+    items: [
+      'A daily instant limit per merchant.',
+      'Notice from Partner N before very large redemptions.',
+      'A morning redemption from the reserve fund, sized to the day’s expected flow.',
+    ],
+    compare: [
+      ['Promise holds', '73%', '100%'],
+      ['Extra cash', '$1.2B', '$0.4B'],
+    ],
+    stamp: 'Recorded before outcome · Model v15',
   },
   coordinate: {
+    kind: 'coordinate',
     q: 'Which terms with Exchange E grow balances that stay?',
     goal: 'more long-held balances, at the same cost',
-    may: [['Reserve mix', false], ['Cash by bank', false], ['Timing', false], ['Partner limits', false], ['Partner terms', true]],
-    hold: ['Reserve policy', 'OCC rule', 'E’s risk limits'],
-    files: ['exchange_e_proposal.pdf'],
-    asked: 'Treasury, with Exchange E',
-    p: [
-      'A question asked of two machines. Only the terms between the issuer and Exchange E may change.',
-      'Each side runs its own machine on the shared world. Neither model is shared; only terms and scores pass between them.',
-      'Each machine replays its own past and is checked against what happened. E reports its score, not its data.',
-      'The same futures, run in both machines. Each scores only its own side.',
-      '',
-      'Written down before the outcome, with both models’ versions, then scored against it.',
-    ],
+    step5: 'Coordinate',
     model: 'two',
-    unknown: 'How E’s users respond to new terms. Estimated by E’s machine, not ours.',
-    routeCap: '',
-    replay: 'two',
-    iv: {
-      title: 'Long-held balances in two years', sub: 'Balances on Exchange E held longer than a month, by condition.',
-      a: 'Current terms', b: 'Found by both machines', cap: '1,000 futures over two years · dot is the median, line the 90% range',
-      min: 7.5, max: 12.5, ticks: [8, 9, 10, 11, 12], fmt: bn,
-      rows: [
-        { label: 'As today', note: 'Rates, prices and listings move as they have', a: { m: 9.0, lo: 8.6, hi: 9.4 }, b: { m: 11.4, lo: 10.9, hi: 11.9 } },
-        { label: 'Rates fall a point', note: 'Reserve income falls for both sides', a: { m: 9.0, lo: 8.4, hi: 9.6 }, b: { m: 11.4, lo: 10.6, hi: 12.1 } },
-        { label: 'A rival exchange lists the dollar', note: 'Some balances move', a: { m: 8.6, lo: 7.9, hi: 9.3 }, b: { m: 10.8, lo: 9.9, hi: 11.6 } },
-        { label: 'Prices swing', note: 'Holders move in and out fast', a: { m: 8.8, lo: 8.0, hi: 9.5 }, b: { m: 11.1, lo: 10.2, hi: 11.9 } },
-      ],
-    },
-    s5: {
-      name: 'Coordinate', h: 'Then, terms both sides accept.',
-      p: 'Term sets are tried in both machines. Each scores its own side, and only terms that leave both better off are kept.',
-      title: '48 term sets tried in both machines', sub: 'Each dot is one set of terms: our income against E’s revenue, per year.',
-      cap: 'Change per year against current terms',
-      sc: {
-        pts: COORD_PTS,
-        marks: [
-          { x: 0, y: 0, label: 'Current terms', tone: 'grey' },
-          { x: -38, y: 38, label: 'E’s proposal', tone: 'ink' },
-          { x: 9, y: 12, label: 'Found by both machines', tone: 'orange', short: 'Found by both' },
-        ],
-        xmin: -50, xmax: 25, ymin: -15, ymax: 48, xt: [-40, -20, 0, 20], yt: [-10, 0, 10, 20, 30, 40],
-        xf: sm, yf: sm, xlab: 'Our income', ylab: 'E’s revenue', quad: true,
-      },
-      efTitle: 'What each term adds', efSub: 'Long-held balances in two years, against current terms.',
-      ef: [
-        { label: 'E’s share rises the longer balances stay', v: 1.6, fmt: '+$1.6B' },
-        { label: 'Lower share on balances that leave within a month', v: 0.5, fmt: '+$0.5B' },
-        { label: 'Shares reset if reserve yields move sharply', v: 0.3, fmt: '+$0.3B' },
-      ],
-      efMax: 2, pick: false,
-    },
+    replay: ['Our machine: replayed past events. Within 2% of what happened.', 'E’s machine: replayed past events. Within 2% of what happened.'],
+    tableLead: 'Terms tried in both machines, each scoring its own side.',
+    head: ['Terms', 'From', 'Long-held balances', 'Our income, per year', 'E’s revenue, per year'],
+    rows: [
+      { cells: ['Current terms', 'Today', '$9.0B', '—', '—'] },
+      { cells: ['E’s proposal', 'Exchange E', '$9.3B', '−$38M', '+$38M'] },
+      { cells: ['Found by both machines', 'Both machines', '$11.4B', '+$9M', '+$12M'], win: true },
+    ],
+    tried: '48 term sets tried in both machines.',
     answer: 'Terms both machines accept.',
-    items: ['E’s share rises the longer balances stay.', 'It falls on balances that leave within a month.', 'The shares reset if reserve yields move sharply.'],
-    cmpH: ['Today', 'Found'],
-    cmp: [['Long-held balances', '$9.0B', '$11.4B'], ['Our income, per year', '—', '+$9M'], ['E’s revenue, per year', '—', '+$12M']],
-    futures: 'Both gain',
-    change: 'Reserve yields fall below 2%, or a rival exchange matches the terms.',
-    stamp: 'Recorded Nov 12 · before outcome · Model v15 · E’s model v7',
+    items: [
+      'E’s share rises the longer balances stay.',
+      'It falls on balances that leave within a month.',
+      'The shares reset if reserve yields move sharply.',
+    ],
+    stamp: 'Recorded before outcome · Model v15 · E’s model v7',
   },
 };
 
-/* ------------------------------------------------------------------ figures */
-
-function card(title: string, sub: string, cap: string): { box: HTMLElement; body: HTMLElement } {
-  const box = el('div', 'rx-c');
-  if (title) box.append(el('div', 'rx-c__h', `<p class="rx-c__t">${title}</p>${sub ? `<p class="rx-c__s">${sub}</p>` : ''}`));
-  const body = el('div', 'rx-c__b');
-  box.append(body);
-  if (cap) box.append(el('p', 'rx-c__cap', cap));
-  return { box, body };
-}
-const legend = (items: Array<[string, string]>): HTMLElement =>
-  el('p', 'rx-lg', items.map(([c, l]) => `<span><i class="rx-lg__${c}"></i>${l}</span>`).join(''));
-
-/** Draw a chart now and again whenever its box changes width. */
-function live(host: HTMLElement, draw: (w: number) => Element): void {
-  let last = -1;
-  const go = (): void => {
-    const w = Math.floor(host.clientWidth);
-    if (w <= 0 || w === last) return;
-    last = w;
-    host.replaceChildren(draw(w));
-  };
-  go();
-  new ResizeObserver(go).observe(host);
-}
-
-function figQuestion(d: Run): HTMLElement {
-  const chips = (xs: Array<[string, boolean]>) => xs.map(([t, on]) => `<span class="rx-w__chip${on ? ' is-on' : ''}">${on ? '✓ ' : ''}${t}</span>`).join('');
-  return el('div', 'rx-w', `
-    <div class="rx-w__bar"><span>Decisions / New</span><span>Model v15</span></div>
-    <div class="rx-w__body">
-      <div class="rx-w__form">
-        <p class="rx-w__lab">Question</p><p class="rx-w__q">${d.q}</p>
-        <p class="rx-w__lab">Goal</p><p class="rx-w__v">${d.goal}</p>
-        <p class="rx-w__lab">What may change</p><p class="rx-w__chips">${chips(d.may)}</p>
-        <p class="rx-w__lab">Must hold</p><p class="rx-w__chips">${chips(d.hold.map((h) => [h, true]))}</p>
-      </div>
-      <aside class="rx-w__side">
-        <p class="rx-w__lab">Properties</p>
-        <dl><dt>Asked by</dt><dd>${d.asked}</dd><dt>Status</dt><dd><span class="rx-w__st">Ready to run</span></dd><dt>Model</dt><dd>v15</dd></dl>
-        <p class="rx-w__lab">Files</p>
-        <ul>${d.files.map((f) => `<li>${f}</li>`).join('')}</ul>
-      </aside>
-    </div>`);
-}
-
-const LAYERS: Array<[string, string, Array<[string, string]>]> = [
-  ['The world', 'Shared by every machine', [['Banks and settlement windows', 'live'], ['Partners and their behavior', 'daily'], ['Rates and markets', 'live'], ['Chains and rails', 'live']]],
-  ['The issuer', 'Its own, never shared', [['Reserve fund', 'daily'], ['Cash at 25 banks', 'hourly'], ['140 partner agreements', 'on change'], ['Redemption ledger', 'since Jan 2025']]],
-  ['Policy', 'How it chooses to run', [['Reserve policy', 'v6'], ['OCC reserve rule', 'in force'], ['Limits per bank', 'v3'], ['Service promises', 'v9']]],
-];
-const E_LAYERS: Array<[string, string, Array<[string, string]>]> = [
-  ['Our machine', 'The issuer, in its world', [['Reserves and banks', 'hourly'], ['Partner agreements', 'on change'], ['Distribution costs', 'monthly'], ['Reserve policy', 'v6']]],
-  ['Exchange E’s machine', 'E’s, in the same world', [['Its users and their balances', 'not shared'], ['Its fees and revenue', 'not shared'], ['Its listing terms', 'not shared'], ['Its risk limits', 'not shared']]],
+const SCORED: Array<[string, string, string, boolean?]> = [
+  ['The rules', 'Reserve policy, OCC rule', 'Pass'],
+  ['The past', 'Every replayed day', 'Pass'],
+  ['The futures', '1,000 over two years', '100%'],
+  ['The outcome', 'After launch', 'Pending', true],
 ];
 
-function layers(ls: typeof LAYERS): string {
-  return `<div class="rx-ly rx-ly--${ls.length}">${ls
-    .map(([t, s, rows]) => `<div class="rx-ly__c"><p class="rx-ly__t">${t}</p><p class="rx-ly__s">${s}</p><ul>${rows.map(([a, b]) => `<li><span>${a}</span><span>${b}</span></li>`).join('')}</ul></div>`)
-    .join('')}</div>`;
-}
+const MODEL3: Array<[string, string[]]> = [
+  ['The world', ['Banks and settlement windows', 'Partners and their behavior', 'Rates and markets', 'Chains and rails']],
+  ['The issuer', ['Reserve fund', 'Cash at 25 banks', '140 partner agreements', 'Redemption ledger']],
+  ['Policy', ['Reserve policy', 'OCC reserve rule', 'Limits per bank', 'Service promises']],
+];
+const MODEL2: Array<[string, string[]]> = [
+  ['Our machine', ['Reserves and banks', 'Partner agreements', 'Distribution costs', 'Reserve policy']],
+  ['Exchange E’s machine', ['Its users and their balances', 'Its fees and revenue', 'Its listing terms', 'Its risk limits']],
+];
 
-/** Reserve → instant banks → partners, widths by share of instant redemptions. */
-function route(w: number, withN: boolean): SVGSVGElement {
-  const h = 250;
-  const s = svgOf(w, h);
-  const narrow = w < 560;
-  const banks: Array<[string, number]> = [['Bank B', 58], ['Bank A', 19], ['Bank C', 14], ['Bank D', 9]];
-  const x0 = narrow ? 64 : 140, x1 = w * 0.47, x2 = w - (narrow ? 64 : 140);
-  const T = 14, H = h - 2 * T, gap = 10;
-  const tot = H - gap * (banks.length - 1);
-  const nodeH = H * 0.46, n0 = (h - nodeH) / 2;
-  const band = (xa: number, ya: number, ha: number, xb: number, yb: number, hb: number) => {
-    const m = (xa + xb) / 2;
-    return `M${xa} ${ya}C${m} ${ya} ${m} ${yb} ${xb} ${yb}L${xb} ${yb + hb}C${m} ${yb + hb} ${m} ${ya + ha} ${xa} ${ya + ha}Z`;
-  };
-  let y = T, ys = n0;
-  banks.forEach(([name, sh], k) => {
-    const bh = (sh / 100) * tot, eh = (sh / 100) * nodeH;
-    const fill = k === 0 ? 'rgba(20,18,16,0.14)' : 'rgba(20,18,16,0.06)';
-    sv('path', { d: band(x0, ys, eh, x1 - 5, y, bh), fill }, s);
-    sv('path', { d: band(x1 + 5, y, bh, x2, ys, eh), fill }, s);
-    sv('rect', { x: x1 - 5, y, width: 10, height: bh, fill: k === 0 ? INK : '#8f897f' }, s);
-    txt(s, x1 + 14, y + Math.min(bh / 2, 18) + 4, `${name} · ${sh}%`, { fill: INK });
-    y += bh + gap;
-    ys += eh;
-  });
-  sv('rect', { x: x0 - 4, y: n0, width: 4, height: nodeH, fill: INK }, s);
-  sv('rect', { x: x2, y: n0, width: 4, height: nodeH, fill: INK }, s);
-  txt(s, x0 - 12, h / 2 - 3, narrow ? 'Reserve' : 'Reserve fund', { 'text-anchor': 'end', fill: INK, 'font-family': 'var(--sans)', 'font-size': 13 });
-  if (!narrow) txt(s, x0 - 12, h / 2 + 14, 'and bank cash', { 'text-anchor': 'end', 'font-family': 'var(--sans)', 'font-size': 12 });
-  txt(s, x2 + 12, h / 2 - 3, narrow ? 'Partners' : '140 partners', { fill: INK, 'font-family': 'var(--sans)', 'font-size': 13 });
-  if (!narrow) txt(s, x2 + 12, h / 2 + 14, 'and their merchants', { 'font-family': 'var(--sans)', 'font-size': 12 });
-  if (withN) {
-    const yB = T + 0.58 * tot * 0.62;
-    const yN = n0 + nodeH + 26;
-    sv('path', { d: `M${x2 + 2} ${yN}C${(x1 + x2) / 2} ${yN} ${(x1 + x2) / 2} ${yB} ${x1 + 5} ${yB}`, fill: 'none', stroke: OR, 'stroke-width': 2, 'stroke-dasharray': '5 4' }, s);
-    sv('circle', { cx: x2 + 2, cy: yN, r: 4, fill: OR }, s);
-    txt(s, x2 + 12, yN + 4, narrow ? 'N, draft' : 'Partner N, draft', { fill: ORD, 'font-family': 'var(--sans)', 'font-size': 13 });
-  }
-  return s;
-}
+const el = (tag: string, cls?: string, text?: string): HTMLElement => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+};
 
-function figModel(d: Run): HTMLElement {
-  const box = el('div', 'rx-stack');
-  if (d.model === 'two') {
-    const c = card('Two machines, one world', 'Each runs on the shared world. Only terms and scores pass between them.', 'Neither model is shared');
-    c.body.innerHTML = layers(E_LAYERS) + '<p class="rx-pass"><span>Passes between them</span> Proposed terms · each side’s score · replay accuracy</p>';
-    box.append(c.box);
+
+function stepView(d: RunData, i: number, _animate: boolean): HTMLElement {
+  const v = el('div', `rn__view rn__view--${i}`);
+  if (i === 0) {
+    const c = CH[d.kind];
+    const chips = (xs: Array<[string, boolean]>): string => xs.map(([t, on]) => `<span class="${on ? 'is-on' : ''}">${on ? '✓ ' : ''}${t}</span>`).join('');
+    const box = el('div', 'rn__setup');
+    box.innerHTML = `<div><p class="rn__lab">What may change</p><p class="rn__chips">${chips(c.may)}</p><p class="rn__lab">Must hold</p><p class="rn__chips">${chips(c.hold.map((h): [string, boolean] => [h, true]))}</p><p class="rn__fix">Anything outside ‘What may change’ stays fixed.</p></div><dl class="rn__props"><dt>Asked by</dt><dd>${c.asked}</dd><dt>Model</dt><dd>v15</dd><dt>Files</dt><dd>${c.files.join('<br>')}</dd></dl>`;
+    v.append(box);
+  } else if (i === 1) {
+    const c = CH[d.kind];
+    if (d.model === 'two') {
+      v.append(el('p', 'rn__lab', 'Two machines, one world'));
+      const cols = el('div', 'rn__cols rn__cols--2');
+      MODEL2.forEach(([h, rows], k) => {
+        const col = el('div', 'rn__col');
+        col.style.setProperty('--d', `${k * 160}ms`);
+        col.append(el('p', 'rn__colh', h));
+        const ul = el('ul');
+        rows.forEach((r) => ul.append(el('li', undefined, r)));
+        col.append(ul);
+        cols.append(col);
+      });
+      v.append(cols, el('p', 'rn__note', 'Neither model is shared. Only terms and scores pass between them.'));
+    } else {
+      const top = el('div', 'rn__row');
+      top.append(el('p', 'rn__lab', 'How redemptions are paid · last 90 days'));
+      const ly = el('p', 'rn__layers');
+      ly.innerHTML = MODEL3.map(([h], k) => `<span>${h} <i>${['shared', 'its own', 'its rules'][k]}</i></span>`).join('');
+      top.append(ly);
+      const host = el('div', 'rn__chart');
+      const unk = el('p', 'rn__unk');
+      unk.innerHTML = `<b>Unknown, kept in view</b> ${c.unknown}`;
+      v.append(top, host, unk);
+      requestAnimationFrame(() => live(host, (w) => route(w, d.kind === 'discover', Math.max(170, Math.min(230, host.parentElement!.clientHeight - 110)))));
+    }
+  } else if (i === 2) {
+    const host = el('div', 'rn__chart');
+    const stats = el('p', 'rn__stats');
+    if (d.kind === 'coordinate') {
+      v.append(el('p', 'rn__lab', 'Our machine, replayed · balances E’s users held, $B'), legend([['ink', 'What happened'], ['or', 'Replay']]), host, stats);
+      stats.innerHTML = `<span><b>${(meanErr(OBS_E, REP_E) * 100).toFixed(1)}%</b> mean error, 78 weeks</span><span><b>Within 2%</b> E’s machine, reported by E</span><span><b>None</b> data shared</span>`;
+      requestAnimationFrame(() => live(host, (w) => lines(w, { series: [{ v: OBS_E, color: '#141210' }, { v: REP_E, color: '#f39200', dash: '4 3' }], min: 7.6, max: 9.8, ticks: [8, 9], fmt: (x) => `$${x}B`, h: 150 })));
+    } else if (d.kind === 'optimize') {
+      v.append(el('p', 'rn__lab', 'The past, under each plan · idle cash at banks, $B'), legend([['grey', 'Current plan'], ['or', 'Optimized plan']]), host, stats);
+      stats.innerHTML = `<span><b>${(meanErr(OBS_B, REP_B) * 100).toFixed(1)}%</b> replay error, 78 weeks</span><span><b>78 of 78</b> weeks every redemption paid, both plans</span>`;
+      requestAnimationFrame(() => live(host, (w) => lines(w, { series: [{ v: IDLE_NOW, color: '#bdb7ac', w: 2 }, { v: IDLE_OPT, color: '#f39200', w: 2 }], min: 1.2, max: 2.4, ticks: [1.2, 1.8, 2.4], fmt: (x) => `$${x.toFixed(1)}B`, h: 150 })));
+    } else {
+      const over = WITH_N.map((x, k) => (x > LIMIT_B ? k : -1)).filter((k) => k >= 0);
+      v.append(el('p', 'rn__lab', 'The past, with Partner N · bank B’s peak day each week, $M'), legend([['ink', 'With Partner N'], ['dash', 'Bank B same-day limit'], ['sh', 'Falls short']]), host, stats);
+      stats.innerHTML = `<span><b>${(meanErr(OBS_B, REP_B) * 100).toFixed(1)}%</b> replay error against what happened</span><span><b>${over.length} of 78</b> weeks fall short with Partner N, all at bank B</span>`;
+      requestAnimationFrame(() => live(host, (w) => lines(w, { series: [{ v: WITH_N, color: '#141210' }], min: 300, max: 800, ticks: [400, 600, 800], fmt: mn, limit: { v: LIMIT_B, label: mn(LIMIT_B) }, over, h: 150 })));
+    }
+  } else if (i === 3) {
+    const c = CH[d.kind];
+    const short: Record<Tab, [string, string]> = { discover: ['Draft', 'Found'], optimize: ['Current', 'Optimized'], coordinate: ['Current', 'Found'] };
+    const host = el('div', 'rn__chart');
+    v.append(el('p', 'rn__lab', `${c.iv.title} · ${c.iv.cap.split(' · ')[0]}`), legend([['hollow', c.iv.a], ['dot', c.iv.b], ['range', '90% range']]), host);
+    requestAnimationFrame(() => live(host, (w) => intervals(w, { ...c.iv, a: short[d.kind][0], b: short[d.kind][1], compact: true })));
+  } else if (i === 4) {
+    const c = CH[d.kind];
+    const host = el('div', 'rn__chart');
+    v.append(el('p', 'rn__lab', `${d.step5} · ${c.s5.title}`), host);
+    requestAnimationFrame(() => live(host, (w) => scatter(w, { ...c.s5.sc, h: Math.max(220, Math.min(270, host.parentElement!.clientHeight - 30)) })));
   } else {
-    const c = card('What the model reads', 'Three layers, each kept current at its own pace.', '');
-    c.body.innerHTML = layers(LAYERS);
-    box.append(c.box);
-    const r = card('How redemptions are paid', 'Instant redemptions run through four of the 25 banks.', d.routeCap);
-    const host = el('div', 'rx-chart');
-    r.body.append(host);
-    box.append(r.box);
-    requestAnimationFrame(() => live(host, (w) => route(w, d.replay === 'counterfactual')));
+    const grid = el('div', 'rn__ans');
+    const a = el('div', 'rn__ansa');
+    a.append(el('p', 'rn__lab', 'Answer'), el('p', 'rn__answer', d.answer));
+    if (d.items) {
+      const ol = el('ol', 'rn__items');
+      d.items.forEach((t, k) => {
+        const li = el('li');
+        li.append(el('span', undefined, `0${k + 1}`), document.createTextNode(t));
+        ol.append(li);
+      });
+      a.append(ol);
+    }
+    if (d.compare) {
+      const cmp = el('dl', 'rn__cmp');
+      d.compare.forEach(([k, from, to]) => {
+        const r = el('div');
+        r.append(el('dt', undefined, k), el('dd', undefined, `${from} → ${to}`));
+        cmp.append(r);
+      });
+      a.append(cmp);
+    }
+    const b = el('div', 'rn__ansb');
+    b.append(el('p', 'rn__lab', 'Scored against'));
+    const sc = el('dl', 'rn__sc');
+    SCORED.forEach(([k, what, res, pend]) => {
+      const r = el('div');
+      r.append(el('dt', undefined, k), el('dd', undefined, what), el('dd', pend ? 'rn__res is-pend' : 'rn__res', res));
+      sc.append(r);
+    });
+    b.append(sc, el('p', 'rn__stamp', d.stamp));
+    grid.append(a, b);
+    v.append(grid);
   }
-  box.append(el('p', 'rx-unk', `<span>Unknown, kept in view</span> ${d.unknown}`));
-  return box;
+  return v;
 }
-
-function figReplay(d: Run): HTMLElement {
-  const box = el('div', 'rx-stack');
-  if (d.replay === 'two') {
-    const err = meanErr(OBS_E, REP_E);
-    const c = card('Our machine, replayed', 'Balances E’s users held, weekly, $B.', `Mean error ${(err * 100).toFixed(1)}% across 78 weeks`);
-    c.body.append(legend([['ink', 'What happened'], ['or', 'Replay']]));
-    const host = el('div', 'rx-chart');
-    c.body.append(host);
-    box.append(c.box);
-    requestAnimationFrame(() => live(host, (w) => lines(w, { series: [{ v: OBS_E, color: INK }, { v: REP_E, color: OR, dash: '4 3' }], min: 7.6, max: 9.8, ticks: [8, 9], fmt: (v) => `$${v}B`, h: 190 })));
-    const e = card('Exchange E’s machine, replayed', 'Run by E, on E’s own records.', '');
-    e.body.innerHTML = '<div class="rx-rep"><p><span>Reported score</span><b>Within 2%</b></p><p><span>Weeks replayed</span><b>78</b></p><p><span>Data shared with us</span><b>None</b></p></div>';
-    box.append(e.box);
-    return box;
-  }
-  const err = meanErr(OBS_B, REP_B);
-  const a = card('Checked against the past', d.replay === 'idle' ? 'Instant redemptions through bank B, peak day each week, $M.' : 'Instant redemptions through bank B, peak day each week, $M.', `Mean error ${(err * 100).toFixed(1)}% across 78 weeks`);
-  a.body.append(legend([['ink', 'What happened'], ['or', 'Replay']]));
-  const ha = el('div', 'rx-chart');
-  a.body.append(ha);
-  box.append(a.box);
-  requestAnimationFrame(() => live(ha, (w) => lines(w, { series: [{ v: OBS_B, color: INK }, { v: REP_B, color: OR, dash: '4 3' }], min: 300, max: 600, ticks: [300, 400, 500, 600], fmt: mn, h: 190 })));
-  if (d.replay === 'counterfactual') {
-    const over = WITH_N.map((v, i) => (v > LIMIT_B ? i : -1)).filter((i) => i >= 0);
-    const b = card('The same past, with Partner N', 'Bank B’s peak day with Partner N’s merchants added, against what bank B can pay the same day.', `${over.length} of 78 weeks would have fallen short, all at bank B`);
-    b.body.append(legend([['ink', 'With Partner N'], ['dash', 'Bank B same-day limit'], ['sh', 'Week falls short']]));
-    const hb = el('div', 'rx-chart');
-    b.body.append(hb);
-    box.append(b.box);
-    requestAnimationFrame(() => live(hb, (w) => lines(w, { series: [{ v: WITH_N, color: INK }], min: 300, max: 800, ticks: [400, 600, 800], fmt: mn, limit: { v: LIMIT_B, label: `${mn(LIMIT_B)}` }, over, h: 200 })));
-  } else {
-    const b = card('The same past, under the optimized plan', 'Idle cash at banks, weekly average, $B.', 'Every redemption paid within minutes in all 78 weeks, under both plans');
-    b.body.append(legend([['grey', 'Current plan'], ['or', 'Optimized plan']]));
-    const hb = el('div', 'rx-chart');
-    b.body.append(hb);
-    box.append(b.box);
-    requestAnimationFrame(() => live(hb, (w) => lines(w, { series: [{ v: IDLE_NOW, color: GREY, w: 2 }, { v: IDLE_OPT, color: OR, w: 2 }], min: 1.2, max: 2.4, ticks: [1.2, 1.6, 2.0, 2.4], fmt: (v) => `$${v.toFixed(1)}B`, h: 180 })));
-  }
-  return box;
-}
-
-function figAhead(d: Run): HTMLElement {
-  const c = card(d.iv.title, d.iv.sub, d.iv.cap);
-  c.body.append(legend([['hollow', d.iv.a], ['dot', d.iv.b]]));
-  const host = el('div', 'rx-chart');
-  c.body.append(host);
-  const short: Record<string, [string, string]> = { 'The draft': ['Draft', 'Found'], 'Current plan': ['Current', 'Optimized'], 'Current terms': ['Current', 'Found'] };
-  const [sa, sb] = short[d.iv.a] ?? ['', ''];
-  requestAnimationFrame(() => live(host, (w) => intervals(w, { ...d.iv, a: sa, b: sb })));
-  return c.box;
-}
-
-function figSearch(d: Run): HTMLElement {
-  const s5 = d.s5;
-  const box = el('div', 'rx-stack');
-  const c = card(s5.title, s5.sub, s5.cap);
-  const host = el('div', 'rx-chart');
-  c.body.append(host);
-  box.append(c.box);
-  const e = card(s5.efTitle, s5.efSub, '');
-  box.append(e.box);
-  let sel = -1;
-  let last = 0;
-  const found = s5.sc.marks.find((m) => m.tone === 'orange')!;
-  const draw = (w: number) => {
-    const g = sel >= 0 && s5.ef[sel]?.ghost ? { from: found, to: s5.ef[sel]!.ghost!, label: `Without it · ${pct(s5.ef[sel]!.ghost!.y)}` } : undefined;
-    return scatter(w, { ...s5.sc, ghost: g });
-  };
-  const paintEf = () => e.body.replaceChildren(effects(s5.ef, s5.efMax, sel, s5.pick ? (i) => { sel = i; paintEf(); last = host.clientWidth; host.replaceChildren(draw(last)); } : null));
-  paintEf();
-  requestAnimationFrame(() => live(host, draw));
-  return box;
-}
-
-function figAnswer(d: Run): HTMLElement {
-  const scored: Array<[string, string, string, boolean?]> = [
-    ['The rules', d.hold.join(', '), 'Pass'],
-    ['The past', 'All 78 replayed weeks', 'Pass'],
-    ['The futures', '1,000, median', d.futures],
-    ['The outcome', 'After launch', 'Pending', true],
-  ];
-  return el('div', 'rx-w rx-w--ans', `
-    <div class="rx-w__bar"><span>Decisions / ${d.q.length > 46 ? d.q.slice(0, 44) + '…' : d.q}</span><span>Answer ready</span></div>
-    <div class="rx-w__body">
-      <div class="rx-w__form">
-        <p class="rx-w__lab">Answer</p>
-        <p class="rx-a__t">${d.answer}</p>
-        <ol class="rx-a__i">${d.items.map((t, i) => `<li><span>${String(i + 1).padStart(2, '0')}</span>${t}</li>`).join('')}</ol>
-        <table class="rx-a__c"><thead><tr><th></th><th>${d.cmpH[0]}</th><th>${d.cmpH[1]}</th></tr></thead><tbody>${d.cmp.map(([a, b, c]) => `<tr><th>${a}</th><td>${b}</td><td>${c}</td></tr>`).join('')}</tbody></table>
-        <p class="rx-a__n"><span>Would change if</span> ${d.change}</p>
-      </div>
-      <aside class="rx-w__side">
-        <p class="rx-w__lab">Scored against</p>
-        <ul class="rx-a__s">${scored.map(([a, b, c, p]) => `<li><span>${a}</span><span>${b}</span><b class="${p ? 'is-p' : ''}">${c}</b></li>`).join('')}</ul>
-        <p class="rx-a__st">${d.stamp}</p>
-      </aside>
-    </div>`);
-}
-
-/* --------------------------------------------------------------------- init */
 
 export function initRun(root: HTMLElement): void {
   const reduced = prefersReducedMotion();
-  const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-  const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-step]'));
-  const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-goto]'));
-  const q = root.querySelector<HTMLElement>('[data-q]');
-  const goal = root.querySelector<HTMLElement>('[data-goal]');
-  let kind: Kind = 'discover';
+  const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+  const rail = Array.from(root.querySelectorAll<HTMLElement>('.rn__rail li'));
+  const step5 = root.querySelector<HTMLElement>('[data-step5]');
+  const qEl = root.querySelector<HTMLElement>('[data-q]');
+  const goalEl = root.querySelector<HTMLElement>('[data-goal]');
+  const stage = root.querySelector<HTMLElement>('[data-stage]');
+  const bar = root.querySelector<HTMLElement>('[data-bar]');
+  const replay = root.querySelector<HTMLButtonElement>('[data-replay]');
+  const track = root.closest<HTMLElement>('[data-run-track]');
+  if (!stage || !qEl || !goalEl || !bar) return;
 
-  const render = (k: Kind): void => {
-    kind = k;
-    const d = RUNS[k];
-    tabs.forEach((b) => {
-      const on = b.dataset['tab'] === k;
-      b.setAttribute('aria-selected', String(on));
-      b.tabIndex = on ? 0 : -1;
-    });
-    if (q) q.textContent = d.q;
-    if (goal) goal.textContent = d.goal;
-    root.querySelectorAll<HTMLElement>('[data-name="4"]').forEach((n) => (n.textContent = d.s5.name));
-    steps.forEach((s, i) => {
-      const h = s.querySelector<HTMLElement>('[data-h]');
-      const p = s.querySelector<HTMLElement>('[data-p]');
-      if (i === 4 && h) h.textContent = d.s5.h;
-      if (p) p.textContent = i === 4 ? d.s5.p : d.p[i]!;
-      const f = s.querySelector<HTMLElement>('[data-fig]');
-      if (!f) return;
-      const fig = [figQuestion, figModel, figReplay, figAhead, figSearch, figAnswer][i]!(d);
-      f.replaceChildren(fig);
-      if (!reduced) {
-        f.classList.remove('is-in');
-        void f.offsetWidth;
-        f.classList.add('is-in');
+  const ORDER: Tab[] = ['optimize', 'discover', 'coordinate'];
+  let tab: Tab = 'discover';
+  let step = reduced ? 5 : 0;
+  let typer = 0;
+  let auto = 0;
+  let idle = 0;
+  let hold = 0;
+  let inView = false;
+  let lastScrollStep = -1;
+  const desktop = window.matchMedia('(min-width: 1024px) and (min-height: 760px)');
+
+  const typeQuestion = (text: string): void => {
+    window.clearInterval(typer);
+    if (reduced) {
+      qEl.textContent = text;
+      return;
+    }
+    let n = 0;
+    qEl.textContent = '';
+    qEl.classList.add('is-typing');
+    typer = window.setInterval(() => {
+      n += 2;
+      qEl.textContent = text.slice(0, n);
+      if (n >= text.length) {
+        window.clearInterval(typer);
+        qEl.classList.remove('is-typing');
       }
-    });
+    }, 22);
   };
 
-  tabs.forEach((b) =>
-    b.addEventListener('click', () => {
-      if (b.dataset['tab'] === kind) return;
-      render(b.dataset['tab'] as Kind);
+  const render = (typeQ: boolean): void => {
+    const d = RUNS[tab];
+    tabs.forEach((t) => {
+      const on = t.dataset['tab'] === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    if (step5) step5.textContent = d.step5;
+    if (typeQ) typeQuestion(d.q);
+    else qEl.textContent = d.q;
+    goalEl.textContent = d.goal;
+    rail.forEach((li, k) => {
+      li.classList.toggle('is-done', k < step);
+      li.classList.toggle('is-now', k === step);
+    });
+    bar.style.width = `${((step + 1) / 6) * 100}%`;
+    const v = stepView(d, step, !reduced);
+    stage.replaceChildren(v);
+    if (!reduced) {
+      void v.offsetWidth;
+      v.classList.add('is-in');
+    }
+  };
+
+  const stopAuto = (): void => {
+    window.clearInterval(auto);
+    window.clearTimeout(hold);
+    auto = 0;
+  };
+  const nextTab = (): void => {
+    tab = ORDER[(ORDER.indexOf(tab) + 1) % ORDER.length]!;
+    step = 0;
+    lastScrollStep = -1;
+    render(true);
+  };
+  const advance = (): void => {
+    if (step < 5) {
+      step += 1;
+      render(false);
+      if (step === 5) {
+        window.clearInterval(auto);
+        auto = 0;
+        hold = window.setTimeout(() => {
+          nextTab();
+          startAuto();
+        }, 5000);
+      }
+    }
+  };
+  const startAuto = (): void => {
+    if (reduced || auto) return;
+    if (step === 5) {
+      hold = window.setTimeout(() => {
+        nextTab();
+        startAuto();
+      }, 5000);
+      return;
+    }
+    auto = window.setInterval(advance, 2500);
+  };
+  const armIdle = (): void => {
+    window.clearTimeout(idle);
+    if (reduced || !inView) return;
+    idle = window.setTimeout(startAuto, 4000);
+  };
+
+  // --- input ---------------------------------------------------------------------------
+  tabs.forEach((t) =>
+    t.addEventListener('click', () => {
+      stopAuto();
+      tab = t.dataset['tab'] as Tab;
+      step = reduced ? 5 : 0;
+      lastScrollStep = -1;
+      render(true);
+      if (!desktop.matches) startAuto();
+      else armIdle();
     }),
   );
   root.querySelector('[role="tablist"]')?.addEventListener('keydown', (ev) => {
-    const key = (ev as KeyboardEvent).key;
-    if (key !== 'ArrowLeft' && key !== 'ArrowRight') return;
-    const i = tabs.findIndex((b) => b.getAttribute('aria-selected') === 'true');
-    const n = tabs[(i + (key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]!;
-    n.focus();
-    n.click();
+    const k = (ev as KeyboardEvent).key;
+    if (k !== 'ArrowLeft' && k !== 'ArrowRight') return;
+    const i = ORDER.indexOf(tab);
+    const n = tabs.find((b) => b.dataset['tab'] === ORDER[(i + (k === 'ArrowRight' ? 1 : 2)) % 3]);
+    n?.focus();
+    n?.click();
     ev.preventDefault();
   });
+  replay?.addEventListener('click', () => {
+    stopAuto();
+    step = 0;
+    lastScrollStep = -1;
+    render(true);
+    if (!reduced) startAuto();
+  });
+  root.querySelector('.rn__win')?.addEventListener('click', () => {
+    if (desktop.matches || reduced) return;
+    if (!auto) {
+      if (step === 5) {
+        step = 0;
+        render(true);
+      }
+      startAuto();
+    }
+  });
 
-  // The index follows the step in view.
-  const setOn = (i: number) => links.forEach((a, k) => a.classList.toggle('is-on', k === i));
-  setOn(0);
-  const io = new IntersectionObserver(
-    (es) => {
-      es.forEach((e) => {
-        if (e.isIntersecting) setOn(Number((e.target as HTMLElement).dataset['step']));
+  // --- scroll drives the run on a desktop-sized window ---------------------------------
+  const onScroll = (): void => {
+    if (!track || !desktop.matches || reduced) return;
+    const r = track.getBoundingClientRect();
+    const span = r.height - window.innerHeight;
+    if (span <= 0) return;
+    const p = Math.max(0, Math.min(1, -r.top / span));
+    const s = Math.min(5, Math.floor(p * 6));
+    if (r.top > window.innerHeight * 0.5 || r.bottom < 0) return;
+    if (s !== lastScrollStep) {
+      lastScrollStep = s;
+      stopAuto();
+      if (s !== step) {
+        step = s;
+        render(false);
+      }
+    }
+    armIdle();
+  };
+  let q = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (q) return;
+      q = true;
+      requestAnimationFrame(() => {
+        q = false;
+        onScroll();
       });
     },
-    { rootMargin: '-45% 0px -50% 0px' },
+    { passive: true },
   );
-  steps.forEach((s) => io.observe(s));
 
-  render('discover');
+  const io = new IntersectionObserver(
+    (en) => {
+      inView = en.some((e) => e.isIntersecting);
+      if (inView) armIdle();
+      else {
+        window.clearTimeout(idle);
+        stopAuto();
+      }
+    },
+    { threshold: 0.4 },
+  );
+  io.observe(root.querySelector('.rn__win') ?? root);
+  render(!reduced);
+  if (reduced) root.classList.add('is-still');
 }

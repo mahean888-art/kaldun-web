@@ -258,3 +258,13 @@
 .ws-left { padding-bottom: 20px; }
 .ws-decs li + li { margin-top: 2px; }
 .hero, .band--ink { background-size: 100% 100% !important; background-position: 0 0 !important; background-repeat: no-repeat !important; }
+
+/* --- hero corners: four steps, clockwise -------------------------------------------------- */
+.hero__mark { color: rgba(20, 18, 16, 0.45) !important; }
+.hero__mark em { font-style: normal; color: inherit; margin-right: 4px; }
+@media (min-width: 1024px) {
+  .hero__mark--bl { display: inline-flex !important; }
+  .hl--b { margin-bottom: 104px !important; }
+  .hero .hero__actions { margin-bottom: 92px !important; }
+}
+.dm--tabs .dm__q dt { min-height: 0 !important; }

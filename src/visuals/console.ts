@@ -32,8 +32,8 @@ export function initWorkspace(root: HTMLElement): void {
     record: [root.querySelector('[data-record-view]'), root.querySelector('[data-a-record]')],
   };
   const panel = root.querySelector<HTMLElement>('#ws-center-panel');
-  const first = decs[0]?.dataset['dec'] ?? '';
-  const firstStatus = decs[0]?.querySelector<HTMLElement>('[data-status]');
+  const first = root.dataset['runDec'] ?? decs[0]?.dataset['dec'] ?? '';
+  const firstStatus = decs.find((d) => d.dataset['dec'] === first)?.querySelector<HTMLElement>('[data-status]');
   const statusText = firstStatus?.textContent ?? '';
   let current = first;
   let tab: Tab = 'decision';

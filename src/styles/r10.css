@@ -342,7 +342,7 @@ button.tm__dec:focus-visible { outline: 2px solid var(--or); outline-offset: 1px
 .wk__btns { display: flex; gap: 6px; margin-bottom: 16px; }
 .wk__b { flex: 1; padding: 7px 10px; border: 1px solid #dcd8d0; border-radius: 8px; background: #fff; font: inherit; font-size: 12.5px; color: #4a463f; cursor: pointer; }
 .wk__b:hover { border-color: var(--ink); color: var(--ink); }
-.wk__b.is-on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.wk__b.is-on { background: #fff4e3; border-color: var(--or); color: var(--ink); font-weight: 500; }
 .wk__out { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .wk__out div { padding-top: 10px; border-top: 1px solid var(--line); }
 .wk__out dt { font-size: 12px; color: var(--mut); }

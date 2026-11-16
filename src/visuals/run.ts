@@ -93,15 +93,12 @@ function run(F: ReturnType<typeof futures>, on: Set<Term>): Result {
     peaks.push(peak);
   }
   peaks.sort((a, b) => a - b);
-  const q = (arr: Float64Array, p: number): number => {
-    const s = Array.from(arr).sort((a, b) => a - b);
-    return s[Math.floor(p * (s.length - 1))]!;
-  };
   const lo = new Float64Array(HOURS), mid = new Float64Array(HOURS), hi = new Float64Array(HOURS);
   for (let t = 0; t < HOURS; t++) {
-    lo[t] = q(paths[t]!, 0.05);
-    mid[t] = q(paths[t]!, 0.5);
-    hi[t] = q(paths[t]!, 0.95);
+    const sorted = paths[t]!.slice().sort();
+    lo[t] = sorted[Math.floor(0.05 * (N - 1))]!;
+    mid[t] = sorted[Math.floor(0.5 * (N - 1))]!;
+    hi[t] = sorted[Math.floor(0.95 * (N - 1))]!;
   }
   return { prefund: peaks[Math.floor(0.95 * (N - 1))]!, instant: 1 - late / total, lo, mid, hi, refills, open };
 }
@@ -158,26 +155,16 @@ export function initRun(root: HTMLElement): void {
   const stage = root.querySelector<HTMLElement>('.tm__stage');
   if (!host || !oCash || !oInst || !win || !stage) return;
 
-  const F = futures();
-  const key = (s: Set<Term>): string => TERMS.filter((t) => s.has(t)).join('+');
-  const cache = new Map<string, Result>();
-  const get = (s: Set<Term>): Result => {
-    const k = key(s);
-    if (!cache.has(k)) cache.set(k, run(F, s));
-    return cache.get(k)!;
-  };
-  const today = get(new Set());
-  // Try every set of terms; keep the least prefunding that pays 99% at once.
+  // The model, built once the section is near the screen.
+  let get: ((s: Set<Term>) => Result) | null = null;
+  let today: Result | null = null;
   let best = new Set<Term>();
-  for (let m = 0; m < 16; m++) {
-    const s = new Set(TERMS.filter((_, i) => m & (1 << i)));
-    const r = get(s);
-    if (r.instant >= 0.99 && r.prefund < get(best).prefund) best = s;
-  }
-  const ymax = today.prefund * 1.12;
-
+  let ymax = 1;
   let on = new Set<Term>();
+  const key = (s: Set<Term>): string => TERMS.filter((t) => s.has(t)).join('+');
+
   const paint = (): void => {
+    if (!get || !today) return;
     const r = get(on);
     host.innerHTML = chart(r, today, ymax, Math.max(300, host.clientWidth), Math.max(220, host.clientHeight));
     btns.forEach((b) => b.setAttribute('aria-pressed', String(on.has(b.dataset['term'] as Term))));
@@ -185,7 +172,6 @@ export function initRun(root: HTMLElement): void {
     oInst.textContent = `${(Math.floor(r.instant * 1000) / 10).toFixed(1)}%`;
     const isBest = key(on) === key(best);
     setBtns.forEach((b) => b.classList.toggle('is-on', (b.dataset['set'] === 'machine' && isBest) || (b.dataset['set'] === 'today' && on.size === 0)));
-    root.classList.toggle('is-best', isBest);
   };
 
   let timers: number[] = [];
@@ -234,32 +220,57 @@ export function initRun(root: HTMLElement): void {
     paint();
   });
 
-  // At rest: the machine's terms. When first seen: start from today's and add
-  // the machine's terms one at a time.
-  if (reduced) {
+  const build = (): void => {
+    const F = futures();
+    const cache = new Map<string, Result>();
+    get = (s: Set<Term>): Result => {
+      const k = key(s);
+      if (!cache.has(k)) cache.set(k, run(F, s));
+      return cache.get(k)!;
+    };
+    today = get(new Set());
+    // Try every set of terms; keep the least prefunding that pays 99% at once.
+    for (let m = 0; m < 16; m++) {
+      const s = new Set(TERMS.filter((_, i) => m & (1 << i)));
+      const r = get(s);
+      if (r.instant >= 0.99 && r.prefund < get(best).prefund) best = s;
+    }
+    ymax = today.prefund * 1.12;
     on = new Set(best);
     paint();
-    return;
-  }
-  on = new Set(best);
-  paint();
-  const io = new IntersectionObserver(
+  };
+
+  // When first seen: start from today's terms and add the machine's one at a time.
+  const play = (): void => {
+    if (reduced) return;
+    on = new Set();
+    paint();
+    TERMS.filter((t) => best.has(t)).forEach((t, i) =>
+      timers.push(
+        window.setTimeout(() => {
+          on = new Set(on).add(t);
+          paint();
+        }, 1400 + i * 1100),
+      ),
+    );
+  };
+
+  const near = new IntersectionObserver(
     (es) => {
       if (!es.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      on = new Set();
-      paint();
-      const order = TERMS.filter((t) => best.has(t));
-      order.forEach((t, i) =>
-        timers.push(
-          window.setTimeout(() => {
-            on = new Set(on).add(t);
-            paint();
-          }, 1400 + i * 1100),
-        ),
-      );
+      near.disconnect();
+      build();
+    },
+    { rootMargin: '600px 0px' },
+  );
+  near.observe(win);
+  const seen = new IntersectionObserver(
+    (es) => {
+      if (!es.some((e) => e.isIntersecting) || !get) return;
+      seen.disconnect();
+      play();
     },
     { threshold: 0.4 },
   );
-  io.observe(win);
+  seen.observe(win);
 }

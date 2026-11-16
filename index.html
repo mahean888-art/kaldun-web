@@ -137,36 +137,108 @@
         </div>
       </section>
 
-      <section class="band band--paper ps-band tm-band" id="start" data-screen>
+      <section class="band band--paper ps-band" id="start" data-screen>
         <div class="wrap">
-          <div class="tm wk" data-run>
+          <div class="ps" data-run>
             <div class="ps__top">
               <div><p class="chip">Where we start</p><h2 class="h2">Every digital dollar is a promise.</h2></div>
-              <p class="ps__sub tm__sub">To pay anyone, at any hour, through any partner. Its Foresight Machine finds the terms that keep it.</p>
+              <p class="ps__sub">To pay anyone, at any hour, through any partner. That promise runs through a world of issuers, banks, payment companies, exchanges, lenders and funds, each depending on the others. We model that world once. Each institution in it gets its own Foresight Machine.</p>
             </div>
-            <div class="ps__stage tm__stage">
-              <div class="tm__win wk__win" role="region" aria-label="One issuer's weekend across 1,000 futures. Switch the terms the machine can change and see how much cash must wait at banks, and how many redemptions are still paid at once.">
-                <div class="wv__bar0"><p class="wv__ws"><span class="tm__mark" aria-hidden="true"><i></i><i></i></span>Foresight Machine <span class="wv__sl">/</span> <span class="wk__crumb">A dollar issuer <span class="wv__sl">/</span> </span>The weekend</p><p class="wv__src">1,000 futures · Friday 12:00 to Monday 12:00 ET</p></div>
-                <div class="wk__body">
-                  <div class="wk__plot">
-                    <p class="wk__q">How much cash must wait at banks over the weekend?</p><p class="wk__sub">Cash redeemed while banks are closed, as a share of what today’s terms prefund</p>
-                    <div class="wk__chart" data-chart></div>
-                    <p class="wk__legend"><span><i class="lg-band"></i>Cash needed, 90% of futures</span><span><i class="lg-med"></i>Median future</span><span><i class="lg-today"></i>Under today’s terms</span><span><i class="lg-fund"></i>Fund refills</span></p>
+            <div class="ps__stage">
+              <div class="ps__win" role="img" aria-label="A Foresight Machine for a dollar issuer, showing one task: the task and its goal, the model of the issuer in its world, a thousand futures, the search, and the answer with its record.">
+                <div class="ps__bar">
+                  <span class="ps__ws"><i class="ps__mark"></i>Dollar issuer <span class="ps__chev">⌄</span></span>
+                  <span class="ps__crumb"><span>Tasks</span><span class="ps__sl">/</span><b>Instant redemption for Partner N</b></span>
+                  <span class="ps__acts"><span class="ps__dots">···</span><span class="ps__share">Share</span></span>
+                </div>
+                <div class="ps__body">
+                  <aside class="ps__side">
+                    <ul class="ps__nav">
+                      <li><i class="ps__ic ps__ic--o"></i>Overview</li>
+                      <li data-k="2"><i class="ps__ic ps__ic--m"></i>Model</li>
+                      <li class="is-on"><i class="ps__ic ps__ic--d"></i>Tasks</li>
+                      <li data-k="6"><i class="ps__ic ps__ic--r"></i>Record</li>
+                    </ul>
+                    <p class="ps__lab">Open tasks</p>
+                    <ul class="ps__rec">
+                      <li class="is-on">Instant redemption for Partner N</li>
+                      <li>Liquidity buffer, next week</li>
+                      <li>Reserve mix for December</li>
+                      <li>Terms with Exchange E</li>
+                    </ul>
+                    <p class="ps__me"><span>TR</span>Treasury</p>
+                  </aside>
+                  <div class="ps__main">
+                    <h3 class="ps__title">Instant redemption for Partner N</h3>
+                    <div class="ps__tabsrow">
+                      <span class="ps__tabs"><span class="is-on">Overview</span><span>Model</span><span>Futures</span><span>Search</span><span>Record</span></span>
+                      <span class="ps__run">Run again</span>
+                    </div>
+                    <div class="ps__grid">
+                      <section class="ps-c" data-c="1"><b class="ps-n">1</b>
+                        <p class="ps-c__h">Task <span>set by Treasury</span></p>
+                        <p class="ps-q">Offer instant redemption to Partner N’s merchants.</p>
+                        <p class="ps-kv"><span>Goal</span>Every redemption paid within minutes, at any hour</p>
+                        <p class="ps-kv"><span>Verified by</span><em class="v">78 replayed weeks</em><em class="v">1,000 futures</em><em class="v">The outcome</em></p>
+                        <p class="ps-kv"><span>May change</span><em>Reserve mix</em><em>Cash by bank</em><em>Timing</em><em>Partner limits</em><em>Partner terms</em></p>
+                        <p class="ps-kv"><span>Must hold</span><em>Reserve policy</em><em>OCC rule</em><em>Service promises</em></p>
+                      </section>
+                      <section class="ps-c" data-c="2"><b class="ps-n">2</b>
+                        <p class="ps-c__h">Model <span>v15 · updated 2 hours ago</span></p>
+                        <dl class="ps-m">
+                          <div><dt>The world <i>shared</i></dt><dd>25 banks and their settlement windows, 140 partners, 12 chains, rates and markets</dd></div>
+                          <div><dt>The issuer <i>its own</i></dt><dd>Reserve of $41.6B in a reserve fund and cash at banks, the mint and redemption ledger</dd></div>
+                          <div><dt>Policy</dt><dd>Reserve rules, monthly attestation, limits per bank</dd></div>
+                        </dl>
+                        <p class="ps-foot">Checked against 78 past weeks · within 1.8%</p>
+                      </section>
+                      <section class="ps-c" data-c="3"><b class="ps-n">3</b>
+                        <p class="ps-c__h">Futures <span>1,000 over two years</span></p>
+                        <div class="ps-f">
+                          <p class="ps-f__lg"><span><i class="o"></i>The draft</span><span><i class="f"></i>Added by the terms found</span></p>
+                          <div class="ps-f__r"><span>Adoption is slow</span><span>96% → <strong>100%</strong></span><i><b class="o" style="width:96%"></b><b class="f" style="left:96%;width:4%"></b></i></div><div class="ps-f__r"><span>Adoption is fast</span><span>73% → <strong>100%</strong></span><i><b class="o" style="width:73%"></b><b class="f" style="left:73%;width:27%"></b></i></div><div class="ps-f__r"><span>Partner N doubles</span><span>81% → <strong>100%</strong></span><i><b class="o" style="width:81%"></b><b class="f" style="left:81%;width:19%"></b></i></div><div class="ps-f__r"><span>A bank leaves</span><span>88% → <strong>99%</strong></span><i><b class="o" style="width:88%"></b><b class="f" style="left:88%;width:11%"></b></i></div>
+                        </div>
+                        <p class="ps-foot">Promise holds, share of futures</p>
+                      </section>
+                      <section class="ps-c" data-c="4"><b class="ps-n">4</b>
+                        <p class="ps-c__h">Search <span>312 arrangements tried</span></p>
+                        <ol class="ps-s">
+                          <li><span>1</span>A daily instant limit per merchant<em>without it 84%</em></li>
+                          <li><span>2</span>Notice before very large redemptions<em>without it 93%</em></li>
+                          <li><span>3</span>A morning redemption from the reserve fund<em>without it 89%</em></li>
+                        </ol>
+                        <p class="ps-foot">Found by the machine; none was in the draft</p>
+                      </section>
+                    </div>
                   </div>
-                  <aside class="wk__side">
-                    <p class="wv__k">Terms the machine may change</p>
-                    <ul class="wk__terms"><li><button type="button" class="wk__t" data-term="limit" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A daily limit per merchant</b><em>Amounts above it settle next business morning.</em></span></button></li><li><button type="button" class="wk__t" data-term="notice" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>Notice for very large redemptions</b><em>Large redemptions are scheduled for Monday.</em></span></button></li><li><button type="button" class="wk__t" data-term="fund" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A morning fund redemption, every day</b><em>The fund refills bank cash at 8:00, weekends too.</em></span></button></li><li><button type="button" class="wk__t" data-term="bank" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A second bank with longer hours</b><em>Open until 20:00 Friday and from 18:00 Sunday.</em></span></button></li></ul>
-                    <div class="wk__btns"><button type="button" class="wk__b" data-set="today">Today’s terms</button><button type="button" class="wk__b wk__b--m" data-set="machine">The machine’s terms</button></div>
-                    <dl class="wk__out">
-                      <div><dt>Cash prefunded before Friday’s close</dt><dd><b data-o-cash>100%</b> <span>of today’s</span></dd></div>
-                      <div><dt>Redemptions paid at once</dt><dd><b data-o-inst>100%</b> <span>of volume</span></dd></div>
-                    </dl>
-                    <p class="wk__note" data-o-note>16 arrangements, each run across the same 1,000 futures. The machine keeps the least idle cash that still pays 99% at once.</p>
+                  <aside class="ps__right">
+                    <section class="ps-a" data-c="5"><b class="ps-n">5</b>
+                      <p class="ps-c__h">Answer</p>
+                      <p class="ps-a__t">Yes, with three terms.</p>
+                      <dl class="ps-a__d"><div><dt>Promise holds</dt><dd>73% → <strong>100%</strong></dd></div><div><dt>Extra cash</dt><dd>$1.2B → <strong>$0.4B</strong></dd></div></dl>
+                      <p class="ps-lab">Scored against</p>
+                      <dl class="ps-a__s"><div><dt>The rules</dt><dd>Pass</dd></div><div><dt>The past</dt><dd>Pass</dd></div><div><dt>The futures</dt><dd>100%</dd></div><div><dt>The outcome</dt><dd class="is-p">Pending</dd></div></dl>
+                    </section>
+                    <section class="ps-p" data-c="6"><b class="ps-n">6</b>
+                      <p class="ps-c__h">Record</p>
+                      <dl class="ps-a__s"><div><dt>Status</dt><dd><span class="ps-tag">Answer ready</span></dd></div><div><dt>Recorded</dt><dd>Nov 6, before outcome</dd></div><div><dt>Asked by</dt><dd>Treasury</dd></div></dl>
+                      <p class="ps-lab">Files</p>
+                      <ul class="ps-files"><li>partner_n_draft_v3.pdf</li><li>partner_n_merchants.csv</li></ul>
+                    </section>
                   </aside>
                 </div>
+                <span class="ps__ask">Ask</span>
               </div>
             </div>
-            <p class="ps__ask2"><span>We model this world once. Every institution in it gets its own machine.</span> <a href="/discuss/">Ask your own <span aria-hidden="true">→</span></a></p>
+            <ol class="ps__legend">
+              <li data-k="1"><span>1</span><b>Task</b>Set by the team: a goal, what may change, and how the answer is checked.</li>
+              <li data-k="2"><span>2</span><b>Model</b>The institution in its world, checked against the past.</li>
+              <li data-k="3"><span>3</span><b>Futures</b>The decision tried across a thousand futures.</li>
+              <li data-k="4"><span>4</span><b>Search</b>Arrangements no one listed, tried and ranked.</li>
+              <li data-k="5"><span>5</span><b>Answer</b>With its evidence, scored against rules, past and futures.</li>
+              <li data-k="6"><span>6</span><b>Record</b>Written down before the outcome, then scored against it.</li>
+            </ol>
+            <p class="ps__ask2"><span>In a Foresight Machine, any question can be asked of the model.</span> <a href="/discuss/">Ask your own <span aria-hidden="true">→</span></a></p>
           </div>
         </div>
       </section>

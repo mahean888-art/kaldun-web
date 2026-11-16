@@ -139,11 +139,7 @@ export function initRun(root: HTMLElement): void {
   const play = (): void => {
     clear();
     render();
-    // Hold the document at its finished height, so nothing below it moves.
-    body.style.minHeight = '';
-    root.classList.add('is-done');
-    body.style.minHeight = `${body.offsetHeight}px`;
-    root.classList.remove('is-done');
+
     foot.classList.remove('is-on');
     if (reduced) {
       finished();
@@ -166,7 +162,6 @@ export function initRun(root: HTMLElement): void {
   decs.forEach((b) =>
     b.addEventListener('click', () => {
       id = b.dataset['doc']!;
-      body.style.minHeight = '';
       decs.forEach((x) => {
         const on = x === b;
         x.classList.toggle('is-on', on);
@@ -175,6 +170,28 @@ export function initRun(root: HTMLElement): void {
       play();
     }),
   );
+
+  // Scale the window to fit the screen: its full width, and no taller than the screen allows.
+  const win = root.querySelector<HTMLElement>('.tm__win')!;
+  const stage = root.querySelector<HTMLElement>('.tm__stage')!;
+  const wide = window.matchMedia('(min-width: 768px)');
+  const fit = (): void => {
+    if (!wide.matches) {
+      win.style.transform = '';
+      stage.style.height = '';
+      stage.style.maxWidth = '';
+      return;
+    }
+    const pad = 40;
+    const outer = (stage.parentElement as HTMLElement).clientWidth;
+    const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
+    const k = Math.min(1, (outer - pad) / 1120, (window.innerHeight - headerH - 96 - pad) / 640);
+    win.style.transform = `scale(${k})`;
+    stage.style.maxWidth = `${pad + 1120 * k}px`;
+    stage.style.height = `${pad + 640 * k}px`;
+  };
+  fit();
+  window.addEventListener('resize', fit);
 
   // Draw the finished state first, so the page is complete at rest; play when seen.
   render();

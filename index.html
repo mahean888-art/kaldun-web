@@ -139,41 +139,30 @@
 
       <section class="band band--paper ps-band tm-band" id="start" data-screen>
         <div class="wrap">
-          <div class="tm wv" data-run>
+          <div class="tm wk" data-run>
             <div class="ps__top">
               <div><p class="chip">Where we start</p><h2 class="h2">Every digital dollar is a promise.</h2></div>
               <p class="ps__sub tm__sub">To pay anyone, at any hour, through any partner. Its Foresight Machine finds the terms that keep it.</p>
             </div>
             <div class="ps__stage tm__stage">
-              <div class="tm__win wv__win" role="region" aria-label="The world a Foresight Machine models for programmable money, from public data, and the questions each kind of institution asks of it.">
-                <div class="wv__bar0"><p class="wv__ws"><span class="tm__mark" aria-hidden="true"><i></i><i></i></span>Foresight Machine <span class="wv__sl">/</span> Programmable money</p><p class="wv__src"><i></i>World model · public data, mid-November 2026</p></div>
-                <div class="wv__body">
-                  <section class="wv__col wv__world">
-                    <p class="wv__k">The world</p>
-                    <p class="wv__big">$290B</p>
-                    <p class="wv__bigl">digital dollars in circulation, down 3% in two weeks</p>
-                    <p class="wv__k wv__k--s">By issuer</p>
-                    <div class="wv__bar"><i style="--w:60" class="c1"></i><i style="--w:24" class="c2"></i><i style="--w:16" class="c3"></i></div><ul class="wv__lg"><li><span class="sw c1"></span>Tether <b>60%</b></li><li><span class="sw c2"></span>Circle <b>24%</b></li><li><span class="sw c3"></span>Others <b>16%</b></li></ul>
-                    <p class="wv__k wv__k--s">By chain</p>
-                    <div class="wv__bar"><i style="--w:46" class="c1"></i><i style="--w:33" class="c2"></i><i style="--w:21" class="c3"></i></div><ul class="wv__lg"><li><span class="sw c1"></span>Ethereum <b>46%</b></li><li><span class="sw c2"></span>Tron <b>33%</b></li><li><span class="sw c3"></span>Others <b>21%</b></li></ul>
-                    <p class="wv__k wv__k--s">Who it connects</p>
-                    <p class="wv__who">Issuers · banks · exchanges · wallets · payment companies · lenders · funds</p>
-                  </section>
-                  <section class="wv__col wv__forces">
-                    <p class="wv__k">What is moving</p>
-                    <ol>
-                      <li><b>A distribution price war.</b> Issuers pay exchanges and wallets more of their reserve income, up to all of it, just as rates fall.</li>
-                      <li><b>Banks are coming.</b> Twenty-one plan a joint dollar for 2027; a tokenized-deposit network is being built.</li>
-                      <li><b>Liquidity is splitting.</b> New payment chains grow fast, and every dollar must be where it is spent.</li>
-                      <li><b>Weekends.</b> Card networks now settle on weekends. The cash behind every dollar sits in banks that close.</li>
-                    </ol>
-                  </section>
-                  <section class="wv__col wv__ask">
-                    <p class="wv__k">Questions for your machine</p>
-                    <div class="wv__roles" role="tablist" aria-label="Kind of institution"><button type="button" role="tab" data-role="issuer" aria-selected="true">Issuer</button><button type="button" role="tab" data-role="bank" aria-selected="false" tabindex="-1">Bank</button><button type="button" role="tab" data-role="exchange" aria-selected="false" tabindex="-1">Exchange</button><button type="button" role="tab" data-role="pay" aria-selected="false" tabindex="-1">Payment company</button></div>
-                    <ol class="wv__qs" data-qs aria-live="polite"></ol>
-                    <p class="wv__note">Each runs in its own machine, on the same world: replayed against the past, tried across a thousand futures, and written down before the outcome.</p>
-                  </section>
+              <div class="tm__win wk__win" role="region" aria-label="One issuer's weekend across 1,000 futures. Switch the terms the machine can change and see how much cash must wait at banks, and how many redemptions are still paid at once.">
+                <div class="wv__bar0"><p class="wv__ws"><span class="tm__mark" aria-hidden="true"><i></i><i></i></span>Foresight Machine <span class="wv__sl">/</span> <span class="wk__crumb">A dollar issuer <span class="wv__sl">/</span> </span>The weekend</p><p class="wv__src">1,000 futures · Friday 12:00 to Monday 12:00 ET</p></div>
+                <div class="wk__body">
+                  <div class="wk__plot">
+                    <p class="wk__q">How much cash must wait at banks over the weekend?</p><p class="wk__sub">Cash redeemed while banks are closed, as a share of what today’s terms prefund</p>
+                    <div class="wk__chart" data-chart></div>
+                    <p class="wk__legend"><span><i class="lg-band"></i>Cash needed, 90% of futures</span><span><i class="lg-med"></i>Median future</span><span><i class="lg-today"></i>Under today’s terms</span><span><i class="lg-fund"></i>Fund refills</span></p>
+                  </div>
+                  <aside class="wk__side">
+                    <p class="wv__k">Terms the machine may change</p>
+                    <ul class="wk__terms"><li><button type="button" class="wk__t" data-term="limit" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A daily limit per merchant</b><em>Amounts above it settle next business morning.</em></span></button></li><li><button type="button" class="wk__t" data-term="notice" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>Notice for very large redemptions</b><em>Large redemptions are scheduled for Monday.</em></span></button></li><li><button type="button" class="wk__t" data-term="fund" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A morning fund redemption, every day</b><em>The fund refills bank cash at 8:00, weekends too.</em></span></button></li><li><button type="button" class="wk__t" data-term="bank" aria-pressed="false"><span class="wk__sw" aria-hidden="true"></span><span><b>A second bank with longer hours</b><em>Open until 20:00 Friday and from 18:00 Sunday.</em></span></button></li></ul>
+                    <div class="wk__btns"><button type="button" class="wk__b" data-set="today">Today’s terms</button><button type="button" class="wk__b wk__b--m" data-set="machine">The machine’s terms</button></div>
+                    <dl class="wk__out">
+                      <div><dt>Cash prefunded before Friday’s close</dt><dd><b data-o-cash>100%</b> <span>of today’s</span></dd></div>
+                      <div><dt>Redemptions paid at once</dt><dd><b data-o-inst>100%</b> <span>of volume</span></dd></div>
+                    </dl>
+                    <p class="wk__note" data-o-note>16 arrangements, each run across the same 1,000 futures. The machine keeps the least idle cash that still pays 99% at once.</p>
+                  </aside>
                 </div>
               </div>
             </div>

@@ -1,58 +1,58 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "www.foresightmachines.com"
         }
       ],
-      "destination": "https://foresightmachines.com/:path*",
+      "destination": "https://foresightmachines.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "kaldun.ai"
         }
       ],
-      "destination": "https://foresightmachines.com/:path*",
+      "destination": "https://foresightmachines.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "www.kaldun.ai"
         }
       ],
-      "destination": "https://foresightmachines.com/:path*",
+      "destination": "https://foresightmachines.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "ulmolabs.com"
         }
       ],
-      "destination": "https://foresightmachines.com/:path*",
+      "destination": "https://foresightmachines.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "www.ulmolabs.com"
         }
       ],
-      "destination": "https://foresightmachines.com/:path*",
+      "destination": "https://foresightmachines.com/$1",
       "permanent": true
     },
     {

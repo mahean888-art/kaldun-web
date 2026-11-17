@@ -1,6 +1,71 @@
 {
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.foresightmachines.com"
+        }
+      ],
+      "destination": "https://foresightmachines.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "kaldun.ai"
+        }
+      ],
+      "destination": "https://foresightmachines.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.kaldun.ai"
+        }
+      ],
+      "destination": "https://foresightmachines.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ulmolabs.com"
+        }
+      ],
+      "destination": "https://foresightmachines.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ulmolabs.com"
+        }
+      ],
+      "destination": "https://foresightmachines.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/example",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/example/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/journal/introducing-foresight-machines",
       "destination": "/journal/the-future-should-be-engineered-with-foresight/",
       "permanent": true

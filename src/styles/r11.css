@@ -164,3 +164,12 @@
 .dm--tabs .dm__art img { mix-blend-mode: normal; }
 .dm--tabs .dm__cap { display: none !important; }
 @media (max-width: 899px) { .dm--tabs .dm__art img { object-position: 50% 62%; } }
+
+/* Worlds panel: grows to its text instead of overflowing; the drawing fills whatever height results. */
+@media (min-width: 900px) {
+  .dm--tabs .dm__panel { height: auto !important; min-height: clamp(500px, 38vw, 580px); display: grid; }
+  .dm--tabs .dm__panel > .dm__p { grid-area: 1 / 1; height: auto; }
+  .dm--tabs .dm__panel > .dm__p[hidden] { display: grid !important; visibility: hidden; pointer-events: none; }
+  .dm--tabs .dm__art { height: auto; min-height: 100%; }
+  .dm--tabs .dm__art img { position: absolute; inset: 0; }
+}

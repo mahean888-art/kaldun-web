@@ -116,10 +116,21 @@ export function initRun(root: HTMLElement): void {
     const inner = stage.clientWidth - parseFloat(cs.paddingLeft);
     const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
     const avail = window.innerHeight - headerH - 48 - padT;
-    let k = 1;
-    for (let i = 0; i < 4; i++) {
+    // The largest scale whose layout, widened to fill the frame, still fits the height.
+    const fits = (k: number): boolean => {
       win.style.width = `${inner / k}px`;
-      k = Math.max(0.62, Math.min(1, avail / win.offsetHeight));
+      return win.offsetHeight * k <= avail;
+    };
+    let k = 1;
+    if (!fits(1)) {
+      let lo = 0.62;
+      let hi = 1;
+      for (let i = 0; i < 12; i++) {
+        const mid = (lo + hi) / 2;
+        if (fits(mid)) lo = mid;
+        else hi = mid;
+      }
+      k = lo;
     }
     win.style.width = `${inner / k}px`;
     win.style.transformOrigin = '0 0';

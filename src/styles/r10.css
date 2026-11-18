@@ -190,3 +190,4 @@
   .ps__right { padding-bottom: 0 !important; }
   .ps__ask { position: static; width: auto; margin: 0 16px 16px; }
 }
+.ps-a__n b { font-weight: 500; color: var(--ink); }

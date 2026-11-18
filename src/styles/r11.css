@@ -219,3 +219,46 @@
   .screen--discuss .form input, .screen--discuss .form textarea { margin-top: 0.35rem; padding: 0.45rem 0 0.6rem; }
   .screen--discuss .form textarea { min-height: clamp(4.5rem, 15vh, 10rem); }
 }
+
+/* ---- How it works: the four steps as a rail beside the film (Nov 18) ---- */
+.fm { display: grid; grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); align-items: center; column-gap: clamp(32px, 4vw, 56px); }
+.fm__rail { display: flex; flex-direction: column; gap: 22px; }
+.fm__ch { display: flex !important; flex-direction: column; gap: 0; flex: none; }
+.fm__ch li { margin: 0; }
+.fm__ch button { display: grid !important; grid-template-columns: 34px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 0; row-gap: 6px; align-items: baseline; flex-wrap: nowrap; padding: 16px 0 16px 22px !important; color: var(--ink) !important; position: relative; }
+.fm__ch i { position: absolute; left: 0; top: 0; bottom: 0; right: auto; width: 2px; height: auto !important; background: rgba(20, 18, 16, 0.12); }
+.fm__ch b { width: 100% !important; height: 0; }
+.fm__ch button.is-done b { height: 100% !important; }
+.fm__n { grid-column: 1; grid-row: 1; font-family: var(--mono); font-size: 12px; color: #8a857c; }
+.fm__t { grid-column: 2; grid-row: 1; font-family: var(--serif); font-size: clamp(22px, 1.9vw, 28px); line-height: 1.05; color: var(--ink); }
+.fm__d { grid-column: 2; grid-row: 2; font-size: 14.5px; line-height: 1.45; color: #4a463f; }
+.fm__ch button.is-on .fm__n { color: #a85f00; }
+.fm__ch button.is-on .fm__t { color: var(--ink); }
+.fm__ch button:hover .fm__t { text-decoration: underline; text-decoration-color: #f39200; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.fm__ch button:focus-visible { outline: 2px solid #f39200; outline-offset: 2px; }
+.fm__play { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; margin-left: 22px; padding: 7px 14px 7px 12px; }
+.fm__pi { position: relative; width: 9px; height: 10px; }
+.fm__pi::before, .fm__pi::after { content: ''; position: absolute; top: 0; width: 3px; height: 10px; background: var(--ink); }
+.fm__pi::before { left: 0; } .fm__pi::after { right: 0; }
+.fm.is-paused .fm__pi::before { width: 0; height: 0; background: none; border-left: 9px solid var(--ink); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.fm.is-paused .fm__pi::after { display: none; }
+.fm__frame { justify-self: end; }
+@media (min-width: 1024px) and (min-height: 700px) {
+  .fm__frame { width: min(calc(60% + 40% * var(--p)), calc((100svh - var(--header-h) - 150px) * 16 / 9)) !important; }
+  .fm__rail { opacity: calc(var(--p) * 1.6 - 0.6); transform: translateX(calc((1 - var(--p)) * -24px)); }
+}
+@media (max-width: 1023px), (max-height: 699px) {
+  .fm { grid-template-columns: minmax(0, 1fr); row-gap: 18px; }
+  .fm__rail { order: 2; gap: 14px; }
+  .fm__frame { order: 1; justify-self: stretch; }
+  .fm__ch button { padding: 12px 0 12px 16px !important; grid-template-columns: 30px minmax(0, 1fr); }
+  .fm__n { display: inline !important; }
+  .fm__t { font-size: 20px; }
+  .fm__d { font-size: 14px; }
+  .fm__play { margin-left: 16px; }
+}
+/* the play control sits in the film's corner; the rail's rhythm follows the screen height */
+.fm__play { position: absolute; z-index: 2; right: 14px; bottom: 14px; margin: 0 !important; background: rgba(255, 253, 248, 0.94) !important; }
+.fm__ch button { padding-top: clamp(10px, 1.9vh, 18px) !important; padding-bottom: clamp(10px, 1.9vh, 18px) !important; }
+.fm__d { font-size: clamp(13.5px, 1.65vh, 15px); }
+@media (max-width: 1023px), (max-height: 699px) { .fm__frame { position: relative; } .fm__play { right: 10px; bottom: 10px; padding: 5px 11px 5px 10px; font-size: 12px; } }

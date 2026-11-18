@@ -4,7 +4,8 @@
  * As the section scrolls in, the screen opens from a narrow band to the full
  * width, then the film plays in the site's four steps: Model (opening on the
  * world, then the institution inside it), Simulate, Discover and Record. The
- * step bar shows where it is and jumps on click; the film loops.
+ * step rail beside it names each step, fills a line beside the one playing, and
+ * jumps on click; the film loops.
  * The scenes themselves are CSS keyed on data-s (src/styles/r11.css).
  * Under reduced motion the screen is open and the last scene is shown still.
  */
@@ -63,7 +64,7 @@ export function initFilm(root: HTMLElement): void {
       const span = SCENES.filter((x) => x[2] === st);
       const total = span.reduce((a, x) => a + x[0], 0);
       const before = SCENES.slice(FIRST[st - 1]! - 1, s - 1).reduce((a, x) => a + x[0], 0);
-      b.style.width = `${Math.min(100, ((before + performance.now() - t0) / total) * 100)}%`;
+      b.style.height = `${Math.min(100, ((before + performance.now() - t0) / total) * 100)}%`;
     }
     raf = requestAnimationFrame(tick);
   };
@@ -73,7 +74,7 @@ export function initFilm(root: HTMLElement): void {
     cancelAnimationFrame(raf);
     chips.forEach((c, k) => {
       const b = c.querySelector<HTMLElement>('b');
-      if (b) b.style.width = k + 1 < step(s) ? '100%' : '0%';
+      if (b) b.style.height = k + 1 < step(s) ? '100%' : '0%';
     });
     if (paused) return;
     t0 = performance.now();
@@ -103,7 +104,8 @@ export function initFilm(root: HTMLElement): void {
   );
   play?.addEventListener('click', () => {
     paused = !paused;
-    play.textContent = paused ? 'Play' : 'Pause';
+    const pt = play.querySelector<HTMLElement>('[data-play-t]');
+    if (pt) pt.textContent = paused ? 'Play' : 'Pause';
     play.setAttribute('aria-label', paused ? 'Play the film' : 'Pause the film');
     root.classList.toggle('is-paused', paused);
     if (!paused) started = true;

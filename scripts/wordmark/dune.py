@@ -90,7 +90,13 @@ def mark(text='FORESIGHT MACHINES'):
         x += w + GAP
     return x - GAP, ''.join(ds), dots
 
-def svg_inner(clip_id, color='currentColor', stroke=S):
+def weight(stroke):
+    """Rebuild the geometry at another stroke, so bars stay inside the cap height."""
+    global S, h, TOP, BOT
+    S = float(stroke); h = S / 2; TOP, BOT = h, H - h
+
+def svg_inner(clip_id, color='currentColor', stroke=10.0):
+    weight(stroke)
     w, d, dots = mark()
     return w, (f'<clipPath id="{clip_id}"><rect x="-2" y="0" width="{f(w+4)}" height="100"/></clipPath>'
                f'<g clip-path="url(#{clip_id})" fill="none" stroke="{color}" stroke-width="{f(stroke)}" stroke-linejoin="miter" stroke-miterlimit="8">'

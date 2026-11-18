@@ -152,7 +152,7 @@
 
 /* --- the drawn wordmark ---------------------------------------------------------------- */
 .wm--draw { display: block; width: auto; height: 1em; overflow: visible; }
-.bar__brand .wm--draw { height: 15px; color: #171007; }
+.bar__brand .wm--draw { height: 16px; color: #171007; }
 .ws-brand .wm--draw { height: 11px; color: #18181b; }
 @media (max-width: 480px) { .bar__brand .wm--draw { height: 12px; } }
 

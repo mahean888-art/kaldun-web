@@ -8,8 +8,10 @@ ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 PAGES = ['index.html', 'discuss/index.html', 'journal/index.html',
          'journal/the-future-should-be-engineered-with-foresight/index.html', '404.html', 'demo/index.html']
 
+NAV_STROKE = 15  # the top bar shows the mark at ~16px tall: a heavier cut, about 2.3px strokes
+
 def nav_svg(n):
-    w, inner = dune.svg_inner(f'wmc{n}')
+    w, inner = dune.svg_inner(f'wmc{n}', stroke=NAV_STROKE)
     return f'<svg class="wm wm--draw" viewBox="-4 -4 {dune.f(w+8)} 108" role="img" aria-label="Foresight Machines">{inner}</svg>'
 
 for i, page in enumerate(PAGES):

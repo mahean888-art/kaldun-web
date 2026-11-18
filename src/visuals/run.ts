@@ -1,4 +1,3 @@
-import { prefersReducedMotion } from '../lib/prefers';
 /**
  * Where we start: one screen of the product.
  *
@@ -74,46 +73,8 @@ function initPersonas(root: HTMLElement): void {
   });
 }
 
-// Prompt chips: clicking one types it into the Ask bar, and carries it to the Discuss page.
-function initPrompts(root: HTMLElement): void {
-  const ask = root.querySelector<HTMLElement>('[data-ask]');
-  const q = root.querySelector<HTMLElement>('[data-ask-q]');
-  const own = root.querySelector<HTMLAnchorElement>('[data-ask-own]');
-  const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-prompt]'));
-  if (!ask || !q) return;
-  const reduced = prefersReducedMotion();
-  let t = 0;
-  chips.forEach((c) =>
-    c.addEventListener('click', () => {
-      const text = c.textContent ?? '';
-      chips.forEach((x) => {
-        x.classList.toggle('is-on', x === c);
-        x.setAttribute('aria-pressed', String(x === c));
-      });
-      if (own) own.href = `/discuss/?q=${encodeURIComponent(text)}`;
-      ask.classList.add('is-filled');
-      window.clearInterval(t);
-      if (reduced) {
-        q.textContent = text;
-        return;
-      }
-      let n = 0;
-      ask.classList.add('is-typing');
-      t = window.setInterval(() => {
-        n += 2;
-        q.textContent = text.slice(0, n);
-        if (n >= text.length) {
-          window.clearInterval(t);
-          ask.classList.remove('is-typing');
-        }
-      }, 22);
-    }),
-  );
-}
-
 export function initRun(root: HTMLElement): void {
   initPersonas(root);
-  initPrompts(root);
   const items = Array.from(root.querySelectorAll<HTMLElement>('.ps__legend [data-k]'));
   const win = root.querySelector<HTMLElement>('.ps__win');
   if (!win) return;

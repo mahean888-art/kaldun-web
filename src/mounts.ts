@@ -46,11 +46,12 @@ function mountActions(root: ParentNode): void {
 }
 
 /**
- * The decision form. With an endpoint configured, the fields are posted there.
- * Without one, or if the post fails, the fields become a mail to the address
- * in the sender's own mail app. Either way the page says what happened, and
- * when it is the mail app, the message is shown ready to copy, so a visitor
- * without a mail app loses nothing.
+ * The decision form posts straight to the endpoint and confirms on the page.
+ * It never opens a mail app on its own: many bank and treasury setups block
+ * mail-app links, so messages would be lost silently. If the post fails, the
+ * page says so and shows the message ready to copy, with a mail-app link the
+ * visitor can choose to use. A question carried from the home page (?q=)
+ * starts the decision field.
  */
 function wireForm(root: ParentNode): void {
   const form = qs<HTMLFormElement>('[data-decision-form]', root);
@@ -67,6 +68,10 @@ function wireForm(root: ParentNode): void {
   const subject = 'Discuss a decision';
   let message = '';
 
+  const carried = new URLSearchParams(window.location.search).get('q');
+  const decisionField = form.querySelector<HTMLTextAreaElement>('[name="decision"]');
+  if (carried && decisionField && !decisionField.value) decisionField.value = carried.slice(0, 500);
+
   const reveal = (): void => {
     done.hidden = false;
     done.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -77,11 +82,20 @@ function wireForm(root: ParentNode): void {
     if (lead) lead.textContent = `Thank you. We will reply to ${reply}.`;
     if (text) text.hidden = true;
     if (actions) actions.hidden = true;
+    form.hidden = true;
     reveal();
   };
 
   const showMail = (body: string, href: string): void => {
     message = `To: ${EMAIL}\nSubject: ${subject}\n\n${body}`;
+    if (head) head.textContent = 'Not sent yet';
+    if (lead) {
+      lead.textContent = 'The form could not reach us just now. Copy the message below and send it to ';
+      const a = document.createElement('a');
+      a.href = `mailto:${EMAIL}`;
+      a.textContent = EMAIL;
+      lead.append(a, '.');
+    }
     if (text) {
       text.hidden = false;
       text.textContent = message;
@@ -110,7 +124,7 @@ function wireForm(root: ParentNode): void {
     const fields = { name: get('name'), reply: get('reply'), org: get('org'), role: get('role'), decision: get('decision') };
     const body = [
       `Name: ${fields.name}`,
-      `Organization: ${fields.org}`,
+      `Institution: ${fields.org}`,
       `Role: ${fields.role}`,
       `Work email: ${fields.reply}`,
       `The decision:\n${fields.decision}`,
@@ -120,7 +134,6 @@ function wireForm(root: ParentNode): void {
 
     const byMail = (): void => {
       showMail(body, href);
-      window.location.href = href;
     };
 
     if (!FORM_ENDPOINT) {
@@ -141,7 +154,7 @@ function wireForm(root: ParentNode): void {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         Name: fields.name,
-        Organization: fields.org,
+        Institution: fields.org,
         Role: fields.role,
         'Work email': fields.reply,
         'The decision': fields.decision,

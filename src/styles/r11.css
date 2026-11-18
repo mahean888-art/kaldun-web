@@ -20,7 +20,7 @@
 @keyframes fm-cap { from { opacity: 0; transform: translateY(8px); } }
 
 .fm__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 16px auto 0; }
-.fm__ch { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; flex: 1; margin: 0; padding: 0; }
+.fm__ch { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; flex: 1; margin: 0; padding: 0; }
 .fm__ch button { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; width: 100%; padding: 0 0 10px; border: 0; background: none; font: inherit; font-size: 14px; color: #8a857c; text-align: left; cursor: pointer; position: relative; transition: color 0.2s ease-out; }
 .fm__ch button:hover, .fm__ch button.is-on { color: var(--ink); }
 .fm__n { font-family: var(--mono); font-size: 12px; }
@@ -48,7 +48,7 @@
   .fm__cap { position: static; max-width: none; margin-top: 10px; border-radius: 10px; }
   .fm__frame { overflow: visible; aspect-ratio: auto; background: none; }
   .fm__svg { aspect-ratio: 16 / 9; height: auto; border-radius: 12px; }
-  .fm__ch { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .fm__ch { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .fm__ch button { font-size: 12px; }
 }
 
@@ -159,7 +159,7 @@
 @media (max-width: 760px) { #mission .ms__lamps { display: none; } }
 
 /* --- worlds: the film's drawings, no studio stage ------------------------------------------ */
-.dm--tabs .dm__art { background: #cfe3f2 !important; }
+.dm--tabs .dm__art { background: #efeae0 !important; }
 .dm--tabs .dm__art::after { display: none; }
 .dm--tabs .dm__art img { mix-blend-mode: normal; }
 .dm--tabs .dm__cap { display: none !important; }
@@ -173,3 +173,17 @@
   .dm--tabs .dm__art { height: auto; min-height: 100%; }
   .dm--tabs .dm__art img { position: absolute; inset: 0; }
 }
+
+/* Film: the caption box is solid from its first frame; only the words move in. */
+.fm__cap { background: #fffdf8; }
+@keyframes fm-cap { from { color: transparent; transform: translateY(4px); } }
+
+/* Worlds: four questions, Optimize to Underwrite, in a 2 × 2 grid */
+@media (min-width: 900px) {
+  .dm--tabs .dm__qs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dm--tabs .dm__q { min-height: 0 !important; gap: 8px; padding: 14px 16px 16px; }
+  .dm--tabs .dm__q dd { font-size: 18px; line-height: 1.22; }
+}
+
+/* Discuss: the confirmation replaces the form once it is sent */
+.form[hidden] { display: none !important; }

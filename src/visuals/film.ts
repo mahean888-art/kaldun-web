@@ -2,20 +2,25 @@
  * The film: one illustrated landscape of four worlds, in five scenes.
  *
  * As the section scrolls in, the screen opens from a narrow band to the full
- * width, then the film plays: the world, then Model, Simulate, Discover and
- * Record. The chapter bar shows where it is and jumps on click; the film loops.
+ * width, then the film plays in the site's four steps: Model (opening on the
+ * world, then the institution inside it), Simulate, Discover and Record. The
+ * step bar shows where it is and jumps on click; the film loops.
  * The scenes themselves are CSS keyed on data-s (src/styles/r11.css).
  * Under reduced motion the screen is open and the last scene is shown still.
  */
 import { prefersReducedMotion } from '../lib/prefers';
 
-const SCENES: Array<[number, string]> = [
-  [7000, 'An institution, and the world it depends on: its capital, contracts, counterparties, markets, and rules.'],
-  [8000, 'The world, built once, and the institution inside it, built from its own records.'],
-  [9000, 'Each decision is tried against past events and a thousand futures.'],
-  [9000, 'It optimizes within today’s terms, then searches for terms no one has listed.'],
-  [10000, 'Every answer is written down before the outcome, then scored. Each outcome makes the model more faithful.'],
+const MODEL = 'The institution, and the world it depends on: its capital, contracts, counterparties, markets and rules.';
+// Scenes: [duration, caption, step]. The world and the institution are both step 01, Model.
+const SCENES: Array<[number, string, number]> = [
+  [6000, MODEL, 1],
+  [7000, MODEL, 1],
+  [9000, 'Each decision is tried against past events and many possible futures.', 2],
+  [9000, 'It searches beyond today’s options for allocations, terms and sequences that hold.', 3],
+  [9000, 'The answer and its evidence, recorded before the outcome.', 4],
 ];
+const FIRST = [1, 3, 4, 5]; // the first scene of each step
+const step = (n: number): number => SCENES[n - 1]![2];
 const OPEN_AT = 0.86;
 
 export function initFilm(root: HTMLElement): void {
@@ -36,22 +41,30 @@ export function initFilm(root: HTMLElement): void {
   const setScene = (n: number): void => {
     s = n;
     root.dataset['s'] = String(n);
-    if (cap) {
+    if (cap && cap.textContent !== SCENES[n - 1]![1]) {
       cap.classList.remove('is-in');
       void cap.offsetWidth;
       cap.textContent = SCENES[n - 1]![1];
       cap.classList.add('is-in');
     }
+    const st = step(n);
     chips.forEach((c, k) => {
-      c.classList.toggle('is-on', k + 1 === n);
-      c.classList.toggle('is-done', k + 1 < n);
-      c.setAttribute('aria-current', k + 1 === n ? 'step' : 'false');
+      c.classList.toggle('is-on', k + 1 === st);
+      c.classList.toggle('is-done', k + 1 < st);
+      c.setAttribute('aria-current', k + 1 === st ? 'step' : 'false');
     });
   };
 
   const tick = (): void => {
-    const b = chips[s - 1]?.querySelector<HTMLElement>('b');
-    if (b) b.style.width = `${Math.min(100, ((performance.now() - t0) / SCENES[s - 1]![0]) * 100)}%`;
+    // A step's bar fills across all of its scenes.
+    const st = step(s);
+    const b = chips[st - 1]?.querySelector<HTMLElement>('b');
+    if (b) {
+      const span = SCENES.filter((x) => x[2] === st);
+      const total = span.reduce((a, x) => a + x[0], 0);
+      const before = SCENES.slice(FIRST[st - 1]! - 1, s - 1).reduce((a, x) => a + x[0], 0);
+      b.style.width = `${Math.min(100, ((before + performance.now() - t0) / total) * 100)}%`;
+    }
     raf = requestAnimationFrame(tick);
   };
 
@@ -60,7 +73,7 @@ export function initFilm(root: HTMLElement): void {
     cancelAnimationFrame(raf);
     chips.forEach((c, k) => {
       const b = c.querySelector<HTMLElement>('b');
-      if (b) b.style.width = k + 1 < s ? '100%' : '0%';
+      if (b) b.style.width = k + 1 < step(s) ? '100%' : '0%';
     });
     if (paused) return;
     t0 = performance.now();
@@ -84,7 +97,7 @@ export function initFilm(root: HTMLElement): void {
     c.addEventListener('click', () => {
       started = true;
       root.classList.add('is-playing');
-      setScene(k + 1);
+      setScene(FIRST[k]!);
       schedule();
     }),
   );

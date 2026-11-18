@@ -1,11 +1,12 @@
-<svg class="fm__svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a small machine that models it, tries it across a thousand futures, finds what holds, and records its answer before the outcome.">
+<svg class="fm__svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">
 <defs>
 <filter id="fm-hand" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
-<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd9ee"/><stop offset=".72" stop-color="#e6f0f5"/></linearGradient>
+<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece6da"/><stop offset=".72" stop-color="#f5f1e8"/></linearGradient>
 <pattern id="fm-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#7a9cb8" stroke-width="1" opacity=".55"/></pattern>
+<pattern id="fm-draft" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0v48" fill="none" stroke="#141210" stroke-width="1" opacity=".07"/></pattern>
 </defs>
 <rect class="fm-skyfill" width="1600" height="900" fill="url(#fm-sky)"/>
-<g class="fm-sun"><circle cx="1330" cy="150" r="54" fill="#fbe2a2" stroke="#1d1a17" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></g>
+<rect width="1600" height="900" fill="url(#fm-draft)"/>
 <g class="fm-clouds" filter="url(#fm-hand)">
 <g class="fm-cl" style="--dx:60px;--dur:42s"><path transform="translate(90 70) scale(1.6)" d="M10 40c-12 0-13-15 0-17 0-14 18-19 27-9 5-15 31-15 36 0 12-7 28 2 24 14 13 0 15 12 3 13z" fill="#fff" stroke="#1d1a17" stroke-width="1.375" stroke-linejoin="round" stroke-linecap="round"/></g>
 <g class="fm-cl" style="--dx:65px;--dur:58s"><path transform="translate(520 40) scale(1.1)" d="M10 40c-12 0-13-15 0-17 0-14 18-19 27-9 5-15 31-15 36 0 12-7 28 2 24 14 13 0 15 12 3 13z" fill="#fff" stroke="#1d1a17" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/></g>
@@ -13,7 +14,6 @@
 <g class="fm-cl" style="--dx:74px;--dur:41s"><path transform="translate(1120 40) scale(0.9)" d="M10 40c-12 0-13-15 0-17 0-14 18-19 27-9 5-15 31-15 36 0 12-7 28 2 24 14 13 0 15 12 3 13z" fill="#fff" stroke="#1d1a17" stroke-width="2.4444444444444446" stroke-linejoin="round" stroke-linecap="round"/></g>
 <g class="fm-cl" style="--dx:63px;--dur:56s"><path transform="translate(1430 250) scale(1.0)" d="M10 40c-12 0-13-15 0-17 0-14 18-19 27-9 5-15 31-15 36 0 12-7 28 2 24 14 13 0 15 12 3 13z" fill="#fff" stroke="#1d1a17" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></g>
 </g>
-<g class="fm-birds" fill="none" stroke="#1d1a17" stroke-width="2.2" stroke-linecap="round"><path d="M640 230q10-10 20 0q10-10 20 0M700 262q8-8 16 0q8-8 16 0M600 280q7-7 14 0q7-7 14 0"/></g>
 <rect class="fm-gridfill" width="1600" height="900" fill="url(#fm-grid)"/>
 <g class="fm-cards">
 <g class="fm-cardk" style="--k:0"><rect x="300" y="150" width="1000" height="600" rx="18" fill="#fffdf8" stroke="#1d1a17" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M360 600h880M380 600v-90h40v90M440 600v-150h50v150M520 600v-60h60v60M640 600l40-60h120l40 60M900 600v-110m-40 0h80M1000 600l30-130 30 130M1100 600h100v-40h-100z" fill="none" stroke="#b8b1a5" stroke-width="3"/></g>
@@ -195,6 +195,5 @@
 <path pathLength="1" style="--n:2" d="M1170 734Q1300 616 1430 734" fill="none" stroke="#f39200" stroke-width="5" stroke-linecap="round"/>
 </g>
 </g>
-<g class="fm-machine"><g class="fm-mbody"><path d="M80 0v26" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="80" cy="-6" r="9" fill="#f39200" stroke="#1d1a17" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><rect x="10" y="26" width="140" height="104" rx="22" fill="#e7c98f" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g class="fm-eyes"><rect x="44" y="56" width="26" height="26" fill="#1d1a17"/><rect x="90" y="56" width="26" height="26" fill="#1d1a17"/></g><path d="M58 104q22 12 44 0" fill="none" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><rect x="34" y="130" width="92" height="34" rx="10" fill="#d8b778" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="54" cy="172" r="11" fill="#fff" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="106" cy="172" r="11" fill="#fff" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path class="fm-arm" d="M150 80q40-6 54-40" fill="none" stroke="#1d1a17" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g></g>
 <g class="fm-rec"><rect x="980" y="560" width="420" height="250" rx="14" fill="#fffdf8" stroke="#1d1a17" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><text x="1012" y="612" class="fm-t fm-t--k">RECORDED BEFORE THE OUTCOME</text><text x="1012" y="664" class="fm-t fm-t--b">The answer, with its evidence</text><path d="M1012 700h300M1012 730h260M1012 760h220" stroke="#1d1a17" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity=".35"/><g class="fm-stamp"><circle cx="1330" cy="740" r="44" fill="none" stroke="#f39200" stroke-width="5"/><path d="M1308 742l16 16 30-34" fill="none" stroke="#f39200" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
 </svg>

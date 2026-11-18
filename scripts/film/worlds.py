@@ -29,6 +29,7 @@ class P:
                f'<path d="M0 32 30 4l30 28" fill="none" stroke="{roof}" stroke-width="7" stroke-linecap="round"/><path d="M0 32 30 4l30 28" fill="none" {st(1.6)}/>'
                f'<rect x="22" y="42" width="15" height="22" fill="#a8c4da" {st(1.6)}/></g>')
     def machine(self, x, y, s=0.62):
+        return  # the robot is retired; the worlds carry the frame
         self.a(f'<g transform="translate({x} {y}) scale({s})"><path d="M80 0v26" {st(3)}/><circle cx="80" cy="-6" r="9" fill="#f39200" {st(2.4)}/>'
                f'<rect x="10" y="26" width="140" height="104" rx="22" fill="#e7c98f" {st(3)}/>'
                f'<rect x="44" y="56" width="26" height="26" fill="{INK}"/><rect x="90" y="56" width="26" height="26" fill="{INK}"/>'
@@ -37,8 +38,8 @@ class P:
     def svg(self, label):
         head = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="{label}">'
                 '<defs><filter id="h" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>'
-                '<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd9ee"/><stop offset="1" stop-color="#e8f1f5"/></linearGradient></defs>'
-                '<rect width="800" height="1000" fill="url(#sky)"/>')
+                '<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece6da"/><stop offset="1" stop-color="#f5f1e8"/></linearGradient><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0v48" fill="none" stroke="#141210" stroke-width="1" opacity=".07"/></pattern></defs>'
+                '<rect width="800" height="1000" fill="url(#sky)"/><rect width="800" height="1000" fill="url(#g)"/>')
         return head + '<g filter="url(#h)">' + ''.join(self.o) + '</g></svg>'
 
 def ground(p, y=640, col='#efe6cd', hill='#dfe6b8'):
@@ -107,7 +108,6 @@ open(os.path.join(OUT, 'w-risk.svg'), 'w').write(p.svg('Houses, shops and a smal
 
 # ---------------------------------------------------------------- energy and infrastructure
 p = P()
-p.a(f'<circle cx="640" cy="170" r="70" fill="#fbe2a2" {st()}/>')
 p.cloud(70, 120, 1.3)
 ground(p, 660)
 for x, y in [(150, 330), (300, 280), (450, 340)]:

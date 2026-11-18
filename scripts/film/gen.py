@@ -43,20 +43,20 @@ def house(x, y, s=1.0, roof='#c9553a', fill='#f6efe2'):
 def tree(x, y, s=1.0):
     o(f'<g transform="translate({x} {y}) scale({s})"><path d="M0 0v30" {st(2.4)}/><circle cx="0" cy="-8" r="17" fill="#a7c98f" {st()}/></g>')
 
-o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a small machine that models it, tries it across a thousand futures, finds what holds, and records its answer before the outcome.">')
+o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">')
 o('<defs>')
 o('<filter id="fm-hand" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>')
-o('<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd9ee"/><stop offset=".72" stop-color="#e6f0f5"/></linearGradient>')
+o('<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece6da"/><stop offset=".72" stop-color="#f5f1e8"/></linearGradient>')
 o('<pattern id="fm-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#7a9cb8" stroke-width="1" opacity=".55"/></pattern>')
+o('<pattern id="fm-draft" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0v48" fill="none" stroke="#141210" stroke-width="1" opacity=".07"/></pattern>')
 o('</defs>')
 
 # ---------------------------------------------------------------- sky
 o('<rect class="fm-skyfill" width="1600" height="900" fill="url(#fm-sky)"/>')
-o(f'<g class="fm-sun"><circle cx="1330" cy="150" r="54" fill="#fbe2a2" {st()}/></g>')
+o('<rect width="1600" height="900" fill="url(#fm-draft)"/>')
 o('<g class="fm-clouds" filter="url(#fm-hand)">')
 cloud(90, 70, 1.6); cloud(520, 40, 1.1); cloud(860, 110, 1.4); cloud(1120, 40, 0.9); cloud(1430, 250, 1.0)
 o('</g>')
-o('<g class="fm-birds" fill="none" stroke="#1d1a17" stroke-width="2.2" stroke-linecap="round"><path d="M640 230q10-10 20 0q10-10 20 0M700 262q8-8 16 0q8-8 16 0M600 280q7-7 14 0q7-7 14 0"/></g>')
 o('<rect class="fm-gridfill" width="1600" height="900" fill="url(#fm-grid)"/>')
 
 # ---------------------------------------------------------------- futures cards (behind the world)
@@ -147,17 +147,6 @@ o(f'<path pathLength="1" style="--n:1" d="M1150 620h60v34h-60zM1166 620v-8h12v8"
 o(f'<path pathLength="1" style="--n:2" d="M1170 734Q1300 616 1430 734" fill="none" stroke="#f39200" stroke-width="5" stroke-linecap="round"/>')
 o('</g>')
 o('</g>')  # world
-
-# ---------------------------------------------------------------- the machine
-o('<g class="fm-machine"><g class="fm-mbody">'
-  f'<path d="M80 0v26" {st(3)}/><circle cx="80" cy="-6" r="9" fill="#f39200" {st(2.4)}/>'
-  f'<rect x="10" y="26" width="140" height="104" rx="22" fill="#e7c98f" {st(3)}/>'
-  f'<g class="fm-eyes"><rect x="44" y="56" width="26" height="26" fill="{INK}"/><rect x="90" y="56" width="26" height="26" fill="{INK}"/></g>'
-  f'<path d="M58 104q22 12 44 0" fill="none" {st(3)}/>'
-  f'<rect x="34" y="130" width="92" height="34" rx="10" fill="#d8b778" {st(3)}/>'
-  f'<circle cx="54" cy="172" r="11" fill="#fff" {st(3)}/><circle cx="106" cy="172" r="11" fill="#fff" {st(3)}/>'
-  f'<path class="fm-arm" d="M150 80q40-6 54-40" fill="none" {st(4)}/>'
-  '</g></g>')
 
 # ---------------------------------------------------------------- scene 5: the record
 o('<g class="fm-rec">'

@@ -23,7 +23,7 @@
     <meta property="og:image" content="https://foresightmachines.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Foresight Machines. Simulate what could happen. Discover what could work." />
+    <meta property="og:image:alt" content="Foresight Machines. Simulate what could happen. Discover what works." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Discuss a decision" />
     <meta name="twitter:description" content="Tell us what you’re weighing, what’s at stake, and what would change your mind." />
@@ -59,27 +59,27 @@
                 <label>Name
                   <input name="name" type="text" autocomplete="name" required />
                 </label>
+                <label>Institution
+                  <input name="org" type="text" autocomplete="organization" required />
+                </label>
+              </div>
+              <div class="form__row">
+                <label>Role
+                  <input name="role" type="text" autocomplete="organization-title" />
+                </label>
                 <label>Work email
                   <input name="reply" type="email" autocomplete="email" required />
                 </label>
               </div>
-              <div class="form__row">
-                <label>Organization
-                  <input name="org" type="text" autocomplete="organization" required />
-                </label>
-                <label>Role
-                  <input name="role" type="text" autocomplete="organization-title" />
-                </label>
-              </div>
-              <label>The decision
+              <label>The decision you want to discuss
                 <textarea name="decision" required></textarea>
               </label>
               <input class="form__honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <p><button class="btn" type="submit">Discuss a decision</button></p>
             </form>
             <div class="form__done" data-form-done role="status" aria-live="polite" hidden>
-              <p class="form__done-head" data-done-head>Message ready</p>
-              <p class="form__done-lead" data-done-lead>Your mail app should open with the message written. If it didn&rsquo;t, copy it and send it to <a data-email href="#"></a>.</p>
+              <p class="form__done-head" data-done-head>Received</p>
+              <p class="form__done-lead" data-done-lead></p>
               <pre class="form__done-text" data-done-text></pre>
               <p class="form__done-actions" data-done-actions><button class="btn" type="button" data-done-copy>Copy message</button><a class="form__done-link" data-done-mail href="#">Open in mail app &rarr;</a></p>
             </div>

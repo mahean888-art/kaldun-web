@@ -17,7 +17,7 @@ const SCENES: Array<[number, string, number]> = [
   [6000, MODEL, 1],
   [7000, MODEL, 1],
   [9000, 'Each decision is stress-tested against past crises and extreme conditions, to find exactly where it breaks.', 2],
-  [9000, 'It searches beyond today’s options for allocations, terms and sequences that hold.', 3],
+  [9000, 'It finds the change that holds: a new allocation, new terms, a new sequence.', 3],
   [9000, 'The answer and its evidence, recorded before the outcome.', 4],
 ];
 const FIRST = [1, 3, 4, 5]; // the first scene of each step

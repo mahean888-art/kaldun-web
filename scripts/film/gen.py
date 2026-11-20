@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the illustrated film (an inline SVG) for the home page.
 
-One panorama of four worlds (money, trade, energy, insurance) drawn in a
+One panorama of the worlds we model (money, power, trade) drawn in a
 hand-inked style. Scenes are driven by CSS from a data-s attribute
 (src/styles/r11.css, src/visuals/film.ts). Run: python3 scripts/film/gen.py > src/partials/film.svg
 """
@@ -43,7 +43,7 @@ def house(x, y, s=1.0, roof='#c9553a', fill='#f6efe2'):
 def tree(x, y, s=1.0):
     o(f'<g transform="translate({x} {y}) scale({s})"><path d="M0 0v30" {st(2.4)}/><circle cx="0" cy="-8" r="17" fill="#a7c98f" {st()}/></g>')
 
-o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">')
+o(f'<svg class="fm__svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of the worlds we model, money, power and trade, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">')
 o('<defs>')
 o('<filter id="fm-hand" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>')
 o('<linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece6da"/><stop offset=".72" stop-color="#f5f1e8"/></linearGradient>')

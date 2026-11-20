@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The four Worlds pictures, drawn in the film's hand-inked style.
+"""The Worlds pictures (money, power, trade; the insurance picture is retired from the site), drawn in the film's hand-inked style.
 
 Each is 800 x 1000, its subject kept between y 200 and 800 so a 4:3 crop on
 phones keeps it. One orange route in each: what the machine would change.
@@ -66,7 +66,7 @@ p.tree(470, 860, 1.1); p.tree(60, 880, 1.2)
 p.machine(80, 790)
 open(os.path.join(OUT, 'w-money.svg'), 'w').write(p.svg('A city of banks and towers, coins moving along the road to shops; one route from the bank to the shops drawn in orange.'))
 
-# ---------------------------------------------------------------- trade and commodities
+# ---------------------------------------------------------------- trade and critical supply chains
 p = P()
 p.cloud(80, 110, 1.2); p.cloud(480, 160, 1.4)
 p.a(f'<path d="M0 560Q200 520 400 550T800 530V1000H0z" fill="#efe6cd" {st()}/>')
@@ -89,7 +89,7 @@ p.a(f'<path d="M30 960Q300 900 560 940T800 930" fill="none" stroke="#f39200" str
 p.machine(60, 600, 0.55)
 open(os.path.join(OUT, 'w-trade.svg'), 'w').write(p.svg('A port: silos, a crane over stacked containers, a tank farm and a container ship; one shipping lane drawn in orange.'))
 
-# ---------------------------------------------------------------- insurance and risk transfer
+# ---------------------------------------------------------------- insurance (retired from the site)
 p = P()
 p.a(f'<g><path d="M120 250c-30 0-34-36 0-40 0-34 46-42 64-18 12-34 70-34 80 0 28-12 62 6 52 32 28 2 28 28 2 28z" fill="#7f8e9a" {st()}/>'
     + ''.join(f'<path d="M{150+k*32} 276l-14 44" stroke="#5d8fb0" stroke-width="4" stroke-linecap="round"/>' for k in range(6)) + '</g>')

@@ -262,3 +262,55 @@
 .fm__ch button { padding-top: clamp(10px, 1.9vh, 18px) !important; padding-bottom: clamp(10px, 1.9vh, 18px) !important; }
 .fm__d { font-size: clamp(13.5px, 1.65vh, 15px); }
 @media (max-width: 1023px), (max-height: 699px) { .fm__frame { position: relative; } .fm__play { right: 10px; bottom: 10px; padding: 5px 11px 5px 10px; font-size: 12px; } }
+
+/* ---- Worlds, Nov 20: three worlds; each panel is title, promise, who, four questions ---- */
+.dm--tabs .dm__list { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.dm--tabs .dm__promise { margin: 12px 0 0; max-width: 30ch; font-family: var(--serif); font-size: clamp(20px, 1.6vw, 24px); line-height: 1.22; color: var(--ink); }
+.dm--tabs .dm__for { margin: 14px 0 0; font-family: var(--mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.12em; text-transform: uppercase; color: #6f6a62; }
+@media (max-width: 899px) {
+  .dm--tabs .dm__promise { font-size: 20px; }
+  .dm--tabs .dm__q { display: grid; gap: 6px; padding: 12px 0; border: 0; border-top: 1px solid rgba(20, 18, 16, 0.12); background: none; }
+}
+@media (min-width: 900px) {
+  .dm--tabs .dm__panel { grid-template-rows: minmax(min(540px, calc(100svh - var(--header-h, 54px) - 150px)), auto); min-height: 0; }
+  .dm--tabs .dm__panel > .dm__p { align-self: stretch; }
+}
+.dm--tabs .dm__for > span:not(.dm__sep) { white-space: nowrap; }
+
+/* ---- Validation, Nov 20: three stages, four rules, one closing line ---- */
+.vn--v3 { display: block; }
+.vn--v3 .vn__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 5vw, 96px); align-items: end; }
+.vn--v3 .vn__head .h2 { max-width: 20ch; }
+.vn--v3 .vn__head .lead { margin: 0; max-width: 36ch; }
+.vn__stages { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: clamp(32px, 5vh, 56px) 0 0; padding: 0; border-top: 1px solid rgba(20, 18, 16, 0.16); border-bottom: 1px solid rgba(20, 18, 16, 0.16); counter-reset: st; }
+.vn__st { position: relative; padding: clamp(18px, 2.6vh, 28px) clamp(18px, 2.2vw, 32px) clamp(20px, 2.8vh, 30px); border-left: 1px solid rgba(20, 18, 16, 0.12); }
+.vn__st:first-child { padding-left: 0; border-left: 0; }
+.vn__st:not(:last-child)::after { content: ''; position: absolute; z-index: 1; right: -5px; top: clamp(24px, 3.2vh, 34px); width: 9px; height: 9px; border-top: 1.5px solid #f39200; border-right: 1.5px solid #f39200; transform: rotate(45deg); background: #fbfaf6; }
+.vn__sk { display: flex; align-items: baseline; gap: 12px; margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #a85f00; }
+.vn__sk span { color: #8a857c; letter-spacing: 0.06em; }
+.vn__sl { margin: 12px 0 0; font-family: var(--serif); font-size: clamp(24px, 2vw, 30px); line-height: 1.1; color: var(--ink); }
+.vn__sb { margin: 10px 0 0; max-width: 38ch; font-size: 15px; line-height: 1.5; color: #4a463f; }
+.vn--v3 .vn__list { margin-top: clamp(20px, 3.4vh, 40px); border-top: 0; }
+.vn--v3 .vn__r { grid-template-columns: clamp(56px, 6vw, 96px) minmax(0, 1fr); padding: clamp(12px, 1.8vh, 18px) 0; }
+.vn--v3 .vn__n { font-size: clamp(30px, 2.8vw, 44px); }
+.vn--v3 .vn__t { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 3vw, 48px); align-items: baseline; font-family: inherit; font-size: inherit; }
+.vn--v3 .vn__t b { font-family: var(--serif); font-weight: 400; font-size: clamp(21px, 1.7vw, 26px); line-height: 1.2; color: var(--ink); }
+.vn--v3 .vn__t span { font-size: 16px; line-height: 1.5; color: #3e3a34; }
+.vn__close { margin: clamp(18px, 2.6vh, 28px) 0 0; font-size: 14px; line-height: 1.5; color: #6f6a62; }
+@media (max-width: 899px) {
+  .vn--v3 .vn__head { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .vn__stages { grid-template-columns: minmax(0, 1fr); }
+  .vn__st, .vn__st:first-child { padding: 18px 0; border-left: 0; border-top: 1px solid rgba(20, 18, 16, 0.12); }
+  .vn__st:first-child { border-top: 0; }
+  .vn__st::after { display: none; }
+  .vn--v3 .vn__t { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+}
+@media (min-width: 900px) {
+  .vn--v3 .vn__head { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); }
+  .vn--v3 .vn__head .h2 { max-width: 23ch; }
+  .vn--v3 .vn__n { font-size: clamp(28px, min(2.8vw, 4.8vh), 44px); }
+  .vn--v3 .vn__t b { font-size: clamp(20px, min(1.7vw, 3vh), 26px); }
+}
+@media (min-width: 900px) {
+  .vn--v3 .vn__head .h2 { max-width: none; font-size: clamp(38px, min(3.5vw, 6.2vh), 56px) !important; }
+}

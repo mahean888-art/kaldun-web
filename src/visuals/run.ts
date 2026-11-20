@@ -10,9 +10,9 @@ const PERSONAS: Record<string, { k: string; t: string; n: string; q: string }> =
   payments: { k: 'This world', t: 'Payment company', n: 'We model the world once; each institution gets its own machine.', q: 'Where should liquidity sit so every payout clears, at any hour, with the least cash trapped?' },
   exchange: { k: 'This world', t: 'Exchange', n: 'We model the world once; each institution gets its own machine.', q: 'Which distribution terms grow balances that stay, for us and the issuer?' },
   bank: { k: 'This world', t: 'Bank', n: 'We model the world once; each institution gets its own machine.', q: 'What should it cost to cover redemptions that cannot clear over a weekend?' },
-  trader: { k: 'Next, on the same engine', t: 'Commodity trader', n: 'Commodities and global trade', q: 'Hedge now, or hold and finance the inventory?' },
-  mga: { k: 'Next, on the same engine', t: 'Specialty MGA', n: 'Insurance and emergent risk', q: 'How should a risk with no loss history be priced and layered?' },
-  grid: { k: 'Next, on the same engine', t: 'Grid and compute developer', n: 'Energy, compute and megainfrastructure', q: 'Stage the build, or finance it whole?' },
+  trader: { k: 'Next, on the same engine', t: 'Commodity trader', n: 'Trade and critical supply chains', q: 'How should cargo at sea be hedged and routed if a strait closes?' },
+  mga: { k: 'Next, on the same engine', t: 'Specialty MGA', n: 'Underwrite, across all three worlds', q: 'What should it cost to cover a late project, when power, equipment and debt depend on each other?' },
+  grid: { k: 'Next, on the same engine', t: 'Grid and compute developer', n: 'Power, compute and megainfrastructure', q: 'Which build plan still holds if interconnection slips two years?' },
 };
 
 function initPersonas(root: HTMLElement): void {

@@ -1,5 +1,5 @@
 /**
- * The film: one illustrated landscape of four worlds, in five scenes.
+ * The film: one illustrated landscape of the worlds we model, in five scenes.
  *
  * As the section scrolls in, the screen opens from a narrow band to the full
  * width, then the film plays in the site's four steps: Model (opening on the
@@ -16,7 +16,7 @@ const MODEL = 'The institution, and the world it depends on: its capital, contra
 const SCENES: Array<[number, string, number]> = [
   [6000, MODEL, 1],
   [7000, MODEL, 1],
-  [9000, 'Each decision is stress-tested against past crises and extreme conditions, to find exactly where it breaks.', 2],
+  [9000, 'Each decision is stress-tested against past crises and the smallest shock that breaks it.', 2],
   [9000, 'It finds the change that holds: a new allocation, new terms, a new sequence.', 3],
   [9000, 'The answer and its evidence, recorded before the outcome.', 4],
 ];

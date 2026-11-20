@@ -1,4 +1,4 @@
-<svg class="fm__svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of four worlds, money, trade, energy and insurance, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">
+<svg class="fm__svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landscape of the worlds we model, money, power and trade, and a machine that models it, tries it across many possible futures, finds what holds, and records its answer before the outcome.">
 <defs>
 <filter id="fm-hand" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
 <linearGradient id="fm-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece6da"/><stop offset=".72" stop-color="#f5f1e8"/></linearGradient>

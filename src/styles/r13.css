@@ -1,20 +1,17 @@
 /* ==========================================================================
-   r13 — Unified Foresight Machines Architectural System
-   One cohesive warm alabaster + carbon ink + industrial amber daylight system:
-   1. Colossal boxed section markers + delicate diagonal hatch bars (.col-bar)
-   2. Authentic vintage Braun/Astromech warm amber indicator torches (.hero__clusters)
-   3. Unified warm-paper triad (#mission) & brushed-stone chassis (#start)
-   4. Colossal warm-stone halftone orbital ring + left beacon axis (#mission)
-   5. Teknoir-structured light architectural Worlds gallery + 3D maquettes (#domains)
+   r13 — Foresight Machines · Unified Architectural Design System
+   Daylight warm alabaster (#f6f4ef), gallery paper (#fcfbf8), studio stone
+   (#eeebe3), deep carbon ink (#141210), and industrial amber (#f0900a) used
+   strictly as signal.
    ========================================================================== */
 
-/* ---- 1. Colossal Diagonal-Hatch Architectural Section Bars --------------- */
+/* ---- 1. Architectural Section Index Bars (Colossal-inspired) ------------- */
 .col-bar {
   display: grid;
-  grid-template-columns: auto minmax(44px, 200px) minmax(0, 1fr);
+  grid-template-columns: auto minmax(44px, 190px) minmax(0, 1fr);
   align-items: center;
   gap: 16px;
-  margin-bottom: clamp(22px, 2.8vw, 36px);
+  margin-bottom: clamp(24px, 2.8vw, 38px);
 }
 .col-bar__tag {
   display: inline-block;
@@ -32,7 +29,7 @@
   height: 9px;
   background: repeating-linear-gradient(
     -58deg,
-    rgba(20, 18, 16, 0.24) 0 1px,
+    rgba(20, 18, 16, 0.22) 0 1px,
     transparent 1px 5px
   );
 }
@@ -53,9 +50,29 @@
   }
 }
 
-/* ---- 2. Authentic Vintage Machine-Grid Amber Torches --------------------- */
-.hero__clusters {
+/* ---- 2. Vintage Machine-Grid Bottom Indicator Torches -------------------- */
+/* Flat satin recessed hardware LEDs on a machined 12-column chassis rail     */
+.hero__strip.hero__clusters {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: start !important;
+  bottom: calc((var(--inset) + var(--hb)) / 2 - 17px) !important;
+  padding-top: 9px !important;
+}
+/* Subtle vertical chassis ticks anchoring the indicator array to the 12-col grid */
+.hero__strip.hero__clusters::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(20, 18, 16, 0.2) 0 1px,
+    transparent 1px calc(100% / 12)
+  );
+  pointer-events: none;
 }
 .hero__clusters .lc {
   display: inline-flex !important;
@@ -69,122 +86,183 @@
 .hero__clusters .lc__row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+}
+.hero__clusters .lc__leg {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 7px;
+  text-transform: uppercase;
+  color: rgba(20, 18, 16, 0.44);
+  white-space: nowrap;
+  user-select: none;
 }
 .hero__clusters .lc__row i {
   display: block;
-  width: 9px !important;
-  height: 9px !important;
+  width: 7px !important;
+  height: 7px !important;
   border-radius: 50%;
   border: 0 !important;
-  transition: background 0.55s ease, box-shadow 0.55s ease, opacity 0.55s ease;
+  transition: background-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
+/* Lit satin amber lens: crisp hardware precision, zero glossy bubble glare */
 .hero__clusters .lc__row i.l {
-  background: radial-gradient(circle at 36% 32%, #ffd88a 0%, #f39200 56%, #d47400 100%) !important;
-  box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.22), 0 0 9px rgba(243, 146, 0, 0.42) !important;
+  background: #f0900a !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(140, 68, 0, 0.36),
+    0 0 4px rgba(240, 144, 10, 0.34) !important;
   opacity: 1 !important;
 }
+/* Dim warm-stone recessed socket */
 .hero__clusters .lc__row i.d {
-  background: radial-gradient(circle at 40% 35%, rgba(243, 146, 0, 0.34), rgba(212, 116, 0, 0.22)) !important;
-  box-shadow: inset 0 1px 1px rgba(20, 18, 16, 0.08) !important;
+  background: rgba(176, 134, 84, 0.32) !important;
+  box-shadow: inset 0 0 0 0.8px rgba(20, 18, 16, 0.14) !important;
   opacity: 1 !important;
 }
+/* Standby open hairline ring */
 .hero__clusters .lc__row i.o {
   background: transparent !important;
-  box-shadow: inset 0 0 0 1.4px rgba(240, 144, 10, 0.72) !important;
+  box-shadow: inset 0 0 0 1.2px rgba(20, 18, 16, 0.38) !important;
 }
 .hero__clusters .lc__row i.gap {
   visibility: hidden;
   box-shadow: none !important;
 }
+/* Slow machine state alternation (driven by src/components/lamps.ts) */
 .hero__clusters .lc__row i.is-alt.l {
-  background: radial-gradient(circle at 40% 35%, rgba(243, 146, 0, 0.34), rgba(212, 116, 0, 0.22)) !important;
-  box-shadow: inset 0 1px 1px rgba(20, 18, 16, 0.08) !important;
+  background: rgba(176, 134, 84, 0.32) !important;
+  box-shadow: inset 0 0 0 0.8px rgba(20, 18, 16, 0.14) !important;
 }
 .hero__clusters .lc__row i.is-alt.d {
-  background: radial-gradient(circle at 36% 32%, #ffd88a 0%, #f39200 56%, #d47400 100%) !important;
-  box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.22), 0 0 9px rgba(243, 146, 0, 0.42) !important;
+  background: #f0900a !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(140, 68, 0, 0.36),
+    0 0 4px rgba(240, 144, 10, 0.34) !important;
 }
-@keyframes fm-vintage-beep {
-  0%, 48%, 100% {
+@keyframes fm-hardware-beep {
+  0%, 52%, 100% {
+    background: #f0900a;
+    box-shadow: inset 0 0 0 1px rgba(140, 68, 0, 0.38), 0 0 5px rgba(240, 144, 10, 0.42);
     opacity: 1;
-    box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.25), 0 0 10px rgba(243, 146, 0, 0.5);
   }
-  62%, 78% {
-    opacity: 0.34;
-    box-shadow: none;
+  58%, 82% {
+    background: rgba(176, 134, 84, 0.28);
+    box-shadow: inset 0 0 0 0.8px rgba(20, 18, 16, 0.14);
+    opacity: 0.72;
   }
 }
 .hero__clusters .lc__row i.is-beep {
-  animation: fm-vintage-beep 2.2s ease-in-out infinite;
+  animation: fm-hardware-beep 2.4s ease-in-out infinite;
+}
+@media (max-width: 1120px) {
+  .hero__clusters .lc__leg { display: none; }
+}
+@media (max-width: 759px) {
+  .hero__strip.hero__clusters {
+    bottom: 14px !important;
+  }
+  .hero__clusters .lc__row i {
+    width: 6.5px !important;
+    height: 6.5px !important;
+  }
 }
 
-/* ---- 3. #film — Clean 2-Column Editorial Head ---------------------------- */
+/* ---- 3. #film — 02 · How It Works (Maquette & Temporal Slice Stage) ------ */
+#film.fm-band > .wrap {
+  padding-top: clamp(44px, 4.2vw, 62px) !important;
+  padding-bottom: clamp(56px, 5.4vw, 78px) !important;
+}
+#film .col-bar {
+  margin-bottom: clamp(16px, 1.8vw, 24px);
+}
 #film .fm-head {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) !important;
   align-items: end;
   gap: 16px 40px;
+  margin-bottom: clamp(18px, 2vw, 26px) !important;
+  padding-bottom: 14px !important;
 }
 .fm-head__sub {
   margin: 0;
   font-size: 15.5px;
-  line-height: 1.52;
+  line-height: 1.54;
   color: #555047;
   max-width: 44ch;
   justify-self: end;
+}
+.fm__stage {
+  aspect-ratio: 16 / 9.2 !important;
+  background: #f3f0e8 !important;
+  cursor: default !important;
 }
 @media (max-width: 1023px) {
   #film .fm-head {
     grid-template-columns: minmax(0, 1fr) !important;
   }
   .fm-head__sub { justify-self: start; }
+  .fm__stage {
+    aspect-ratio: 4 / 3.3 !important;
+  }
 }
 
-/* ---- 4. #mission — Colossal Halftone Ring, Beacon Axis & Light Triad ----- */
+/* ---- 4. #mission — 03 · Pure Colossal Editorial Precision ---------------- */
 #mission .ms {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(20, 18, 16, 0.12);
-  background: #fbf9f4 !important;
-  padding: clamp(56px, 7.2vw, 108px) clamp(28px, 6vw, 96px) !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(20, 18, 16, 0.14) !important;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.14) !important;
+  background: transparent !important;
+  padding: clamp(64px, 7.6vw, 118px) clamp(12px, 3vw, 44px) !important;
 }
 .ms__halo {
   position: absolute;
-  left: clamp(12px, 3vw, 48px);
+  left: clamp(-24px, 1.5vw, 24px);
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(290px, 35vw, 450px);
-  height: clamp(290px, 35vw, 450px);
+  width: clamp(300px, 36vw, 470px);
+  height: clamp(300px, 36vw, 470px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.86;
+  opacity: 0.92;
 }
 #mission .ms__line {
   position: relative;
   z-index: 1;
+  max-width: 15.5ch !important;
+  margin-left: clamp(0px, 9vw, 140px) !important;
+  margin-right: auto !important;
+  text-align: left !important;
+  font-size: clamp(44px, 5.4vw, 78px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--ink) !important;
 }
 #mission .ms__cols--colossal {
   display: grid !important;
-  grid-template-columns: 48px minmax(0, 1fr) !important;
-  gap: 0 clamp(20px, 3vw, 44px);
+  grid-template-columns: 44px minmax(0, 1fr) !important;
+  gap: 0 clamp(24px, 3.2vw, 48px);
   align-items: stretch;
+  max-width: 820px !important;
   margin: clamp(48px, 6vw, 84px) auto 0 !important;
-  padding: 0 clamp(0px, 4vw, 64px) !important;
+  padding: 0 !important;
 }
 .col-axis {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 4px;
+  padding-top: 5px;
 }
 .col-axis__node {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 1px solid rgba(20, 18, 16, 0.18);
-  background: #fbfaf6;
+  border: 1px solid rgba(20, 18, 16, 0.22);
+  background: #f6f4ef;
   flex: none;
 }
 .col-axis__node i {
@@ -202,38 +280,140 @@
 .ms__essay {
   min-width: 0;
 }
+#mission .ms__h {
+  margin: 0 0 22px !important;
+  font-family: var(--serif) !important;
+  font-size: clamp(30px, 2.7vw, 40px) !important;
+  font-weight: 400 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--ink) !important;
+}
+#mission .ms__essay .prose {
+  max-width: 56ch !important;
+}
+#mission .ms__essay .prose p {
+  font-family: var(--sans) !important;
+  font-size: clamp(16.5px, 1.25vw, 18px) !important;
+  line-height: 1.66 !important;
+  letter-spacing: -0.004em !important;
+  color: #3a362f !important;
+  margin: 0 0 18px !important;
+}
+#mission .ms__essay .prose p:last-child {
+  margin-bottom: 0 !important;
+}
+#mission .ms__essay .prose p.prose__punch {
+  color: var(--ink) !important;
+  font-weight: 500 !important;
+  padding-top: 6px;
+}
+#mission .ms__essay .prose a {
+  color: var(--ink) !important;
+  text-decoration: underline;
+  text-decoration-color: rgba(240, 144, 10, 0.72);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
 @media (max-width: 720px) {
+  #mission .ms__line {
+    margin-left: 0 !important;
+    font-size: clamp(36px, 9.6vw, 48px) !important;
+  }
   #mission .ms__cols--colossal {
     grid-template-columns: minmax(0, 1fr) !important;
-    padding: 0 !important;
   }
   .col-axis { display: none; }
 }
 
-/* Unified light warm-paper triad (kills jarring black obsidian card) */
-.ct__c.is-ours {
-  background: #faf3e6 !important;
-  color: var(--ink) !important;
-  border-color: rgba(240, 144, 10, 0.52) !important;
-  border-top: 2px solid #f0900a !important;
+/* Crisp 3-column architectural comparison triad */
+#mission .ct {
+  margin-top: clamp(52px, 6.4vw, 88px) !important;
+}
+#mission .ct__cells {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border: 1px solid rgba(20, 18, 16, 0.14) !important;
+  background: #fcfbf8 !important;
+}
+#mission .ct__c {
+  position: relative;
+  padding: clamp(22px, 2.4vw, 32px) !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(20, 18, 16, 0.12) !important;
+  background: transparent !important;
   box-shadow: none !important;
 }
-.ct__c.is-ours .ct__idx {
-  border-bottom-color: rgba(240, 144, 10, 0.24) !important;
-  color: #a85f00 !important;
+#mission .ct__c:last-child {
+  border-right: 0 !important;
 }
-.ct__c.is-ours .ct__k,
-.ct__c.is-ours .ct__a {
+#mission .ct__idx {
+  margin: 0 0 18px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.1) !important;
+  font-family: var(--mono) !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #7c756b !important;
+}
+#mission .ct__k {
+  margin: 0 0 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--serif) !important;
+  font-size: clamp(26px, 2.2vw, 34px) !important;
+  font-weight: 400 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
   color: var(--ink) !important;
 }
-.ct__c.is-ours .ct__b {
+#mission .ct__a {
+  margin: 0 0 6px !important;
+  font-size: 15.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.42 !important;
+  color: var(--ink) !important;
+}
+#mission .ct__b {
+  margin: 0 !important;
+  font-size: 14.5px !important;
+  line-height: 1.48 !important;
+  color: #6b655c !important;
+}
+#mission .ct__c.is-ours {
+  background: #f8f2e6 !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 2px 0 #f0900a !important;
+}
+#mission .ct__c.is-ours .ct__idx {
+  border-bottom-color: rgba(240, 144, 10, 0.28) !important;
+  color: #a85f00 !important;
+}
+#mission .ct__c.is-ours .ct__k,
+#mission .ct__c.is-ours .ct__a {
+  color: var(--ink) !important;
+}
+#mission .ct__c.is-ours .ct__b {
   color: #4d4840 !important;
 }
-.ct__c.is-ours .ct__br i {
-  border-color: #f0900a !important;
+@media (max-width: 820px) {
+  #mission .ct__cells {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #mission .ct__c {
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(20, 18, 16, 0.12) !important;
+  }
+  #mission .ct__c:last-child {
+    border-bottom: 0 !important;
+  }
 }
 
-/* ---- 4b. #start — Light Brushed-Stone Chassis Header (kills black bar) --- */
+/* ---- 4b. #start — Brushed-Stone Chassis Header --------------------------- */
 .ps__chassis {
   border: 1px solid rgba(20, 18, 16, 0.14) !important;
   background: #efece5 !important;
@@ -252,9 +432,9 @@
   background: #efece5 !important;
 }
 
-/* ---- 5. #domains — Unified Warm-Alabaster Teknoir Worlds Gallery --------- */
+/* ---- 5. #domains — 05 · Worlds (Teknoir Deck × Studio Blender Maquettes) - */
 #domains.band--worlds {
-  background: var(--bg, #f7f5f0) !important;
+  background: var(--bg, #f6f4ef) !important;
   color: var(--ink);
   border-top: 0;
   border-bottom: 0;
@@ -291,7 +471,7 @@
   }
 }
 
-/* Teknoir Control Rail adapted cleanly to warm alabaster paper */
+/* Teknoir-inspired Control Rail in Daylight Architectural Tone */
 .tk-rail {
   display: flex;
   align-items: center;
@@ -330,9 +510,9 @@
   transition: border-color 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
 }
 .tk-next:hover {
-  border-color: #f0900a;
-  background: #f0900a;
-  color: #141210;
+  border-color: #141210;
+  background: #141210;
+  color: #fcfbf8;
 }
 .tk-capsules {
   display: inline-flex;
@@ -341,7 +521,7 @@
 }
 .tk-cap {
   width: clamp(58px, 8vw, 108px);
-  height: 13px;
+  height: 12px;
   padding: 0;
   border: 1px solid rgba(20, 18, 16, 0.26);
   border-radius: 999px;
@@ -350,7 +530,7 @@
   transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
 }
 .tk-cap:hover {
-  border-color: #f0900a;
+  border-color: rgba(20, 18, 16, 0.56);
 }
 .tk-cap.is-on {
   background: #141210;
@@ -358,12 +538,14 @@
 }
 .tk-count {
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: 0.14em;
-  color: #6b655c;
+  text-transform: uppercase;
+  color: #555047;
 }
 
-/* Three side-by-side light architectural window frames */
+/* Three Architectural Maquette Plates */
 .tk-deck {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -373,161 +555,113 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(20, 18, 16, 0.15);
+  border: 1px solid rgba(20, 18, 16, 0.14);
   background: #fcfbf8;
   cursor: pointer;
-  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.2s ease-out;
 }
 .tk-card:hover {
-  border-color: rgba(20, 18, 16, 0.34);
+  border-color: rgba(20, 18, 16, 0.32);
 }
 .tk-card.is-active {
-  border-color: #f0900a;
-  box-shadow: 0 22px 48px -36px rgba(20, 18, 16, 0.24);
+  border-color: rgba(20, 18, 16, 0.34);
+  box-shadow:
+    inset 0 2px 0 #f0900a,
+    0 24px 48px -36px rgba(20, 18, 16, 0.24);
 }
 .tk-card:focus-visible {
   outline: 2px solid #f0900a;
   outline-offset: 2px;
 }
 
-/* Delicate light-stone pinstripe title bar (Teknoir window craft in daylight alabaster) */
-.tk-winbar {
+.tk-card__bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  border-bottom: 1px solid rgba(20, 18, 16, 0.12);
-  background: #f5f2eb;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 18px;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.1);
+  background: #f6f3ec;
 }
-.tk-card.is-active .tk-winbar {
-  border-bottom-color: rgba(240, 144, 10, 0.36);
-  background: #faf3e6;
+.tk-card.is-active .tk-card__bar {
+  background: #faf5eb;
+  border-bottom-color: rgba(240, 144, 10, 0.24);
 }
-.tk-winbar__box {
-  display: inline-grid;
-  place-items: center;
-  width: 14px;
-  height: 14px;
-  border: 1px solid rgba(20, 18, 16, 0.28);
+.tk-card__num {
   font-family: var(--mono);
-  font-size: 10px;
-  line-height: 1;
-  color: #6b655c;
-  flex: none;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #7c756b;
 }
-.tk-card.is-active .tk-winbar__box {
-  border-color: #f0900a;
+.tk-card.is-active .tk-card__num {
   color: #a85f00;
 }
-.tk-winbar__lines {
-  flex: 1;
-  height: 10px;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(20, 18, 16, 0.14) 0 1px,
-    transparent 1px 2.5px
-  );
+.tk-card__tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #555047;
 }
-.tk-card.is-active .tk-winbar__lines {
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(240, 144, 10, 0.48) 0 1px,
-    transparent 1px 2.5px
-  );
+.tk-card.is-active .tk-card__tag {
+  color: var(--ink);
 }
 
 .tk-card__inner {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 16px 18px 20px;
-}
-.tk-card__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.tk-card__k {
-  font-style: italic;
-  font-size: 12.5px;
-  color: #6b655c;
-}
-.tk-card__k i {
-  font-style: normal;
-  font-size: 9px;
-  margin-left: 3px;
-  color: #d47900;
-}
-.tk-card__tag {
-  padding: 2px 8px;
-  border: 1px solid rgba(20, 18, 16, 0.18);
-  border-radius: 3px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #555047;
-}
-.tk-card.is-active .tk-card__tag {
-  border-color: rgba(240, 144, 10, 0.6);
-  color: #9e5800;
-  background: #fdf6ea;
+  padding: 18px 18px 20px;
 }
 .tk-card__title {
   margin: 0 0 16px;
   font-family: var(--serif);
+  font-size: clamp(24px, 2.05vw, 31px);
   font-weight: 400;
-  font-size: clamp(24px, 2vw, 30px);
   line-height: 1.08;
+  letter-spacing: -0.01em;
   color: var(--ink);
   min-height: 2.2em;
 }
-.tk-card__sec {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #8a847a;
-}
-
-/* Daylight Matte-Ceramic Architectural Scale Model Viewport */
 .tk-card__stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3.2;
-  border-radius: 3px;
-  border: 1px solid rgba(20, 18, 16, 0.1);
-  background: #f6f3ec;
+  aspect-ratio: 5 / 4;
+  background: #eeebe3;
+  border: 1px solid rgba(20, 18, 16, 0.09);
   overflow: hidden;
-  cursor: grab;
+  margin-bottom: 16px;
 }
-.tk-card__stage:active {
-  cursor: grabbing;
-}
-.tk-card__canvas {
+.tk-card__img {
   display: block;
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: 50% 54%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+  filter: saturate(0.96);
+}
+.tk-card:hover .tk-card__img,
+.tk-card.is-active .tk-card__img {
+  transform: scale(1.028);
+  filter: saturate(1.04);
 }
 .tk-card__promise {
-  margin: 14px 0 0;
-  font-size: 14px;
-  line-height: 1.48;
+  margin: auto 0 0;
+  font-size: 14.5px;
+  line-height: 1.5;
   color: #4d4840;
 }
+.tk-card.is-active .tk-card__promise {
+  color: var(--ink);
+}
 
-/* Synchronized Active World Institutional Decision Dossier (Warm Alabaster) */
+/* Active World Institutional Dossier below the three plates */
 .tk-dossier {
-  margin-top: clamp(20px, 2.2vw, 28px);
-  border: 1px solid rgba(20, 18, 16, 0.15);
+  margin-top: clamp(22px, 2.4vw, 30px);
+  border: 1px solid rgba(20, 18, 16, 0.14);
   border-top: 2px solid #f0900a;
   background: #fcfbf8;
 }
@@ -540,17 +674,17 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  padding: 14px 22px;
+  padding: 13px 22px;
   border-bottom: 1px solid rgba(20, 18, 16, 0.1);
-  background: #f7f4ed;
+  background: #f6f3ec;
 }
 .tk-panel__code {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-family: var(--mono);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
@@ -570,16 +704,15 @@
   font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7c756b;
+  color: #6b655c;
 }
 .tk-qs {
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0;
-  padding: 0;
 }
 .tk-q {
-  padding: 20px 22px 24px;
+  padding: 20px 22px 22px;
   border-right: 1px solid rgba(20, 18, 16, 0.1);
 }
 .tk-q:last-child {
@@ -589,27 +722,27 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin: 0 0 10px;
+  margin-bottom: 10px;
   font-family: var(--mono);
   font-size: 10.5px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #a85f00;
 }
 .tk-q dt em {
   font-style: normal;
-  color: #9b958b;
+  color: #8f887d;
 }
 .tk-q dd {
   margin: 0;
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: clamp(19px, 1.55vw, 22px);
   line-height: 1.24;
   color: var(--ink);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 960px) {
   .tk-deck {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -619,15 +752,32 @@
   .tk-qs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .tk-q {
+  .tk-q:nth-child(2n) {
+    border-right: 0;
+  }
+  .tk-q:nth-child(-n + 2) {
     border-bottom: 1px solid rgba(20, 18, 16, 0.1);
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 560px) {
   .tk-qs {
     grid-template-columns: minmax(0, 1fr);
   }
   .tk-q {
     border-right: 0;
+    border-bottom: 1px solid rgba(20, 18, 16, 0.1);
   }
+  .tk-q:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* ---- 6. #validation — Baseline-aligned 3-stage progression --------------- */
+#validation .vn__st {
+  display: flex !important;
+  flex-direction: column !important;
+}
+#validation .vn__spec {
+  margin-top: auto !important;
+  padding-top: 12px !important;
 }

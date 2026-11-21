@@ -1,8 +1,10 @@
 /**
- * 05 · Worlds — Teknoir × Astromech interactive OS-window deck controller.
- * Synchronizes segmented capsule pills, next-arrow stepper, clickable OS-window
- * cards, 1/3 counter readout, and the institutional decision dossier below.
+ * 05 · Worlds — Architectural interactive deck controller.
+ * Synchronizes segmented capsules, next-arrow stepper, clickable World plates,
+ * live counter readout (e.g. 01 / 03 · Money), and the active institutional dossier.
  */
+const NAMES = ['Money', 'Power & compute', 'Trade'] as const;
+
 export function initDomains(root: HTMLElement): void {
   const pills = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-i]'));
   const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-tk-card]'));
@@ -33,7 +35,12 @@ export function initDomains(root: HTMLElement): void {
       panel.hidden = k !== current;
     });
 
-    if (countEl) countEl.textContent = `${current + 1}/${pills.length}`;
+    if (countEl) {
+      const num = String(current + 1).padStart(2, '0');
+      const tot = String(pills.length).padStart(2, '0');
+      const label = NAMES[current] ?? '';
+      countEl.textContent = label ? `${num} / ${tot} · ${label}` : `${num} / ${tot}`;
+    }
     if (focus) pills[current]?.focus();
   };
 

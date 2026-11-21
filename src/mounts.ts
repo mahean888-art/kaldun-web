@@ -198,9 +198,6 @@ export function mountHome(root: ParentNode = document): void {
   if (fm) {
     void import('./visuals/filmEngine').then(({ initFilmEngine }) => initFilmEngine(fm));
   }
-  if (root.querySelector('[data-world-canvas]')) {
-    void import('./visuals/worldsThree').then(({ initWorldsThree }) => initWorldsThree(root));
-  }
   initColossalHalo(root);
   initFields(root);
   initManifesto();

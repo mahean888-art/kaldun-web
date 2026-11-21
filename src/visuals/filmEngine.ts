@@ -1,19 +1,22 @@
 /**
- * 02 · How it works — Three.js PBR Studio Sculpture ("The Foresight Instrument")
+ * 02 · How it works — Architectural Maquette & Temporal Slice Engine
  *
- * Physical material language aligned with the Hero architectural maquette:
- * matte architectural porcelain, machined anodized dark-titanium, brushed spice-brass,
- * and translucent frosted optical acrylic planes in soft studio skylight with real shadows.
+ * Uses the actual studio-rendered Blender Cycles world plate and eight frosted
+ * optical slices (/deck-world-wide.webp, /deck-slice0..7-wide.webp, /deck-slice3p-wide.webp)
+ * registered to the exact camera-projected paths in src/data/deck.json.
  *
- * Four choreographed physical states:
- *   1 · MODEL     — Articulated porcelain & obsidian institutional assembly with tensioned clearing filaments
- *   2 · SIMULATE  — Nine frosted optical acrylic temporal slices fan outward against a horizontal Par Plane under stress
- *   3 · INTERVENE — Solid spice-amber optical key prism engages the core, lifting breaking slices back above par
- *   4 · RECORD    — Solved state locks inside concentric machined titanium & brass cryptographic seal rings
+ * Four choreographed architectural states:
+ *   01 · Model     — Isolated world maquette, hairline structural callouts, live clearing flows
+ *   02 · Simulate  — Eight frosted future slices fan outward; stress trajectories test par ($1.00)
+ *   03 · Intervene — Amber solution slice illuminates; changed rail activates; curves lift above par
+ *   04 · Record    — Slices register into a sealed archive stack; pre-outcome commitment stamps
  */
-import * as THREE from 'three';
+import deck from '../data/deck.json';
 import { prefersReducedMotion } from '../lib/prefers';
-import { createRenderer, createStudioEnv, damp } from './threeStudio';
+
+type P = [number, number, number];
+type DeckView = { w: number; h: number; paths: Record<string, P[][]> };
+const WIDE = (deck as unknown as Record<'wide' | 'narrow', DeckView>).wide;
 
 const DURS = [5600, 6200, 6200, 5600] as const;
 
@@ -44,12 +47,72 @@ const META = [
   },
 ] as const;
 
-const CAM_TARGETS: ReadonlyArray<{ pos: [number, number, number]; look: [number, number, number] }> = [
-  { pos: [6.5, 4.5, 7.6], look: [0, 0.05, 0] },
-  { pos: [7.5, 3.8, 6.4], look: [0.1, 0.25, 0] },
-  { pos: [5.9, 4.2, 7.5], look: [0, 0.28, 0] },
-  { pos: [5.2, 5.2, 6.8], look: [0, -0.05, 0] },
+type Track = { pts: P[]; acc: number[]; len: number };
+function buildTrack(raw: P[]): Track {
+  const acc = [0];
+  for (let i = 1; i < raw.length; i++) {
+    acc.push(acc[i - 1]! + Math.hypot(raw[i]![0] - raw[i - 1]![0], raw[i]![1] - raw[i - 1]![1]));
+  }
+  return { pts: raw, acc, len: acc[acc.length - 1] || 1 };
+}
+
+function sampleTrack(t: Track, u: number): [number, number] {
+  const d = Math.max(0, Math.min(1, u)) * t.len;
+  let lo = 0;
+  let hi = t.acc.length - 1;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if (t.acc[mid]! < d) lo = mid;
+    else hi = mid;
+  }
+  const a = t.pts[lo]!;
+  const b = t.pts[hi]!;
+  const span = t.acc[hi]! - t.acc[lo]! || 1;
+  const k = (d - t.acc[lo]!) / span;
+  return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+}
+
+const damp = (curr: number, target: number, lambda: number, dt: number): number =>
+  curr + (target - curr) * (1 - Math.exp(-lambda * dt));
+
+const TRACKS_BASE: Track[] = [
+  ...(WIDE.paths['road'] ?? []),
+  ...(WIDE.paths['rail'] ?? []),
+  ...(WIDE.paths['link'] ?? []),
+].map(buildTrack);
+const TRACKS_FOUND: Track[] = (WIDE.paths['found'] ?? []).map(buildTrack);
+
+// Architectural callout pins anchored to actual elements of deck-world-wide.webp (2400x980)
+const PINS: ReadonlyArray<{
+  nx: number;
+  ny: number;
+  lx: number;
+  ly: number;
+  label: string;
+  align: 'left' | 'right';
+}> = [
+  { nx: 0.305, ny: 0.61, lx: 0.145, ly: 0.28, label: 'POWER & STORAGE', align: 'left' },
+  { nx: 0.448, ny: 0.39, lx: 0.295, ly: 0.14, label: 'RESERVE · $41.6B', align: 'left' },
+  { nx: 0.545, ny: 0.56, lx: 0.725, ly: 0.15, label: '25 BANKS · 24/7 RAILS', align: 'right' },
+  { nx: 0.655, ny: 0.62, lx: 0.855, ly: 0.31, label: '140 PARTNERS · TRADE', align: 'right' },
 ];
+
+// Deterministic stress trajectories for Simulate (02) and Intervene (03)
+const BRANCHES = Array.from({ length: 14 }, (_, i) => {
+  const seed = (i + 1) * 1.6180339;
+  const isBreak = i === 2 || i === 7 || i === 11;
+  const depth = isBreak ? 0.68 + (i % 3) * 0.13 : 0.12 + ((Math.sin(seed * 7.3) + 1) * 0.5) * 0.32;
+  const freq = 1.4 + (i % 5) * 0.38;
+  const phase = seed * 2.1;
+  return { isBreak, depth, freq, phase };
+});
+
+function loadImg(src: string): HTMLImageElement {
+  const im = new Image();
+  im.decoding = 'async';
+  im.src = src;
+  return im;
+}
 
 export function initFilmEngine(host: HTMLElement): void {
   const canvas = host.querySelector<HTMLCanvasElement>('[data-film-canvas]');
@@ -60,379 +123,17 @@ export function initFilmEngine(host: HTMLElement): void {
   const skEl = host.querySelector<HTMLElement>('[data-film-sk]');
   const svEl = host.querySelector<HTMLElement>('[data-film-sv]');
   const codeEl = host.querySelector<HTMLElement>('[data-film-code]');
-  if (!canvas || chs.length !== 4) return;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-  const renderer = createRenderer(canvas, false);
-  if (!renderer) return;
-
-  const { pmrem, envTex } = createStudioEnv(renderer, 'paper');
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf4f1ea);
-  scene.fog = new THREE.Fog(0xf4f1ea, 15, 28);
-  scene.environment = envTex;
-
-  const camera = new THREE.PerspectiveCamera(34, 16 / 9.4, 0.1, 60);
-  camera.position.set(...CAM_TARGETS[0]!.pos);
-
-  // ---- Studio Lighting -----------------------------------------------------
-  const hemi = new THREE.HemisphereLight(0xfffdf8, 0xded8cc, 0.9);
-  scene.add(hemi);
-
-  const keyLight = new THREE.DirectionalLight(0xfff9f0, 2.1);
-  keyLight.position.set(6, 11, 7);
-  keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(1024, 1024);
-  keyLight.shadow.camera.near = 2;
-  keyLight.shadow.camera.far = 26;
-  const sBound = 6.5;
-  keyLight.shadow.camera.left = -sBound;
-  keyLight.shadow.camera.right = sBound;
-  keyLight.shadow.camera.top = sBound;
-  keyLight.shadow.camera.bottom = -sBound;
-  keyLight.shadow.bias = -0.0005;
-  keyLight.shadow.radius = 4;
-  scene.add(keyLight);
-
-  const rimLight = new THREE.DirectionalLight(0xffa428, 1.35);
-  rimLight.position.set(-7, 4, -6);
-  scene.add(rimLight);
-
-  const fillLight = new THREE.DirectionalLight(0xebe7df, 0.75);
-  fillLight.position.set(-6, 5, 6);
-  scene.add(fillLight);
-
-  // ---- Shared Physical Materials -------------------------------------------
-  const porcelainMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf7f4ee,
-    roughness: 0.42,
-    metalness: 0.02,
-    clearcoat: 0.22,
-    clearcoatRoughness: 0.35,
-  });
-
-  const stoneMat = new THREE.MeshPhysicalMaterial({
-    color: 0xe6e1d7,
-    roughness: 0.58,
-    metalness: 0.04,
-  });
-
-  const obsidianMat = new THREE.MeshPhysicalMaterial({
-    color: 0x1a1816,
-    roughness: 0.24,
-    metalness: 0.72,
-    clearcoat: 0.4,
-    clearcoatRoughness: 0.22,
-  });
-
-  const titaniumMat = new THREE.MeshStandardMaterial({
-    color: 0x2c2925,
-    roughness: 0.32,
-    metalness: 0.86,
-  });
-
-  const brassMat = new THREE.MeshStandardMaterial({
-    color: 0xc98a2e,
-    roughness: 0.28,
-    metalness: 0.88,
-  });
-
-  const amberCrystalMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf39200,
-    emissive: 0xd46d00,
-    emissiveIntensity: 0.32,
-    roughness: 0.14,
-    metalness: 0.08,
-    transmission: 0.35,
-    thickness: 0.8,
-    clearcoat: 0.9,
-    clearcoatRoughness: 0.12,
-    transparent: true,
-    opacity: 0.94,
-  });
-
-  // ---- Studio Shadow-Catcher Floor -----------------------------------------
-  const floorGeo = new THREE.PlaneGeometry(32, 32);
-  const floorMat = new THREE.ShadowMaterial({ opacity: 0.14, color: 0x221d16 });
-  const floor = new THREE.Mesh(floorGeo, floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -1.25;
-  floor.receiveShadow = true;
-  scene.add(floor);
-
-  const root = new THREE.Group();
-  scene.add(root);
-
-  // ---- 1. Machined Architectural Plinth & Precision Vernier Bezel ----------
-  const plinth = new THREE.Group();
-  plinth.position.y = -1.12;
-  root.add(plinth);
-
-  const baseDisc = new THREE.Mesh(new THREE.CylinderGeometry(3.25, 3.35, 0.22, 72), porcelainMat);
-  baseDisc.castShadow = true;
-  baseDisc.receiveShadow = true;
-  plinth.add(baseDisc);
-
-  const innerPad = new THREE.Mesh(new THREE.CylinderGeometry(2.55, 2.55, 0.25, 64), stoneMat);
-  innerPad.receiveShadow = true;
-  plinth.add(innerPad);
-
-  const outerBezel = new THREE.Mesh(new THREE.TorusGeometry(3.26, 0.035, 16, 96), titaniumMat);
-  outerBezel.rotation.x = Math.PI / 2;
-  outerBezel.position.y = 0.11;
-  plinth.add(outerBezel);
-
-  const innerBrassRing = new THREE.Mesh(new THREE.TorusGeometry(2.56, 0.016, 12, 96), brassMat);
-  innerBrassRing.rotation.x = Math.PI / 2;
-  innerBrassRing.position.y = 0.125;
-  plinth.add(innerBrassRing);
-
-  // 72 instanced precision vernier degree ticks around the plinth perimeter
-  const tickGeo = new THREE.BoxGeometry(0.018, 0.016, 0.16);
-  const ticks = new THREE.InstancedMesh(tickGeo, titaniumMat, 72);
-  const dummy = new THREE.Object3D();
-  for (let i = 0; i < 72; i++) {
-    const a = (i / 72) * Math.PI * 2;
-    const major = i % 6 === 0;
-    const rad = major ? 2.96 : 3.0;
-    dummy.position.set(Math.cos(a) * rad, 0.12, Math.sin(a) * rad);
-    dummy.rotation.set(0, -a + Math.PI / 2, 0);
-    dummy.scale.set(major ? 1.5 : 0.9, 1, major ? 1.45 : 0.72);
-    dummy.updateMatrix();
-    ticks.setMatrixAt(i, dummy.matrix);
-  }
-  ticks.instanceMatrix.needsUpdate = true;
-  plinth.add(ticks);
-
-  // ---- 2. Institutional Model Assembly (Stage 01 Core + Towers) ------------
-  const modelGroup = new THREE.Group();
-  root.add(modelGroup);
-
-  // Central Obsidian & Brass Institution Core
-  const corePedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.54, 1.05, 32), obsidianMat);
-  corePedestal.position.y = -0.35;
-  corePedestal.castShadow = true;
-  corePedestal.receiveShadow = true;
-  modelGroup.add(corePedestal);
-
-  const coreCollar = new THREE.Mesh(new THREE.TorusGeometry(0.51, 0.025, 16, 48), brassMat);
-  coreCollar.rotation.x = Math.PI / 2;
-  coreCollar.position.y = 0.12;
-  modelGroup.add(coreCollar);
-
-  const coreCrown = new THREE.Mesh(new THREE.OctahedronGeometry(0.32, 0), amberCrystalMat);
-  coreCrown.position.y = 0.56;
-  coreCrown.castShadow = true;
-  modelGroup.add(coreCrown);
-
-  // Two precision orbital gimbal rings
-  const gimbalA = new THREE.Mesh(new THREE.TorusGeometry(1.52, 0.016, 14, 96), titaniumMat);
-  gimbalA.position.y = 0.45;
-  modelGroup.add(gimbalA);
-
-  const gimbalB = new THREE.Mesh(new THREE.TorusGeometry(1.88, 0.012, 12, 96), brassMat);
-  gimbalB.position.y = 0.45;
-  modelGroup.add(gimbalB);
-
-  // 6 sculpted matte-porcelain institutional counterparty blocks + tension filaments
-  interface NodePillar {
-    group: THREE.Group;
-    basePos: THREE.Vector3;
-    pulse: THREE.Mesh;
-    curve: THREE.QuadraticBezierCurve3;
-    phase: number;
-  }
-  const pillars: NodePillar[] = [];
-  const pillarSpecs = [
-    { angle: 0.15, r: 2.05, w: 0.42, h: 0.92, d: 0.32 },
-    { angle: 1.18, r: 1.95, w: 0.34, h: 1.18, d: 0.34 },
-    { angle: 2.22, r: 2.1, w: 0.48, h: 0.78, d: 0.32 },
-    { angle: 3.25, r: 1.98, w: 0.36, h: 1.04, d: 0.36 },
-    { angle: 4.3, r: 2.08, w: 0.44, h: 0.86, d: 0.28 },
-    { angle: 5.32, r: 1.92, w: 0.34, h: 1.12, d: 0.34 },
-  ];
-
-  const pulseMat = new THREE.MeshBasicMaterial({ color: 0xf39200 });
-  const filamentMat = new THREE.MeshStandardMaterial({
-    color: 0x3b362f,
-    roughness: 0.35,
-    metalness: 0.78,
-  });
-
-  for (let i = 0; i < pillarSpecs.length; i++) {
-    const sp = pillarSpecs[i]!;
-    const g = new THREE.Group();
-    const x = Math.cos(sp.angle) * sp.r;
-    const z = Math.sin(sp.angle) * sp.r;
-    const baseY = -0.98 + sp.h * 0.5;
-    g.position.set(x, baseY, z);
-    g.rotation.y = -sp.angle + Math.PI / 4;
-
-    const body = new THREE.Mesh(new THREE.BoxGeometry(sp.w, sp.h, sp.d), stoneMat);
-    body.castShadow = true;
-    body.receiveShadow = true;
-    g.add(body);
-
-    const baseCollar = new THREE.Mesh(new THREE.BoxGeometry(sp.w * 1.06, 0.05, sp.d * 1.06), titaniumMat);
-    baseCollar.position.y = -sp.h * 0.5 + 0.025;
-    g.add(baseCollar);
-
-    const cap = new THREE.Mesh(new THREE.BoxGeometry(sp.w * 1.04, 0.04, sp.d * 1.04), i % 2 === 0 ? obsidianMat : brassMat);
-    cap.position.y = sp.h * 0.5 + 0.02;
-    g.add(cap);
-
-    modelGroup.add(g);
-
-    const start = new THREE.Vector3(x, -0.98 + sp.h + 0.05, z);
-    const end = new THREE.Vector3(0, 0.42, 0);
-    const mid = start.clone().lerp(end, 0.5);
-    mid.y += 0.42;
-    const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
-    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.01, 8, false), filamentMat);
-    modelGroup.add(tube);
-
-    const pulse = new THREE.Mesh(new THREE.SphereGeometry(0.036, 12, 12), pulseMat);
-    modelGroup.add(pulse);
-
-    pillars.push({ group: g, basePos: new THREE.Vector3(x, baseY, z), pulse, curve, phase: i * 0.17 });
-  }
-
-  // ---- 3. Nine Frosted Optical Acrylic Temporal Slices (Stage 02 & 03) -----
-  const slicesGroup = new THREE.Group();
-  slicesGroup.position.y = 0.55;
-  root.add(slicesGroup);
-
-  interface TemporalSlice {
-    pivot: THREE.Group;
-    pane: THREE.Mesh;
-    frame: THREE.LineSegments;
-    mat: THREE.MeshPhysicalMaterial;
-    edgeMat: THREE.LineBasicMaterial;
-    index: number;
-    breaksUnderStress: boolean;
-  }
-  const slices: TemporalSlice[] = [];
-  const SLICE_COUNT = 9;
-  const paneGeo = new THREE.BoxGeometry(2.8, 1.55, 0.032);
-  const edgeGeo = new THREE.EdgesGeometry(paneGeo);
-
-  for (let i = 0; i < SLICE_COUNT; i++) {
-    const pivot = new THREE.Group();
-    const isHeroSlice = i === 4;
-    const mat = new THREE.MeshPhysicalMaterial({
-      color: isHeroSlice ? 0xf7b249 : 0xfbf8f2,
-      emissive: isHeroSlice ? 0xf39200 : 0x000000,
-      emissiveIntensity: isHeroSlice ? 0.15 : 0,
-      roughness: 0.22,
-      metalness: 0.05,
-      clearcoat: 0.7,
-      clearcoatRoughness: 0.18,
-      transparent: true,
-      opacity: isHeroSlice ? 0.62 : 0.34,
-      depthWrite: false,
-    });
-    const pane = new THREE.Mesh(paneGeo, mat);
-    pane.castShadow = false;
-    pivot.add(pane);
-
-    const edgeMat = new THREE.LineBasicMaterial({
-      color: isHeroSlice ? 0xf39200 : 0x5c564c,
-      transparent: true,
-      opacity: isHeroSlice ? 0.9 : 0.32,
-    });
-    const frame = new THREE.LineSegments(edgeGeo, edgeMat);
-    pivot.add(frame);
-
-    slicesGroup.add(pivot);
-    slices.push({
-      pivot,
-      pane,
-      frame,
-      mat,
-      edgeMat,
-      index: i,
-      breaksUnderStress: i !== 4 && i % 2 === 1,
-    });
-  }
-
-  // Custom GLSL Par Datum Horizon Plane (appears in Simulate & Intervene)
-  const parUniforms = {
-    uTime: { value: 0 },
-    uOpacity: { value: 0 },
-    uSolved: { value: 0 },
-  };
-  const parMat = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-    uniforms: parUniforms,
-    vertexShader: /* glsl */ `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform float uTime;
-      uniform float uOpacity;
-      uniform float uSolved;
-      varying vec2 vUv;
-      void main() {
-        vec2 p = vUv - 0.5;
-        float r = length(p) * 2.0;
-        if (r > 1.0) discard;
-        float ring = smoothstep(0.95, 0.985, r) * (1.0 - smoothstep(0.985, 1.0, r));
-        float innerRing = smoothstep(0.64, 0.652, r) * (1.0 - smoothstep(0.652, 0.665, r)) * 0.45;
-        float sweep = 0.5 + 0.5 * sin(r * 22.0 - uTime * 2.4);
-        float fill = (1.0 - r) * 0.14 + sweep * 0.05 * (1.0 - r);
-        vec3 stressCol = vec3(0.76, 0.25, 0.10);
-        vec3 amberCol = vec3(0.95, 0.57, 0.0);
-        vec3 col = mix(stressCol, amberCol, uSolved);
-        float a = (ring * 0.85 + innerRing + fill) * uOpacity;
-        gl_FragColor = vec4(col, a);
-      }
-    `,
-  });
-  const parPlane = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 5.6), parMat);
-  parPlane.rotation.x = -Math.PI / 2;
-  parPlane.position.y = 0.05;
-  root.add(parPlane);
-
-  // ---- 4. Intervention Optical Key Prism (Stage 03) ------------------------
-  const keyGroup = new THREE.Group();
-  keyGroup.position.y = 2.8;
-  root.add(keyGroup);
-
-  const keyCore = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.75, 0.42), amberCrystalMat);
-  keyCore.castShadow = true;
-  keyGroup.add(keyCore);
-
-  const keyCage = new THREE.LineSegments(
-    new THREE.EdgesGeometry(new THREE.BoxGeometry(0.46, 1.79, 0.46)),
-    new THREE.LineBasicMaterial({ color: 0x141210, transparent: true, opacity: 0.7 }),
+  // Load real Blender Cycles studio layers
+  const worldImg = loadImg('/deck-world-wide.webp');
+  const sliceImgs = Array.from({ length: 8 }, (_, k) =>
+    loadImg(k === 3 ? '/deck-slice3p-wide.webp' : `/deck-slice${k}-wide.webp`),
   );
-  keyGroup.add(keyCage);
+  const litSliceImg = loadImg('/deck-slice3-wide.webp');
 
-  // ---- 5. Cryptographic Pre-Outcome Seal Rings (Stage 04) ------------------
-  const sealGroup = new THREE.Group();
-  sealGroup.position.y = 0.12;
-  root.add(sealGroup);
-
-  const sealRings: THREE.Mesh[] = [];
-  const sealRads = [1.05, 1.38, 1.72];
-  for (let i = 0; i < sealRads.length; i++) {
-    const r = sealRads[i]!;
-    const mesh = new THREE.Mesh(
-      new THREE.TorusGeometry(r, i === 1 ? 0.042 : 0.028, 18, 80),
-      i === 1 ? brassMat : obsidianMat,
-    );
-    mesh.rotation.x = Math.PI / 2;
-    mesh.castShadow = true;
-    sealGroup.add(mesh);
-    sealRings.push(mesh);
-  }
-
-  // ---- Interactive State Machine -------------------------------------------
   const reduced = prefersReducedMotion();
   let step = 0;
   let playing = !reduced;
@@ -440,15 +141,14 @@ export function initFilmEngine(host: HTMLElement): void {
   let stepStart = performance.now();
   let lastNow = performance.now();
   let raf = 0;
+  let W = 900;
+  let H = 540;
+  let dpr = 1;
   let px = 0;
   let py = 0;
   let tx = 0;
   let ty = 0;
-
-  // Damped stage weights (w0..w3)
   const w = [1, 0, 0, 0];
-  const camPos = new THREE.Vector3(...CAM_TARGETS[0]!.pos);
-  const camLook = new THREE.Vector3(...CAM_TARGETS[0]!.look);
 
   const syncDom = (): void => {
     host.dataset['s'] = String(step + 1);
@@ -480,17 +180,17 @@ export function initFilmEngine(host: HTMLElement): void {
     if (!stage) return;
     const r = stage.getBoundingClientRect();
     if (r.width < 20 || r.height < 20) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(r.width, r.height, false);
-    camera.aspect = r.width / r.height;
-    camera.updateProjectionMatrix();
+    W = Math.round(r.width);
+    H = Math.round(r.height);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
   };
 
-  const renderFrame = (now: number): void => {
+  const drawFrame = (now: number): void => {
     const dt = Math.min((now - lastNow) / 1000, 0.08);
     lastNow = now;
-    const t = reduced ? 2.4 : now / 1000;
+    const t = reduced ? 1.8 : now / 1000;
 
     if (playing && !reduced) {
       const dur = DURS[step]!;
@@ -507,11 +207,10 @@ export function initFilmEngine(host: HTMLElement): void {
       host.style.setProperty('--p', '1');
     }
 
-    // Damp pointer parallax & state weights
     px = damp(px, tx, 5, dt);
     py = damp(py, ty, 5, dt);
     for (let i = 0; i < 4; i++) {
-      w[i] = damp(w[i]!, i === step ? 1 : 0, 4.5, dt);
+      w[i] = damp(w[i]!, i === step ? 1 : 0, 5.2, dt);
     }
 
     const wModel = w[0]!;
@@ -519,98 +218,457 @@ export function initFilmEngine(host: HTMLElement): void {
     const wInt = w[2]!;
     const wRec = w[3]!;
 
-    // Smooth camera choreography
-    const ct = CAM_TARGETS[step]!;
-    camPos.x = damp(camPos.x, ct.pos[0] + px * 0.65, 3.6, dt);
-    camPos.y = damp(camPos.y, ct.pos[1] - py * 0.35, 3.6, dt);
-    camPos.z = damp(camPos.z, ct.pos[2], 3.6, dt);
-    camLook.x = damp(camLook.x, ct.look[0], 4.2, dt);
-    camLook.y = damp(camLook.y, ct.look[1], 4.2, dt);
-    camLook.z = damp(camLook.z, ct.look[2], 4.2, dt);
-    camera.position.copy(camPos);
-    camera.lookAt(camLook);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Subtle slow orbital rotation of the whole instrument
-    root.rotation.y = Math.sin(t * 0.22) * 0.16 + px * 0.18;
+    // 1. Studio warm stone ground (#f3f0e8)
+    ctx.fillStyle = '#f3f0e8';
+    ctx.fillRect(0, 0, W, H);
 
-    // 1. Model Assembly (prominent in Stage 01, recedes cleanly in Simulate/Record)
-    const modelScale = 0.72 + wModel * 0.28 + wRec * 0.12;
-    modelGroup.scale.setScalar(modelScale);
-    coreCrown.rotation.y = t * 0.85;
-    coreCrown.rotation.x = Math.sin(t * 0.6) * 0.22;
-    coreCrown.position.y = 0.56 + Math.sin(t * 1.6) * 0.045 - wRec * 0.28;
+    // Subtle architectural 6-column vertical drafting hairlines
+    const compact = W < 560;
+    const bandH = compact ? Math.round(H * 0.34) : Math.round(H * 0.27);
+    const stageH = H - bandH;
 
-    gimbalA.rotation.x = Math.PI * 0.35 + t * 0.28 * (1 - wRec * 0.85);
-    gimbalA.rotation.y = t * 0.22;
-    gimbalB.rotation.z = Math.PI * 0.22 - t * 0.24 * (1 - wRec * 0.85);
-    gimbalB.rotation.x = Math.PI * 0.48 + Math.sin(t * 0.4) * 0.15;
-
-    for (const p of pillars) {
-      const lift = Math.sin(t * 1.1 + p.phase * 6) * 0.025 * wModel;
-      p.group.position.y = p.basePos.y + lift;
-      const u = (t * 0.36 + p.phase) % 1;
-      p.curve.getPoint(u, p.pulse.position);
-      p.pulse.visible = wModel + wInt > 0.15;
+    ctx.strokeStyle = 'rgba(20, 18, 16, 0.055)';
+    ctx.lineWidth = 1;
+    const cols = 6;
+    for (let c = 1; c < cols; c++) {
+      const gx = Math.round((W / cols) * c) + 0.5;
+      ctx.beginPath();
+      ctx.moveTo(gx, 0);
+      ctx.lineTo(gx, stageH);
+      ctx.stroke();
+    }
+    // Delicate edge millimeter ticks along left & right walls
+    ctx.strokeStyle = 'rgba(20, 18, 16, 0.14)';
+    for (let tyTick = 18; tyTick < stageH - 12; tyTick += 18) {
+      const major = tyTick % 72 === 0;
+      const len = major ? 7 : 3.5;
+      ctx.beginPath();
+      ctx.moveTo(0, tyTick + 0.5);
+      ctx.lineTo(len, tyTick + 0.5);
+      ctx.moveTo(W - len, tyTick + 0.5);
+      ctx.lineTo(W, tyTick + 0.5);
+      ctx.stroke();
     }
 
-    // 2. Frosted Acrylic Temporal Slices (fan out in Simulate, snap into alignment in Intervene)
-    const slicePresence = Math.max(wSim, wInt, wRec * 0.35);
-    slicesGroup.visible = slicePresence > 0.02;
-    for (const sl of slices) {
-      const norm = (sl.index - (SLICE_COUNT - 1) / 2) / ((SLICE_COUNT - 1) / 2); // -1 .. +1
-      const isHero = sl.index === 4;
+    // 2. Compute registered 2400x980 maquette viewport inside upper stage
+    const imgAspect = 2400 / 980;
+    let drawW = W * (compact ? 1.18 : 1.06);
+    let drawH = drawW / imgAspect;
+    const maxDrawH = stageH * 0.94;
+    if (drawH > maxDrawH) {
+      drawH = maxDrawH;
+      drawW = drawH * imgAspect;
+    }
+    const baseX = (W - drawW) * 0.5 + px * 8;
+    const baseY = (stageH - drawH) * 0.56 + py * 4;
 
-      const spreadZ = norm * (1.85 * wSim + 1.25 * wInt + 0.18 * wRec);
-      const fanRotY = norm * (0.34 * wSim + 0.12 * wInt);
-      const stressDip = sl.breaksUnderStress
-        ? -0.58 * wSim + Math.sin(t * 2.2 + sl.index) * 0.06 * wSim
-        : 0.12 * wSim;
-      const stressTilt = sl.breaksUnderStress ? -0.26 * wSim : 0.04 * wSim;
+    const toStage = (nx: number, ny: number): [number, number] => [
+      baseX + nx * drawW,
+      baseY + ny * drawH,
+    ];
 
-      sl.pivot.position.set(norm * 0.14 * wSim, stressDip + (isHero ? 0.14 * wInt : 0), spreadZ);
-      sl.pivot.rotation.set(stressTilt, fanRotY, 0);
-      const sc = 0.2 + slicePresence * 0.8;
-      sl.pivot.scale.set(sc, sc * (isHero ? 1.05 : 0.92), 1);
+    // 3. Frosted Acrylic Future Slices (behind the porcelain world)
+    const sliceVis = Math.max(wSim, wInt, wRec * 0.85);
+    if (sliceVis > 0.01) {
+      for (let k = 7; k >= 0; k--) {
+        const im = sliceImgs[k];
+        if (!im || !im.complete || !im.naturalWidth) continue;
+        const norm = (k - 3.5) / 3.5; // -1 .. +1
+        const isLit = k === 3;
 
-      if (isHero) {
-        sl.mat.opacity = (0.35 + 0.42 * wInt + 0.25 * wRec) * slicePresence;
-        sl.mat.emissiveIntensity = 0.08 + 0.42 * wInt + 0.22 * wRec;
-        sl.edgeMat.color.setHex(0xf39200);
-        sl.edgeMat.opacity = 0.95 * slicePresence;
-      } else if (sl.breaksUnderStress) {
-        sl.mat.color.setHex(wSim > 0.5 ? 0xf2dcd4 : 0xfbf8f2);
-        sl.mat.opacity = (0.32 * wSim + 0.22 * wInt + 0.08 * wRec) * slicePresence;
-        sl.edgeMat.color.setHex(wSim > 0.45 ? 0xb83a14 : 0x6b6459);
-        sl.edgeMat.opacity = (0.65 * wSim + 0.25 * wInt) * slicePresence;
-      } else {
-        sl.mat.opacity = (0.28 * wSim + 0.24 * wInt + 0.1 * wRec) * slicePresence;
-        sl.edgeMat.opacity = 0.3 * slicePresence;
+        // Fan open in Simulate, focus slice 3 in Intervene, register tight in Record
+        const fanShiftX = norm * drawW * (0.048 * wSim + 0.022 * wInt - 0.012 * wRec);
+        const fanShiftY =
+          (1 - sliceVis) * 28 +
+          Math.abs(norm) * drawH * (0.035 * wSim) -
+          (isLit ? 7 * wInt : 0) +
+          wRec * (k - 3.5) * -1.4;
+        const paraX = px * (4 + (7 - k) * 1.4);
+
+        let alpha = 0;
+        if (isLit) {
+          alpha = (0.78 * wSim + 0.25 * wInt + 0.35 * wRec) * sliceVis;
+        } else {
+          alpha = (0.88 * wSim + 0.34 * wInt + 0.56 * wRec) * sliceVis;
+        }
+
+        if (alpha > 0.01) {
+          ctx.save();
+          ctx.globalAlpha = Math.min(1, alpha);
+          ctx.drawImage(im, baseX + fanShiftX + paraX, baseY + fanShiftY, drawW, drawH);
+          ctx.restore();
+        }
+
+        // Illuminated warm amber intervention slice (deck-slice3-wide.webp)
+        if (isLit && litSliceImg.complete && litSliceImg.naturalWidth) {
+          const litAlpha = Math.min(1, wInt * 1.0 + wRec * 0.92 + wSim * 0.14);
+          if (litAlpha > 0.01) {
+            ctx.save();
+            ctx.globalAlpha = litAlpha;
+            ctx.drawImage(
+              litSliceImg,
+              baseX + fanShiftX + paraX,
+              baseY + fanShiftY,
+              drawW,
+              drawH,
+            );
+            ctx.restore();
+          }
+        }
       }
     }
 
-    // 3. Par Datum Shader Plane
-    parUniforms.uTime.value = t;
-    parUniforms.uOpacity.value = Math.min(1, wSim * 0.9 + wInt * 0.85);
-    parUniforms.uSolved.value = wInt;
-    parPlane.visible = parUniforms.uOpacity.value > 0.02;
-
-    // 4. Intervention Optical Key Prism (descends in Stage 03, retracts cleanly out of frustum otherwise)
-    keyGroup.visible = wInt > 0.08;
-    keyGroup.position.y = 6.2 - wInt * 5.55 + Math.sin(t * 2.0) * 0.03;
-    keyGroup.rotation.y = Math.PI / 4 + t * 0.5;
-    keyGroup.scale.setScalar(Math.max(0.01, wInt));
-
-    // 5. Cryptographic Seal Rings (close tightly in Stage 04)
-    sealGroup.visible = wRec > 0.02;
-    for (let i = 0; i < sealRings.length; i++) {
-      const ring = sealRings[i]!;
-      const drop = (1 - wRec) * (0.9 + i * 0.45);
-      ring.position.y = drop + i * 0.08;
-      ring.scale.setScalar(1.35 - wRec * 0.35);
-      ring.rotation.z = t * (i % 2 === 0 ? 0.35 : -0.28) * (1 - wRec * 0.7);
+    // 4. Foreground Photoreal Blender Cycles White World Maquette
+    if (worldImg.complete && worldImg.naturalWidth) {
+      ctx.save();
+      ctx.drawImage(worldImg, baseX, baseY, drawW, drawH);
+      ctx.restore();
     }
 
-    renderer.render(scene, camera);
+    // 5. Real 3D Camera-Projected Flow Lines on the World Maquette (deck.json)
+    const flowAlpha = Math.max(wModel * 0.9, wSim * 0.5, wInt * 0.95, wRec * 0.55);
+    if (flowAlpha > 0.04) {
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Base infrastructure paths (roads, rails, bank links)
+      for (let ti = 0; ti < TRACKS_BASE.length; ti++) {
+        const tr = TRACKS_BASE[ti]!;
+        ctx.beginPath();
+        for (let j = 0; j < tr.pts.length; j++) {
+          const [sx, sy] = toStage(tr.pts[j]![0], tr.pts[j]![1]);
+          if (j === 0) ctx.moveTo(sx, sy);
+          else ctx.lineTo(sx, sy);
+        }
+        ctx.strokeStyle =
+          wSim > 0.45
+            ? `rgba(184, 64, 28, ${(0.22 * wSim).toFixed(3)})`
+            : `rgba(240, 144, 10, ${(0.26 * flowAlpha).toFixed(3)})`;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+
+        // Crisp traveling light packet along each path
+        const u = (t * 0.24 + ti * 0.19) % 1;
+        const [pxPt, pyPt] = sampleTrack(tr, u);
+        const [sx, sy] = toStage(pxPt, pyPt);
+        ctx.fillStyle =
+          wSim > 0.45
+            ? `rgba(184, 64, 28, ${(0.82 * wSim).toFixed(3)})`
+            : `rgba(240, 144, 10, ${(0.88 * flowAlpha).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Highlighted changed connection (found path) during Intervene & Record
+      const foundVis = Math.max(wInt, wRec * 0.85);
+      if (foundVis > 0.04) {
+        for (const tr of TRACKS_FOUND) {
+          ctx.beginPath();
+          for (let j = 0; j < tr.pts.length; j++) {
+            const [sx, sy] = toStage(tr.pts[j]![0], tr.pts[j]![1]);
+            if (j === 0) ctx.moveTo(sx, sy);
+            else ctx.lineTo(sx, sy);
+          }
+          ctx.strokeStyle = `rgba(240, 144, 10, ${(0.95 * foundVis).toFixed(3)})`;
+          ctx.lineWidth = 2.6;
+          ctx.stroke();
+
+          for (let k = 0; k < 2; k++) {
+            const u = (t * 0.42 + k * 0.5) % 1;
+            const [fx, fy] = sampleTrack(tr, u);
+            const [sx, sy] = toStage(fx, fy);
+            ctx.fillStyle = '#fff9ee';
+            ctx.strokeStyle = '#d97700';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(sx, sy, 3.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    // 6. Stage 01 · Model — Crisp Architectural Callout Leaders
+    if (wModel > 0.05 && !compact) {
+      ctx.save();
+      ctx.globalAlpha = wModel;
+      ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+      for (const pin of PINS) {
+        const [ax, ay] = toStage(pin.nx, pin.ny);
+        const lx = pin.lx * W;
+        const ly = pin.ly * stageH;
+        const elbowX = pin.align === 'left' ? lx + 12 : lx - 12;
+
+        ctx.strokeStyle = 'rgba(20, 18, 16, 0.28)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(elbowX, ly);
+        ctx.lineTo(lx, ly);
+        ctx.stroke();
+
+        // Anchor crosshair dot on maquette
+        ctx.fillStyle = '#f0900a';
+        ctx.beginPath();
+        ctx.arc(ax, ay, 2.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(20, 18, 16, 0.45)';
+        ctx.beginPath();
+        ctx.arc(ax, ay, 5.5, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#2d2a25';
+        ctx.textAlign = pin.align === 'left' ? 'left' : 'right';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(pin.label, lx, ly - 5);
+      }
+      ctx.restore();
+    }
+
+    // 7. Stage 04 · Record — Architectural Registration Reticle around Solved World
+    if (wRec > 0.05) {
+      ctx.save();
+      ctx.globalAlpha = wRec;
+      const rx = Math.round(W * 0.14);
+      const ry = Math.round(stageH * 0.10);
+      const rw = Math.round(W * 0.72);
+      const rh = Math.round(stageH * 0.80);
+      const br = 12;
+
+      ctx.strokeStyle = 'rgba(20, 18, 16, 0.22)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 4]);
+      ctx.strokeRect(rx + 0.5, ry + 0.5, rw, rh);
+      ctx.setLineDash([]);
+
+      // Amber precision corner brackets
+      ctx.strokeStyle = '#e08200';
+      ctx.lineWidth = 1.6;
+      const corners: Array<[number, number, number, number]> = [
+        [rx, ry, 1, 1],
+        [rx + rw, ry, -1, 1],
+        [rx, ry + rh, 1, -1],
+        [rx + rw, ry + rh, -1, -1],
+      ];
+      for (const [cx, cy, sx, sy] of corners) {
+        ctx.beginPath();
+        ctx.moveTo(cx + sx * br, cy);
+        ctx.lineTo(cx, cy);
+        ctx.lineTo(cx, cy + sy * br);
+        ctx.stroke();
+      }
+
+      // Small archival stamp top-right inside reticle
+      ctx.font = '600 9.5px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#a85f00';
+      ctx.fillText('RECORD LOCKED · 7c41…a9e0', rx + rw - 10, ry + 9);
+      ctx.restore();
+    }
+
+    // 8. Lower Architectural Telemetry Band (razor-sharp Swiss readout per stage)
+    ctx.fillStyle = '#faf8f3';
+    ctx.fillRect(0, stageH, W, bandH);
+    ctx.strokeStyle = 'rgba(20, 18, 16, 0.14)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, stageH + 0.5);
+    ctx.lineTo(W, stageH + 0.5);
+    ctx.stroke();
+
+    const padX = compact ? 14 : 22;
+    const innerW = W - padX * 2;
+    const innerTop = stageH + 12;
+    const innerH = bandH - 22;
+
+    // 8a. Model Telemetry — Structured 4-column Institutional State Matrix
+    if (wModel > 0.05) {
+      ctx.save();
+      ctx.globalAlpha = wModel;
+      const items = [
+        { k: 'RESERVE', v: '$41.6B', s: 'T-bills · repo · 4 banks' },
+        { k: 'COUNTERPARTIES', v: '140', s: '25 banks · 12 chains' },
+        { k: 'REPLAY ACCURACY', v: '±1.8%', s: '78 held-out weeks' },
+        { k: 'CONSTRAINTS', v: 'PAR $1.00', s: '15-min · 24/7 rails' },
+      ];
+      const count = compact ? 2 : 4;
+      const colW = innerW / count;
+      for (let i = 0; i < count; i++) {
+        const it = items[i]!;
+        const cx = padX + i * colW;
+        if (i > 0) {
+          ctx.strokeStyle = 'rgba(20, 18, 16, 0.1)';
+          ctx.beginPath();
+          ctx.moveTo(cx - 8 + 0.5, innerTop);
+          ctx.lineTo(cx - 8 + 0.5, innerTop + innerH);
+          ctx.stroke();
+        }
+        ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+        ctx.fillStyle = '#7c756b';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(it.k, cx, innerTop + 2);
+
+        ctx.font = '500 18px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#141210';
+        ctx.fillText(it.v, cx, innerTop + 21);
+
+        ctx.font = '400 11px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#6b655c';
+        ctx.fillText(it.s, cx, innerTop + 47);
+      }
+      ctx.restore();
+    }
+
+    // 8b. Simulate & Intervene Telemetry — Razor-sharp Swiss Par-Datum Stress Graph
+    const graphAlpha = Math.max(wSim, wInt);
+    if (graphAlpha > 0.05) {
+      ctx.save();
+      ctx.globalAlpha = graphAlpha;
+      const labelCol = compact ? 0 : 196;
+      const gx = padX;
+      const gw = innerW - labelCol;
+      const gy = innerTop + 14;
+      const gh = Math.max(36, innerH - 22);
+      const parY = gy + gh * 0.36;
+
+      // Graph header label
+      ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = wInt > 0.5 ? '#a85f00' : '#7c756b';
+      ctx.fillText(
+        wInt > 0.5
+          ? 'STRESS HORIZON · WITH THREE INTERVENTIONS'
+          : 'STRESS HORIZON · 312 BRANCHES AGAINST PAR ($1.00)',
+        gx,
+        innerTop - 2,
+      );
+
+      // Horizontal Par Datum line
+      ctx.strokeStyle = 'rgba(20, 18, 16, 0.34)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(gx, parY + 0.5);
+      ctx.lineTo(gx + gw - 58, parY + 0.5);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw stress branch curves
+      const samples = 44;
+      for (const br of BRANCHES) {
+        ctx.beginPath();
+        for (let s = 0; s <= samples; s++) {
+          const u = s / samples;
+          const x = gx + u * (gw - 62);
+          // Baseline shock dips below par; intervention lifts smoothly above par
+          const envelope = Math.sin(u * Math.PI);
+          const wave = Math.sin(u * Math.PI * br.freq + br.phase + t * 0.4) * 0.08 * envelope;
+          const rawDip = br.depth * Math.pow(Math.sin(Math.min(1, u * 1.12) * Math.PI), 1.35);
+          const liftedDip = rawDip * (1 - wInt * 0.88) - wInt * 0.16 * envelope;
+          const y = parY - gh * 0.16 + (liftedDip + wave) * gh * 0.72;
+          if (s === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        if (br.isBreak) {
+          ctx.strokeStyle =
+            wInt > 0.5
+              ? `rgba(232, 134, 0, ${(0.88 * wInt + 0.25).toFixed(3)})`
+              : `rgba(184, 64, 28, ${(0.86 * wSim + 0.2).toFixed(3)})`;
+          ctx.lineWidth = 1.75;
+        } else {
+          ctx.strokeStyle = 'rgba(20, 18, 16, 0.13)';
+          ctx.lineWidth = 1;
+        }
+        ctx.stroke();
+      }
+
+      // Clean non-overlapping PAR $1.00 datum label on right end of dashed rule
+      ctx.font = '500 9px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.fillStyle = '#4d4840';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('PAR $1.00', gx + gw, parY + 0.5);
+
+      // Right-hand crisp summary column (desktop)
+      if (!compact) {
+        const rx = gx + gw + 18;
+        ctx.strokeStyle = 'rgba(20, 18, 16, 0.1)';
+        ctx.beginPath();
+        ctx.moveTo(rx - 9 + 0.5, innerTop);
+        ctx.lineTo(rx - 9 + 0.5, innerTop + innerH);
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+        ctx.fillStyle = wInt > 0.5 ? '#a85f00' : '#b8401c';
+        ctx.fillText(wInt > 0.5 ? 'PAR HELD' : 'BREAKS FIRST', rx, innerTop + 2);
+
+        ctx.font = '500 17px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#141210';
+        ctx.fillText(wInt > 0.5 ? '$1.9B run held' : 'Short $310M', rx, innerTop + 20);
+
+        ctx.font = '400 11px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#575249';
+        ctx.fillText(
+          wInt > 0.5 ? '3 terms · $500M freed' : 'Bank offline: 3.5 h',
+          rx,
+          innerTop + 46,
+        );
+      }
+      ctx.restore();
+    }
+
+    // 8c. Record Telemetry — Clean Pre-Outcome Archival Ledger Strip
+    if (wRec > 0.05) {
+      ctx.save();
+      ctx.globalAlpha = wRec;
+      const colsRec = [
+        { k: 'STATUS', v: 'Committed', s: 'Before the outcome' },
+        { k: 'RECORD HASH', v: '7c41…a9e0', s: 'Immutable digest' },
+        { k: 'HELD-OUT REPLAY', v: '78 / 78 wks', s: 'All four regimes raised' },
+        { k: 'SCORING WINDOW', v: '90 days', s: 'Corrected by outcome' },
+      ];
+      const count = compact ? 2 : 4;
+      const colW = innerW / count;
+      for (let i = 0; i < count; i++) {
+        const it = colsRec[i]!;
+        const cx = padX + i * colW;
+        if (i > 0) {
+          ctx.strokeStyle = 'rgba(20, 18, 16, 0.1)';
+          ctx.beginPath();
+          ctx.moveTo(cx - 8 + 0.5, innerTop);
+          ctx.lineTo(cx - 8 + 0.5, innerTop + innerH);
+          ctx.stroke();
+        }
+        ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+        ctx.fillStyle = i === 0 ? '#a85f00' : '#7c756b';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(it.k, cx, innerTop + 2);
+
+        ctx.font =
+          i === 1
+            ? '500 16px "IBM Plex Mono", ui-monospace, monospace'
+            : '500 18px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#141210';
+        ctx.fillText(it.v, cx, innerTop + 21);
+
+        ctx.font = '400 11px "Geist", -apple-system, sans-serif';
+        ctx.fillStyle = '#6b655c';
+        ctx.fillText(it.s, cx, innerTop + 47);
+      }
+      ctx.restore();
+    }
   };
 
   const loop = (now: number): void => {
@@ -618,7 +676,7 @@ export function initFilmEngine(host: HTMLElement): void {
       raf = 0;
       return;
     }
-    renderFrame(now);
+    drawFrame(now);
     if (!reduced) raf = requestAnimationFrame(loop);
     else raf = 0;
   };
@@ -626,13 +684,17 @@ export function initFilmEngine(host: HTMLElement): void {
   const wake = (): void => {
     resize();
     lastNow = performance.now();
-    renderFrame(lastNow);
+    drawFrame(lastNow);
     if (!reduced && !raf && visible && !document.hidden) {
       raf = requestAnimationFrame(loop);
     }
   };
 
-  // Controls
+  // Repaint as soon as studio renders decode
+  for (const im of [worldImg, litSliceImg, ...sliceImgs]) {
+    im.addEventListener('load', () => wake(), { once: true });
+  }
+
   chs.forEach((b, i) =>
     b.addEventListener('click', () => {
       setStep(i, true);
@@ -677,12 +739,6 @@ export function initFilmEngine(host: HTMLElement): void {
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && visible) wake();
-  });
-
-  window.addEventListener('beforeunload', () => {
-    pmrem.dispose();
-    envTex.dispose();
-    renderer.dispose();
   });
 
   syncDom();

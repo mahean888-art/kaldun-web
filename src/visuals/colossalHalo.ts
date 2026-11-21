@@ -1,7 +1,7 @@
 /**
  * Colossal-inspired architectural halftone-dot orbital ring for 03 · Mission.
- * Pure deterministic algorithmic halftone dot geometry on warm alabaster paper:
- * zero blur, zero raster imagery, imperceptibly calm precision rotation.
+ * Pure monochrome warm-stone halftone geometry on alabaster paper:
+ * zero stray accent blobs, zero blur, calm orbital drift.
  */
 import { prefersReducedMotion } from '../lib/prefers';
 
@@ -12,8 +12,8 @@ export function initColossalHalo(root: ParentNode = document): void {
   if (!ctx) return;
 
   const reduced = prefersReducedMotion();
-  let W = 520;
-  let H = 520;
+  let W = 500;
+  let H = 500;
   let dpr = 1;
   let visible = false;
   let raf = 0;
@@ -36,12 +36,8 @@ export function initColossalHalo(root: ParentNode = document): void {
     const cx = W * 0.5;
     const cy = H * 0.5;
     const outerR = Math.min(W, H) * 0.44;
-    const step = Math.max(9.5, Math.min(W, H) / 44);
-    const phase = t * 0.14;
-
-    // Two nodal inflection centers orbiting gently along the ring (echoing Colossal's halftone torus)
-    const nodeA = phase;
-    const nodeB = phase + Math.PI * 0.85;
+    const step = Math.max(8.5, Math.min(W, H) / 48);
+    const phase = t * 0.09;
 
     for (let y = step * 0.5; y < H; y += step) {
       for (let x = step * 0.5; x < W; x += step) {
@@ -50,30 +46,26 @@ export function initColossalHalo(root: ParentNode = document): void {
         const dist = Math.hypot(dx, dy);
         const angle = Math.atan2(dy, dx);
 
-        // Dual interlocked orbital tracks with harmonic thickness modulation
-        const r1 = outerR * (0.82 + 0.08 * Math.sin(angle * 2 - phase));
-        const r2 = outerR * (0.64 + 0.06 * Math.cos(angle * 3 + phase * 0.7));
-        const d1 = Math.abs(dist - r1);
-        const d2 = Math.abs(dist - r2);
+        // Smooth architectural torus ring with gentle thickness swell
+        const ringR = outerR * (0.76 + 0.045 * Math.sin(angle * 2 - phase));
+        const halfWidth = outerR * (0.21 + 0.05 * Math.cos(angle - phase * 0.6));
+        const radial = Math.max(0, 1 - Math.abs(dist - ringR) / halfWidth);
+        if (radial <= 0) continue;
 
-        const band1 = Math.max(0, 1 - d1 / (outerR * 0.24));
-        const band2 = Math.max(0, 1 - d2 / (outerR * 0.14)) * 0.65;
+        // Clean broken-ring aperture on the lower-right, echoing Colossal's halftone ring
+        const gapAngle = Math.atan2(
+          Math.sin(angle - phase * 0.35 - 0.55),
+          Math.cos(angle - phase * 0.35 - 0.55),
+        );
+        const gapFade = Math.min(1, Math.max(0.08, (Math.abs(gapAngle) - 0.18) / 0.85));
 
-        // Subtle crescent opening like Colossal's signature broken halftone ring
-        const gapAngle = Math.atan2(Math.sin(angle - phase * 0.5 - 2.35), Math.cos(angle - phase * 0.5 - 2.35));
-        const gapFade = Math.min(1, Math.max(0.18, Math.abs(gapAngle) / 1.15));
+        const density = Math.pow(radial, 1.15) * gapFade;
+        if (density < 0.12) continue;
 
-        // Nodal swell near the two inflection points
-        const angA = Math.abs(Math.atan2(Math.sin(angle - nodeA), Math.cos(angle - nodeA)));
-        const angB = Math.abs(Math.atan2(Math.sin(angle - nodeB), Math.cos(angle - nodeB)));
-        const nodal = Math.exp(-angA * angA * 7.5) * 0.45 + Math.exp(-angB * angB * 9.0) * 0.35;
-
-        const density = Math.min(1, (Math.max(band1, band2) + nodal * band1) * gapFade);
-        if (density < 0.14) continue;
-
-        const dotR = density * (step * 0.41);
-        const isAmberNode = nodal > 0.34 && band1 > 0.52;
-        ctx.fillStyle = isAmberNode ? 'rgba(243, 146, 0, 0.46)' : 'rgba(176, 168, 152, 0.54)';
+        const dotR = density * (step * 0.40);
+        // Pure monochrome warm architectural stone (never muddies headline ink)
+        const alpha = (0.14 + density * 0.36).toFixed(3);
+        ctx.fillStyle = `rgba(154, 146, 132, ${alpha})`;
         ctx.beginPath();
         ctx.arc(x, y, dotR, 0, Math.PI * 2);
         ctx.fill();
@@ -93,7 +85,7 @@ export function initColossalHalo(root: ParentNode = document): void {
 
   const wake = (): void => {
     resize();
-    draw(reduced ? 0.6 : (performance.now() - t0) / 1000);
+    draw(reduced ? 0.5 : (performance.now() - t0) / 1000);
     if (!reduced && !raf && visible && !document.hidden) {
       raf = requestAnimationFrame(loop);
     }

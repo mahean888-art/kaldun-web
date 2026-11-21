@@ -11,6 +11,7 @@ import { initWorkspace } from './visuals/console';
 import { initDomains } from './visuals/domains';
 import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
+import { initColossalHalo } from './visuals/colossalHalo';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -200,6 +201,7 @@ export function mountHome(root: ParentNode = document): void {
   if (root.querySelector('[data-world-canvas]')) {
     void import('./visuals/worldsThree').then(({ initWorldsThree }) => initWorldsThree(root));
   }
+  initColossalHalo(root);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

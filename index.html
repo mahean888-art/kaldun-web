@@ -120,13 +120,13 @@
           <canvas class="deck__fx" aria-hidden="true"></canvas>
         </div>
       </div>
-      <div class="hero__strip hero__clusters b1 b2 b3" aria-hidden="true" data-clusters>
-        <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:3" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
-        <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:9" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:10" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
+      <div class="hero__strip hero__clusters b1 b2 b3" aria-hidden="true" data-clusters data-hero-lamps>
+        <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span><span class="lc__code">032</span></span>
+        <span class="lc" style="--c:3" data-third="1"><span class="lc__code lc__code--pre">FM-01</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+        <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span><span class="lc__code">PAR</span></span>
+        <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span><span class="lc__code">SIM</span></span>
+        <span class="lc" style="--c:9" data-third="3"><span class="lc__code lc__code--pre">012 5621</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+        <span class="lc" style="--c:10" data-third="3"><span class="lc__code lc__code--pre">563</span><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
         <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
       </div>
 
@@ -136,9 +136,14 @@
       <section class="band band--paper fm-band" id="film" data-screen>
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap fm-wrap">
+          <div class="col-bar" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 02</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">HOW IT WORKS</span>
+          </div>
           <div class="fm-head">
-            <p class="chip chip--sec"><em>SEC-02</em>How it works</p>
             <h2 class="h2">How a Foresight Machine reaches an answer.</h2>
+            <p class="fm-head__sub">Model the institution, run forward under stress, find the intervention that holds, and commit the record before the outcome is known.</p>
           </div>
           <div class="fm fm--inst" data-film data-s="1">
             <div class="fm__rail">
@@ -156,6 +161,8 @@
                 <span class="fm__code" data-film-code>MANIFOLD // 25 BANKS · 140 PARTNERS</span>
               </div>
               <div class="fm__stage">
+                <i class="fm__ruler fm__ruler--l" aria-hidden="true"></i>
+                <i class="fm__ruler fm__ruler--r" aria-hidden="true"></i>
                 <canvas class="fm__canvas" data-film-canvas role="img" aria-label="Interactive 3D architectural sculpture showing how a Foresight Machine models an institution, fans open translucent temporal slices under stress, engages an amber intervention prism to hold par, and seals the cryptographic pre-outcome commitment."></canvas>
               </div>
               <div class="fm__foot">
@@ -173,23 +180,43 @@
       <section class="band band--paper" id="mission" data-screen>
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap">
-          <p class="chip chip--sec"><em>SEC-03</em>Mission</p>
-          <div class="ms"><span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span><h2 class="ms__line">Make foresight infrastructure for the financial and physical world.</h2></div><div class="ms__lamps hero__clusters b1 b2 b3" aria-hidden="true">
-        <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:3" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
-        <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:9" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-        <span class="lc" style="--c:10" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
-        <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
-      </div><div class="ms__cols"><h3 class="ms__h">There’s forecasting, and there’s foresight.</h3><div class="prose">
-                  <p>Forecasting anticipates the conditions ahead, and machines now <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">match or beat the best human forecasters</a>.</p>
-                  <p>But every commitment sits inside a system of other institutions, agreements, and rules, and that system has outrun the tools we plan with.</p>
-                  <p>Today those systems are modeled on spreadsheets, one scenario at a time.</p>
-                  <p>A Foresight Machine runs the whole system forward, then intervenes: a different allocation, new terms, or a sequence that makes a project possible.</p>
-                  <p>No one can experiment on a real institution.</p>
-                  <p>Its team can experiment on its Foresight Machine, before anything is committed.</p>
-                </div></div>
+          <div class="col-bar" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 03</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">MISSION</span>
+          </div>
+          <div class="ms">
+            <canvas class="ms__halo" data-colossal-halo aria-hidden="true"></canvas>
+            <span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <p class="ms__kicker">[ PROTOCOL 03 // INSTITUTIONAL INFRASTRUCTURE ]</p>
+            <h2 class="ms__line">Make foresight infrastructure for the financial and physical world.</h2>
+          </div>
+          <div class="ms__lamps hero__clusters b1 b2 b3" aria-hidden="true">
+            <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span><span class="lc__code">032</span></span>
+            <span class="lc" style="--c:3" data-third="1"><span class="lc__code lc__code--pre">FM-03</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
+            <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:9" data-third="3"><span class="lc__code lc__code--pre">SYS</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:10" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
+            <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
+          </div>
+          <div class="ms__cols ms__cols--colossal">
+            <div class="col-axis" aria-hidden="true">
+              <span class="col-axis__node"><i></i></span>
+              <span class="col-axis__line"></span>
+            </div>
+            <div class="ms__essay">
+              <h3 class="ms__h">There’s forecasting, and there’s foresight.</h3>
+              <div class="prose">
+                <p>Forecasting anticipates the conditions ahead, and machines now <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">match or beat the best human forecasters</a>.</p>
+                <p>But every commitment sits inside a system of other institutions, agreements, and rules, and that system has outrun the tools we plan with.</p>
+                <p>Today those systems are modeled on spreadsheets, one scenario at a time.</p>
+                <p>A Foresight Machine runs the whole system forward, then intervenes: a different allocation, new terms, or a sequence that makes a project possible.</p>
+                <p>No one can experiment on a real institution.</p>
+                <p>Its team can experiment on its Foresight Machine, before anything is committed.</p>
+              </div>
+            </div>
+          </div>
 
           <div class="ct" aria-label="What kind of thing this is"><ol class="ct__cells"><li class="ct__c"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__idx"><span>01 // PAST</span><em>[ PASSIVE ]</em></p><p class="ct__k">Dashboards</p><p class="ct__a">Show what happened.</p><p class="ct__b">You read them.</p></li><li class="ct__c"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__idx"><span>02 // PROBABLE</span><em>[ PROBABILISTIC ]</em></p><p class="ct__k">Forecasts</p><p class="ct__a">Estimate what is likely.</p><p class="ct__b">You interpret them.</p></li><li class="ct__c is-ours"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__idx"><span>03 // ENGINEERED</span><em>[ EXECUTABLE ]</em></p><p class="ct__k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p><p class="ct__a">Find the plan that holds.</p><p class="ct__b">You set the goal and decide.</p></li></ol><div class="ct__bar" aria-hidden="true"><i></i><i></i><i class="is-ours"></i></div></div>
         </div>
@@ -197,9 +224,14 @@
 
       <section class="band band--paper ps-band" id="start" data-screen>
         <div class="wrap">
+          <div class="col-bar" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 04</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">WHERE WE START</span>
+          </div>
           <div class="ps" data-run>
             <div class="ps__top">
-              <div><p class="chip chip--sec"><em>SEC-04</em>Where we start</p><h2 class="h2">Every digital dollar is a promise.</h2></div>
+              <div><h2 class="h2">Every digital dollar is a promise.</h2></div>
               <p class="ps__sub">To pay anyone, at any hour, through any partner. That promise runs through a world of issuers, banks, payment companies, exchanges, lenders, and funds, each depending on the others. We model that world once. Each institution in it gets its own Foresight Machine.</p>
             </div>
             <div class="ps__chassis">
@@ -336,17 +368,158 @@
         </div>
       </section>
 
-      <section class="band band--paper" id="domains" data-screen>
-        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <div class="wrap">
-          <p class="chip chip--sec"><em>SEC-05</em>Worlds</p>
-          <header class="blk__head blk__head--center dm__head">
+      <section class="band band--worlds" id="domains" data-screen>
+        <div class="tk-bg" aria-hidden="true"></div>
+        <div class="wrap tk-wrap">
+          <div class="col-bar col-bar--dark" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 05</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">WORLDS</span>
+          </div>
+          <header class="tk-head">
             <h2 class="h2">Wherever capital is committed.</h2>
             <p class="lead">Each is a world of its own, with its institutions, its flows, and its rules, joined to the others by the money that moves between them. We model the world of money first, then follow it into the worlds it builds.</p>
           </header>
-          <div class="dm dm--tabs" data-domains>
-            <div class="dm__list" role="tablist" aria-label="Worlds"><button type="button" role="tab" class="dm__c is-lit" id="dm-t-0" aria-selected="true" aria-controls="dm-p-0" data-i="0"><span class="dm__n">05A</span><span class="dm__name">Money, payments, and credit</span></button><button type="button" role="tab" class="dm__c" id="dm-t-1" aria-selected="false" aria-controls="dm-p-1" tabindex="-1" data-i="1"><span class="dm__n">05B</span><span class="dm__name">Power, compute, and megainfrastructure</span></button><button type="button" role="tab" class="dm__c" id="dm-t-2" aria-selected="false" aria-controls="dm-p-2" tabindex="-1" data-i="2"><span class="dm__n">05C</span><span class="dm__name">Trade and critical supply chains</span></button></div>
-            <div class="dm__panel"><div class="dm__p" id="dm-p-0" role="tabpanel" aria-labelledby="dm-t-0"><figure class="dm__art dm__art--vitrine"><span class="dm__plate" aria-hidden="true">[ SEC-05A // MONETARY ]</span><span class="dm__idx" aria-hidden="true">SPECIMEN 01 / 03</span><canvas class="dm__canvas" data-world-canvas="money" role="img" aria-label="Interactive Three.js 3D Monetary Clearing Orrery with machined titanium and brass gyroscopic gimbals orbiting a luminous amber par crystal core."></canvas><span class="dm__tele" aria-hidden="true">ORRERY · PAR LOCK 1.0000 · 24/7 RAILS</span><figcaption class="dm__cap"><span>01</span>Money, payments, and credit</figcaption></figure><div class="dm__body"><h3 class="dm__title">Money, payments, and credit</h3><p class="dm__promise">Every payment clears at par, on time, at any hour.</p><p class="dm__for"><span>Issuers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Banks</span><span class="dm__sep" aria-hidden="true"> · </span><span>Payment companies</span><span class="dm__sep" aria-hidden="true"> · </span><span>Exchanges</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>What is the smallest buffer that passes every stress test?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to redeem instantly for a new partner?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the issuer, its bank, and its partners?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover redemptions that cannot clear over a weekend?</dd></div></dl></div></div><div class="dm__p" id="dm-p-1" role="tabpanel" aria-labelledby="dm-t-1" hidden><figure class="dm__art dm__art--vitrine"><span class="dm__plate" aria-hidden="true">[ SEC-05B // POWER &amp; COMPUTE ]</span><span class="dm__idx" aria-hidden="true">SPECIMEN 02 / 03</span><canvas class="dm__canvas" data-world-canvas="power" role="img" aria-label="Interactive Three.js 3D topographic energy wavefield with amber contour isolines, ceramic compute campus monoliths, and luminous catenary storage bridges."></canvas><span class="dm__tele" aria-hidden="true">WAVEFIELD · 60.00 HZ · STORAGE BRIDGE</span><figcaption class="dm__cap"><span>02</span>Power, compute, and megainfrastructure</figcaption></figure><div class="dm__body"><h3 class="dm__title">Power, compute, and megainfrastructure</h3><p class="dm__promise">Capacity delivered on the contracted date, and the debt serviced.</p><p class="dm__for"><span>Developers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Utilities</span><span class="dm__sep" aria-hidden="true"> · </span><span>Hyperscalers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Neoclouds</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>Which build plan still holds if interconnection slips two years?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to finance this campus at today’s rates?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the developer, the utility, and the lender?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a late project, when power, equipment, and debt depend on each other?</dd></div></dl></div></div><div class="dm__p" id="dm-p-2" role="tabpanel" aria-labelledby="dm-t-2" hidden><figure class="dm__art dm__art--vitrine"><span class="dm__plate" aria-hidden="true">[ SEC-05C // TRADE GEODESICS ]</span><span class="dm__idx" aria-hidden="true">SPECIMEN 03 / 03</span><canvas class="dm__canvas" data-world-canvas="trade" role="img" aria-label="Interactive Three.js 3D Spacing Guild geodesic navigation globe with brushed obsidian core, brass azimuth ring, constrained chokepoint, and elevated amber great-circle reroute arcs."></canvas><span class="dm__tele" aria-hidden="true">GEODESIC · STRAIT CHOKEPOINT · REROUTE</span><figcaption class="dm__cap"><span>03</span>Trade and critical supply chains</figcaption></figure><div class="dm__body"><h3 class="dm__title">Trade and critical supply chains</h3><p class="dm__promise">Cargo, metals, and chips delivered and paid for on the agreed terms.</p><p class="dm__for"><span>Traders</span><span class="dm__sep" aria-hidden="true"> · </span><span>Shippers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Mines and processors</span><span class="dm__sep" aria-hidden="true"> · </span><span>Buyers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Trade-finance banks</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>How should cargo at sea be hedged and routed if a strait closes?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What offtake terms make a mine bankable?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the buyer, the supplier, and the bank?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a cargo held at port?</dd></div></dl></div></div></div>
+
+          <div class="tk" data-domains>
+            <!-- Teknoir top control rail: Worlds pill + Next button + 3 segmented capsules + 1/3 counter -->
+            <div class="tk-rail">
+              <div class="tk-rail__l">
+                <span class="tk-pill-label">Worlds</span>
+                <button type="button" class="tk-next" data-tk-next aria-label="Next world"><span aria-hidden="true">▶</span></button>
+              </div>
+              <div class="tk-capsules" role="tablist" aria-label="Select world">
+                <button type="button" role="tab" class="tk-cap is-on" id="dm-t-0" aria-selected="true" aria-controls="tk-d-0" data-i="0" aria-label="01 · Money, payments, and credit"></button>
+                <button type="button" role="tab" class="tk-cap" id="dm-t-1" aria-selected="false" aria-controls="tk-d-1" tabindex="-1" data-i="1" aria-label="02 · Power, compute, and megainfrastructure"></button>
+                <button type="button" role="tab" class="tk-cap" id="dm-t-2" aria-selected="false" aria-controls="tk-d-2" tabindex="-1" data-i="2" aria-label="03 · Trade and critical supply chains"></button>
+              </div>
+              <span class="tk-count" data-tk-count aria-live="polite">1/3</span>
+            </div>
+
+            <!-- Teknoir OS-window pinstripe cards housing Astromech halftone dot-matrix Three.js apertures -->
+            <div class="tk-deck">
+              <article class="tk-card is-active" data-tk-card="0" tabindex="0" aria-current="true">
+                <div class="tk-winbar" aria-hidden="true"><span class="tk-winbar__box">−</span><span class="tk-winbar__lines"></span></div>
+                <div class="tk-card__inner">
+                  <div class="tk-card__meta">
+                    <span class="tk-card__k">Worlds <i aria-hidden="true">▶</i></span>
+                    <span class="tk-card__tag">MONETARY</span>
+                  </div>
+                  <h3 class="tk-card__title">Money, payments, and credit</h3>
+                  <div class="tk-card__sec">
+                    <span>SECTION</span>
+                    <span>1/3</span>
+                  </div>
+                  <div class="tk-card__stage">
+                    <i class="tk-card__ruler tk-card__ruler--l" aria-hidden="true"></i>
+                    <i class="tk-card__ruler tk-card__ruler--r" aria-hidden="true"></i>
+                    <canvas class="tk-card__canvas" data-world-canvas="money" role="img" aria-label="Halftone dot-matrix 3D Monetary Clearing Orrery showing glowing amber par core, orbiting reserve rings, and weekend cutoff barrier."></canvas>
+                    <div class="tk-card__grain" aria-hidden="true"></div>
+                    <span class="tk-card__hud" aria-hidden="true">PAR LOCK 1.0000 · 24/7 RAILS</span>
+                  </div>
+                  <p class="tk-card__promise">Every payment clears at par, on time, at any hour.</p>
+                </div>
+              </article>
+
+              <article class="tk-card" data-tk-card="1" tabindex="0" aria-current="false">
+                <div class="tk-winbar" aria-hidden="true"><span class="tk-winbar__box">−</span><span class="tk-winbar__lines"></span></div>
+                <div class="tk-card__inner">
+                  <div class="tk-card__meta">
+                    <span class="tk-card__k">Worlds <i aria-hidden="true">▶</i></span>
+                    <span class="tk-card__tag">INFRASTRUCTURE</span>
+                  </div>
+                  <h3 class="tk-card__title">Power, compute, and megainfrastructure</h3>
+                  <div class="tk-card__sec">
+                    <span>SECTION</span>
+                    <span>2/3</span>
+                  </div>
+                  <div class="tk-card__stage">
+                    <i class="tk-card__ruler tk-card__ruler--l" aria-hidden="true"></i>
+                    <i class="tk-card__ruler tk-card__ruler--r" aria-hidden="true"></i>
+                    <canvas class="tk-card__canvas" data-world-canvas="power" role="img" aria-label="Halftone dot-matrix 3D topographic energy wavefield with compute monoliths and luminous amber catenary storage bridges."></canvas>
+                    <div class="tk-card__grain" aria-hidden="true"></div>
+                    <span class="tk-card__hud" aria-hidden="true">GRID 60.00 HZ · STORAGE BRIDGE</span>
+                  </div>
+                  <p class="tk-card__promise">Capacity delivered on the contracted date, and the debt serviced.</p>
+                </div>
+              </article>
+
+              <article class="tk-card" data-tk-card="2" tabindex="0" aria-current="false">
+                <div class="tk-winbar" aria-hidden="true"><span class="tk-winbar__box">−</span><span class="tk-winbar__lines"></span></div>
+                <div class="tk-card__inner">
+                  <div class="tk-card__meta">
+                    <span class="tk-card__k">Worlds <i aria-hidden="true">▶</i></span>
+                    <span class="tk-card__tag">SUPPLY CHAINS</span>
+                  </div>
+                  <h3 class="tk-card__title">Trade and critical supply chains</h3>
+                  <div class="tk-card__sec">
+                    <span>SECTION</span>
+                    <span>3/3</span>
+                  </div>
+                  <div class="tk-card__stage">
+                    <i class="tk-card__ruler tk-card__ruler--l" aria-hidden="true"></i>
+                    <i class="tk-card__ruler tk-card__ruler--r" aria-hidden="true"></i>
+                    <canvas class="tk-card__canvas" data-world-canvas="trade" role="img" aria-label="Halftone dot-matrix 3D Spacing Guild geodesic sphere showing constrained strait chokepoint and glowing amber great-circle reroute corridor."></canvas>
+                    <div class="tk-card__grain" aria-hidden="true"></div>
+                    <span class="tk-card__hud" aria-hidden="true">STRAIT CHOKEPOINT · GEODESIC REROUTE</span>
+                  </div>
+                  <p class="tk-card__promise">Cargo, metals, and chips delivered and paid for on the agreed terms.</p>
+                </div>
+              </article>
+            </div>
+
+            <!-- Synchronized institutional decision specification dossier for the active world -->
+            <div class="tk-dossier">
+              <div class="tk-panel" id="tk-d-0" role="tabpanel" aria-labelledby="dm-t-0" data-tk-panel="0">
+                <div class="tk-panel__top">
+                  <span class="tk-panel__code"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>05A // MONEY, PAYMENTS, AND CREDIT</span>
+                  <span class="tk-panel__actors">Issuers · Banks · Payment companies · Exchanges · Lenders</span>
+                </div>
+                <dl class="tk-qs">
+                  <div class="tk-q"><dt><em>01</em>Optimize</dt><dd>What is the smallest buffer that passes every stress test?</dd></div>
+                  <div class="tk-q"><dt><em>02</em>Discover</dt><dd>What would it take to redeem instantly for a new partner?</dd></div>
+                  <div class="tk-q"><dt><em>03</em>Coordinate</dt><dd>Which terms work for the issuer, its bank, and its partners?</dd></div>
+                  <div class="tk-q"><dt><em>04</em>Underwrite</dt><dd>What should it cost to cover redemptions that cannot clear over a weekend?</dd></div>
+                </dl>
+              </div>
+
+              <div class="tk-panel" id="tk-d-1" role="tabpanel" aria-labelledby="dm-t-1" data-tk-panel="1" hidden>
+                <div class="tk-panel__top">
+                  <span class="tk-panel__code"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>05B // POWER, COMPUTE, AND MEGAINFRASTRUCTURE</span>
+                  <span class="tk-panel__actors">Developers · Utilities · Hyperscalers · Neoclouds · Lenders</span>
+                </div>
+                <dl class="tk-qs">
+                  <div class="tk-q"><dt><em>01</em>Optimize</dt><dd>Which build plan still holds if interconnection slips two years?</dd></div>
+                  <div class="tk-q"><dt><em>02</em>Discover</dt><dd>What would it take to finance this campus at today’s rates?</dd></div>
+                  <div class="tk-q"><dt><em>03</em>Coordinate</dt><dd>Which terms work for the developer, the utility, and the lender?</dd></div>
+                  <div class="tk-q"><dt><em>04</em>Underwrite</dt><dd>What should it cost to cover a late project, when power, equipment, and debt depend on each other?</dd></div>
+                </dl>
+              </div>
+
+              <div class="tk-panel" id="tk-d-2" role="tabpanel" aria-labelledby="dm-t-2" data-tk-panel="2" hidden>
+                <div class="tk-panel__top">
+                  <span class="tk-panel__code"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>05C // TRADE AND CRITICAL SUPPLY CHAINS</span>
+                  <span class="tk-panel__actors">Traders · Shippers · Mines and processors · Buyers · Trade-finance banks</span>
+                </div>
+                <dl class="tk-qs">
+                  <div class="tk-q"><dt><em>01</em>Optimize</dt><dd>How should cargo at sea be hedged and routed if a strait closes?</dd></div>
+                  <div class="tk-q"><dt><em>02</em>Discover</dt><dd>What offtake terms make a mine bankable?</dd></div>
+                  <div class="tk-q"><dt><em>03</em>Coordinate</dt><dd>Which terms work for the buyer, the supplier, and the bank?</dd></div>
+                  <div class="tk-q"><dt><em>04</em>Underwrite</dt><dd>What should it cost to cover a cargo held at port?</dd></div>
+                </dl>
+              </div>
+            </div>
+
+            <!-- Astromech dark optical torch register along bottom bezel of Worlds band -->
+            <div class="tk-lamps hero__clusters b1 b2 b3" aria-hidden="true">
+              <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span><span class="lc__code">05A</span></span>
+              <span class="lc" style="--c:3" data-third="1"><span class="lc__code lc__code--pre">WORLDS</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+              <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
+              <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
+              <span class="lc" style="--c:9" data-third="3"><span class="lc__code lc__code--pre">05B</span><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+              <span class="lc" style="--c:10" data-third="3"><span class="lc__code lc__code--pre">05C</span><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
+              <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
+            </div>
           </div>
         </div>
       </section>
@@ -354,7 +527,11 @@
       <section class="band band--paper" id="validation" data-screen>
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap">
-          <p class="chip chip--sec"><em>SEC-06</em>Validation</p>
+          <div class="col-bar" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 06</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">VALIDATION</span>
+          </div>
           <div class="vn vn--v3">
             <header class="vn__head">
               <h2 class="h2">A Foresight Machine earns trust one way: by its record.</h2>
@@ -374,7 +551,11 @@
       <section class="band band--paper" id="manifesto" data-screen>
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap">
-          <p class="chip chip--sec"><em>SEC-07</em>Manifesto</p>
+          <div class="col-bar" aria-hidden="true">
+            <span class="col-bar__tag">SECTION 07</span>
+            <span class="col-bar__hatch"></span>
+            <span class="col-bar__lbl">MANIFESTO</span>
+          </div>
           <div class="win win--feature">
             <span class="win__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             <div class="feat">

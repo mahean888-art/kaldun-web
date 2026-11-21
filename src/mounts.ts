@@ -11,7 +11,7 @@ import { initWorkspace } from './visuals/console';
 import { initDomains } from './visuals/domains';
 import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
-import { initColossalHalo } from './visuals/colossalHalo';
+import { initHowItWorks } from './visuals/howItWorks';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -194,14 +194,8 @@ export function mountHome(root: ParentNode = document): void {
   if (mt) initSteps(mt);
   const rn = qs<HTMLElement>('[data-run]', root);
   if (rn) initRun(rn);
-  const fm = qs<HTMLElement>('[data-film]', root);
-  if (fm) {
-    void import('./visuals/filmEngine').then(({ initFilmEngine }) => initFilmEngine(fm));
-  }
-  if (root.querySelector('[data-world-optic]')) {
-    void import('./visuals/worldsOptics').then(({ initWorldsOptics }) => initWorldsOptics(root));
-  }
-  initColossalHalo(root);
+  const hw = qs<HTMLElement>('[data-how-works]', root);
+  if (hw) initHowItWorks(hw);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

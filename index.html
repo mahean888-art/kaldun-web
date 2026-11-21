@@ -144,30 +144,118 @@
             <h2 class="h2">How a Foresight Machine reaches an answer.</h2>
             <p class="fm-head__sub">Model the institution, run forward under stress, find the intervention that holds, and commit the record before the outcome is known.</p>
           </div>
-          <div class="fm fm--inst" data-film data-s="1">
-            <div class="fm__rail">
-              <ol class="fm__ch">
-                <li><button type="button" data-go="1" class="is-on" aria-current="step"><i><b></b></i><span class="fm__n">01</span><span class="fm__t">Model</span><span class="fm__d">Models the institution and the world it depends on: its capital, contracts, counterparties, markets, and rules.</span></button></li>
-                <li><button type="button" data-go="2"><i><b></b></i><span class="fm__n">02</span><span class="fm__t">Simulate</span><span class="fm__d">Stress-tests each decision against past crises and the smallest shock that breaks it.</span></button></li>
-                <li><button type="button" data-go="3"><i><b></b></i><span class="fm__n">03</span><span class="fm__t">Intervene</span><span class="fm__d">Finds the change that holds: a new allocation, new terms, or a new sequence.</span></button></li>
-                <li><button type="button" data-go="4"><i><b></b></i><span class="fm__n">04</span><span class="fm__t">Record</span><span class="fm__d">Records the answer and its evidence before the outcome is known.</span></button></li>
-              </ol>
+          <div class="hw" data-how-works>
+            <div class="hw__tabs" role="tablist" aria-label="Four stages of a Foresight Machine">
+              <button type="button" role="tab" class="hw__tab is-on" id="hw-t-0" aria-selected="true" aria-controls="hw-p-0" data-hw-tab="0">
+                <span class="hw__n">01</span>
+                <span class="hw__t">Model</span>
+                <span class="hw__d">Models the institution and the world it depends on: its capital, contracts, counterparties, markets, and rules.</span>
+              </button>
+              <button type="button" role="tab" class="hw__tab" id="hw-t-1" aria-selected="false" aria-controls="hw-p-1" tabindex="-1" data-hw-tab="1">
+                <span class="hw__n">02</span>
+                <span class="hw__t">Simulate</span>
+                <span class="hw__d">Stress-tests each decision against past crises and the smallest shock that breaks it.</span>
+              </button>
+              <button type="button" role="tab" class="hw__tab" id="hw-t-2" aria-selected="false" aria-controls="hw-p-2" tabindex="-1" data-hw-tab="2">
+                <span class="hw__n">03</span>
+                <span class="hw__t">Intervene</span>
+                <span class="hw__d">Finds the change that holds: a new allocation, new terms, or a new sequence.</span>
+              </button>
+              <button type="button" role="tab" class="hw__tab" id="hw-t-3" aria-selected="false" aria-controls="hw-p-3" tabindex="-1" data-hw-tab="3">
+                <span class="hw__n">04</span>
+                <span class="hw__t">Record</span>
+                <span class="hw__d">Records the answer and its evidence before the outcome is known.</span>
+              </button>
             </div>
-            <div class="fm__frame fm__inst">
-              <span class="fm__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-              <div class="fm__top">
-                <span class="fm__plate" data-film-plate>01 · Model</span>
-                <span class="fm__code" data-film-code>Coupled system · World model</span>
-              </div>
-              <div class="fm__stage">
-                <canvas class="fm__canvas" data-film-canvas role="img" aria-label="Universal optical simulation instrument showing how a Foresight Machine models coupled institutional strata, runs branching futures through an adversarial stress front, isolates the single golden intervention path that holds, and locks the pre-outcome record."></canvas>
-              </div>
-              <div class="fm__foot">
-                <div class="fm__spec">
-                  <span class="fm__spec-k" data-film-sk>Executable world</span>
-                  <span class="fm__spec-v" data-film-sv>Entities, contracts, constraints, markets, and rules coupled in one state space</span>
+
+            <div class="hw__sheet">
+              <div class="hw__bar">
+                <span class="hw__bar-k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Mechanism</span>
+                <div class="hw__bar-nav">
+                  <span class="hw__step" data-hw-step aria-live="polite">01 / 04</span>
+                  <button type="button" class="hw__btn" data-hw-prev aria-label="Previous stage">←</button>
+                  <button type="button" class="hw__btn" data-hw-next aria-label="Next stage">→</button>
                 </div>
-                <button type="button" class="fm__play" data-play aria-label="Pause the sequence"><span class="fm__pi" aria-hidden="true"></span><span data-play-t>Pause</span></button>
+              </div>
+
+              <div class="hw__panel" id="hw-p-0" role="tabpanel" aria-labelledby="hw-t-0" data-hw-panel="0">
+                <div class="hw__cols">
+                  <div class="hw__col">
+                    <p class="hw__k"><span>01</span>What enters</p>
+                    <p class="hw__lead">Capital, contracts, counterparties, physical assets, market rules, and operating limits.</p>
+                    <p class="hw__note">Every rule in the model links directly to its governing document or operational record.</p>
+                  </div>
+                  <div class="hw__col">
+                    <p class="hw__k"><span>02</span>What the machine does</p>
+                    <p class="hw__lead">Couples the institution’s own structure to a shared executable model of the surrounding world.</p>
+                    <p class="hw__note">Dependencies run live as one system rather than disconnected spreadsheets.</p>
+                  </div>
+                  <div class="hw__col hw__col--out">
+                    <p class="hw__k"><span>03</span>What it produces</p>
+                    <p class="hw__lead">An executable institutional world model calibrated against held-out history.</p>
+                    <p class="hw__note">Verified on what actually happened before any forward decision is tested.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hw__panel" id="hw-p-1" role="tabpanel" aria-labelledby="hw-t-1" data-hw-panel="1" hidden>
+                <div class="hw__cols">
+                  <div class="hw__col">
+                    <p class="hw__k"><span>01</span>What enters</p>
+                    <p class="hw__lead">A proposed commitment, contract, allocation, or build schedule alongside the constraints that must hold.</p>
+                    <p class="hw__note">Evaluated under the exact rules and obligations governing the institution.</p>
+                  </div>
+                  <div class="hw__col">
+                    <p class="hw__k"><span>02</span>What the machine does</p>
+                    <p class="hw__lead">Runs the coupled system forward through historical crises and adversarial stress until a constraint breaks.</p>
+                    <p class="hw__note">Each shock is pushed to failure. No assumed probabilities or rosy base cases.</p>
+                  </div>
+                  <div class="hw__col hw__col--out">
+                    <p class="hw__k"><span>03</span>What it produces</p>
+                    <p class="hw__lead">The exact breaking boundary: which dependency fails first, how fast it cascades, and under what threshold.</p>
+                    <p class="hw__note">Replaces intuition with the smallest real shock that breaks the draft plan.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hw__panel" id="hw-p-2" role="tabpanel" aria-labelledby="hw-t-2" data-hw-panel="2" hidden>
+                <div class="hw__cols">
+                  <div class="hw__col">
+                    <p class="hw__k"><span>01</span>What enters</p>
+                    <p class="hw__lead">Every lever the team may change—allocations, counterparty terms, limits, routing, or sequencing—and every rule that must hold.</p>
+                    <p class="hw__note">Bound strictly to what the institution can actually execute.</p>
+                  </div>
+                  <div class="hw__col">
+                    <p class="hw__k"><span>02</span>What the machine does</p>
+                    <p class="hw__lead">Searches across combinations of interventions inside the live model until every stress regime clears the required threshold.</p>
+                    <p class="hw__note">Tests hundreds of structural arrangements instead of one manual scenario at a time.</p>
+                  </div>
+                  <div class="hw__col hw__col--out">
+                    <p class="hw__k"><span>03</span>What it produces</p>
+                    <p class="hw__lead">The plan that holds, its exact improvement over the draft, and the next boundary where even the improved plan would break.</p>
+                    <p class="hw__note">You set the goal, inspect every trade-off, and make the decision.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hw__panel" id="hw-p-3" role="tabpanel" aria-labelledby="hw-t-3" data-hw-panel="3" hidden>
+                <div class="hw__cols">
+                  <div class="hw__col">
+                    <p class="hw__k"><span>01</span>What enters</p>
+                    <p class="hw__lead">The chosen plan, the exact model version, every stress run, and the underlying evidence chain.</p>
+                    <p class="hw__note">Packaged alongside the team’s own baseline plan under identical rules.</p>
+                  </div>
+                  <div class="hw__col">
+                    <p class="hw__k"><span>02</span>What the machine does</p>
+                    <p class="hw__lead">Commits and cryptographically hashes the complete answer before the real-world outcome is known.</p>
+                    <p class="hw__note">Eliminates hindsight bias and creates an auditable institutional record.</p>
+                  </div>
+                  <div class="hw__col hw__col--out">
+                    <p class="hw__k"><span>03</span>What it produces</p>
+                    <p class="hw__lead">A permanent pre-outcome record scored against reality after the fact.</p>
+                    <p class="hw__note">Every miss becomes a new test environment the model must pass before shipping again.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -183,7 +271,6 @@
             <span class="col-bar__lbl">Mission</span>
           </div>
           <div class="ms">
-            <canvas class="ms__halo" data-colossal-halo aria-hidden="true"></canvas>
             <h2 class="ms__line">Make foresight infrastructure for the financial and physical world.</h2>
           </div>
           <div class="ms__cols ms__cols--colossal">
@@ -387,11 +474,13 @@
                   <span class="tk-card__tag">Money</span>
                 </div>
                 <div class="tk-card__inner">
+                  <span class="tk-card__big" aria-hidden="true">01</span>
                   <h3 class="tk-card__title">Money, payments, and credit</h3>
-                  <div class="tk-card__stage">
-                    <canvas class="tk-card__canvas" data-world-optic="money" role="img" aria-label="3D optical clearing orrery showing concentric 24/7 settlement meridians, parabolic amber liquidity arcs, and an unbroken par equilibrium horizon."></canvas>
-                  </div>
                   <p class="tk-card__promise">Every payment clears at par, on time, at any hour.</p>
+                  <dl class="tk-card__spec">
+                    <div><dt>System</dt><dd>Reserves · 24/7 rails · Settlement banks · Par</dd></div>
+                    <div><dt>Institutions</dt><dd>Issuers, banks, payment companies, exchanges, lenders</dd></div>
+                  </dl>
                 </div>
               </article>
 
@@ -401,11 +490,13 @@
                   <span class="tk-card__tag">Power &amp; compute</span>
                 </div>
                 <div class="tk-card__inner">
+                  <span class="tk-card__big" aria-hidden="true">02</span>
                   <h3 class="tk-card__title">Power, compute, and megainfrastructure</h3>
-                  <div class="tk-card__stage">
-                    <canvas class="tk-card__canvas" data-world-optic="power" role="img" aria-label="3D optical grid-compute phase lattice showing synchronized AC generation waves coupling along an amber transmission corridor into terraced gigawatt compute strata."></canvas>
-                  </div>
                   <p class="tk-card__promise">Capacity delivered on the contracted date, and the debt serviced.</p>
+                  <dl class="tk-card__spec">
+                    <div><dt>System</dt><dd>Generation · Interconnection · Compute · Project debt</dd></div>
+                    <div><dt>Institutions</dt><dd>Developers, utilities, hyperscalers, neoclouds, lenders</dd></div>
+                  </dl>
                 </div>
               </article>
 
@@ -415,11 +506,13 @@
                   <span class="tk-card__tag">Trade</span>
                 </div>
                 <div class="tk-card__inner">
+                  <span class="tk-card__big" aria-hidden="true">03</span>
                   <h3 class="tk-card__title">Trade and critical supply chains</h3>
-                  <div class="tk-card__stage">
-                    <canvas class="tk-card__canvas" data-world-optic="trade" role="img" aria-label="3D orthographic halftone globe showing continental coastlines, great-circle maritime corridors, a disrupted strait chokepoint, and an active amber reroute around the Cape."></canvas>
-                  </div>
                   <p class="tk-card__promise">Cargo, metals, and chips delivered and paid for on the agreed terms.</p>
+                  <dl class="tk-card__spec">
+                    <div><dt>System</dt><dd>Vessels · Straits · Offtake · Working capital</dd></div>
+                    <div><dt>Institutions</dt><dd>Traders, shippers, mines, buyers, trade-finance banks</dd></div>
+                  </dl>
                 </div>
               </article>
             </div>

@@ -1,14 +1,14 @@
 /* ==========================================================================
-   r13 — Foresight Machines · Unified Architectural Design System
-   Daylight warm alabaster (#f6f4ef), gallery paper (#fcfbf8), studio stone
-   (#eeebe3), deep carbon ink (#141210), and industrial amber (#f0900a) used
-   strictly as signal.
+   r13 — Foresight Machines · Pure Daylight Swiss / Colossal Architectural System
+   Warm alabaster (#f6f4ef), gallery paper (#fcfbf8), brushed stone (#f4f1e9),
+   deep carbon ink (#141210), hairline rules, and amber (#f0900a) strictly as
+   signal. Zero procedural canvases. Zero black boxes.
    ========================================================================== */
 
-/* ---- 0. Subtle Archival Lithography / Film-Stock Micro-Grain ------------- */
+/* ---- 0. Subtle Archival Print Micro-Grain -------------------------------- */
 .grain {
   display: block !important;
-  opacity: 0.034 !important;
+  opacity: 0.028 !important;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='19' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>") !important;
   background-size: 180px 180px !important;
@@ -60,7 +60,6 @@
 }
 
 /* ---- 2. Vintage Machine-Grid Bottom Indicator Torches -------------------- */
-/* Flat satin recessed hardware LEDs on a machined 12-column chassis rail     */
 .hero__strip.hero__clusters {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -68,7 +67,6 @@
   bottom: calc((var(--inset) + var(--hb)) / 2 - 17px) !important;
   padding-top: 9px !important;
 }
-/* Subtle vertical chassis ticks anchoring the indicator array to the 12-col grid */
 .hero__strip.hero__clusters::before {
   content: '';
   position: absolute;
@@ -116,7 +114,6 @@
   border: 0 !important;
   transition: background-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
-/* Lit satin amber lens: crisp hardware precision, zero glossy bubble glare */
 .hero__clusters .lc__row i.l {
   background: #f0900a !important;
   box-shadow:
@@ -124,13 +121,11 @@
     0 0 4px rgba(240, 144, 10, 0.34) !important;
   opacity: 1 !important;
 }
-/* Dim warm-stone recessed socket */
 .hero__clusters .lc__row i.d {
   background: rgba(176, 134, 84, 0.32) !important;
   box-shadow: inset 0 0 0 0.8px rgba(20, 18, 16, 0.14) !important;
   opacity: 1 !important;
 }
-/* Standby open hairline ring */
 .hero__clusters .lc__row i.o {
   background: transparent !important;
   box-shadow: inset 0 0 0 1.2px rgba(20, 18, 16, 0.38) !important;
@@ -139,7 +134,6 @@
   visibility: hidden;
   box-shadow: none !important;
 }
-/* Slow machine state alternation (driven by src/components/lamps.ts) */
 .hero__clusters .lc__row i.is-alt.l {
   background: rgba(176, 134, 84, 0.32) !important;
   box-shadow: inset 0 0 0 0.8px rgba(20, 18, 16, 0.14) !important;
@@ -178,75 +172,289 @@
   }
 }
 
-/* ---- 3. #film — 02 · How It Works (Universal Optical Lithography Stage) -- */
+/* ---- 3. #film — 02 · How It Works (Swiss 4-Stage Architectural Ledger) --- */
 #film.fm-band > .wrap {
-  padding-top: clamp(44px, 4.2vw, 62px) !important;
-  padding-bottom: clamp(56px, 5.4vw, 78px) !important;
+  max-width: 1320px;
+  padding-top: clamp(42px, 4.2vw, 58px) !important;
+  padding-bottom: clamp(56px, 5.4vw, 80px) !important;
 }
 #film .col-bar {
   margin-bottom: clamp(16px, 1.8vw, 24px);
 }
 #film .fm-head {
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) !important;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr) !important;
   align-items: end;
-  gap: 16px 40px;
-  margin-bottom: clamp(18px, 2vw, 26px) !important;
-  padding-bottom: 14px !important;
+  gap: 16px 48px;
+  margin-bottom: clamp(20px, 2.2vw, 28px) !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.13);
+}
+#film .fm-head .h2 {
+  font-size: clamp(34px, 3.5vw, 50px) !important;
+  line-height: 1.03 !important;
 }
 .fm-head__sub {
   margin: 0;
   font-size: 15.5px;
   line-height: 1.54;
   color: #555047;
-  max-width: 44ch;
+  max-width: 46ch;
   justify-self: end;
 }
-.fm__stage {
-  aspect-ratio: 16 / 8.6 !important;
-  background: #110f0c !important;
-  cursor: crosshair !important;
+
+.hw {
+  display: flex;
+  flex-direction: column;
 }
+.hw__tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid rgba(20, 18, 16, 0.14);
+  background: #fcfbf8;
+}
+.hw__tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: clamp(16px, 1.7vw, 22px) clamp(18px, 1.9vw, 24px);
+  border: 0;
+  border-right: 1px solid rgba(20, 18, 16, 0.12);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.18s ease-out;
+}
+.hw__tab:last-child {
+  border-right: 0;
+}
+.hw__tab:hover {
+  background: #f8f5ee;
+}
+.hw__tab.is-on {
+  background: #faf5ea;
+  box-shadow: inset 0 2px 0 #f0900a;
+}
+.hw__tab:focus-visible {
+  outline: 2px solid #f0900a;
+  outline-offset: -2px;
+}
+.hw__n {
+  display: block;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #8c857a;
+}
+.hw__tab.is-on .hw__n {
+  color: #a85f00;
+}
+.hw__t {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--serif);
+  font-size: clamp(26px, 2.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: #575249;
+  transition: color 0.15s ease-out;
+}
+.hw__tab:hover .hw__t,
+.hw__tab.is-on .hw__t {
+  color: var(--ink);
+}
+.hw__d {
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b655c;
+}
+.hw__tab.is-on .hw__d {
+  color: #35312b;
+}
+
+.hw__sheet {
+  border: 1px solid rgba(20, 18, 16, 0.14);
+  border-top: 0;
+  background: #fcfbf8;
+}
+.hw__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 22px;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.1);
+  background: #f5f2ea;
+}
+.hw__bar-k {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.hw__bar-k .bar__squares {
+  display: inline-flex;
+  gap: 3px;
+}
+.hw__bar-k .bar__squares i {
+  width: 6.5px;
+  height: 6.5px;
+  background: #f0900a;
+  box-shadow: none;
+}
+.hw__bar-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hw__step {
+  margin-right: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: #6b655c;
+}
+.hw__btn {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(20, 18, 16, 0.22);
+  border-radius: 50%;
+  background: #fcfbf8;
+  color: var(--ink);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
+}
+.hw__btn:hover {
+  border-color: #141210;
+  background: #141210;
+  color: #fcfbf8;
+}
+.hw__panel[hidden] {
+  display: none;
+}
+.hw__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.hw__col {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.1vw, 26px) clamp(20px, 2.1vw, 26px);
+  border-right: 1px solid rgba(20, 18, 16, 0.11);
+}
+.hw__col:last-child {
+  border-right: 0;
+}
+.hw__col--out {
+  background: #faf6ee;
+}
+.hw__k {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.1);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b655c;
+}
+.hw__col--out .hw__k {
+  color: #a85f00;
+  border-bottom-color: rgba(240, 144, 10, 0.26);
+}
+.hw__k span {
+  color: #9b9488;
+  font-weight: 500;
+}
+.hw__col--out .hw__k span {
+  color: #a85f00;
+}
+.hw__lead {
+  margin: 0 0 14px;
+  font-family: var(--serif);
+  font-size: clamp(21px, 1.75vw, 26px);
+  line-height: 1.22;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+}
+.hw__note {
+  margin: auto 0 0;
+  font-size: 14px;
+  line-height: 1.52;
+  color: #575249;
+}
+
 @media (max-width: 1023px) {
   #film .fm-head {
     grid-template-columns: minmax(0, 1fr) !important;
   }
   .fm-head__sub { justify-self: start; }
-  .fm__stage {
-    aspect-ratio: 4 / 3.1 !important;
+  .hw__tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hw__tab:nth-child(2n) {
+    border-right: 0;
+  }
+  .hw__tab:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(20, 18, 16, 0.12);
+  }
+  .hw__cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hw__col {
+    border-right: 0;
+    border-bottom: 1px solid rgba(20, 18, 16, 0.11);
+  }
+  .hw__col:last-child {
+    border-bottom: 0;
+  }
+}
+@media (max-width: 560px) {
+  .hw__tabs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hw__tab {
+    border-right: 0;
+    border-bottom: 1px solid rgba(20, 18, 16, 0.12);
+  }
+  .hw__tab:last-child {
+    border-bottom: 0;
   }
 }
 
-/* ---- 4. #mission — 03 · Pure Colossal Editorial Precision ---------------- */
+/* ---- 4. #mission — 03 · Pure Colossal Editorial Monumentality ------------ */
 #mission .ms {
   position: relative;
-  overflow: hidden;
   border: 0 !important;
   border-top: 1px solid rgba(20, 18, 16, 0.14) !important;
   border-bottom: 1px solid rgba(20, 18, 16, 0.14) !important;
   background: transparent !important;
-  padding: clamp(64px, 7.6vw, 118px) clamp(12px, 3vw, 44px) !important;
-}
-.ms__halo {
-  position: absolute;
-  left: clamp(-24px, 1.5vw, 24px);
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(300px, 36vw, 470px);
-  height: clamp(300px, 36vw, 470px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.92;
+  padding: clamp(52px, 5.8vw, 88px) 0 !important;
 }
 #mission .ms__line {
   position: relative;
-  z-index: 1;
-  max-width: 15.5ch !important;
-  margin-left: clamp(0px, 9vw, 140px) !important;
-  margin-right: auto !important;
+  max-width: 21ch !important;
+  margin: 0 !important;
   text-align: left !important;
-  font-size: clamp(44px, 5.4vw, 78px) !important;
+  font-size: clamp(44px, 5.4vw, 80px) !important;
   line-height: 1.02 !important;
-  letter-spacing: -0.015em !important;
+  letter-spacing: -0.016em !important;
   color: var(--ink) !important;
 }
 #mission .ms__cols--colossal {
@@ -326,7 +534,6 @@
 }
 @media (max-width: 720px) {
   #mission .ms__line {
-    margin-left: 0 !important;
     font-size: clamp(36px, 9.6vw, 48px) !important;
   }
   #mission .ms__cols--colossal {
@@ -441,7 +648,7 @@
   background: #efece5 !important;
 }
 
-/* ---- 5. #domains — 05 · Worlds (Teknoir Deck × Studio Blender Maquettes) - */
+/* ---- 5. #domains — 05 · Worlds (Pure Daylight Swiss Specimen Plates) ----- */
 #domains.band--worlds {
   background: var(--bg, #f6f4ef) !important;
   color: var(--ink);
@@ -480,7 +687,6 @@
   }
 }
 
-/* Teknoir-inspired Control Rail in Daylight Architectural Tone */
 .tk-rail {
   display: flex;
   align-items: center;
@@ -554,7 +760,7 @@
   color: #555047;
 }
 
-/* Three Architectural Maquette Plates */
+/* Three Pure Daylight Swiss Monograph Specimen Plates */
 .tk-deck {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -567,16 +773,17 @@
   border: 1px solid rgba(20, 18, 16, 0.14);
   background: #fcfbf8;
   cursor: pointer;
-  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
 }
 .tk-card:hover {
-  border-color: rgba(20, 18, 16, 0.32);
+  border-color: rgba(20, 18, 16, 0.3);
 }
 .tk-card.is-active {
   border-color: rgba(20, 18, 16, 0.34);
+  background: #fdfbf6;
   box-shadow:
     inset 0 2px 0 #f0900a,
-    0 24px 48px -36px rgba(20, 18, 16, 0.24);
+    0 22px 44px -36px rgba(20, 18, 16, 0.22);
 }
 .tk-card:focus-visible {
   outline: 2px solid #f0900a;
@@ -588,12 +795,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 11px 18px;
+  padding: 11px 20px;
   border-bottom: 1px solid rgba(20, 18, 16, 0.1);
-  background: #f6f3ec;
+  background: #f5f2ea;
 }
 .tk-card.is-active .tk-card__bar {
-  background: #faf5eb;
+  background: #faf4e8;
   border-bottom-color: rgba(240, 144, 10, 0.24);
 }
 .tk-card__num {
@@ -622,43 +829,67 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 18px 18px 20px;
+  padding: 22px 20px 22px;
+}
+.tk-card__big {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--serif);
+  font-size: clamp(46px, 4vw, 62px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: rgba(20, 18, 16, 0.15);
+  transition: color 0.2s ease-out;
+}
+.tk-card.is-active .tk-card__big {
+  color: #e08200;
 }
 .tk-card__title {
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   font-family: var(--serif);
-  font-size: clamp(24px, 2.05vw, 31px);
+  font-size: clamp(26px, 2.2vw, 33px);
   font-weight: 400;
-  line-height: 1.08;
+  line-height: 1.07;
   letter-spacing: -0.01em;
   color: var(--ink);
-  min-height: 2.2em;
-}
-.tk-card__stage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 5 / 4;
-  background: #110f0c;
-  border: 1px solid rgba(20, 18, 16, 0.24);
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.tk-card.is-active .tk-card__stage {
-  border-color: rgba(243, 146, 0, 0.55);
-}
-.tk-card__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+  min-height: 2.18em;
 }
 .tk-card__promise {
-  margin: auto 0 0;
-  font-size: 14.5px;
-  line-height: 1.5;
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.52;
   color: #4d4840;
 }
 .tk-card.is-active .tk-card__promise {
   color: var(--ink);
+}
+.tk-card__spec {
+  margin: auto 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(20, 18, 16, 0.11);
+  display: grid;
+  gap: 10px;
+}
+.tk-card__spec > div {
+  display: grid;
+  gap: 3px;
+}
+.tk-card__spec dt {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8c857a;
+}
+.tk-card.is-active .tk-card__spec dt {
+  color: #a85f00;
+}
+.tk-card__spec dd {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.44;
+  color: #3a362f;
 }
 
 /* Active World Institutional Dossier below the three plates */
@@ -679,7 +910,7 @@
   flex-wrap: wrap;
   padding: 13px 22px;
   border-bottom: 1px solid rgba(20, 18, 16, 0.1);
-  background: #f6f3ec;
+  background: #f5f2ea;
 }
 .tk-panel__code {
   display: inline-flex;

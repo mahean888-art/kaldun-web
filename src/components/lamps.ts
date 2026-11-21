@@ -136,9 +136,13 @@ function initIndexDrawer(): void {
   const setOpen = (open: boolean): void => {
     drawer.hidden = !open;
     document.documentElement.classList.toggle('is-index-open', open);
-    openers.forEach((b) => b.setAttribute('aria-expanded', String(open)));
+    openers.forEach((b) => {
+      b.setAttribute('aria-expanded', String(open));
+      const plus = b.querySelector<HTMLElement>('.lamps__plus');
+      if (plus) plus.textContent = open ? 'Index ×' : 'Index +';
+    });
     if (open) {
-      const closeBtn = drawer.querySelector<HTMLElement>('[data-index-close]');
+      const closeBtn = drawer.querySelector<HTMLElement>('.idx__close');
       closeBtn?.focus();
     } else {
       openers[0]?.focus();

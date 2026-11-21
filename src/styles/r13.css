@@ -1,24 +1,25 @@
 /* ==========================================================================
-   r13 — Maven Creative Synthesis (Colossal + Astromech + Teknoir)
-   1. Colossal boxed SECTION 0X + diagonal hatch headers (.col-bar)
-   2. Astromech perfected micro-telemetry bottom torches (.hero__clusters, .lc__code)
-   3. Astromech millimeter edge rulers on #film Three.js studio sculpture
-   4. Colossal halftone orbital ring (.ms__halo) + left-margin beacon axis (.col-axis)
-   5. Teknoir OS-window pinstripe Worlds deck × Astromech halftone WebGL apertures (#domains)
+   r13 — Unified Foresight Machines Architectural System
+   One cohesive warm alabaster + carbon ink + industrial amber daylight system:
+   1. Colossal boxed section markers + delicate diagonal hatch bars (.col-bar)
+   2. Authentic vintage Braun/Astromech warm amber indicator torches (.hero__clusters)
+   3. Unified warm-paper triad (#mission) & brushed-stone chassis (#start)
+   4. Colossal warm-stone halftone orbital ring + left beacon axis (#mission)
+   5. Teknoir-structured light architectural Worlds gallery + 3D maquettes (#domains)
    ========================================================================== */
 
 /* ---- 1. Colossal Diagonal-Hatch Architectural Section Bars --------------- */
 .col-bar {
   display: grid;
-  grid-template-columns: auto minmax(48px, 240px) minmax(0, 1fr);
+  grid-template-columns: auto minmax(44px, 200px) minmax(0, 1fr);
   align-items: center;
-  gap: 18px;
-  margin-bottom: clamp(24px, 3vw, 40px);
+  gap: 16px;
+  margin-bottom: clamp(22px, 2.8vw, 36px);
 }
 .col-bar__tag {
   display: inline-block;
-  padding: 4px 10px;
-  border: 1px solid rgba(20, 18, 16, 0.36);
+  padding: 3px 9px;
+  border: 1px solid rgba(20, 18, 16, 0.24);
   font-family: var(--mono);
   font-size: 10.5px;
   font-weight: 500;
@@ -28,10 +29,10 @@
   white-space: nowrap;
 }
 .col-bar__hatch {
-  height: 11px;
+  height: 9px;
   background: repeating-linear-gradient(
     -58deg,
-    rgba(20, 18, 16, 0.42) 0 1px,
+    rgba(20, 18, 16, 0.24) 0 1px,
     transparent 1px 5px
   );
 }
@@ -40,146 +41,85 @@
   font-family: var(--mono);
   font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #6b655c;
   white-space: nowrap;
 }
-.col-bar--dark .col-bar__tag {
-  border-color: rgba(244, 240, 232, 0.34);
-  color: #f4f0e8;
-}
-.col-bar--dark .col-bar__hatch {
-  background: repeating-linear-gradient(
-    -58deg,
-    rgba(243, 146, 0, 0.56) 0 1px,
-    transparent 1px 5px
-  );
-}
-.col-bar--dark .col-bar__lbl {
-  color: rgba(244, 240, 232, 0.58);
-}
 @media (max-width: 640px) {
   .col-bar {
-    grid-template-columns: auto minmax(24px, 1fr) auto;
+    grid-template-columns: auto minmax(20px, 1fr) auto;
     gap: 10px;
   }
 }
 
-/* ---- 2. Perfected Astromech Bottom Torch Array (Hero, Mission, Worlds) --- */
+/* ---- 2. Authentic Vintage Machine-Grid Amber Torches --------------------- */
 .hero__clusters {
-  align-items: center !important;
+  align-items: start !important;
 }
 .hero__clusters .lc {
   display: inline-flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   gap: 8px;
 }
 .hero__clusters .lc__lamps {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 4px;
+  display: grid;
+  gap: 5px;
 }
 .hero__clusters .lc__row {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 .hero__clusters .lc__row i {
   display: block;
-  width: 6.5px !important;
-  height: 6.5px !important;
+  width: 9px !important;
+  height: 9px !important;
   border-radius: 50%;
-  box-shadow: none !important;
-  transition: background-color 0.25s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out;
+  border: 0 !important;
+  transition: background 0.55s ease, box-shadow 0.55s ease, opacity 0.55s ease;
 }
 .hero__clusters .lc__row i.l {
-  background: #f39200 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 245, 220, 0.55), 0 0 0 1px rgba(20, 18, 16, 0.14) !important;
+  background: radial-gradient(circle at 36% 32%, #ffd88a 0%, #f39200 56%, #d47400 100%) !important;
+  box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.22), 0 0 9px rgba(243, 146, 0, 0.42) !important;
+  opacity: 1 !important;
 }
 .hero__clusters .lc__row i.d {
-  background: #c97704 !important;
-  opacity: 0.38 !important;
-  box-shadow: 0 0 0 1px rgba(20, 18, 16, 0.12) !important;
+  background: radial-gradient(circle at 40% 35%, rgba(243, 146, 0, 0.34), rgba(212, 116, 0, 0.22)) !important;
+  box-shadow: inset 0 1px 1px rgba(20, 18, 16, 0.08) !important;
+  opacity: 1 !important;
 }
 .hero__clusters .lc__row i.o {
   background: transparent !important;
-  border: 1.2px solid rgba(196, 114, 0, 0.68) !important;
-  box-shadow: none !important;
+  box-shadow: inset 0 0 0 1.4px rgba(240, 144, 10, 0.72) !important;
 }
 .hero__clusters .lc__row i.gap {
   visibility: hidden;
-  border: 0 !important;
   box-shadow: none !important;
 }
 .hero__clusters .lc__row i.is-alt.l {
-  opacity: 0.32 !important;
+  background: radial-gradient(circle at 40% 35%, rgba(243, 146, 0, 0.34), rgba(212, 116, 0, 0.22)) !important;
+  box-shadow: inset 0 1px 1px rgba(20, 18, 16, 0.08) !important;
 }
 .hero__clusters .lc__row i.is-alt.d {
-  background: #f39200 !important;
-  opacity: 1 !important;
+  background: radial-gradient(circle at 36% 32%, #ffd88a 0%, #f39200 56%, #d47400 100%) !important;
+  box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.22), 0 0 9px rgba(243, 146, 0, 0.42) !important;
 }
-@keyframes fm-torch-beep {
-  0%, 42%, 100% { opacity: 1; background: #f39200; }
-  58%, 82% { opacity: 0.28; background: #b86c00; }
+@keyframes fm-vintage-beep {
+  0%, 48%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 1px rgba(208, 114, 0, 0.25), 0 0 10px rgba(243, 146, 0, 0.5);
+  }
+  62%, 78% {
+    opacity: 0.34;
+    box-shadow: none;
+  }
 }
 .hero__clusters .lc__row i.is-beep {
-  animation: fm-torch-beep 1.8s steps(2, end) infinite;
-}
-.lc__code {
-  font-family: var(--mono);
-  font-size: 8.5px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(20, 18, 16, 0.44);
-  line-height: 1;
-  white-space: nowrap;
-  user-select: none;
-}
-.lc__code--pre {
-  margin-right: 2px;
-}
-@media (max-width: 1120px) {
-  .lc__code { display: none; }
+  animation: fm-vintage-beep 2.2s ease-in-out infinite;
 }
 
-/* Dark optical torch register (for smoked-obsidian Worlds band) */
-.tk-lamps {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: center;
-  margin-top: clamp(24px, 3vw, 38px);
-  padding-top: 18px;
-  border-top: 1px solid rgba(243, 146, 0, 0.26);
-}
-.tk-lamps .lc {
-  grid-column: var(--c) / span 2;
-}
-.tk-lamps .lc--end {
-  grid-column: 11 / span 2;
-  justify-self: end;
-}
-.tk-lamps .lc__row i.l {
-  background: #ff9c14 !important;
-  box-shadow: 0 0 7px rgba(243, 146, 0, 0.65) !important;
-}
-.tk-lamps .lc__row i.d {
-  background: #b86200 !important;
-  opacity: 0.46 !important;
-  box-shadow: none !important;
-}
-.tk-lamps .lc__row i.o {
-  border-color: rgba(243, 146, 0, 0.72) !important;
-}
-.tk-lamps .lc__code {
-  color: rgba(243, 146, 0, 0.54);
-}
-@media (max-width: 760px) {
-  .tk-lamps { display: none; }
-}
-
-/* ---- 3. #film — Colossal 2-Col Head + Astromech Millimeter Edge Rulers --- */
+/* ---- 3. #film — Clean 2-Column Editorial Head ---------------------------- */
 #film .fm-head {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) !important;
   align-items: end;
@@ -193,28 +133,6 @@
   max-width: 44ch;
   justify-self: end;
 }
-.fm__ruler {
-  position: absolute;
-  top: 24px;
-  bottom: 24px;
-  width: 9px;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.42;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(20, 18, 16, 0.5) 0 1px,
-    transparent 1px 12px
-  );
-}
-.fm__ruler--l {
-  left: 12px;
-  border-left: 1px solid rgba(20, 18, 16, 0.24);
-}
-.fm__ruler--r {
-  right: 12px;
-  border-right: 1px solid rgba(20, 18, 16, 0.24);
-}
 @media (max-width: 1023px) {
   #film .fm-head {
     grid-template-columns: minmax(0, 1fr) !important;
@@ -222,35 +140,24 @@
   .fm-head__sub { justify-self: start; }
 }
 
-/* ---- 4. #mission — Colossal Halftone Orbital Ring + Left Beacon Axis ----- */
+/* ---- 4. #mission — Colossal Halftone Ring, Beacon Axis & Light Triad ----- */
 #mission .ms {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(20, 18, 16, 0.12);
   background: #fbf9f4 !important;
-  padding: clamp(56px, 7.5vw, 116px) clamp(28px, 6vw, 96px) !important;
+  padding: clamp(56px, 7.2vw, 108px) clamp(28px, 6vw, 96px) !important;
 }
 .ms__halo {
   position: absolute;
   left: clamp(12px, 3vw, 48px);
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(300px, 36vw, 460px);
-  height: clamp(300px, 36vw, 460px);
+  width: clamp(290px, 35vw, 450px);
+  height: clamp(290px, 35vw, 450px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.92;
-}
-.ms__kicker {
-  position: relative;
-  z-index: 1;
-  margin: 0 0 18px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #a85f00;
+  opacity: 0.86;
 }
 #mission .ms__line {
   position: relative;
@@ -276,7 +183,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(20, 18, 16, 0.2);
+  border: 1px solid rgba(20, 18, 16, 0.18);
   background: #fbfaf6;
   flex: none;
 }
@@ -284,13 +191,13 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #f39200;
+  background: #f0900a;
 }
 .col-axis__line {
   width: 1px;
   flex: 1;
   margin-top: 8px;
-  background: rgba(20, 18, 16, 0.16);
+  background: rgba(20, 18, 16, 0.14);
 }
 .ms__essay {
   min-width: 0;
@@ -303,56 +210,78 @@
   .col-axis { display: none; }
 }
 
-/* ---- 5. #domains — Teknoir OS-Window Worlds × Astromech Halftone WebGL --- */
+/* Unified light warm-paper triad (kills jarring black obsidian card) */
+.ct__c.is-ours {
+  background: #faf3e6 !important;
+  color: var(--ink) !important;
+  border-color: rgba(240, 144, 10, 0.52) !important;
+  border-top: 2px solid #f0900a !important;
+  box-shadow: none !important;
+}
+.ct__c.is-ours .ct__idx {
+  border-bottom-color: rgba(240, 144, 10, 0.24) !important;
+  color: #a85f00 !important;
+}
+.ct__c.is-ours .ct__k,
+.ct__c.is-ours .ct__a {
+  color: var(--ink) !important;
+}
+.ct__c.is-ours .ct__b {
+  color: #4d4840 !important;
+}
+.ct__c.is-ours .ct__br i {
+  border-color: #f0900a !important;
+}
+
+/* ---- 4b. #start — Light Brushed-Stone Chassis Header (kills black bar) --- */
+.ps__chassis {
+  border: 1px solid rgba(20, 18, 16, 0.14) !important;
+  background: #efece5 !important;
+  border-radius: 3px;
+}
+.ps__chead {
+  background: #f6f3ec !important;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.12) !important;
+  border-left: 3px solid #f0900a;
+  color: #4d4840 !important;
+}
+.ps__chead span:last-child {
+  color: #8a6428 !important;
+}
+.ps__stage {
+  background: #efece5 !important;
+}
+
+/* ---- 5. #domains — Unified Warm-Alabaster Teknoir Worlds Gallery --------- */
 #domains.band--worlds {
-  position: relative;
-  background: #0c0b0a !important;
-  color: #f4f0e8;
-  border-top: 1px solid rgba(243, 146, 0, 0.35);
-  border-bottom: 1px solid rgba(243, 146, 0, 0.35);
-  overflow: clip;
-}
-#domains .tk-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(rgba(244, 240, 232, 0.042) 1px, transparent 1px) 0 0 / 38px 38px,
-    linear-gradient(90deg, rgba(244, 240, 232, 0.042) 1px, transparent 1px) 0 0 / 38px 38px;
-}
-#domains .tk-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.065;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+  background: var(--bg, #f7f5f0) !important;
+  color: var(--ink);
+  border-top: 0;
+  border-bottom: 0;
 }
 #domains .tk-wrap {
-  position: relative;
-  z-index: 1;
   max-width: 1320px;
   padding-top: clamp(64px, 6.5vw, 96px) !important;
-  padding-bottom: clamp(56px, 6vw, 84px) !important;
+  padding-bottom: clamp(64px, 6.5vw, 96px) !important;
 }
 .tk-head {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: end;
   gap: 20px 48px;
-  margin-bottom: clamp(32px, 3.6vw, 48px);
+  margin-bottom: clamp(32px, 3.6vw, 46px);
 }
 .tk-head .h2 {
   margin: 0;
-  color: #f6f2ea !important;
-  font-size: clamp(38px, 4vw, 60px) !important;
+  color: var(--ink) !important;
+  font-size: clamp(38px, 3.8vw, 56px) !important;
   line-height: 1.02 !important;
 }
 .tk-head .lead {
   margin: 0;
-  color: rgba(244, 240, 232, 0.72) !important;
+  color: #555047 !important;
   font-size: 16px !important;
-  line-height: 1.55 !important;
+  line-height: 1.56 !important;
   max-width: 52ch;
 }
 @media (max-width: 899px) {
@@ -362,13 +291,13 @@
   }
 }
 
-/* Teknoir Top Control Rail */
+/* Teknoir Control Rail adapted cleanly to warm alabaster paper */
 .tk-rail {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  margin-bottom: clamp(22px, 2.4vw, 32px);
+  margin-bottom: clamp(20px, 2.2vw, 28px);
   flex-wrap: wrap;
 }
 .tk-rail__l {
@@ -379,31 +308,30 @@
 .tk-pill-label {
   display: inline-flex;
   align-items: center;
-  height: 36px;
-  padding: 0 18px;
-  border: 1px solid rgba(244, 240, 232, 0.34);
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid rgba(20, 18, 16, 0.24);
   border-radius: 999px;
+  background: #fcfbf8;
   font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  color: #f4f0e8;
+  color: var(--ink);
 }
 .tk-next {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(244, 240, 232, 0.34);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(20, 18, 16, 0.24);
   border-radius: 50%;
-  background: transparent;
-  color: #f4f0e8;
+  background: #fcfbf8;
+  color: var(--ink);
   font-size: 10px;
   cursor: pointer;
   transition: border-color 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
 }
 .tk-next:hover {
-  border-color: #f39200;
-  background: #f39200;
+  border-color: #f0900a;
+  background: #f0900a;
   color: #141210;
 }
 .tk-capsules {
@@ -413,29 +341,29 @@
 }
 .tk-cap {
   width: clamp(58px, 8vw, 108px);
-  height: 15px;
+  height: 13px;
   padding: 0;
-  border: 1px solid rgba(244, 240, 232, 0.32);
+  border: 1px solid rgba(20, 18, 16, 0.26);
   border-radius: 999px;
   background: transparent;
   cursor: pointer;
   transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
 }
 .tk-cap:hover {
-  border-color: rgba(243, 146, 0, 0.8);
+  border-color: #f0900a;
 }
 .tk-cap.is-on {
-  background: #f2eee5;
-  border-color: #f2eee5;
+  background: #141210;
+  border-color: #141210;
 }
 .tk-count {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 11.5px;
   letter-spacing: 0.14em;
-  color: rgba(244, 240, 232, 0.68);
+  color: #6b655c;
 }
 
-/* Teknoir OS-Window Pinstripe Cards */
+/* Three side-by-side light architectural window frames */
 .tk-deck {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -445,63 +373,65 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(244, 240, 232, 0.2);
-  background: rgba(15, 14, 12, 0.94);
+  border: 1px solid rgba(20, 18, 16, 0.15);
+  background: #fcfbf8;
   cursor: pointer;
-  transition: border-color 0.2s ease-out, transform 0.2s ease-out;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 .tk-card:hover {
-  border-color: rgba(243, 146, 0, 0.52);
+  border-color: rgba(20, 18, 16, 0.34);
 }
 .tk-card.is-active {
-  border-color: rgba(243, 146, 0, 0.88);
-  background: #100f0d;
+  border-color: #f0900a;
+  box-shadow: 0 22px 48px -36px rgba(20, 18, 16, 0.24);
 }
 .tk-card:focus-visible {
-  outline: 2px solid #f39200;
+  outline: 2px solid #f0900a;
   outline-offset: 2px;
 }
 
-/* Classic Teknoir / System-OS Window Titlebar: [-] + 5 horizontal pinstripes */
+/* Delicate light-stone pinstripe title bar (Teknoir window craft in daylight alabaster) */
 .tk-winbar {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
-  border-bottom: 1px solid rgba(244, 240, 232, 0.18);
+  border-bottom: 1px solid rgba(20, 18, 16, 0.12);
+  background: #f5f2eb;
 }
 .tk-card.is-active .tk-winbar {
-  border-bottom-color: rgba(243, 146, 0, 0.45);
+  border-bottom-color: rgba(240, 144, 10, 0.36);
+  background: #faf3e6;
 }
 .tk-winbar__box {
   display: inline-grid;
   place-items: center;
   width: 14px;
   height: 14px;
-  border: 1px solid rgba(244, 240, 232, 0.42);
+  border: 1px solid rgba(20, 18, 16, 0.28);
   font-family: var(--mono);
   font-size: 10px;
   line-height: 1;
-  color: rgba(244, 240, 232, 0.7);
+  color: #6b655c;
   flex: none;
 }
 .tk-card.is-active .tk-winbar__box {
-  border-color: #f39200;
-  color: #f39200;
+  border-color: #f0900a;
+  color: #a85f00;
 }
 .tk-winbar__lines {
   flex: 1;
-  height: 11px;
+  height: 10px;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(244, 240, 232, 0.28) 0 1px,
+    rgba(20, 18, 16, 0.14) 0 1px,
     transparent 1px 2.5px
   );
 }
 .tk-card.is-active .tk-winbar__lines {
   background: repeating-linear-gradient(
     to bottom,
-    rgba(243, 146, 0, 0.62) 0 1px,
+    rgba(240, 144, 10, 0.48) 0 1px,
     transparent 1px 2.5px
   );
 }
@@ -510,7 +440,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 16px 18px 18px;
+  padding: 16px 18px 20px;
 }
 .tk-card__meta {
   display: flex;
@@ -522,35 +452,36 @@
 .tk-card__k {
   font-style: italic;
   font-size: 12.5px;
-  color: rgba(244, 240, 232, 0.72);
+  color: #6b655c;
 }
 .tk-card__k i {
   font-style: normal;
   font-size: 9px;
   margin-left: 3px;
-  color: #f39200;
+  color: #d47900;
 }
 .tk-card__tag {
-  padding: 3px 8px;
-  border: 1px solid rgba(244, 240, 232, 0.24);
+  padding: 2px 8px;
+  border: 1px solid rgba(20, 18, 16, 0.18);
   border-radius: 3px;
   font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(244, 240, 232, 0.76);
+  color: #555047;
 }
 .tk-card.is-active .tk-card__tag {
-  border-color: rgba(243, 146, 0, 0.68);
-  color: #f39200;
+  border-color: rgba(240, 144, 10, 0.6);
+  color: #9e5800;
+  background: #fdf6ea;
 }
 .tk-card__title {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(24px, 2vw, 30px);
   line-height: 1.08;
-  color: #f7f4ee;
+  color: var(--ink);
   min-height: 2.2em;
 }
 .tk-card__sec {
@@ -560,24 +491,24 @@
   margin-bottom: 8px;
   font-family: var(--mono);
   font-size: 9.5px;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(244, 240, 232, 0.48);
+  color: #8a847a;
 }
 
-/* Astromech Halftone Dot-Matrix WebGL Aperture + Film Grain + Scanlines */
+/* Daylight Matte-Ceramic Architectural Scale Model Viewport */
 .tk-card__stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3.25;
-  border-radius: 6px;
-  border: 1px solid rgba(244, 240, 232, 0.14);
-  background: #0b0a08;
+  aspect-ratio: 4 / 3.2;
+  border-radius: 3px;
+  border: 1px solid rgba(20, 18, 16, 0.1);
+  background: #f6f3ec;
   overflow: hidden;
   cursor: grab;
 }
-.tk-card.is-active .tk-card__stage {
-  border-color: rgba(243, 146, 0, 0.42);
+.tk-card__stage:active {
+  cursor: grabbing;
 }
 .tk-card__canvas {
   display: block;
@@ -586,67 +517,19 @@
   width: 100%;
   height: 100%;
 }
-/* Astromech analog scanline + micro film-grain optical texture */
-.tk-card__grain {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.24) 0 1px,
-      transparent 1px 3px
-    );
-  opacity: 0.55;
-}
-.tk-card__ruler {
-  position: absolute;
-  top: 16px;
-  bottom: 28px;
-  width: 6px;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0.48;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(243, 146, 0, 0.72) 0 1px,
-    transparent 1px 9px
-  );
-}
-.tk-card__ruler--l {
-  left: 9px;
-  border-left: 1px solid rgba(243, 146, 0, 0.35);
-}
-.tk-card__ruler--r {
-  right: 9px;
-  border-right: 1px solid rgba(243, 146, 0, 0.35);
-}
-.tk-card__hud {
-  position: absolute;
-  left: 12px;
-  bottom: 9px;
-  z-index: 3;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(244, 240, 232, 0.56);
-  pointer-events: none;
-}
 .tk-card__promise {
   margin: 14px 0 0;
   font-size: 14px;
-  line-height: 1.45;
-  color: rgba(244, 240, 232, 0.76);
+  line-height: 1.48;
+  color: #4d4840;
 }
 
-/* Synchronized Active World Institutional Decision Dossier */
+/* Synchronized Active World Institutional Decision Dossier (Warm Alabaster) */
 .tk-dossier {
   margin-top: clamp(20px, 2.2vw, 28px);
-  border: 1px solid rgba(244, 240, 232, 0.18);
-  border-top: 2px solid #f39200;
-  background: rgba(16, 15, 13, 0.96);
+  border: 1px solid rgba(20, 18, 16, 0.15);
+  border-top: 2px solid #f0900a;
+  background: #fcfbf8;
 }
 .tk-panel[hidden] {
   display: none;
@@ -658,7 +541,8 @@
   gap: 16px;
   flex-wrap: wrap;
   padding: 14px 22px;
-  border-bottom: 1px solid rgba(244, 240, 232, 0.12);
+  border-bottom: 1px solid rgba(20, 18, 16, 0.1);
+  background: #f7f4ed;
 }
 .tk-panel__code {
   display: inline-flex;
@@ -667,9 +551,9 @@
   font-family: var(--mono);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f39200;
+  color: var(--ink);
 }
 .tk-panel__code .bar__squares {
   display: inline-flex;
@@ -678,7 +562,7 @@
 .tk-panel__code .bar__squares i {
   width: 7px;
   height: 7px;
-  background: #f39200;
+  background: #f0900a;
   box-shadow: none;
 }
 .tk-panel__actors {
@@ -686,7 +570,7 @@
   font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(244, 240, 232, 0.56);
+  color: #7c756b;
 }
 .tk-qs {
   display: grid;
@@ -696,7 +580,7 @@
 }
 .tk-q {
   padding: 20px 22px 24px;
-  border-right: 1px solid rgba(244, 240, 232, 0.1);
+  border-right: 1px solid rgba(20, 18, 16, 0.1);
 }
 .tk-q:last-child {
   border-right: 0;
@@ -709,20 +593,20 @@
   font-family: var(--mono);
   font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f39200;
+  color: #a85f00;
 }
 .tk-q dt em {
   font-style: normal;
-  color: rgba(244, 240, 232, 0.42);
+  color: #9b958b;
 }
 .tk-q dd {
   margin: 0;
   font-family: var(--serif);
   font-size: 20px;
   line-height: 1.24;
-  color: #f4f0e8;
+  color: var(--ink);
 }
 
 @media (max-width: 1023px) {
@@ -736,7 +620,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .tk-q {
-    border-bottom: 1px solid rgba(244, 240, 232, 0.1);
+    border-bottom: 1px solid rgba(20, 18, 16, 0.1);
   }
 }
 @media (max-width: 600px) {

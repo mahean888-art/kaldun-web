@@ -19,28 +19,28 @@ const DURS = [5600, 6200, 6200, 5600] as const;
 
 const META = [
   {
-    plate: 'SEC-02 // STAGE 01 · MODEL',
-    sk: 'STATE SPACE',
+    plate: '01 · Model',
+    sk: 'State space',
     sv: 'Capital, contracts, counterparties, rails, and rules',
-    code: 'MANIFOLD // 25 BANKS · 140 PARTNERS',
+    code: '25 banks · 140 partners · 12 chains',
   },
   {
-    plate: 'SEC-02 // STAGE 02 · SIMULATE',
-    sk: 'STRESS REGIMES',
+    plate: '02 · Simulate',
+    sk: 'Stress tests',
     sv: 'Held-out crises and the smallest shock that breaks par',
-    code: 'REGIMES // 312 BRANCHES · PAR 1.0000',
+    code: '312 branches tested · par $1.00',
   },
   {
-    plate: 'SEC-02 // STAGE 03 · INTERVENE',
-    sk: 'INTERVENTION',
-    sv: 'Second 24/7 rail + daily cap + morning sweep lifts every branch above par',
-    code: 'SOLUTION // 3 TERMS · +$500M FREED',
+    plate: '03 · Intervene',
+    sk: 'Changed terms',
+    sv: 'Second 24/7 rail, daily merchant cap, and morning sweep',
+    code: 'Three terms · $500M freed',
   },
   {
-    plate: 'SEC-02 // STAGE 04 · RECORD',
-    sk: 'PRE-OUTCOME SEAL',
-    sv: 'Cryptographic commitment hashed before the outcome is known',
-    code: 'SHA-256 // 7C41·A9E0 · LOCKED',
+    plate: '04 · Record',
+    sk: 'Pre-outcome record',
+    sv: 'Written down and hashed before the outcome is known',
+    code: 'Hash 7c41…a9e0 · committed',
   },
 ] as const;
 

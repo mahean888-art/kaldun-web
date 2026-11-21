@@ -1,643 +1,536 @@
 /**
- * 05 · Worlds — Astromech × Spacing Guild Halftone Dot-Matrix Three.js WebGL Engines
+ * 05 · Worlds — Three.js Matte-Ceramic Architectural Scale Models
  *
- * Inspired directly by Maven Creative's Astromech optical instruments:
- * volumetric 3D forms rendered as dense custom-GLSL halftone dot-matrix fields,
- * glowing amber phosphor crescents, Fresnel rim-weighted points, animated particle
- * trajectories, subtle horizontal scanlines, and deterministic micro-signal jitter.
+ * Designed in the exact material language of the Hero architectural maquette:
+ * matte porcelain & warm architectural plaster on a beveled daylight studio plate,
+ * soft gallery skylight, real PCFSoftShadowMap contact shadows, frosted acrylic
+ * planes, and warm amber (#f0900a) flows marking the engineered intervention.
  *
- * Three bespoke worlds:
- *   - money : Monetary Clearing Orrery (dot-matrix par sphere + nested orbital rings + cutoff arc)
- *   - power : Megawatt Topographic Wavefield (3,072-dot GLSL wave surface + monoliths + catenary streams)
- *   - trade : Spacing Guild Geodesic Globe (Fibonacci Fresnel-rim sphere + chokepoint + reroute arcs)
+ *   - money : Financial district — clearing pavilion, settlement banks, 24/7 rails
+ *   - power : Energy & compute campus — wind turbines, solar field, storage yard, data halls
+ *   - trade : Maritime port — gantry cranes, container stacks, silos, vessel & shipping lane
  */
 import * as THREE from 'three';
 import { prefersReducedMotion } from '../lib/prefers';
-import { createRenderer, damp } from './threeStudio';
+import { createRenderer, createStudioEnv, damp } from './threeStudio';
 
 type WorldKind = 'money' | 'power' | 'trade';
 
-interface SceneController {
-  update: (t: number, dt: number, px: number, py: number) => void;
-  dispose: () => void;
+interface MaquetteMats {
+  porcelain: THREE.MeshPhysicalMaterial;
+  plaster: THREE.MeshPhysicalMaterial;
+  stone: THREE.MeshStandardMaterial;
+  slate: THREE.MeshStandardMaterial;
+  amber: THREE.MeshPhysicalMaterial;
+  amberLine: THREE.MeshBasicMaterial;
+  mutedLine: THREE.MeshBasicMaterial;
+  terracotta: THREE.MeshStandardMaterial;
+  frosted: THREE.MeshPhysicalMaterial;
+  frostedAmber: THREE.MeshPhysicalMaterial;
 }
 
-/**
- * Custom GLSL Halftone Optical Point-Cloud Shader.
- * Renders crisp circular halftone phosphor dots with subtle distance attenuation,
- * Fresnel-like luminance boost, traveling wave pulses, and rare deterministic micro-glitch.
- */
-function createHalftonePointsMat(baseSize = 4.2): THREE.ShaderMaterial {
-  return new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    uniforms: {
-      uTime: { value: 0 },
-      uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
-      uBaseSize: { value: baseSize },
-    },
-    vertexShader: /* glsl */ `
-      attribute float aSize;
-      attribute float aPhase;
-      attribute vec3 aColor;
-      uniform float uTime;
-      uniform float uPixelRatio;
-      uniform float uBaseSize;
-      varying vec3 vColor;
-      varying float vAlpha;
-      varying float vGlitch;
-
-      void main() {
-        vec3 pos = position;
-        // Subtle rare deterministic signal-line micro-glitch (Astromech optical CRT signature)
-        float tick = floor(uTime * 7.5);
-        float rnd = fract(sin(tick * 127.1 + floor(pos.y * 8.0) * 311.7) * 43758.5453);
-        float glitchMask = step(0.986, rnd);
-        pos.x += glitchMask * (fract(rnd * 19.3) - 0.5) * 0.14;
-        vGlitch = glitchMask;
-
-        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-        float dist = max(1.2, -mvPosition.z);
-        float pulse = 0.78 + 0.22 * sin(uTime * 2.2 + aPhase);
-        gl_PointSize = clamp((aSize * uBaseSize * uPixelRatio * (5.2 / dist)) * (0.92 + 0.14 * pulse), 1.5, 22.0);
-        gl_Position = projectionMatrix * mvPosition;
-
-        vColor = aColor;
-        // Depth-fade back hemisphere softly for strong 3D volumetric clarity
-        vAlpha = smoothstep(13.5, 3.8, dist) * (0.58 + 0.42 * pulse);
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      varying vec3 vColor;
-      varying float vAlpha;
-      varying float vGlitch;
-
-      void main() {
-        vec2 c = gl_PointCoord - 0.5;
-        float d = length(c) * 2.0;
-        if (d > 1.0) discard;
-        // Crisp optical halftone disc with hot phosphor center
-        float disc = smoothstep(1.0, 0.42, d);
-        float core = smoothstep(0.55, 0.0, d);
-        vec3 col = vColor * (0.95 + core * 0.65) + vec3(1.0, 0.94, 0.82) * pow(core, 2.5) * 0.55;
-        col += vec3(0.4, 0.22, 0.05) * vGlitch;
-        gl_FragColor = vec4(col, disc * vAlpha);
-      }
-    `,
-  });
-}
-
-function buildPoints(
-  positions: number[],
-  colors: number[],
-  sizes: number[],
-  phases: number[],
-  baseSize = 4.2,
-): { points: THREE.Points; mat: THREE.ShaderMaterial; geo: THREE.BufferGeometry } {
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  geo.setAttribute('aColor', new THREE.Float32BufferAttribute(colors, 3));
-  geo.setAttribute('aSize', new THREE.Float32BufferAttribute(sizes, 1));
-  geo.setAttribute('aPhase', new THREE.Float32BufferAttribute(phases, 1));
-  const mat = createHalftonePointsMat(baseSize);
-  const points = new THREE.Points(geo, mat);
-  return { points, mat, geo };
-}
-
-/** 05A · Money: Halftone Dot-Matrix Monetary Clearing Orrery */
-function buildMoneyScene(scene: THREE.Scene, camera: THREE.PerspectiveCamera): SceneController {
-  camera.fov = 34;
-  camera.position.set(0, 1.4, 9.4);
-  camera.lookAt(0, 0, 0);
-  camera.updateProjectionMatrix();
-
-  const root = new THREE.Group();
-  scene.add(root);
-
-  const pos: number[] = [];
-  const col: number[] = [];
-  const sz: number[] = [];
-  const ph: number[] = [];
-
-  const pushPt = (x: number, y: number, z: number, c: [number, number, number], s: number, p: number): void => {
-    pos.push(x, y, z);
-    col.push(c[0], c[1], c[2]);
-    sz.push(s);
-    ph.push(p);
-  };
-
-  const amber: [number, number, number] = [0.96, 0.58, 0.04];
-  const goldHi: [number, number, number] = [1.0, 0.82, 0.42];
-  const warmDim: [number, number, number] = [0.68, 0.44, 0.16];
-  const crimson: [number, number, number] = [0.92, 0.24, 0.08];
-
-  // 1. Dense luminous Par Core Sphere (Fibonacci halftone shell, Astromech glowing orb feel)
-  const coreN = 760;
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < coreN; i++) {
-    const y = 1 - (i / (coreN - 1)) * 2;
-    const r = Math.sqrt(Math.max(0, 1 - y * y));
-    const theta = golden * i;
-    const rad = 0.72 + (i % 7 === 0 ? 0.04 : 0);
-    const x = Math.cos(theta) * r * rad;
-    const z = Math.sin(theta) * r * rad;
-    const eqBoost = 1.0 - Math.abs(y) * 0.45;
-    pushPt(x, y * rad, z, i % 5 === 0 ? goldHi : amber, 0.95 + eqBoost * 0.7, theta);
-  }
-
-  // 2. Outer Calibrated Clearing Ring (thick halftone band + crimson weekend cutoff sector)
-  const outerR = 2.38;
-  for (let i = 0; i < 640; i++) {
-    const a = (i / 640) * Math.PI * 2;
-    const band = ((i % 4) - 1.5) * 0.042;
-    const thickness = ((i % 3) - 1) * 0.025;
-    const r = outerR + band;
-    const x = Math.cos(a) * r;
-    const y = Math.sin(a) * r;
-    const z = thickness;
-    const isCutoff = a > 0.35 && a < 1.25;
-    pushPt(x, y, z, isCutoff ? crimson : warmDim, isCutoff ? 1.35 : 0.78, a * 3.0);
-  }
-
-  // 3. Tilted Mid Reserve Ring (bright amber halftone crescent + 5 reserve node clusters)
-  const midMat4 = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(1.12, 0.38, 0.18));
-  const v = new THREE.Vector3();
-  for (let i = 0; i < 520; i++) {
-    const a = (i / 520) * Math.PI * 2;
-    const band = ((i % 3) - 1) * 0.032;
-    v.set(Math.cos(a) * (1.82 + band), Math.sin(a) * (1.82 + band), 0).applyMatrix4(midMat4);
-    const bright = Math.sin(a * 2.0) * 0.5 + 0.5;
-    pushPt(v.x, v.y, v.z, bright > 0.72 ? goldHi : amber, 0.75 + bright * 0.65, a * 2.0);
-  }
-
-  // 4. Inner 24/7 Failover Ring (high-intensity amber-white dense filament)
-  const innerMat4 = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(-0.72, 0.56, 0.12));
-  for (let i = 0; i < 420; i++) {
-    const a = (i / 420) * Math.PI * 2;
-    v.set(Math.cos(a) * 1.34, Math.sin(a) * 1.34, ((i % 3) - 1) * 0.02).applyMatrix4(innerMat4);
-    pushPt(v.x, v.y, v.z, i % 4 === 0 ? goldHi : amber, 1.15, a * 4.0);
-  }
-
-  // 5. Subtle outer ambient spice dust
-  for (let i = 0; i < 240; i++) {
-    const r = 2.6 + (i % 19) * 0.08;
-    const a = i * 2.39996;
-    const y = (((i * 37) % 100) / 100 - 0.5) * 3.2;
-    pushPt(Math.cos(a) * r, y, Math.sin(a) * r, warmDim, 0.45, a);
-  }
-
-  const cloud = buildPoints(pos, col, sz, ph, 4.3);
-  root.add(cloud.points);
-
-  // Ultra-fine precision architectural hairline reference rings
-  const hairMat = new THREE.LineBasicMaterial({ color: 0xf39200, transparent: true, opacity: 0.22 });
-  const makeCircleLine = (rad: number, rx: number, ry: number, rz: number): THREE.LineLoop => {
-    const pts = Array.from({ length: 120 }, (_, i) => {
-      const a = (i / 120) * Math.PI * 2;
-      return new THREE.Vector3(Math.cos(a) * rad, Math.sin(a) * rad, 0);
-    });
-    const line = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), hairMat);
-    line.rotation.set(rx, ry, rz);
-    return line;
-  };
-  root.add(makeCircleLine(2.58, 0, 0, 0));
-  root.add(makeCircleLine(1.82, 1.12, 0.38, 0.18));
-
-  // Traveling high-energy settlement comets along the inner 24/7 failover orbit
-  const cometPts = Array.from({ length: 24 }, () => new THREE.Vector3());
-  const cometGeo = new THREE.BufferGeometry().setFromPoints(cometPts);
-  const cometMat = new THREE.PointsMaterial({
-    color: 0xffdfa0,
-    size: 0.11,
-    transparent: true,
-    opacity: 0.92,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  const comets = new THREE.Points(cometGeo, cometMat);
-  root.add(comets);
-
+function createMaquetteMats(): MaquetteMats {
   return {
-    update(t, _dt, px, py) {
-      cloud.mat.uniforms['uTime']!.value = t;
-      root.rotation.y = t * 0.16 + px * 0.42;
-      root.rotation.x = 0.22 + py * 0.28;
-      const arr = cometGeo.attributes['position'] as THREE.BufferAttribute;
-      for (let i = 0; i < 24; i++) {
-        const a = t * 1.45 - i * 0.065 + (i >= 12 ? Math.PI : 0);
-        v.set(Math.cos(a) * 1.34, Math.sin(a) * 1.34, 0).applyMatrix4(innerMat4);
-        arr.setXYZ(i, v.x, v.y, v.z);
-      }
-      arr.needsUpdate = true;
-    },
-    dispose() {
-      cloud.geo.dispose();
-      cloud.mat.dispose();
-      hairMat.dispose();
-      cometGeo.dispose();
-      cometMat.dispose();
-    },
+    porcelain: new THREE.MeshPhysicalMaterial({
+      color: 0xf4f0e7,
+      roughness: 0.62,
+      metalness: 0.02,
+      clearcoat: 0.08,
+      clearcoatRoughness: 0.5,
+    }),
+    plaster: new THREE.MeshPhysicalMaterial({
+      color: 0xe4ded2,
+      roughness: 0.74,
+      metalness: 0.02,
+    }),
+    stone: new THREE.MeshStandardMaterial({
+      color: 0xd0c9bc,
+      roughness: 0.78,
+      metalness: 0.04,
+    }),
+    slate: new THREE.MeshStandardMaterial({
+      color: 0x5c574f,
+      roughness: 0.52,
+      metalness: 0.35,
+    }),
+    amber: new THREE.MeshPhysicalMaterial({
+      color: 0xf0900a,
+      emissive: 0xd97400,
+      emissiveIntensity: 0.24,
+      roughness: 0.26,
+      metalness: 0.05,
+      clearcoat: 0.5,
+    }),
+    amberLine: new THREE.MeshBasicMaterial({ color: 0xf0900a }),
+    mutedLine: new THREE.MeshBasicMaterial({ color: 0xb2aaa0 }),
+    terracotta: new THREE.MeshStandardMaterial({
+      color: 0xc44820,
+      roughness: 0.45,
+      metalness: 0.08,
+    }),
+    frosted: new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      roughness: 0.25,
+      metalness: 0,
+      transparent: true,
+      opacity: 0.34,
+      depthWrite: false,
+    }),
+    frostedAmber: new THREE.MeshPhysicalMaterial({
+      color: 0xf7a836,
+      emissive: 0xf0900a,
+      emissiveIntensity: 0.16,
+      roughness: 0.22,
+      metalness: 0,
+      transparent: true,
+      opacity: 0.54,
+      depthWrite: false,
+    }),
   };
 }
 
-/** 05B · Power & Compute: 3,072-Dot GLSL Topographic Energy Wavefield + Compute Monoliths */
-function buildPowerScene(scene: THREE.Scene, camera: THREE.PerspectiveCamera): SceneController {
-  camera.fov = 35;
-  camera.position.set(4.9, 3.8, 5.9);
-  camera.lookAt(0, 0.1, 0);
-  camera.updateProjectionMatrix();
+function setupStudioLight(scene: THREE.Scene): void {
+  scene.add(new THREE.HemisphereLight(0xfffdf8, 0xb5ac9c, 0.58));
 
-  const root = new THREE.Group();
-  root.position.y = -0.3;
-  scene.add(root);
+  const key = new THREE.DirectionalLight(0xfffaf0, 2.25);
+  key.position.set(7.5, 9.2, 4.2);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.near = 2;
+  key.shadow.camera.far = 26;
+  const b = 4.6;
+  key.shadow.camera.left = -b;
+  key.shadow.camera.right = b;
+  key.shadow.camera.top = b;
+  key.shadow.camera.bottom = -b;
+  key.shadow.bias = -0.0006;
+  key.shadow.radius = 3.5;
+  scene.add(key);
 
-  // 1. Dense 64 x 48 Halftone Dot-Matrix Animated Topographic Wavefield (GPU vertex shader!)
-  const cols = 64;
-  const rows = 48;
-  const count = cols * rows;
-  const gridPos = new Float32Array(count * 3);
-  const gridUv = new Float32Array(count * 2);
-  let ptr = 0;
-  let uptr = 0;
-  for (let iz = 0; iz < rows; iz++) {
-    for (let ix = 0; ix < cols; ix++) {
-      const u = ix / (cols - 1);
-      const v = iz / (rows - 1);
-      gridPos[ptr++] = (u - 0.5) * 6.4;
-      gridPos[ptr++] = 0;
-      gridPos[ptr++] = (v - 0.5) * 4.8;
-      gridUv[uptr++] = u;
-      gridUv[uptr++] = v;
+  const fill = new THREE.DirectionalLight(0xe2dcd0, 0.42);
+  fill.position.set(-7, 4, 5);
+  scene.add(fill);
+
+  const rim = new THREE.DirectionalLight(0xffb44d, 0.48);
+  rim.position.set(-4, 5, -7);
+  scene.add(rim);
+
+  const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(24, 24),
+    new THREE.ShadowMaterial({ opacity: 0.24, color: 0x221b12 }),
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -0.22;
+  floor.receiveShadow = true;
+  scene.add(floor);
+}
+
+function addBasePlate(parent: THREE.Group, w: number, d: number, mats: MaquetteMats): THREE.Mesh {
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(w, 0.2, d), mats.plaster);
+  plate.position.y = -0.1;
+  plate.castShadow = true;
+  plate.receiveShadow = true;
+  parent.add(plate);
+
+  // Subtle architectural plinth trim
+  const trim = new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, 0.04, d + 0.08), mats.stone);
+  trim.position.y = -0.19;
+  trim.receiveShadow = true;
+  parent.add(trim);
+  return plate;
+}
+
+function addBox(
+  parent: THREE.Group,
+  w: number,
+  h: number,
+  d: number,
+  x: number,
+  y: number,
+  z: number,
+  mat: THREE.Material,
+): THREE.Mesh {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.set(x, y + h * 0.5, z);
+  m.castShadow = true;
+  m.receiveShadow = true;
+  parent.add(m);
+  return m;
+}
+
+interface PulseTrack {
+  curve: THREE.Curve<THREE.Vector3>;
+  beads: THREE.Mesh[];
+  speed: number;
+}
+
+function addRoute(
+  parent: THREE.Group,
+  points: Array<[number, number, number]>,
+  mats: MaquetteMats,
+  isAmber: boolean,
+  beadCount = 3,
+  speed = 0.28,
+): PulseTrack | null {
+  const vecs = points.map(([x, y, z]) => new THREE.Vector3(x, y, z));
+  const curve = new THREE.CatmullRomCurve3(vecs, false, 'catmullrom', 0.12);
+  const tube = new THREE.Mesh(
+    new THREE.TubeGeometry(curve, 48, isAmber ? 0.022 : 0.015, 8, false),
+    isAmber ? mats.amberLine : mats.mutedLine,
+  );
+  parent.add(tube);
+  if (!isAmber) return null;
+
+  const beads: THREE.Mesh[] = [];
+  const bGeo = new THREE.SphereGeometry(0.045, 12, 12);
+  const bMat = new THREE.MeshBasicMaterial({ color: 0xffb84d });
+  for (let i = 0; i < beadCount; i++) {
+    const b = new THREE.Mesh(bGeo, bMat);
+    parent.add(b);
+    beads.push(b);
+  }
+  return { curve, beads, speed };
+}
+
+/** 01 · Money, payments, and credit — Architectural Financial District Maquette */
+function buildMoneyMaquette(root: THREE.Group, mats: MaquetteMats): (t: number) => void {
+  addBasePlate(root, 4.9, 3.3, mats);
+
+  // Subtle plaza paving divisions
+  addBox(root, 1.9, 0.025, 2.7, -1.25, 0, 0, mats.stone);
+  addBox(root, 2.3, 0.025, 2.7, 1.05, 0, 0, mats.porcelain);
+
+  // Central Reserve Clearing Pavilion (left-center monument)
+  addBox(root, 1.15, 0.16, 1.05, -1.2, 0.025, -0.1, mats.stone);
+  addBox(root, 0.96, 0.56, 0.86, -1.2, 0.185, -0.1, mats.porcelain);
+  addBox(root, 1.02, 0.055, 0.92, -1.2, 0.745, -0.1, mats.amber);
+  addBox(root, 0.68, 0.14, 0.6, -1.2, 0.8, -0.1, mats.porcelain);
+
+  // Four Settlement Bank Towers (clustered architectural skyline)
+  const banks: Array<[number, number, number, number, number, boolean]> = [
+    [0.52, 1.55, 0.46, 0.35, -0.78, true],
+    [0.44, 1.92, 0.44, 0.92, -0.62, false],
+    [0.48, 1.24, 0.44, 1.52, -0.72, false],
+    [0.42, 1.48, 0.42, 1.65, 0.25, true],
+  ];
+  for (const [w, h, d, x, z, hasAmberCrown] of banks) {
+    addBox(root, w, h, d, x, 0.025, z, mats.porcelain);
+    addBox(root, w * 0.76, 0.12, d * 0.76, x, 0.025 + h, z, mats.plaster);
+    if (hasAmberCrown) {
+      addBox(root, w * 0.8, 0.03, d * 0.8, x, 0.025 + h + 0.12, z, mats.amber);
     }
   }
-  const waveGeo = new THREE.BufferGeometry();
-  waveGeo.setAttribute('position', new THREE.BufferAttribute(gridPos, 3));
-  waveGeo.setAttribute('aUv', new THREE.BufferAttribute(gridUv, 2));
 
-  const waveMat = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    uniforms: {
-      uTime: { value: 0 },
-      uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
-    },
-    vertexShader: /* glsl */ `
-      attribute vec2 aUv;
-      uniform float uTime;
-      uniform float uPixelRatio;
-      varying float vElev;
-      varying float vEdge;
-      varying float vLag;
-
-      void main() {
-        vec3 p = position;
-        float w1 = sin(p.x * 0.95 + uTime * 0.85) * cos(p.z * 0.9 - uTime * 0.5) * 0.36;
-        float w2 = sin((p.x - p.z) * 1.4 - uTime * 0.6) * 0.16;
-        vec2 dip = p.xz - vec2(-1.45, 0.72);
-        float lag = exp(-dot(dip, dip) * 1.1);
-        float trough = -0.68 * lag;
-        vec2 peak = p.xz - vec2(1.15, -0.35);
-        float ridge = 0.52 * exp(-dot(peak, peak) * 0.6);
-
-        float h = w1 + w2 + trough + ridge;
-        p.y += h;
-        vElev = h;
-        vLag = lag;
-
-        vec2 e = abs(aUv - 0.5) * 2.0;
-        vEdge = smoothstep(1.0, 0.72, max(e.x, e.y));
-
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        float dist = max(1.2, -mv.z);
-        float contourBoost = smoothstep(0.65, 1.0, abs(sin(h * 11.0)));
-        gl_PointSize = clamp((2.6 + contourBoost * 2.4 + lag * 1.8) * uPixelRatio * (5.4 / dist), 1.4, 14.0);
-        gl_Position = projectionMatrix * mv;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      varying float vElev;
-      varying float vEdge;
-      varying float vLag;
-
-      void main() {
-        vec2 c = gl_PointCoord - 0.5;
-        float d = length(c) * 2.0;
-        if (d > 1.0) discard;
-        float disc = smoothstep(1.0, 0.35, d);
-        vec3 dimBronze = vec3(0.42, 0.28, 0.12);
-        vec3 amber = vec3(0.96, 0.58, 0.04);
-        vec3 goldHi = vec3(1.0, 0.88, 0.58);
-        vec3 crimson = vec3(0.94, 0.22, 0.08);
-        vec3 col = mix(dimBronze, amber, smoothstep(-0.35, 0.35, vElev));
-        col = mix(col, goldHi, smoothstep(0.32, 0.78, vElev));
-        col = mix(col, crimson, clamp(vLag * 1.35, 0.0, 1.0));
-        gl_FragColor = vec4(col, disc * vEdge * 0.85);
-      }
-    `,
-  });
-  root.add(new THREE.Points(waveGeo, waveMat));
-
-  // 2. Crisp Wireframe Architectural Monoliths (Solar -> Storage -> Compute Campus)
-  const monolithSpecs = [
-    { x: 1.15, z: -0.35, w: 0.5, h: 1.95, d: 0.5, amber: true },
-    { x: 1.72, z: -0.1, w: 0.36, h: 1.45, d: 0.36, amber: true },
-    { x: 1.32, z: 0.28, w: 0.32, h: 1.15, d: 0.32, amber: false },
-    { x: -0.25, z: 0.15, w: 0.44, h: 1.28, d: 0.44, amber: true },
-    { x: -0.74, z: -0.22, w: 0.32, h: 0.92, d: 0.32, amber: false },
-    { x: -1.85, z: -0.85, w: 0.38, h: 0.88, d: 0.38, amber: false },
+  // Lower-rise Exchange & Merchant District blocks
+  const blocks: Array<[number, number, number, number, number]> = [
+    [0.62, 0.48, 0.46, 0.48, 0.72],
+    [0.44, 0.68, 0.42, 1.08, 0.78],
+    [0.52, 0.38, 0.38, -0.58, 0.92],
+    [0.42, 0.54, 0.36, -1.58, 0.88],
+    [0.38, 0.62, 0.36, -1.82, -0.95],
   ];
+  for (const [w, h, d, x, z] of blocks) {
+    addBox(root, w, h, d, x, 0.025, z, mats.plaster);
+  }
 
-  const solidMat = new THREE.MeshBasicMaterial({ color: 0x0d0c0a, transparent: true, opacity: 0.84 });
-  const edgeAmber = new THREE.LineBasicMaterial({ color: 0xf39200, transparent: true, opacity: 0.85 });
-  const edgeMuted = new THREE.LineBasicMaterial({ color: 0xd8c8ae, transparent: true, opacity: 0.45 });
-
-  for (const m of monolithSpecs) {
+  // Three frosted temporal acrylic planes rising subtly behind the skyline (echoing the Hero!)
+  const sliceGeo = new THREE.BoxGeometry(2.6, 1.55, 0.024);
+  const edgeGeo = new THREE.EdgesGeometry(sliceGeo);
+  const slices: THREE.Group[] = [];
+  for (let i = 0; i < 3; i++) {
     const g = new THREE.Group();
-    g.position.set(m.x, m.h * 0.5 - 0.05, m.z);
-    const box = new THREE.BoxGeometry(m.w, m.h, m.d);
-    g.add(new THREE.Mesh(box, solidMat));
-    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(box), m.amber ? edgeAmber : edgeMuted));
+    const isLit = i === 1;
+    g.position.set(0.15 + (i - 1) * 0.14, 0.95, -1.32 - i * 0.16);
+    g.rotation.y = (i - 1) * 0.08;
+    g.add(new THREE.Mesh(sliceGeo, isLit ? mats.frostedAmber : mats.frosted));
+    g.add(
+      new THREE.LineSegments(
+        edgeGeo,
+        new THREE.LineBasicMaterial({ color: isLit ? 0xf0900a : 0xcfc8bc, transparent: true, opacity: isLit ? 0.8 : 0.45 }),
+      ),
+    );
     root.add(g);
+    slices.push(g);
   }
 
-  // 3. Luminous Particle-Stream High-Voltage Catenary Bridges (Storage <-> Compute)
-  const curves = [
-    new THREE.QuadraticBezierCurve3(new THREE.Vector3(-1.85, 0.85, -0.85), new THREE.Vector3(-1.05, 1.62, -0.35), new THREE.Vector3(-0.25, 1.25, 0.15)),
-    new THREE.QuadraticBezierCurve3(new THREE.Vector3(-0.25, 1.25, 0.15), new THREE.Vector3(0.45, 2.42, -0.1), new THREE.Vector3(1.15, 1.92, -0.35)),
-    new THREE.QuadraticBezierCurve3(new THREE.Vector3(-0.74, 0.88, -0.22), new THREE.Vector3(0.45, 1.98, -0.18), new THREE.Vector3(1.72, 1.42, -0.1)),
-  ];
-
-  const streamCount = 96;
-  const streamPos = new Float32Array(streamCount * 3);
-  const streamGeo = new THREE.BufferGeometry();
-  streamGeo.setAttribute('position', new THREE.BufferAttribute(streamPos, 3));
-  const streamMat = new THREE.PointsMaterial({
-    color: 0xffc666,
-    size: 0.085,
-    transparent: true,
-    opacity: 0.95,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  const streamPoints = new THREE.Points(streamGeo, streamMat);
-  root.add(streamPoints);
-
-  const arcLineMat = new THREE.LineBasicMaterial({ color: 0xf39200, transparent: true, opacity: 0.35 });
-  for (const c of curves) {
-    root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(c.getPoints(48)), arcLineMat));
-  }
+  // Standard T+1 rail (muted stone) + Active 24/7 Amber Failover Clearing Rails
+  addRoute(root, [[-0.65, 0.04, -0.1], [0.1, 0.04, -0.1], [0.92, 0.04, -0.62]], mats, false);
+  const tracks: PulseTrack[] = [];
+  const t1 = addRoute(
+    root,
+    [[-0.65, 0.045, 0.08], [-0.15, 0.045, 0.18], [0.35, 0.045, -0.35], [0.35, 0.045, -0.78]],
+    mats,
+    true,
+    3,
+    0.32,
+  );
+  const t2 = addRoute(
+    root,
+    [[-0.65, 0.045, 0.18], [0.05, 0.045, 0.35], [0.95, 0.045, 0.35], [1.65, 0.045, 0.25]],
+    mats,
+    true,
+    4,
+    0.26,
+  );
+  const t3 = addRoute(
+    root,
+    [[-1.2, 0.045, 0.45], [-0.58, 0.045, 0.65], [0.48, 0.045, 0.72]],
+    mats,
+    true,
+    2,
+    0.29,
+  );
+  if (t1) tracks.push(t1);
+  if (t2) tracks.push(t2);
+  if (t3) tracks.push(t3);
 
   const tmp = new THREE.Vector3();
-
-  return {
-    update(t, _dt, px, py) {
-      waveMat.uniforms['uTime']!.value = t;
-      root.rotation.y = Math.sin(t * 0.2) * 0.24 + px * 0.38;
-      root.rotation.x = py * 0.18;
-
-      const attr = streamGeo.attributes['position'] as THREE.BufferAttribute;
-      for (let i = 0; i < streamCount; i++) {
-        const ci = i % curves.length;
-        const u = (t * 0.42 + i / streamCount) % 1;
-        curves[ci]!.getPoint(u, tmp);
-        attr.setXYZ(i, tmp.x, tmp.y, tmp.z);
+  return (t: number) => {
+    for (const tr of tracks) {
+      for (let i = 0; i < tr.beads.length; i++) {
+        const u = (t * tr.speed + i / tr.beads.length) % 1;
+        tr.curve.getPoint(u, tmp);
+        tr.beads[i]!.position.copy(tmp);
       }
-      attr.needsUpdate = true;
-    },
-    dispose() {
-      waveGeo.dispose();
-      waveMat.dispose();
-      solidMat.dispose();
-      edgeAmber.dispose();
-      edgeMuted.dispose();
-      streamGeo.dispose();
-      streamMat.dispose();
-      arcLineMat.dispose();
-    },
+    }
+    slices.forEach((s, i) => {
+      s.position.y = 0.95 + Math.sin(t * 0.9 + i * 1.1) * 0.025;
+    });
   };
 }
 
-/** 05C · Trade: Spacing Guild Halftone Fresnel-Rim Geodesic Navigation Globe */
-function buildTradeScene(scene: THREE.Scene, camera: THREE.PerspectiveCamera): SceneController {
-  camera.fov = 34;
-  camera.position.set(0, 0.95, 7.6);
-  camera.lookAt(0, 0, 0);
-  camera.updateProjectionMatrix();
+/** 02 · Power, compute, and megainfrastructure — Architectural Energy & Compute Campus */
+function buildPowerMaquette(root: THREE.Group, mats: MaquetteMats): (t: number) => void {
+  addBasePlate(root, 4.9, 3.3, mats);
 
-  const root = new THREE.Group();
-  scene.add(root);
+  // Subtle stepped terrain terrace on the left (wind ridge)
+  addBox(root, 1.5, 0.18, 2.8, -1.55, 0, -0.05, mats.stone);
+  addBox(root, 1.1, 0.16, 1.9, -1.68, 0.18, -0.35, mats.plaster);
 
-  const R = 1.72;
+  // Three Sculptural Matte-Ceramic Wind Turbines
+  const rotors: THREE.Group[] = [];
+  const turbineCoords: Array<[number, number, number]> = [
+    [-1.82, 0.34, -0.82],
+    [-1.48, 0.34, -0.22],
+    [-1.78, 0.34, 0.38],
+  ];
+  for (const [tx, ty, tz] of turbineCoords) {
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.036, 1.15, 12), mats.porcelain);
+    mast.position.set(tx, ty + 0.575, tz);
+    mast.castShadow = true;
+    root.add(mast);
 
-  // Inner dark matte occlusion sphere so front hemisphere dots read crisply over back hemisphere
-  const coreSphere = new THREE.Mesh(
-    new THREE.SphereGeometry(R * 0.96, 40, 40),
-    new THREE.MeshBasicMaterial({ color: 0x0b0a08 }),
-  );
-  root.add(coreSphere);
-
-  // 1. 3,200-point Fibonacci Halftone Globe with Fresnel Grazing-Rim Glow (Astromech crescent aesthetic!)
-  const N = 3200;
-  const gPos = new Float32Array(N * 3);
-  const gNorm = new Float32Array(N * 3);
-  const gPhase = new Float32Array(N);
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < N; i++) {
-    const y = 1 - (i / (N - 1)) * 2;
-    const r = Math.sqrt(Math.max(0, 1 - y * y));
-    const theta = golden * i;
-    const nx = Math.cos(theta) * r;
-    const ny = y;
-    const nz = Math.sin(theta) * r;
-    gPos[i * 3] = nx * R;
-    gPos[i * 3 + 1] = ny * R;
-    gPos[i * 3 + 2] = nz * R;
-    gNorm[i * 3] = nx;
-    gNorm[i * 3 + 1] = ny;
-    gNorm[i * 3 + 2] = nz;
-    gPhase[i] = theta;
-  }
-
-  const globeGeo = new THREE.BufferGeometry();
-  globeGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3));
-  globeGeo.setAttribute('normal', new THREE.BufferAttribute(gNorm, 3));
-  globeGeo.setAttribute('aPhase', new THREE.BufferAttribute(gPhase, 1));
-
-  const globeMat = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    uniforms: {
-      uTime: { value: 0 },
-      uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
-    },
-    vertexShader: /* glsl */ `
-      attribute float aPhase;
-      uniform float uTime;
-      uniform float uPixelRatio;
-      varying float vFresnel;
-      varying float vGrid;
-
-      void main() {
-        vec3 N = normalize(mat3(modelMatrix) * normal);
-        vec4 wp = modelMatrix * vec4(position, 1.0);
-        vec3 V = normalize(cameraPosition - wp.xyz);
-        float ndv = max(dot(N, V), 0.0);
-        vFresnel = pow(1.0 - ndv, 2.2);
-
-        // Subtle latitude/longitude architectural bands
-        float latBand = smoothstep(0.92, 1.0, abs(cos(asin(clamp(normal.y, -1.0, 1.0)) * 6.0)));
-        vGrid = latBand;
-
-        vec4 mv = viewMatrix * wp;
-        float dist = max(1.5, -mv.z);
-        float sz = (1.6 + vFresnel * 4.4 + latBand * 1.1) * uPixelRatio * (5.2 / dist);
-        gl_PointSize = clamp(sz, 1.2, 16.0);
-        gl_Position = projectionMatrix * mv;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      varying float vFresnel;
-      varying float vGrid;
-
-      void main() {
-        vec2 c = gl_PointCoord - 0.5;
-        float d = length(c) * 2.0;
-        if (d > 1.0) discard;
-        float disc = smoothstep(1.0, 0.32, d);
-        vec3 dim = vec3(0.44, 0.30, 0.14);
-        vec3 amber = vec3(0.96, 0.58, 0.04);
-        vec3 hot = vec3(1.0, 0.88, 0.62);
-        vec3 col = mix(dim, amber, smoothstep(0.15, 0.72, vFresnel + vGrid * 0.25));
-        col = mix(col, hot, smoothstep(0.68, 0.98, vFresnel));
-        float a = disc * (0.28 + vFresnel * 0.72 + vGrid * 0.16);
-        gl_FragColor = vec4(col, clamp(a, 0.0, 1.0));
-      }
-    `,
-  });
-  root.add(new THREE.Points(globeGeo, globeMat));
-
-  // 2. Tilted Dotted Equatorial Azimuth Bezel
-  const bezelPos: number[] = [];
-  const bezelCol: number[] = [];
-  const bezelSz: number[] = [];
-  const bezelPh: number[] = [];
-  const bezelMat4 = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(Math.PI * 0.45, 0.12, -0.2));
-  const v = new THREE.Vector3();
-  for (let i = 0; i < 240; i++) {
-    const a = (i / 240) * Math.PI * 2;
-    const major = i % 10 === 0;
-    v.set(Math.cos(a) * R * 1.32, Math.sin(a) * R * 1.32, 0).applyMatrix4(bezelMat4);
-    bezelPos.push(v.x, v.y, v.z);
-    bezelCol.push(major ? 1.0 : 0.78, major ? 0.76 : 0.5, major ? 0.32 : 0.16);
-    bezelSz.push(major ? 1.45 : 0.68);
-    bezelPh.push(a);
-  }
-  const bezel = buildPoints(bezelPos, bezelCol, bezelSz, bezelPh, 3.8);
-  root.add(bezel.points);
-
-  // 3. Front-hemisphere Great-Circle Chokepoint vs. Spice-Amber Reroute Arcs
-  const sphVec = (lat: number, lon: number, rad = R): THREE.Vector3 => {
-    const cl = Math.cos(lat);
-    return new THREE.Vector3(cl * Math.sin(lon) * rad, Math.sin(lat) * rad, cl * Math.cos(lon) * rad);
-  };
-
-  const makeGreatCircle = (a: [number, number], b: [number, number], boost = 0.24): THREE.CatmullRomCurve3 => {
-    const va = sphVec(a[0], a[1], 1).normalize();
-    const vb = sphVec(b[0], b[1], 1).normalize();
-    const pts: THREE.Vector3[] = [];
-    for (let i = 0; i <= 40; i++) {
-      const u = i / 40;
-      const vec = va.clone().lerp(vb, u).normalize();
-      pts.push(vec.multiplyScalar(R * (1.02 + boost * Math.sin(u * Math.PI))));
+    const hub = new THREE.Group();
+    hub.position.set(tx + 0.04, ty + 1.12, tz);
+    for (let b = 0; b < 3; b++) {
+      const blade = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.42, 0.038), mats.porcelain);
+      blade.position.y = 0.21;
+      blade.castShadow = true;
+      const arm = new THREE.Group();
+      arm.rotation.x = (b / 3) * Math.PI * 2;
+      arm.add(blade);
+      hub.add(arm);
     }
-    return new THREE.CatmullRomCurve3(pts);
-  };
-
-  const originPort: [number, number] = [-0.08, -0.78];
-  const straitChoke: [number, number] = [0.22, 0.02];
-  const destPort: [number, number] = [0.56, 0.72];
-  const southernCape: [number, number] = [-0.62, 0.12];
-
-  const chokeCurves = [
-    makeGreatCircle(originPort, straitChoke, 0.06),
-    makeGreatCircle(straitChoke, destPort, 0.06),
-  ];
-  const rerouteCurves = [
-    makeGreatCircle(originPort, southernCape, 0.25),
-    makeGreatCircle(southernCape, destPort, 0.25),
-  ];
-
-  // Blocked strait dashed crimson line + glowing chokepoint beacon
-  const chokeMat = new THREE.LineDashedMaterial({ color: 0xe63e18, dashSize: 0.12, gapSize: 0.09, transparent: true, opacity: 0.9 });
-  for (const c of chokeCurves) {
-    const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(c.getPoints(48)), chokeMat);
-    l.computeLineDistances();
-    root.add(l);
+    root.add(hub);
+    rotors.push(hub);
   }
 
-  const rerouteLineMat = new THREE.LineBasicMaterial({ color: 0xf39200, transparent: true, opacity: 0.55 });
-  for (const c of rerouteCurves) {
-    root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(c.getPoints(56)), rerouteLineMat));
+  // Solar Field (3x4 tilted ceramic collector panels)
+  const panelGeo = new THREE.BoxGeometry(0.28, 0.024, 0.18);
+  const panels = new THREE.InstancedMesh(panelGeo, mats.porcelain, 12);
+  panels.castShadow = true;
+  panels.receiveShadow = true;
+  const dummy = new THREE.Object3D();
+  let idx = 0;
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 4; c++) {
+      dummy.position.set(-0.62 + c * 0.34, 0.1, 0.48 + r * 0.3);
+      dummy.rotation.set(-0.34, 0, 0);
+      dummy.updateMatrix();
+      panels.setMatrixAt(idx++, dummy.matrix);
+    }
+  }
+  panels.instanceMatrix.needsUpdate = true;
+  root.add(panels);
+
+  // Grid-Scale Battery Storage Yard (central amber-accented bridge!)
+  addBox(root, 0.96, 0.04, 0.82, -0.15, 0, -0.58, mats.stone);
+  for (let i = 0; i < 4; i++) {
+    const z = -0.84 + i * 0.175;
+    addBox(root, 0.72, 0.22, 0.12, -0.15, 0.04, z, mats.porcelain);
+    addBox(root, 0.72, 0.032, 0.12, -0.15, 0.26, z, mats.amber);
   }
 
-  // Animated bright amber cargo particle streams along reroute corridor
-  const cargoN = 80;
-  const cargoPos = new Float32Array(cargoN * 3);
-  const cargoGeo = new THREE.BufferGeometry();
-  cargoGeo.setAttribute('position', new THREE.BufferAttribute(cargoPos, 3));
-  const cargoMat = new THREE.PointsMaterial({
-    color: 0xffdfa0,
-    size: 0.095,
-    transparent: true,
-    opacity: 0.95,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  root.add(new THREE.Points(cargoGeo, cargoMat));
+  // Hyperscale Compute Campus (two monumental louvered ceramic data halls)
+  addBox(root, 1.32, 0.68, 0.98, 1.35, 0, -0.45, mats.porcelain);
+  addBox(root, 1.15, 0.56, 0.84, 1.35, 0, 0.68, mats.plaster);
+  // Precision cooling roof louver units
+  for (let i = 0; i < 5; i++) {
+    addBox(root, 0.14, 0.12, 0.72, 0.92 + i * 0.21, 0.68, -0.45, mats.stone);
+  }
+  for (let i = 0; i < 4; i++) {
+    addBox(root, 0.14, 0.1, 0.58, 1.02 + i * 0.22, 0.56, 0.68, mats.stone);
+  }
 
-  // Chokepoint pulsing alert ring
-  const chokePos = sphVec(straitChoke[0], straitChoke[1], R * 1.03);
-  const chokeRing = new THREE.Mesh(
-    new THREE.TorusGeometry(0.17, 0.014, 10, 36),
-    new THREE.MeshBasicMaterial({ color: 0xe63e18, transparent: true, opacity: 0.9 }),
+  // Transmission Pylons & Glowing Amber Storage Bridge Bus
+  const tracks: PulseTrack[] = [];
+  const t1 = addRoute(
+    root,
+    [[-1.48, 0.36, -0.22], [-0.88, 0.42, -0.42], [-0.15, 0.3, -0.58]],
+    mats,
+    true,
+    3,
+    0.3,
   );
-  chokeRing.position.copy(chokePos);
-  chokeRing.lookAt(chokePos.clone().multiplyScalar(2));
-  root.add(chokeRing);
+  const t2 = addRoute(
+    root,
+    [[-0.12, 0.14, 0.48], [-0.15, 0.28, -0.12], [-0.15, 0.3, -0.58]],
+    mats,
+    true,
+    2,
+    0.26,
+  );
+  const t3 = addRoute(
+    root,
+    [[0.22, 0.3, -0.58], [0.55, 0.62, -0.52], [0.85, 0.58, -0.45]],
+    mats,
+    true,
+    3,
+    0.34,
+  );
+  const t4 = addRoute(
+    root,
+    [[0.22, 0.26, -0.42], [0.62, 0.46, 0.2], [0.88, 0.48, 0.68]],
+    mats,
+    true,
+    3,
+    0.29,
+  );
+  if (t1) tracks.push(t1);
+  if (t2) tracks.push(t2);
+  if (t3) tracks.push(t3);
+  if (t4) tracks.push(t4);
 
   const tmp = new THREE.Vector3();
-
-  return {
-    update(t, _dt, px, py) {
-      globeMat.uniforms['uTime']!.value = t;
-      bezel.mat.uniforms['uTime']!.value = t;
-      root.rotation.y = Math.sin(t * 0.24) * 0.24 + px * 0.42;
-      root.rotation.x = 0.08 + py * 0.26;
-      const pulse = 1 + Math.sin(t * 3.4) * 0.22;
-      chokeRing.scale.set(pulse, pulse, 1);
-
-      const attr = cargoGeo.attributes['position'] as THREE.BufferAttribute;
-      for (let i = 0; i < cargoN; i++) {
-        const ci = i % 2;
-        const u = (t * 0.38 + i / cargoN) % 1;
-        rerouteCurves[ci]!.getPoint(u, tmp);
-        attr.setXYZ(i, tmp.x, tmp.y, tmp.z);
+  return (t: number) => {
+    rotors.forEach((r, i) => {
+      r.rotation.x = t * (1.25 + i * 0.14) + i * 1.4;
+    });
+    for (const tr of tracks) {
+      for (let i = 0; i < tr.beads.length; i++) {
+        const u = (t * tr.speed + i / tr.beads.length) % 1;
+        tr.curve.getPoint(u, tmp);
+        tr.beads[i]!.position.copy(tmp);
       }
-      attr.needsUpdate = true;
-    },
-    dispose() {
-      globeGeo.dispose();
-      globeMat.dispose();
-      bezel.geo.dispose();
-      bezel.mat.dispose();
-      chokeMat.dispose();
-      rerouteLineMat.dispose();
-      cargoGeo.dispose();
-      cargoMat.dispose();
-    },
+    }
+  };
+}
+
+/** 03 · Trade and critical supply chains — Architectural Maritime Port & Corridor Maquette */
+function buildTradeMaquette(root: THREE.Group, mats: MaquetteMats): (t: number) => void {
+  addBasePlate(root, 4.9, 3.3, mats);
+
+  // Recessed smooth pale-stone water basin (right half) vs raised ceramic quay (left half)
+  addBox(root, 2.55, 0.14, 3.1, -1.12, 0, 0, mats.porcelain);
+  addBox(root, 2.2, 0.03, 3.1, 1.28, 0, 0, mats.stone);
+
+  // Bulk Mineral / Commodity Silos & Tank Farm (back-left)
+  for (let i = 0; i < 4; i++) {
+    const silo = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.92, 20), mats.porcelain);
+    silo.position.set(-1.92 + i * 0.36, 0.14 + 0.46, -0.92);
+    silo.castShadow = true;
+    silo.receiveShadow = true;
+    root.add(silo);
+  }
+  for (let i = 0; i < 3; i++) {
+    const tank = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.38, 24), mats.plaster);
+    tank.position.set(-1.82 + i * 0.54, 0.14 + 0.19, 0.92);
+    tank.castShadow = true;
+    tank.receiveShadow = true;
+    root.add(tank);
+  }
+
+  // Modular Stacked Shipping Containers on the Quay (porcelain + warm stone + 3 amber priority stacks)
+  const contGeo = new THREE.BoxGeometry(0.36, 0.13, 0.14);
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 3; col++) {
+      const tiers = (row + col) % 3 === 0 ? 3 : 2;
+      for (let tier = 0; tier < tiers; tier++) {
+        const isAmber = tier === tiers - 1 && ((row === 1 && col === 1) || (row === 2 && col === 2));
+        const m = new THREE.Mesh(
+          contGeo,
+          isAmber ? mats.amber : (row + tier) % 2 === 0 ? mats.porcelain : mats.plaster,
+        );
+        m.position.set(-1.42 + col * 0.42, 0.14 + 0.065 + tier * 0.135, -0.3 + row * 0.24);
+        m.castShadow = true;
+        m.receiveShadow = true;
+        root.add(m);
+      }
+    }
+  }
+
+  // Two Sculptural Articulated Gantry Cranes straddling the quay edge
+  for (const cz of [-0.45, 0.38]) {
+    const legH = 1.05;
+    addBox(root, 0.055, legH, 0.055, -0.02, 0.14, cz - 0.18, mats.porcelain);
+    addBox(root, 0.055, legH, 0.055, -0.02, 0.14, cz + 0.18, mats.porcelain);
+    addBox(root, 0.055, legH, 0.055, -0.34, 0.14, cz - 0.18, mats.porcelain);
+    addBox(root, 0.055, legH, 0.055, -0.34, 0.14, cz + 0.18, mats.porcelain);
+    // Horizontal gantry boom extending over the container ship
+    addBox(root, 1.58, 0.06, 0.42, 0.22, 0.14 + legH - 0.18, cz, mats.porcelain);
+    addBox(root, 0.14, 0.06, 0.16, 0.56, 0.14 + legH - 0.24, cz, mats.amber);
+  }
+
+  // Sleek Matte-Ceramic Container Ship moored & gliding in the basin
+  const ship = new THREE.Group();
+  ship.position.set(0.82, 0.04, 0.05);
+  addBox(ship, 0.46, 0.2, 1.68, 0, 0, 0, mats.porcelain);
+  // Bridge tower aft
+  addBox(ship, 0.38, 0.44, 0.24, 0, 0.2, -0.58, mats.plaster);
+  // Deck container stacks on ship
+  for (let i = 0; i < 4; i++) {
+    addBox(ship, 0.34, 0.16, 0.22, 0, 0.2, -0.22 + i * 0.26, i === 2 ? mats.amber : mats.plaster);
+  }
+  root.add(ship);
+
+  // Blocked direct strait lane (muted) vs. Glowing Amber Reroute Shipping Corridor
+  addRoute(root, [[0.82, 0.05, 0.92], [1.45, 0.05, 0.32], [2.15, 0.05, -0.85]], mats, false);
+  // Strait chokepoint marker buoy
+  const buoy = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 0.14, 16), mats.terracotta);
+  buoy.position.set(1.52, 0.1, 0.24);
+  root.add(buoy);
+
+  const tracks: PulseTrack[] = [];
+  const lane = addRoute(
+    root,
+    [[0.82, 0.055, 0.98], [1.35, 0.055, 1.25], [1.96, 0.055, 0.55], [2.12, 0.055, -1.15]],
+    mats,
+    true,
+    4,
+    0.24,
+  );
+  const rail = addRoute(
+    root,
+    [[-2.25, 0.155, 0.45], [-0.45, 0.155, 0.45], [-0.18, 0.155, 0.38]],
+    mats,
+    true,
+    2,
+    0.28,
+  );
+  if (lane) tracks.push(lane);
+  if (rail) tracks.push(rail);
+
+  const tmp = new THREE.Vector3();
+  return (t: number) => {
+    ship.position.y = 0.04 + Math.sin(t * 1.4) * 0.012;
+    ship.rotation.z = Math.sin(t * 1.1) * 0.015;
+    for (const tr of tracks) {
+      for (let i = 0; i < tr.beads.length; i++) {
+        const u = (t * tr.speed + i / tr.beads.length) % 1;
+        tr.curve.getPoint(u, tmp);
+        tr.beads[i]!.position.copy(tmp);
+      }
+    }
   };
 }
 
@@ -651,16 +544,25 @@ export function initWorldsThree(rootNode: ParentNode = document): void {
     const renderer = createRenderer(canvas, false);
     if (!renderer) continue;
 
+    const { pmrem, envTex } = createStudioEnv(renderer, 'paper');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0b0a08);
+    scene.background = new THREE.Color(0xf6f3ec);
+    scene.environment = envTex;
+    setupStudioLight(scene);
 
-    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
-    const controller =
+    const camera = new THREE.PerspectiveCamera(31, 4 / 3, 0.1, 50);
+    camera.position.set(5.4, 4.4, 5.8);
+    camera.lookAt(0, 0.32, 0);
+
+    const root = new THREE.Group();
+    scene.add(root);
+    const mats = createMaquetteMats();
+    const tickScene =
       kind === 'money'
-        ? buildMoneyScene(scene, camera)
+        ? buildMoneyMaquette(root, mats)
         : kind === 'power'
-          ? buildPowerScene(scene, camera)
-          : buildTradeScene(scene, camera);
+          ? buildPowerMaquette(root, mats)
+          : buildTradeMaquette(root, mats);
 
     let visible = false;
     let raf = 0;
@@ -686,8 +588,10 @@ export function initWorldsThree(rootNode: ParentNode = document): void {
       lastNow = now;
       px = damp(px, tx, 5, dt);
       py = damp(py, ty, 5, dt);
-      const t = reduced ? 1.8 : (now - t0) / 1000;
-      controller.update(t, dt, px, py);
+      const t = reduced ? 1.4 : (now - t0) / 1000;
+      root.rotation.y = -0.18 + Math.sin(t * 0.22) * 0.09 + px * 0.24;
+      root.rotation.x = py * 0.08;
+      tickScene(t);
       renderer.render(scene, camera);
     };
 
@@ -723,7 +627,6 @@ export function initWorldsThree(rootNode: ParentNode = document): void {
     });
 
     new ResizeObserver(wake).observe(canvas);
-
     const io = new IntersectionObserver(
       (es) => {
         visible = es.some((e) => e.isIntersecting);
@@ -742,7 +645,8 @@ export function initWorldsThree(rootNode: ParentNode = document): void {
     });
 
     window.addEventListener('beforeunload', () => {
-      controller.dispose();
+      pmrem.dispose();
+      envTex.dispose();
       renderer.dispose();
     });
 

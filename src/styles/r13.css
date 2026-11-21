@@ -5,6 +5,15 @@
    strictly as signal.
    ========================================================================== */
 
+/* ---- 0. Subtle Archival Lithography / Film-Stock Micro-Grain ------------- */
+.grain {
+  display: block !important;
+  opacity: 0.034 !important;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='19' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>") !important;
+  background-size: 180px 180px !important;
+}
+
 /* ---- 1. Architectural Section Index Bars (Colossal-inspired) ------------- */
 .col-bar {
   display: grid;
@@ -169,7 +178,7 @@
   }
 }
 
-/* ---- 3. #film — 02 · How It Works (Maquette & Temporal Slice Stage) ------ */
+/* ---- 3. #film — 02 · How It Works (Universal Optical Lithography Stage) -- */
 #film.fm-band > .wrap {
   padding-top: clamp(44px, 4.2vw, 62px) !important;
   padding-bottom: clamp(56px, 5.4vw, 78px) !important;
@@ -193,9 +202,9 @@
   justify-self: end;
 }
 .fm__stage {
-  aspect-ratio: 16 / 9.2 !important;
-  background: #f3f0e8 !important;
-  cursor: default !important;
+  aspect-ratio: 16 / 8.6 !important;
+  background: #110f0c !important;
+  cursor: crosshair !important;
 }
 @media (max-width: 1023px) {
   #film .fm-head {
@@ -203,7 +212,7 @@
   }
   .fm-head__sub { justify-self: start; }
   .fm__stage {
-    aspect-ratio: 4 / 3.3 !important;
+    aspect-ratio: 4 / 3.1 !important;
   }
 }
 
@@ -629,24 +638,18 @@
   position: relative;
   width: 100%;
   aspect-ratio: 5 / 4;
-  background: #eeebe3;
-  border: 1px solid rgba(20, 18, 16, 0.09);
+  background: #110f0c;
+  border: 1px solid rgba(20, 18, 16, 0.24);
   overflow: hidden;
   margin-bottom: 16px;
 }
-.tk-card__img {
+.tk-card.is-active .tk-card__stage {
+  border-color: rgba(243, 146, 0, 0.55);
+}
+.tk-card__canvas {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 54%;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
-  filter: saturate(0.96);
-}
-.tk-card:hover .tk-card__img,
-.tk-card.is-active .tk-card__img {
-  transform: scale(1.028);
-  filter: saturate(1.04);
 }
 .tk-card__promise {
   margin: auto 0 0;

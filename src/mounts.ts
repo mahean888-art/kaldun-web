@@ -198,6 +198,9 @@ export function mountHome(root: ParentNode = document): void {
   if (fm) {
     void import('./visuals/filmEngine').then(({ initFilmEngine }) => initFilmEngine(fm));
   }
+  if (root.querySelector('[data-world-optic]')) {
+    void import('./visuals/worldsOptics').then(({ initWorldsOptics }) => initWorldsOptics(root));
+  }
   initColossalHalo(root);
   initFields(root);
   initManifesto();

@@ -51,10 +51,48 @@
           <a href="#validation" data-name="06 · Validation" aria-label="06 · Validation"></a>
         </span>
         <a href="#manifesto" data-name="07 · Manifesto" aria-label="07 · Manifesto"></a>
-        <span class="lamps__readout" data-lamps-readout aria-hidden="true">01 / 07 · Home</span>
+        <button type="button" class="lamps__index" data-index-open aria-expanded="false" aria-controls="site-index"><span data-lamps-readout>01 / 07 · Home</span><span class="lamps__plus" aria-hidden="true">Index +</span></button>
       </nav>
       <nav class="bar__nav" aria-label="Site"><a href="/journal/the-future-should-be-engineered-with-foresight/">Manifesto</a><a class="bar__cta" href="/discuss/">Discuss a decision</a></nav>
     </header>
+
+    <div class="idx" id="site-index" data-index-drawer role="dialog" aria-modal="true" aria-label="Site index" hidden>
+      <div class="idx__backdrop" data-index-close></div>
+      <div class="idx__panel">
+        <div class="idx__head">
+          <span class="idx__title"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines · Index</span>
+          <button type="button" class="idx__close" data-index-close aria-label="Close index">Close <span aria-hidden="true">×</span></button>
+        </div>
+        <div class="idx__body">
+          <div class="idx__col">
+            <p class="idx__k">Dossier sections</p>
+            <ol class="idx__list">
+              <li><a href="#top"><span>001</span><b>Home</b><i>→</i></a></li>
+              <li><a href="#film"><span>002</span><b>How it works · The instrument</b><i>→</i></a></li>
+              <li><a href="#mission"><span>003</span><b>Mission · Forecasting vs. foresight</b><i>→</i></a></li>
+              <li><a href="#start"><span>004</span><b>Where we start · Dollar issuer</b><i>→</i></a></li>
+              <li><a href="#domains"><span>005</span><b>Worlds</b><i>→</i></a></li>
+              <li><a href="#validation"><span>006</span><b>Validation &amp; record</b><i>→</i></a></li>
+              <li><a href="#manifesto"><span>007</span><b>Manifesto</b><i>→</i></a></li>
+            </ol>
+          </div>
+          <div class="idx__col idx__col--side">
+            <p class="idx__k">Three worlds</p>
+            <ol class="idx__sub">
+              <li><a href="#domains" data-jump-world="0"><span>05A</span>Money, payments, and credit</a></li>
+              <li><a href="#domains" data-jump-world="1"><span>05B</span>Power, compute, and megainfrastructure</a></li>
+              <li><a href="#domains" data-jump-world="2"><span>05C</span>Trade and critical supply chains</a></li>
+            </ol>
+            <p class="idx__k idx__k--gap">Direct</p>
+            <ul class="idx__sub">
+              <li><a href="/journal/the-future-should-be-engineered-with-foresight/"><span>DOC</span>Read the manifesto →</a></li>
+              <li><a href="/discuss/"><span>INQ</span>Discuss a decision →</a></li>
+              <li><a data-email href="#"><span>MAIL</span><span data-email-text>hello@foresightmachines.com</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="hero" id="top">
       <div class="hero__panel" aria-hidden="true">
@@ -67,7 +105,7 @@
       <div class="hero__copy">
         <a class="hero__dispatch" href="/journal/the-future-should-be-engineered-with-foresight/"><span class="hero__dispatch-k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Manifesto</span><span class="hero__dispatch-t">The future should be engineered with foresight</span><span class="hero__dispatch-a" aria-hidden="true">→</span></a>
         <h1 class="hero__line"><span class="hl hl--a">Every institution will run on a Foresight&nbsp;Machine</span> <span class="hl hl--b">to simulate its world and <u>change what happens next.</u></span></h1>
-        <p class="hero__sub">Executable models of institutions and the systems they depend on, built to simulate shocks, find the terms that hold, and price risk across money, power, and trade.</p>
+        <p class="hero__sub">Executable models of institutions and the systems they depend on—built to simulate the world forward, find where to intervene, and price risk across money, power, and trade.</p>
         <p class="hero__actions"><a class="btn hero__act" href="/discuss/">Discuss a decision</a><a class="hero__next" href="#film">See how it works <span aria-hidden="true">↓</span></a></p>
       </div>
       <div class="hero__model deck" data-deck role="img" aria-label="A small white model of one world on a plate: a coast and a port, towers, a solar field with storage, a factory, a data center, a road and a rail line. Behind it, a fan of frosted slices, each the same world in a slightly different state. One slice glows warm orange: the same world, with one changed connection.">
@@ -94,13 +132,14 @@
     </section>
 
     <main class="main" id="main">
-      <section class="band band--obsidian fm-band" id="film" data-screen>
+      <section class="band band--paper fm-band" id="film" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap fm-wrap">
           <div class="fm-head">
             <p class="chip chip--sec"><em>02</em>How it works</p>
             <h2 class="h2">How a Foresight Machine reaches an answer.</h2>
           </div>
-          <div class="fm fm--chamber" data-film data-s="1">
+          <div class="fm fm--inst" data-film data-s="1">
             <div class="fm__rail">
               <ol class="fm__ch">
                 <li><button type="button" data-go="1" class="is-on" aria-current="step"><i><b></b></i><span class="fm__n">01</span><span class="fm__t">Model</span><span class="fm__d">Models the institution and the world it depends on: its capital, contracts, counterparties, markets, and rules.</span></button></li>
@@ -109,17 +148,14 @@
                 <li><button type="button" data-go="4"><i><b></b></i><span class="fm__n">04</span><span class="fm__t">Record</span><span class="fm__d">Records the answer and its evidence before the outcome is known.</span></button></li>
               </ol>
             </div>
-            <div class="fm__frame fm__chamber">
+            <div class="fm__frame fm__inst">
               <span class="fm__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
               <div class="fm__top">
-                <span class="fm__plate" data-film-plate>PLATE 01 / 04 · MODEL</span>
-                <span class="fm__state" data-film-state><i aria-hidden="true"></i><span>Active</span></span>
+                <span class="fm__plate" data-film-plate>INSTRUMENT 01 / 04 · MODEL</span>
+                <span class="fm__state" data-film-state><i aria-hidden="true"></i><span>Live</span></span>
               </div>
               <div class="fm__stage">
-                <img class="fm__img is-on" data-plate="1" src="/f-model-640.webp" width="640" height="800" alt="White architectural scale model of an interconnected institution on a dark optical bench." decoding="async" />
-                <img class="fm__img" data-plate="2" src="/f-simulate-640.webp" width="640" height="800" alt="Frosted acrylic future slices fanning behind the scale model, representing adversarial stress regimes." loading="lazy" decoding="async" />
-                <img class="fm__img" data-plate="3" src="/f-search-640.webp" width="640" height="800" alt="Amber wireframe interventions and a glowing new connection discovered across the scale model." loading="lazy" decoding="async" />
-                <img class="fm__img" data-plate="4" src="/f-decide-640.webp" width="640" height="800" alt="An edge-lit frosted glass slab resting in an architectural plinth, representing an immutable pre-outcome record." loading="lazy" decoding="async" />
+                <canvas class="fm__canvas" data-film-canvas role="img" aria-label="Live schematic showing how a Foresight Machine models an institution, simulates forward trajectories against par, applies an intervention to lift breaking regimes above par, and records the cryptographic pre-outcome commitment."></canvas>
               </div>
               <div class="fm__foot">
                 <div class="fm__spec">
@@ -242,17 +278,20 @@
                       <section class="ps-c" data-c="3">
                         <p class="ps-c__h">Simulate <span>where each arrangement breaks</span></p>
                         <div class="ps-f">
-                          <p class="ps-f__lg"><span><i class="o"></i>The draft</span><span><i class="f"></i>With the terms found</span></p>
-                          <div class="ps-f__r"><span>Partner N volume surge</span><span>2.3× → <strong>6.0×</strong></span><i><b class="o" style="width:28.8%"></b><b class="f" style="left:28.8%;width:46.2%"></b></i></div><div class="ps-f__r"><span>One settlement bank offline</span><span>3.5 h → <strong>48 h+</strong></span><i><b class="o" style="width:7.3%"></b><b class="f" style="left:7.3%;width:92.7%"></b></i></div><div class="ps-f__r"><span>Weekend run, outflow held at par</span><span>$380M → <strong>$1.9B</strong></span><i><b class="o" style="width:15.2%"></b><b class="f" style="left:15.2%;width:60.8%"></b></i></div><div class="ps-f__r"><span>March 2023 weekend, rescaled</span><span>short $310M → <strong>paid in full</strong></span><i><b class="o" style="width:55%"></b><b class="f" style="left:55%;width:45%"></b></i></div>
+                          <p class="ps-f__lg"><span><i class="o"></i>The draft</span><span><i class="f"></i>With selected terms</span></p>
+                          <div class="ps-f__r" data-sim="surge"><span>Partner N volume surge</span><span>2.3× → <strong data-sim-val>6.0×</strong></span><i><b class="o" style="width:28.8%"></b><b class="f" style="left:28.8%;width:46.2%"></b></i></div>
+                          <div class="ps-f__r" data-sim="offline"><span>One settlement bank offline</span><span>3.5 h → <strong data-sim-val>48 h+</strong></span><i><b class="o" style="width:7.3%"></b><b class="f" style="left:7.3%;width:92.7%"></b></i></div>
+                          <div class="ps-f__r" data-sim="run"><span>Weekend run, outflow held at par</span><span>$380M → <strong data-sim-val>$1.9B</strong></span><i><b class="o" style="width:15.2%"></b><b class="f" style="left:15.2%;width:60.8%"></b></i></div>
+                          <div class="ps-f__r" data-sim="svb"><span>March 2023 weekend, rescaled</span><span>short $310M → <strong data-sim-val>paid in full</strong></span><i><b class="o" style="width:55%"></b><b class="f" style="left:55%;width:45%"></b></i></div>
                         </div>
                         <p class="ps-foot">Each shock pushed until par breaks. No probabilities assumed.</p>
                       </section>
                       <section class="ps-c" data-c="4">
-                        <p class="ps-c__h">Intervene <span>312 options tried</span></p>
-                        <ol class="ps-s">
-                          <li><span>1</span>A second payout bank on the 24/7 rails<em>one bank offline: 3.5 h → 48 h+</em></li>
-                          <li><span>2</span>A daily instant cap per merchant<em>surge: 2.3× → 6.0×; 99.4% of payouts still instant</em></li>
-                          <li><span>3</span>Notice and a morning fund sweep for large redemptions<em>large exits wait for the fund; frees $500M</em></li>
+                        <p class="ps-c__h">Intervene <span>312 options tried · toggle to test</span></p>
+                        <ol class="ps-s ps-s--live">
+                          <li><button type="button" class="ps-term is-on" data-term="rail" aria-pressed="true"><span class="ps-term__n">1</span><span class="ps-term__b">A second payout bank on the 24/7 rails<em>one bank offline: 3.5 h → 48 h+</em></span><i class="ps-term__sw" aria-hidden="true"></i></button></li>
+                          <li><button type="button" class="ps-term is-on" data-term="cap" aria-pressed="true"><span class="ps-term__n">2</span><span class="ps-term__b">A daily instant cap per merchant<em>surge: 2.3× → 6.0×; 99.4% of payouts still instant</em></span><i class="ps-term__sw" aria-hidden="true"></i></button></li>
+                          <li><button type="button" class="ps-term is-on" data-term="sweep" aria-pressed="true"><span class="ps-term__n">3</span><span class="ps-term__b">Notice and a morning fund sweep for large redemptions<em>large exits wait for the fund; frees $500M</em></span><i class="ps-term__sw" aria-hidden="true"></i></button></li>
                         </ol>
                         <p class="ps-foot">Moving cash alone frees nothing and breaks at $520M.</p>
                       </section>
@@ -261,12 +300,12 @@
                   <aside class="ps__right">
                     <section class="ps-a" data-c="5">
                       <p class="ps-c__h">Answer</p>
-                      <p class="ps-a__t">Yes, with three terms.</p>
-                      <dl class="ps-a__d"><div><dt>Weekend run held</dt><dd>$380M → <strong>$1.9B</strong></dd></div><div><dt>Idle cash at banks</dt><dd>$1.2B → <strong>$0.7B</strong></dd></div></dl>
-                      <p class="ps-a__m">$500M freed (about $17.5M a year at a 3.5% reserve yield)</p>
+                      <p class="ps-a__t" data-ans-title>Yes, with three terms.</p>
+                      <dl class="ps-a__d"><div><dt>Weekend run held</dt><dd>$380M → <strong data-ans-run>$1.9B</strong></dd></div><div><dt>Idle cash at banks</dt><dd>$1.2B → <strong data-ans-cash>$0.7B</strong></dd></div></dl>
+                      <p class="ps-a__m" data-ans-yield>$500M freed (about $17.5M a year at a 3.5% reserve yield)</p>
                       <p class="ps-lab">Scored against</p>
-                      <dl class="ps-a__s"><div><dt>The rules</dt><dd>Pass</dd></div><div><dt>Held-out history</dt><dd>78 of 78 weeks</dd></div><div><dt>Stress regimes</dt><dd>All four raised</dd></div><div><dt>The outcome</dt><dd class="is-p">Pending</dd></div></dl>
-                      <p class="ps-a__n"><b>Breaks first:</b> both payout banks offline in one weekend, or a weekend run above $1.9B.</p>
+                      <dl class="ps-a__s"><div><dt>The rules</dt><dd>Pass</dd></div><div><dt>Held-out history</dt><dd>78 of 78 weeks</dd></div><div><dt>Stress regimes</dt><dd data-ans-regimes>All four raised</dd></div><div><dt>The outcome</dt><dd class="is-p">Pending</dd></div></dl>
+                      <p class="ps-a__n"><b>Breaks first:</b> <span data-ans-breaks>both payout banks offline in one weekend, or a weekend run above $1.9B.</span></p>
                     </section>
                     <section class="ps-p" data-c="6">
                       <p class="ps-c__h">Record</p>
@@ -300,7 +339,7 @@
           </header>
           <div class="dm dm--tabs" data-domains>
             <div class="dm__list" role="tablist" aria-label="Worlds"><button type="button" role="tab" class="dm__c is-lit" id="dm-t-0" aria-selected="true" aria-controls="dm-p-0" data-i="0"><span class="dm__n">01</span><span class="dm__name">Money, payments, and credit</span></button><button type="button" role="tab" class="dm__c" id="dm-t-1" aria-selected="false" aria-controls="dm-p-1" tabindex="-1" data-i="1"><span class="dm__n">02</span><span class="dm__name">Power, compute, and megainfrastructure</span></button><button type="button" role="tab" class="dm__c" id="dm-t-2" aria-selected="false" aria-controls="dm-p-2" tabindex="-1" data-i="2"><span class="dm__n">03</span><span class="dm__name">Trade and critical supply chains</span></button></div>
-            <div class="dm__panel"><span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="dm__p" id="dm-p-0" role="tabpanel" aria-labelledby="dm-t-0"><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 01 / MONEY</span><img src="/d-res-960.webp" srcset="/d-res-480.webp 480w, /d-res-960.webp 960w" sizes="(min-width: 900px) 460px, 100vw" width="960" height="1200" alt="White architectural maquette of an issuer tower linked to counterparties by a single glowing amber liquidity rail." loading="lazy" decoding="async" /><figcaption class="dm__cap"><span>01</span>Money, payments, and credit</figcaption></figure><div class="dm__body"><h3 class="dm__title">Money, payments, and credit</h3><p class="dm__promise">Every payment clears at par, on time, at any hour.</p><p class="dm__for"><span>Issuers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Banks</span><span class="dm__sep" aria-hidden="true"> · </span><span>Payment companies</span><span class="dm__sep" aria-hidden="true"> · </span><span>Exchanges</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>What is the smallest buffer that passes every stress test?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to redeem instantly for a new partner?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the issuer, its bank, and its partners?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover redemptions that cannot clear over a weekend?</dd></div></dl></div></div><div class="dm__p" id="dm-p-1" role="tabpanel" aria-labelledby="dm-t-1" hidden><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 02 / POWER</span><img src="/d-energy-960.webp" srcset="/d-energy-480.webp 480w, /d-energy-960.webp 960w" sizes="(min-width: 900px) 460px, 100vw" width="960" height="1200" alt="White architectural maquette of solar arrays, battery storage, a substation, and a data center joined by a glowing amber interconnect." loading="lazy" decoding="async" /><figcaption class="dm__cap"><span>02</span>Power, compute, and megainfrastructure</figcaption></figure><div class="dm__body"><h3 class="dm__title">Power, compute, and megainfrastructure</h3><p class="dm__promise">Capacity delivered on the contracted date, and the debt serviced.</p><p class="dm__for"><span>Developers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Utilities</span><span class="dm__sep" aria-hidden="true"> · </span><span>Hyperscalers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Neoclouds</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>Which build plan still holds if interconnection slips two years?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to finance this campus at today’s rates?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the developer, the utility, and the lender?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a late project, when power, equipment, and debt depend on each other?</dd></div></dl></div></div><div class="dm__p" id="dm-p-2" role="tabpanel" aria-labelledby="dm-t-2" hidden><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 03 / TRADE</span><img src="/d-trade-960.webp" srcset="/d-trade-480.webp 480w, /d-trade-960.webp 960w" sizes="(min-width: 900px) 460px, 100vw" width="960" height="1200" alt="White architectural maquette of a port crane, stacked containers, and bulk silos along a glowing amber trade corridor." loading="lazy" decoding="async" /><figcaption class="dm__cap"><span>03</span>Trade and critical supply chains</figcaption></figure><div class="dm__body"><h3 class="dm__title">Trade and critical supply chains</h3><p class="dm__promise">Cargo, metals, and chips delivered and paid for on the agreed terms.</p><p class="dm__for"><span>Traders</span><span class="dm__sep" aria-hidden="true"> · </span><span>Shippers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Mines and processors</span><span class="dm__sep" aria-hidden="true"> · </span><span>Buyers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Trade-finance banks</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>How should cargo at sea be hedged and routed if a strait closes?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What offtake terms make a mine bankable?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the buyer, the supplier, and the bank?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a cargo held at port?</dd></div></dl></div></div></div>
+            <div class="dm__panel"><span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="dm__p" id="dm-p-0" role="tabpanel" aria-labelledby="dm-t-0"><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 01 / MONEY</span><img src="/world-money.webp" width="960" height="1286" alt="Monolithic limestone and vertical glass financial clearing colonnade bathed in morning sunlight with a recessed warm amber light channel leading into the vault atrium." loading="lazy" decoding="async" /><span class="dm__tele" aria-hidden="true">CLEARING · T+0 PAR · 24/7 RAILS</span><figcaption class="dm__cap"><span>01</span>Money, payments, and credit</figcaption></figure><div class="dm__body"><h3 class="dm__title">Money, payments, and credit</h3><p class="dm__promise">Every payment clears at par, on time, at any hour.</p><p class="dm__for"><span>Issuers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Banks</span><span class="dm__sep" aria-hidden="true"> · </span><span>Payment companies</span><span class="dm__sep" aria-hidden="true"> · </span><span>Exchanges</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>What is the smallest buffer that passes every stress test?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to redeem instantly for a new partner?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the issuer, its bank, and its partners?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover redemptions that cannot clear over a weekend?</dd></div></dl></div></div><div class="dm__p" id="dm-p-1" role="tabpanel" aria-labelledby="dm-t-1" hidden><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 02 / POWER</span><img src="/world-power.webp" width="960" height="1286" alt="Aerial view of a hyperscale desert compute campus, cooling arrays, white battery blocks, and high-voltage substation joined by a single warm amber conduit." loading="lazy" decoding="async" /><span class="dm__tele" aria-hidden="true">SUBSTATION · MW INTERCONNECT · STORAGE</span><figcaption class="dm__cap"><span>02</span>Power, compute, and megainfrastructure</figcaption></figure><div class="dm__body"><h3 class="dm__title">Power, compute, and megainfrastructure</h3><p class="dm__promise">Capacity delivered on the contracted date, and the debt serviced.</p><p class="dm__for"><span>Developers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Utilities</span><span class="dm__sep" aria-hidden="true"> · </span><span>Hyperscalers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Neoclouds</span><span class="dm__sep" aria-hidden="true"> · </span><span>Lenders</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>Which build plan still holds if interconnection slips two years?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What would it take to finance this campus at today’s rates?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the developer, the utility, and the lender?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a late project, when power, equipment, and debt depend on each other?</dd></div></dl></div></div><div class="dm__p" id="dm-p-2" role="tabpanel" aria-labelledby="dm-t-2" hidden><figure class="dm__art"><span class="dm__plate" aria-hidden="true">PLATE 03 / TRADE</span><img src="/world-trade.webp" width="960" height="1286" alt="High-angle aerial view of a deep-water port terminal with geometric container stacks, a moored bulk vessel, and a warm amber gantry crane corridor along the concrete quay." loading="lazy" decoding="async" /><span class="dm__tele" aria-hidden="true">QUAY · CHOKEPOINT ROUTING · TRADE FINANCE</span><figcaption class="dm__cap"><span>03</span>Trade and critical supply chains</figcaption></figure><div class="dm__body"><h3 class="dm__title">Trade and critical supply chains</h3><p class="dm__promise">Cargo, metals, and chips delivered and paid for on the agreed terms.</p><p class="dm__for"><span>Traders</span><span class="dm__sep" aria-hidden="true"> · </span><span>Shippers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Mines and processors</span><span class="dm__sep" aria-hidden="true"> · </span><span>Buyers</span><span class="dm__sep" aria-hidden="true"> · </span><span>Trade-finance banks</span></p><dl class="dm__qs"><div class="dm__q"><dt>Optimize</dt><dd>How should cargo at sea be hedged and routed if a strait closes?</dd></div><div class="dm__q"><dt>Discover</dt><dd>What offtake terms make a mine bankable?</dd></div><div class="dm__q"><dt>Coordinate</dt><dd>Which terms work for the buyer, the supplier, and the bank?</dd></div><div class="dm__q"><dt>Underwrite</dt><dd>What should it cost to cover a cargo held at port?</dd></div></dl></div></div></div>
           </div>
         </div>
       </section>
@@ -320,7 +359,7 @@
               <li class="vn__st"><p class="vn__sk"><span>03</span>Live decisions</p><p class="vn__sl">Where it counts.</p><p class="vn__sb">The institution’s real decisions, recorded before the outcome and scored after.</p><p class="vn__spec">Pre-outcome hash · post-event scoring</p></li>
             </ol>
             <ol class="vn__list"><li class="vn__r"><span class="vn__n">01</span><p class="vn__t"><b>Built from evidence.</b> <span>Every rule in the model links to its source.</span></p></li><li class="vn__r"><span class="vn__n">02</span><p class="vn__t"><b>Tested against what it replaces.</b> <span>Every answer is compared with the team’s own plan, under the same rules.</span></p></li><li class="vn__r"><span class="vn__n">03</span><p class="vn__t"><b>Recorded before the fact.</b> <span>Every answer is written down before the outcome is known.</span></p></li><li class="vn__r"><span class="vn__n">04</span><p class="vn__t"><b>Corrected by outcomes.</b> <span>Every miss becomes a new environment. A change ships only if it does better on unseen history and worse on no past case.</span></p></li></ol>
-            <div class="vn__seal"><span class="vn__seal-k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Sovereignty</span><p class="vn__seal-t">The world is shared. Each institution’s machine, its contracts, its records, and what it learns stay strictly its own.</p></div>
+            <div class="vn__seal"><span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="vn__seal-k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Sovereignty</span><p class="vn__seal-t">The world is shared. Each institution’s machine, its contracts, its records, and what it learns stay strictly its own.</p></div>
           </div>
         </div>
       </section>

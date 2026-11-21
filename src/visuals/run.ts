@@ -3,7 +3,8 @@
  *
  * A Foresight Machine for a dollar issuer, open on one decision. Every visible
  * control responds honestly: persona switcher, focus tabs & left nav, open-task
- * previews, and a working question bar that carries into /discuss/?q=.
+ * previews, live toggleable interventions that recompute the stress bars and
+ * Answer panel in real time, and a working question bar into /discuss/?q=.
  */
 const PERSONAS: Record<string, { k: string; t: string; n: string; q: string }> = {
   payments: {
@@ -70,6 +71,11 @@ const FOCUS_MAP: Record<string, string[]> = {
   record: ['5', '6'],
 };
 
+function fmtMoney(millions: number): string {
+  if (millions >= 1000) return `$${(millions / 1000).toFixed(1)}B`;
+  return `$${millions}M`;
+}
+
 function initPersonas(root: HTMLElement): void {
   const btn = root.querySelector<HTMLButtonElement>('[data-persona-btn]');
   const menu = root.querySelector<HTMLElement>('[data-persona-menu]');
@@ -128,6 +134,115 @@ function initPersonas(root: HTMLElement): void {
     close();
     back();
   });
+}
+
+function initTermSimulator(win: HTMLElement): void {
+  const btns = Array.from(win.querySelectorAll<HTMLButtonElement>('[data-term]'));
+  if (!btns.length) return;
+
+  const state: Record<string, boolean> = { rail: true, cap: true, sweep: true };
+
+  const setSim = (key: string, strongText: string, barPct: number): void => {
+    const row = win.querySelector<HTMLElement>(`[data-sim="${key}"]`);
+    if (!row) return;
+    const val = row.querySelector<HTMLElement>('[data-sim-val]');
+    const bar = row.querySelector<HTMLElement>('b.f');
+    if (val) val.textContent = strongText;
+    if (bar) bar.style.width = `${barPct}%`;
+  };
+
+  const setText = (attr: string, text: string): void => {
+    const el = win.querySelector<HTMLElement>(`[${attr}]`);
+    if (el) el.textContent = text;
+  };
+
+  const recompute = (): void => {
+    const rail = !!state['rail'];
+    const cap = !!state['cap'];
+    const sweep = !!state['sweep'];
+    const count = Number(rail) + Number(cap) + Number(sweep);
+
+    // 1. Volume surge
+    setSim('surge', cap ? '6.0×' : '2.3×', cap ? 46.2 : 0);
+
+    // 2. Settlement bank offline
+    setSim('offline', rail ? '48 h+' : '3.5 h', rail ? 92.7 : 0);
+
+    // 3. Weekend run held at par ($380M base -> $1.9B with all 3)
+    const runM = 380 + (rail ? 420 : 0) + (cap ? 350 : 0) + (sweep ? 750 : 0);
+    const runText = fmtMoney(runM);
+    const runPct = ((runM - 380) / 1520) * 60.8;
+    setSim('run', runText, Number(runPct.toFixed(1)));
+
+    // 4. March 2023 weekend, rescaled
+    let svbText = 'short $310M';
+    let svbPct = 0;
+    if (rail && cap && sweep) {
+      svbText = 'paid in full';
+      svbPct = 45;
+    } else if (sweep && (rail || cap)) {
+      svbText = 'short $85M';
+      svbPct = 29;
+    } else if (sweep) {
+      svbText = 'short $140M';
+      svbPct = 21;
+    } else if (rail && cap) {
+      svbText = 'short $190M';
+      svbPct = 14;
+    } else if (rail || cap) {
+      svbText = 'short $260M';
+      svbPct = 6;
+    }
+    setSim('svb', svbText, svbPct);
+
+    // Update Answer panel
+    if (count === 3) {
+      setText('data-ans-title', 'Yes, with three terms.');
+      setText('data-ans-regimes', 'All four raised');
+      setText('data-ans-breaks', 'both payout banks offline in one weekend, or a weekend run above $1.9B.');
+    } else if (count === 0) {
+      setText('data-ans-title', 'No — breaks under stress.');
+      setText('data-ans-regimes', '0 of 4 raised');
+      setText('data-ans-breaks', 'a 2.3× merchant surge, 3.5 h bank outage, or a $380M weekend run.');
+    } else {
+      setText('data-ans-title', `Partial — ${count} of 3 terms.`);
+      const raised = (cap ? 1 : 0) + (rail ? 1 : 0) + (runM > 380 ? 1 : 0) + (svbPct >= 45 ? 1 : 0);
+      setText('data-ans-regimes', `${raised} of 4 raised`);
+      const weak = !rail
+        ? 'one settlement bank offline for 3.5 h.'
+        : !cap
+          ? 'a 2.3× merchant volume surge.'
+          : 'a rescaled March 2023 weekend exit (short $190M).';
+      setText('data-ans-breaks', weak);
+    }
+
+    setText('data-ans-run', runText);
+    setText('data-ans-cash', sweep ? '$0.7B' : '$1.2B');
+    setText(
+      'data-ans-yield',
+      sweep
+        ? '$500M freed (about $17.5M a year at a 3.5% reserve yield)'
+        : 'No idle cash freed without the morning fund sweep.',
+    );
+
+    btns.forEach((b) => {
+      const k = b.dataset['term'] ?? '';
+      const on = !!state[k];
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+  };
+
+  btns.forEach((b) => {
+    b.addEventListener('click', () => {
+      const k = b.dataset['term'] ?? '';
+      if (!(k in state)) return;
+      state[k] = !state[k];
+      recompute();
+    });
+  });
+
+  recompute();
 }
 
 function initFocusAndTasks(root: HTMLElement, win: HTMLElement): void {
@@ -208,8 +323,8 @@ export function initRun(root: HTMLElement): void {
   const win = root.querySelector<HTMLElement>('.ps__win');
   if (!win) return;
   initFocusAndTasks(root, win);
+  initTermSimulator(win);
 
-  // The parts arrive in order the first time the screen is seen.
   const io = new IntersectionObserver(
     (es) => {
       if (es.some((e) => e.isIntersecting)) {
@@ -221,8 +336,6 @@ export function initRun(root: HTMLElement): void {
   );
   io.observe(win);
 
-  // Fit the whole screen in one viewport: scale it down to the height available
-  // and widen its layout so it still fills the frame edge to edge.
   const stage = win.parentElement as HTMLElement;
   const wide = window.matchMedia('(min-width: 1024px)');
   const fit = (): void => {

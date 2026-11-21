@@ -126,8 +126,47 @@ function initFootMark(): void {
   io.observe(mark);
 }
 
+/** Colossal-style architectural Index + drawer, opened from the top bar. */
+function initIndexDrawer(): void {
+  const drawer = qs<HTMLElement>('[data-index-drawer]');
+  const openers = qsa<HTMLButtonElement>('[data-index-open]');
+  const closers = qsa<HTMLElement>('[data-index-close]');
+  if (!drawer || openers.length === 0) return;
+
+  const setOpen = (open: boolean): void => {
+    drawer.hidden = !open;
+    document.documentElement.classList.toggle('is-index-open', open);
+    openers.forEach((b) => b.setAttribute('aria-expanded', String(open)));
+    if (open) {
+      const closeBtn = drawer.querySelector<HTMLElement>('[data-index-close]');
+      closeBtn?.focus();
+    } else {
+      openers[0]?.focus();
+    }
+  };
+
+  openers.forEach((b) => b.addEventListener('click', () => setOpen(drawer.hidden)));
+  closers.forEach((c) => c.addEventListener('click', () => setOpen(false)));
+
+  drawer.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const worldIdx = link.dataset['jumpWorld'];
+      setOpen(false);
+      if (worldIdx !== undefined) {
+        const tab = document.querySelector<HTMLButtonElement>(`#domains [data-i="${worldIdx}"]`);
+        tab?.click();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !drawer.hidden) setOpen(false);
+  });
+}
+
 export function initLamps(): void {
   initBarLamps();
   initHeroLamps();
   initFootMark();
+  initIndexDrawer();
 }

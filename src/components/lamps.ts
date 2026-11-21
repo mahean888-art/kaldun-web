@@ -25,6 +25,7 @@ function initBarLamps(): void {
     .filter((el): el is HTMLElement => el !== null);
   if (stops.length !== lamps.length) return;
 
+  const readout = qs<HTMLElement>('[data-lamps-readout]');
   let current = -1;
   const update = (): void => {
     // The section being read is the last one whose top has passed a line a
@@ -44,6 +45,13 @@ function initBarLamps(): void {
       if (i === at) a.setAttribute('aria-current', 'location');
       else a.removeAttribute('aria-current');
     });
+    if (readout) {
+      const raw = lamps[at]?.dataset['name'] ?? '';
+      const label = raw.replace(/^\d+\s*·\s*/, '');
+      const num = String(at + 1).padStart(2, '0');
+      const total = String(lamps.length).padStart(2, '0');
+      readout.textContent = `${num} / ${total} · ${label}`;
+    }
   };
 
   let queued = false;

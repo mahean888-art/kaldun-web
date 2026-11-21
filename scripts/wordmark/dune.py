@@ -16,7 +16,7 @@ GAP, SPACE = 27.0, 72.0
 
 def f(x): return f'{x:.1f}'.rstrip('0').rstrip('.')
 
-def glyph(c):
+def glyph(c, small_cut=False):
     """Return (width, path data, dots[(cx, cy, r)])."""
     if c == 'F':
         w = 86; return w, f'M0 {f(TOP)}H{w}M{f(w*0.8)} {f(MID)}H{f(h)}V{f(H)}', []
@@ -29,6 +29,9 @@ def glyph(c):
     if c in 'CE':
         w = 92; R = 50 - h
         d = f'M{w} {f(TOP)}H{f(h+R)}A{f(R)} {f(R)} 0 0 0 {f(h+R)} {f(BOT)}H{w}'
+        if c == 'E' and small_cut:
+            d += f'M{f(w*0.42)} {f(MID)}H{f(w*0.92)}'
+            return w, d, []
         return w, d, ([(w * 0.64, 50, S * 0.9)] if c == 'E' else [])
     if c == 'S':
         w = 88; r = (MID - TOP) / 2
@@ -80,12 +83,12 @@ def shift(d, dx):
         s += t if (t.isalpha() or not s or s[-1].isalpha()) else ' ' + t
     return s
 
-def mark(text='FORESIGHT MACHINES'):
+def mark(text='FORESIGHT MACHINES', small_cut=False):
     x, ds, dots = 0.0, [], []
     for ch in text:
         if ch == ' ':
             x += SPACE - GAP; continue
-        w, d, dd = glyph(ch)
+        w, d, dd = glyph(ch, small_cut=small_cut)
         ds.append(shift(d, x)); dots += [(cx + x, cy, r) for cx, cy, r in dd]
         x += w + GAP
     return x - GAP, ''.join(ds), dots
@@ -95,9 +98,9 @@ def weight(stroke):
     global S, h, TOP, BOT
     S = float(stroke); h = S / 2; TOP, BOT = h, H - h
 
-def svg_inner(clip_id, color='currentColor', stroke=10.0):
+def svg_inner(clip_id, color='currentColor', stroke=10.0, small_cut=False):
     weight(stroke)
-    w, d, dots = mark()
+    w, d, dots = mark(small_cut=small_cut)
     return w, (f'<clipPath id="{clip_id}"><rect x="-2" y="0" width="{f(w+4)}" height="100"/></clipPath>'
                f'<g clip-path="url(#{clip_id})" fill="none" stroke="{color}" stroke-width="{f(stroke)}" stroke-linejoin="miter" stroke-miterlimit="8">'
                f'<path d="{d}"/></g>'

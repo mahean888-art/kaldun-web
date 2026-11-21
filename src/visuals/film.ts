@@ -214,9 +214,9 @@ export function initFilm(root: HTMLElement): void {
     const monoSm = '9.5px "IBM Plex Mono", ui-monospace, monospace';
     const monoMd = '11px "IBM Plex Mono", ui-monospace, monospace';
 
-    // 1. Archival drafting grid
+    // 1. Archival drafting grid + top azimuth calibration scale (Spacing Guild astrolabe precision)
     const step = compact ? 32 : 40;
-    ctx.strokeStyle = 'rgba(20, 18, 16, 0.045)';
+    ctx.strokeStyle = 'rgba(20, 18, 16, 0.042)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let x = step; x < W; x += step) {
@@ -228,6 +228,18 @@ export function initFilm(root: HTMLElement): void {
       ctx.lineTo(W, y + 0.5);
     }
     ctx.stroke();
+
+    // Precision top calibration ticks
+    const tickCount = compact ? 24 : 48;
+    for (let i = 1; i < tickCount; i++) {
+      const tx = (i / tickCount) * W;
+      const major = i % 6 === 0;
+      ctx.strokeStyle = major ? 'rgba(20, 18, 16, 0.24)' : 'rgba(20, 18, 16, 0.1)';
+      ctx.beginPath();
+      ctx.moveTo(tx + 0.5, 0);
+      ctx.lineTo(tx + 0.5, major ? 8 : 4);
+      ctx.stroke();
+    }
 
     // Chart coordinate zone (opens as simW -> 1)
     const chartL = W * (compact ? 0.09 : 0.34);
@@ -253,7 +265,7 @@ export function initFilm(root: HTMLElement): void {
       ctx.restore();
     }
 
-    // 3. Topology graph (full stage in step 1; compact left column on desktop in steps 2..4; cleanly hidden on narrow phones)
+    // 3. Topology graph + Spacing Guild Navigator astrolabe rings
     const topoAlpha = compact ? clamp(1 - simW * 1.5, 0, 1) : 1;
     if (topoAlpha > 0.02) {
       ctx.save();
@@ -263,6 +275,34 @@ export function initFilm(root: HTMLElement): void {
         y: lerp(n.my, n.cy, simW) * H,
         n,
       }));
+      const core = pts[0]!;
+
+      // Concentric Guild Navigator astrolabe rings around ISSUER core
+      const rScale = lerp(Math.min(W, H) * 0.35, Math.min(W, H) * 0.18, simW);
+      const spin = reduced ? 0.4 : (now / 1000) * 0.12;
+      for (const [mult, dash, col] of [
+        [1.0, false, 'rgba(20, 18, 16, 0.11)'],
+        [0.72, true, intW > 0.2 ? `rgba(243, 146, 0, ${(0.22 + 0.35 * intW).toFixed(3)})` : 'rgba(20, 18, 16, 0.09)'],
+        [0.42, false, 'rgba(20, 18, 16, 0.08)'],
+      ] as Array<[number, boolean, string]>) {
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 1;
+        if (dash) ctx.setLineDash([4, 5]);
+        ctx.beginPath();
+        ctx.arc(core.x, core.y, rScale * mult, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      // Rotating cardinal astrolabe ticks on outer ring
+      for (let d = 0; d < 24; d++) {
+        const a = (d / 24) * Math.PI * 2 + spin;
+        const maj = d % 6 === 0;
+        ctx.strokeStyle = maj ? 'rgba(243, 146, 0, 0.65)' : 'rgba(20, 18, 16, 0.14)';
+        ctx.beginPath();
+        ctx.moveTo(core.x + Math.cos(a) * (rScale - (maj ? 8 : 3.5)), core.y + Math.sin(a) * (rScale - (maj ? 8 : 3.5)));
+        ctx.lineTo(core.x + Math.cos(a) * rScale, core.y + Math.sin(a) * rScale);
+        ctx.stroke();
+      }
 
       // Edges
       for (let ei = 0; ei < EDGES.length; ei++) {

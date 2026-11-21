@@ -11,7 +11,7 @@ PAGES = ['index.html', 'discuss/index.html', 'journal/index.html',
 NAV_STROKE = 13.5  # the top bar shows the mark at ~16px tall: balanced weight with open counters
 
 def nav_svg(n):
-    w, inner = dune.svg_inner(f'wmc{n}', stroke=NAV_STROKE, small_cut=True)
+    w, inner = dune.svg_inner(f'wmc{n}', stroke=NAV_STROKE, small_cut=False)
     return f'<svg class="wm wm--draw" viewBox="-4 -4 {dune.f(w+8)} 108" role="img" aria-label="Foresight Machines">{inner}</svg>'
 
 for i, page in enumerate(PAGES):

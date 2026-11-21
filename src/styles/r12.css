@@ -805,62 +805,83 @@ html.is-index-open {
   }
 }
 
-/* ---- 7. Worlds: Hasselblad Architectural Plates + Swiss Telemetry -------- */
-.dm--tabs .dm__art {
+/* ---- 7. Worlds: Real-Time 3D Guild Navigator Canvas Engines -------------- */
+.dm--tabs .dm__art.dm__art--cg {
   position: relative;
-  background: #e9e4da !important;
+  background: #f5f2eb !important;
   border-right: 1px solid rgba(20, 18, 16, 0.12);
   overflow: hidden;
+  cursor: crosshair;
 }
-.dm--tabs .dm__art::before {
-  content: '';
+.dm--tabs .dm__art.dm__art--cg::before,
+.dm--tabs .dm__art.dm__art--cg::after {
+  display: none !important;
+}
+.dm__canvas {
+  display: block;
   position: absolute;
   inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(20, 18, 16, 0.12) 0%, transparent 24%, transparent 74%, rgba(20, 18, 16, 0.45) 100%);
-}
-.dm--tabs .dm__art img {
-  object-fit: cover;
-  object-position: 50% 50%;
-  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  width: 100%;
+  height: 100%;
 }
 .dm__plate {
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 16px;
+  left: 16px;
   z-index: 2;
-  padding: 5px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(20, 18, 16, 0.62);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 9px;
+  border: 1px solid rgba(20, 18, 16, 0.16);
+  background: rgba(252, 250, 245, 0.9);
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f7f3eb;
+  color: #a85f00;
+  pointer-events: none;
+}
+.dm__live {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid rgba(20, 18, 16, 0.12);
+  background: rgba(252, 250, 245, 0.88);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b665d;
+  pointer-events: none;
+}
+.dm__live i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f39200;
 }
 .dm__tele {
   position: absolute;
-  left: 18px;
-  bottom: 18px;
+  left: 16px;
+  bottom: 16px;
   z-index: 2;
-  padding: 5px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(20, 18, 16, 0.64);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 9px;
+  border: 1px solid rgba(20, 18, 16, 0.14);
+  background: rgba(252, 250, 245, 0.9);
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: rgba(249, 246, 240, 0.94);
+  color: #5c564d;
+  pointer-events: none;
 }
 @media (min-width: 900px) {
   .dm--tabs .dm__panel {
-    grid-template-rows: minmax(min(480px, calc(100svh - var(--header-h, 54px) - 200px)), auto) !important;
+    grid-template-rows: minmax(min(490px, calc(100svh - var(--header-h, 54px) - 200px)), auto) !important;
     min-height: 0 !important;
   }
   .dm--tabs .dm__body {
@@ -873,16 +894,64 @@ html.is-index-open {
   }
 }
 @media (max-width: 899px) {
-  .dm--tabs .dm__art {
+  .dm--tabs .dm__art.dm__art--cg {
     border-right: 0;
     border-bottom: 1px solid rgba(20, 18, 16, 0.12);
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 3.4;
+    min-height: 290px;
   }
-  .dm--tabs .dm__art img {
-    width: 100%;
-    height: 100%;
-    object-position: 50% 45% !important;
-  }
+}
+
+/* ---- 7b. Kill ALL AI-style fuzzy glows; enforce dry Dune / Swiss craft --- */
+.hero {
+  background-image: none !important;
+}
+.hero__panel {
+  box-shadow: none !important;
+  border: 1px solid rgba(20, 18, 16, 0.14) !important;
+  background-color: #fcfaf5 !important;
+}
+.hero__grid {
+  opacity: 1 !important;
+}
+/* Machined architectural calibration bay for Dollar Issuer console (kills mushy orange blob) */
+.ps__stage {
+  border-radius: 4px !important;
+  border: 1px solid rgba(20, 18, 16, 0.14) !important;
+  background:
+    linear-gradient(rgba(20, 18, 16, 0.055) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(20, 18, 16, 0.055) 1px, transparent 1px) 0 0 / 32px 32px,
+    #efece4 !important;
+}
+.ps__win {
+  border-radius: 4px 0 0 0 !important;
+  box-shadow: -12px -8px 36px -28px rgba(20, 18, 16, 0.22) !important;
+}
+/* Crisp triad without soft drop-shadow */
+.ct__c.is-ours {
+  box-shadow: none !important;
+  border-top: 2px solid #f39200 !important;
+}
+/* Monumental Dune footer wordmark: ZERO ambient orange fog, ZERO drop-shadow blur */
+.foot {
+  background: #f5f2eb !important;
+  border-top: 1px solid rgba(20, 18, 16, 0.12) !important;
+}
+.foot::before,
+.foot::after {
+  display: none !important;
+  background: none !important;
+}
+.foot__mark {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem) !important;
+  padding-top: clamp(2rem, 4vw, 3.5rem) !important;
+  border-top: 1px solid rgba(20, 18, 16, 0.12) !important;
+}
+.foot__mark--word svg,
+.foot__mark svg {
+  filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
 /* ---- 8. Validation spec strip & Warm-Stone Sovereignty Plate ------------- */

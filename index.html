@@ -258,7 +258,10 @@
                       </div>
 
                       <div class="nm-app__foot">
-                        <span class="nm-app__footl">|◀  ▶  ▶|   STATE CLOCK · CALIBRATED</span>
+                        <div class="nm-transport">
+                          <button type="button" class="nm-tbtn" data-m1-play aria-pressed="false" aria-label="Play or pause state clock">▶</button>
+                          <span class="nm-app__footl">STATE CLOCK · CALIBRATED</span>
+                        </div>
                         <ul class="nm-replay" data-m1-replay></ul>
                       </div>
                     </div>
@@ -272,7 +275,7 @@
               <article class="nm-panel" id="nm-p-1" role="tabpanel" data-nm-panel="1" hidden>
                 <div class="nm-panel__lead">
                   <h3 class="nm-panel__h">From normal operations to the exact breaking boundary.</h3>
-                  <p class="nm-panel__p">Drag the sweep scrubber below. The machine pushes synthetic stress across every coupled dependency until a governing constraint fails—without assuming probabilities.</p>
+                  <p class="nm-panel__p">Run the sweep or drag the scrubber below. The machine pushes synthetic stress across every coupled dependency until a governing constraint fails—without assuming probabilities.</p>
                 </div>
 
                 <div class="nm-matte nm-matte--basalt">
@@ -331,33 +334,35 @@
                         <div class="nm-s2__phead">
                           <span>SYNCHRONIZED CONSTRAINT HEADROOM &amp; COUPLED LOAD</span>
                           <div class="nm-s2__leg">
-                            <span><i style="background:#141210"></i>Headroom</span>
+                            <span><i style="background:#1a1714"></i>Headroom</span>
                             <span><i style="background:#9d968a"></i>Coupled load</span>
-                            <span><i style="background:#e58600"></i>Playhead</span>
+                            <span><i style="background:#c47a18"></i>Playhead</span>
                           </div>
                         </div>
-                        <svg viewBox="0 0 760 156" class="nm-s2__svg" role="img" aria-label="Constraint headroom declining under synthetic stress until crossing the governing constraint floor.">
-                          <g stroke="#141210" stroke-opacity="0.06" stroke-width="1">
-                            <line x1="0" y1="34" x2="760" y2="34" />
-                            <line x1="0" y1="84" x2="760" y2="84" />
-                            <line x1="0" y1="134" x2="760" y2="134" />
-                            <line x1="190" y1="0" x2="190" y2="152" />
-                            <line x1="380" y1="0" x2="380" y2="152" />
-                            <line x1="570" y1="0" x2="570" y2="152" />
+                        <svg viewBox="0 0 760 138" class="nm-s2__svg" role="img" aria-label="Constraint headroom declining under synthetic stress until crossing the governing constraint floor.">
+                          <g stroke="#1a1714" stroke-opacity="0.06" stroke-width="1">
+                            <line x1="0" y1="28" x2="760" y2="28" />
+                            <line x1="0" y1="82" x2="760" y2="82" />
+                            <line x1="0" y1="124" x2="760" y2="124" />
+                            <line x1="190" y1="0" x2="190" y2="136" />
+                            <line x1="380" y1="0" x2="380" y2="136" />
+                            <line x1="570" y1="0" x2="570" y2="136" />
                           </g>
-                          <line x1="0" y1="90" x2="760" y2="90" stroke="#141210" stroke-opacity="0.34" stroke-dasharray="4 4" />
-                          <text x="752" y="82" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6e685e">GOVERNING CONSTRAINT FLOOR</text>
-                          <path data-m2-curve-h d="" fill="none" stroke="#141210" stroke-width="1.8" />
-                          <path data-m2-curve-l d="" fill="none" stroke="#a69f93" stroke-width="1.25" />
+                          <path data-m2-breach-area d="" fill="rgba(166, 56, 24, 0.08)" />
+                          <line data-m2-break-mark x1="350" y1="8" x2="350" y2="132" stroke="#1a1714" stroke-opacity="0.22" stroke-dasharray="2 3" />
+                          <line x1="0" y1="82" x2="760" y2="82" stroke="#1a1714" stroke-opacity="0.34" stroke-dasharray="4 4" />
+                          <text x="752" y="74" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6e685e">GOVERNING CONSTRAINT FLOOR</text>
+                          <path data-m2-curve-h d="" fill="none" stroke="#1a1714" stroke-width="1.75" />
+                          <path data-m2-curve-l d="" fill="none" stroke="#a69f93" stroke-width="1.2" />
                           <g data-m2-playhead transform="translate(350 0)">
-                            <line x1="0" y1="6" x2="0" y2="150" stroke="#e58600" stroke-width="1.5" />
-                            <circle data-m2-dot cx="0" cy="90" r="5" fill="#e58600" stroke="#141210" stroke-width="1.5" />
+                            <line x1="0" y1="6" x2="0" y2="134" stroke="#c47a18" stroke-width="1.5" />
+                            <circle data-m2-dot cx="0" cy="82" r="4.8" fill="#c47a18" stroke="#1a1714" stroke-width="1.5" />
                           </g>
                         </svg>
                       </div>
 
                       <div class="nm-app__foot nm-app__foot--scrub">
-                        <span class="nm-app__footl">|◀  ❚❚  ▶|   SWEEP</span>
+                        <button type="button" class="nm-tbtn nm-tbtn--wide" data-m2-play aria-pressed="false" aria-label="Play or pause adversarial stress sweep">▶ SWEEP</button>
                         <input data-m2-slider type="range" min="0" max="100" value="46" class="nm-scrub-range" aria-label="Scrub synthetic stress intensity" />
                         <span class="nm-app__footr" data-m2-readout>46% stress · 3.3×</span>
                       </div>
@@ -429,19 +434,14 @@
                     <div class="nm-s4__plate">
                       <div class="nm-s4__head">
                         <span class="nm-s4__k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Pre-Outcome Record</span>
-                        <!-- Minimal Dune Transcription-Cylinder orthographic seal -->
-                        <svg class="nm-s4__seal" viewBox="0 0 64 64" width="44" height="44" aria-hidden="true">
-                          <rect x="6" y="4" width="52" height="56" rx="4" fill="none" stroke="rgba(244,239,230,0.34)" stroke-width="1"/>
-                          <circle cx="32" cy="24" r="10" fill="none" stroke="#e58600" stroke-width="1.3"/>
-                          <circle cx="32" cy="24" r="5.5" fill="none" stroke="rgba(244,239,230,0.5)" stroke-width="0.9"/>
-                          <line x1="32" y1="34" x2="32" y2="52" stroke="rgba(244,239,230,0.58)" stroke-width="1.2"/>
-                          <circle cx="46" cy="42" r="4.5" fill="none" stroke="rgba(244,239,230,0.38)" stroke-width="1"/>
-                          <circle cx="46" cy="52" r="2.2" fill="none" stroke="rgba(244,239,230,0.38)" stroke-width="0.9"/>
-                        </svg>
+                        <span class="nm-s4__code">SEAL · ORTHO PLAN</span>
+                      </div>
+                      <div class="nm-s4__sealbox" data-seal-plate aria-hidden="true">
+                        <canvas></canvas>
                       </div>
                       <p class="nm-s4__q">“Every answer is written down beside the team’s own draft under identical rules, before the outcome is known—and every miss becomes a permanent test case.”</p>
                       <div class="nm-s4__foot">
-                        <span>DIGEST · 7c41…a9e0</span>
+                        <span data-m4-digest-foot>DIGEST · 7c41…a9e0</span>
                         <span>Zero hindsight · Audited against baseline</span>
                       </div>
                     </div>
@@ -453,8 +453,9 @@
                       </div>
                       <dl class="nm-s4__dl">
                         <div><dt>Status</dt><dd>Committed prior to outcome</dd></div>
-                        <div><dt>World ruleset</dt><dd>Public rules · Versioned hash</dd></div>
-                        <div><dt>Digest</dt><dd class="nm-mono">sha256: 7c41…a9e0</dd></div>
+                        <div><dt>World ruleset</dt><dd data-m4-ruleset>OCC reserve standards · Public ruleset</dd></div>
+                        <div><dt>Horizon</dt><dd data-m4-horizon>48 h settlement window</dd></div>
+                        <div><dt>Digest</dt><dd class="nm-mono" data-m4-digest>sha256: 7c41…a9e0</dd></div>
                         <div><dt>Baseline</dt><dd>Team draft logged identically</dd></div>
                         <div><dt>Serving</dt><dd>Live institutional decision loop</dd></div>
                         <div><dt>Ownership</dt><dd>Strictly the institution’s</dd></div>
@@ -485,7 +486,14 @@
             <span class="dn-crop dn-crop--tr" aria-hidden="true"></span>
             <span class="dn-crop dn-crop--bl" aria-hidden="true"></span>
             <span class="dn-vert" aria-hidden="true">F·M</span>
-            <h2 class="ms__line">Make foresight infrastructure for the financial and physical world.</h2>
+            <div class="dn-chamber__copy">
+              <p class="dn-chamber__eyebrow">PLATE 03 · HORIZON INSTRUMENT</p>
+              <h2 class="ms__line">Make foresight infrastructure for the financial and physical world.</h2>
+              <p class="dn-chamber__cap">Every contour is one simulated state; the central spindle holds the committed record before reality arrives.</p>
+            </div>
+            <div class="dn-chamber__fig" data-mission-instrument aria-hidden="true">
+              <canvas></canvas>
+            </div>
           </div>
 
           <div class="ms__lamps hero__clusters b1 b2 b3" aria-hidden="true">
@@ -520,7 +528,7 @@
       </section>
 
       <!-- ================================================================ -->
-      <!-- 04 · WORLDS — Dune Dual-Projection Architectural Specimen Plates -->
+      <!-- 04 · WORLDS — Dune Stratified Architectural Specimen Plates      -->
       <!-- ================================================================ -->
       <section class="band band--paper band--worlds" id="domains" data-screen>
         <div class="wrap tk-wrap">
@@ -549,48 +557,15 @@
             </div>
 
             <div class="tk-deck">
-              <!-- WORLD 01 · MONEY — Dune Dual-Projection Architectural Plate (Isometric Clearing Vault + Orthographic Plan) -->
+              <!-- WORLD 01 · MONEY — Caladan Parchment Stratified Clearing House -->
               <article class="tk-card is-active" data-tk-card="0" tabindex="0" aria-current="true">
-                <div class="dn-plate dn-plate--caladan" aria-hidden="true">
+                <div class="dn-plate dn-plate--caladan" data-plate="money" aria-hidden="true">
                   <span class="dn-plate__tab">01 · Money</span>
-                  <!-- Double-hairline chamfered archival frame (Dune dossier signature) -->
                   <svg class="dn-plate__frame" viewBox="0 0 400 320" preserveAspectRatio="none">
-                    <path d="M 10 34 L 112 34 L 128 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(42,38,33,0.34)" stroke-width="1"/>
-                    <path d="M 15 39 L 115 39 L 131 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(42,38,33,0.16)" stroke-width="0.9"/>
+                    <path d="M 10 34 L 116 34 L 132 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(58,46,32,0.42)" stroke-width="1"/>
+                    <path d="M 15 39 L 119 39 L 135 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(58,46,32,0.18)" stroke-width="0.85"/>
                   </svg>
-                  <!-- Isometric 3/4 Clearing Monolith (top) + Orthographic Reserve Plan (bottom) -->
-                  <svg class="dn-plate__art" viewBox="0 0 400 320">
-                    <!-- Horizontal architectural projection divider -->
-                    <line x1="34" y1="196" x2="366" y2="196" stroke="#2a2621" stroke-opacity="0.22" stroke-width="0.9"/>
-                    <!-- TOP: Isometric chamfered dual-vault clearing prism with single ochre par equilibrium plane -->
-                    <g stroke="#2a2621" stroke-width="0.95" stroke-linejoin="round">
-                      <!-- Left clearing monolith -->
-                      <polygon points="78,108 142,76 184,96 120,128" fill="#ede8dd"/>
-                      <polygon points="78,108 120,128 120,162 78,142" fill="#d3ccc0"/>
-                      <polygon points="120,128 184,96 184,130 120,162" fill="#c0b8aa"/>
-                      <!-- Center luminous Dune amber equilibrium core -->
-                      <polygon points="146,114 200,87 254,114 200,141" fill="#e8a124" fill-opacity="0.88"/>
-                      <polygon points="146,114 200,141 200,154 146,127" fill="#c87b08" fill-opacity="0.85"/>
-                      <polygon points="200,141 254,114 254,127 200,154" fill="#df8e0d" fill-opacity="0.9"/>
-                      <!-- Right clearing monolith -->
-                      <polygon points="216,96 258,76 322,108 280,128" fill="#f2ede3"/>
-                      <polygon points="216,96 280,128 280,162 216,130" fill="#d9d2c5"/>
-                      <polygon points="280,128 322,108 322,142 280,162" fill="#beb6a8"/>
-                      <!-- Hidden architectural drafting axes -->
-                      <line x1="200" y1="54" x2="200" y2="174" stroke-opacity="0.24" stroke-dasharray="2 3"/>
-                      <line x1="66" y1="126" x2="334" y2="126" stroke-opacity="0.2" stroke-dasharray="2 3"/>
-                    </g>
-                    <!-- BOTTOM: Orthographic top-view blueprint (echoing Dune Transcription Device plan view) -->
-                    <g fill="none" stroke="#2a2621" stroke-width="0.95">
-                      <polygon points="96,222 108,212 292,212 304,222 304,276 292,286 108,286 96,276" fill="#f7f4ed" fill-opacity="0.65"/>
-                      <rect x="114" y="226" width="44" height="46" stroke-opacity="0.55"/>
-                      <rect x="242" y="226" width="44" height="46" stroke-opacity="0.55"/>
-                      <circle cx="200" cy="249" r="22" stroke-width="1.2"/>
-                      <circle cx="200" cy="249" r="13" stroke="#d48000" stroke-width="1.6"/>
-                      <line x1="158" y1="249" x2="178" y2="249" stroke="#d48000" stroke-width="1.4"/>
-                      <line x1="222" y1="249" x2="242" y2="249" stroke="#d48000" stroke-width="1.4"/>
-                    </g>
-                  </svg>
+                  <canvas class="dn-plate__art" data-plate-canvas></canvas>
                 </div>
                 <div class="tk-card__inner">
                   <div class="tk-card__meta"><span>01 / 03</span><span>Money</span></div>
@@ -599,42 +574,15 @@
                 </div>
               </article>
 
-              <!-- WORLD 02 · POWER & COMPUTE — Dune Dual-Projection Plate (Faceted Bridge Conduit + Front Elevation) -->
+              <!-- WORLD 02 · POWER & COMPUTE — Emperor Taupe Stratified Substation -->
               <article class="tk-card" data-tk-card="1" tabindex="0" aria-current="false">
-                <div class="dn-plate dn-plate--arrakis" aria-hidden="true">
+                <div class="dn-plate dn-plate--arrakis" data-plate="power" aria-hidden="true">
                   <span class="dn-plate__tab">02 · Power</span>
                   <svg class="dn-plate__frame" viewBox="0 0 400 320" preserveAspectRatio="none">
-                    <path d="M 10 34 L 112 34 L 128 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(42,38,33,0.34)" stroke-width="1"/>
-                    <path d="M 15 39 L 115 39 L 131 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(42,38,33,0.16)" stroke-width="0.9"/>
+                    <path d="M 10 34 L 116 34 L 132 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(250,247,240,0.62)" stroke-width="1"/>
+                    <path d="M 15 39 L 119 39 L 135 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(250,247,240,0.28)" stroke-width="0.85"/>
                   </svg>
-                  <!-- Isometric 3/4 Twin Faceted Bridge Span (Lighting of Dune geometry) + Orthographic Front Elevation -->
-                  <svg class="dn-plate__art" viewBox="0 0 400 320">
-                    <line x1="34" y1="196" x2="366" y2="196" stroke="#2a2621" stroke-opacity="0.22" stroke-width="0.9"/>
-                    <!-- TOP: Isometric stepped generation-to-compute faceted bridge span -->
-                    <g stroke="#2a2621" stroke-width="0.95" stroke-linejoin="round">
-                      <!-- Left faceted span bar -->
-                      <polygon points="62,142 152,96 188,108 98,154" fill="#ece8df"/>
-                      <polygon points="62,142 98,154 108,168 72,156" fill="#d5cfc4"/>
-                      <polygon points="98,154 188,108 182,126 108,168" fill="#e8a124" fill-opacity="0.88"/>
-                      <!-- Center coupling gap -->
-                      <polygon points="186,104 206,94 218,98 198,108" fill="#3a352e"/>
-                      <!-- Right faceted span bar -->
-                      <polygon points="204,92 304,48 338,60 238,104" fill="#f3efe7"/>
-                      <polygon points="204,92 238,104 234,122 200,110" fill="#c7c0b3"/>
-                      <polygon points="238,104 338,60 328,78 234,122" fill="#e8a124" fill-opacity="0.92"/>
-                      <!-- Subtle datum projection lines -->
-                      <line x1="196" y1="62" x2="196" y2="176" stroke-opacity="0.22" stroke-dasharray="2 3"/>
-                    </g>
-                    <!-- BOTTOM: Crisp orthographic front elevation (directly echoing 17.00.06 bottom elevation!) -->
-                    <g stroke="#2a2621" stroke-width="0.95" stroke-linejoin="round">
-                      <polygon points="68,244 192,244 184,264 88,264" fill="#e8a124" fill-opacity="0.82"/>
-                      <polygon points="68,244 92,232 192,232 192,244" fill="#ece8df"/>
-                      <rect x="194" y="236" width="12" height="24" fill="#d3cdc2"/>
-                      <polygon points="208,244 332,244 312,264 216,264" fill="#e8a124" fill-opacity="0.88"/>
-                      <polygon points="208,244 208,232 308,232 332,244" fill="#f3efe7"/>
-                      <line x1="56" y1="274" x2="344" y2="274" stroke-opacity="0.3" stroke-dasharray="3 3"/>
-                    </g>
-                  </svg>
+                  <canvas class="dn-plate__art" data-plate-canvas></canvas>
                 </div>
                 <div class="tk-card__inner">
                   <div class="tk-card__meta"><span>02 / 03</span><span>Power &amp; compute</span></div>
@@ -643,45 +591,15 @@
                 </div>
               </article>
 
-              <!-- WORLD 03 · TRADE — Dune Dual-Projection Plate (Harkonnen Basalt Corridor Lock + Reroute Plan) -->
+              <!-- WORLD 03 · TRADE — Harkonnen Bronze-Umber Stratified Corridor Hull -->
               <article class="tk-card" data-tk-card="2" tabindex="0" aria-current="false">
-                <div class="dn-plate dn-plate--giedi" aria-hidden="true">
+                <div class="dn-plate dn-plate--giedi" data-plate="trade" aria-hidden="true">
                   <span class="dn-plate__tab">03 · Trade</span>
                   <svg class="dn-plate__frame" viewBox="0 0 400 320" preserveAspectRatio="none">
-                    <path d="M 10 34 L 112 34 L 128 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(244,239,230,0.34)" stroke-width="1"/>
-                    <path d="M 15 39 L 115 39 L 131 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(244,239,230,0.16)" stroke-width="0.9"/>
+                    <path d="M 10 34 L 116 34 L 132 14 L 388 14 L 392 18 L 392 308 L 388 312 L 14 312 L 10 308 Z" fill="none" stroke="rgba(242,236,224,0.52)" stroke-width="1"/>
+                    <path d="M 15 39 L 119 39 L 135 19 L 384 19 L 387 22 L 387 304 L 384 307 L 18 307 L 15 304 Z" fill="none" stroke="rgba(242,236,224,0.22)" stroke-width="0.85"/>
                   </svg>
-                  <!-- Isometric 3/4 Stepped Maritime Corridor Monolith (16.56.49 Console rhythm) + Orthographic Reroute Plan -->
-                  <svg class="dn-plate__art" viewBox="0 0 400 320">
-                    <line x1="34" y1="196" x2="366" y2="196" stroke="#f4efe6" stroke-opacity="0.22" stroke-width="0.9"/>
-                    <!-- TOP: Isometric terraced corridor hull & lock ribs -->
-                    <g fill="none" stroke="#f4efe6" stroke-width="0.9" stroke-linejoin="round">
-                      <polygon points="86,126 156,74 294,104 316,138 242,166 108,144" fill="rgba(244,239,230,0.06)"/>
-                      <polygon points="112,118 164,84 274,108 224,146" fill="rgba(244,239,230,0.09)"/>
-                      <!-- Internal stepped cargo ribs -->
-                      <line x1="138" y1="101" x2="188" y2="132" stroke-opacity="0.45"/>
-                      <line x1="168" y1="92" x2="220" y2="124" stroke-opacity="0.45"/>
-                      <line x1="198" y1="98" x2="248" y2="128" stroke-opacity="0.45"/>
-                      <line x1="228" y1="104" x2="276" y2="134" stroke-opacity="0.45"/>
-                      <!-- Single luminous amber bypass facet along the keel -->
-                      <polygon points="108,144 242,166 316,138 308,149 240,175 114,154" fill="#e58600" fill-opacity="0.88" stroke="#e58600"/>
-                    </g>
-                    <!-- BOTTOM: Orthographic navigational channel & Cape bypass corridor plan -->
-                    <g fill="none" stroke="#f4efe6" stroke-width="0.95">
-                      <circle cx="88" cy="244" r="14" stroke-opacity="0.62"/>
-                      <circle cx="88" cy="244" r="4" fill="#f4efe6"/>
-                      <circle cx="312" cy="244" r="14" stroke-opacity="0.62"/>
-                      <circle cx="312" cy="244" r="4" fill="#f4efe6"/>
-                      <!-- Constricted primary strait (dashed) -->
-                      <line x1="102" y1="244" x2="298" y2="244" stroke-opacity="0.34" stroke-dasharray="3 4"/>
-                      <rect x="190" y="234" width="20" height="20" stroke-opacity="0.55"/>
-                      <line x1="194" y1="238" x2="206" y2="250" stroke-opacity="0.72"/>
-                      <line x1="206" y1="238" x2="194" y2="250" stroke-opacity="0.72"/>
-                      <!-- Luminous ochre bypass trajectory -->
-                      <path d="M 102 244 Q 200 296 298 244" stroke="#e58600" stroke-width="2"/>
-                      <circle cx="200" cy="270" r="3.5" fill="#e58600" stroke="#141210" stroke-width="1"/>
-                    </g>
-                  </svg>
+                  <canvas class="dn-plate__art" data-plate-canvas></canvas>
                 </div>
                 <div class="tk-card__inner">
                   <div class="tk-card__meta"><span>03 / 03</span><span>Trade</span></div>

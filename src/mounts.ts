@@ -12,6 +12,7 @@ import { initDomains } from './visuals/domains';
 import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
 import { initHowItWorks } from './visuals/howItWorks';
+import { initWorldPlates } from './visuals/worldPlates';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -196,6 +197,7 @@ export function mountHome(root: ParentNode = document): void {
   if (rn) initRun(rn);
   const hw = qs<HTMLElement>('[data-how-works]', root);
   if (hw) initHowItWorks(hw);
+  initWorldPlates(root);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

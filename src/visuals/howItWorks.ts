@@ -3,14 +3,16 @@
  *
  * All four stages (01 Model the world, 02 Simulate to failure, 03 Intervene and
  * discover, 04 Commit the record) remain permanently visible on the left rail
- * and transition smoothly on click while the right-hand workspace renders a
- * full-scale, realistic Nominal-style interactive desktop environment.
+ * and switch exclusively on click, while the right-hand workspace renders an
+ * alive, realistic Nominal-grade interactive desktop environment.
  *
  * Strictly obeys the three institutional integrity rules:
  *   1. Public rules / clearly labeled simulated worlds only (never client claims).
  *   2. Zero made-up savings figures, zero named crises, zero 2023.
  *   3. Zero dashboard clichés (no pill badges, KPI card grids, or decorative gauges).
  */
+
+import { mountSealPlate } from './worldPlates';
 
 type DomainKey = 'money' | 'power' | 'trade';
 
@@ -19,11 +21,19 @@ interface TimelineFrame {
   rows: ReadonlyArray<readonly [string, string]>;
 }
 
+interface CounterfactualRow {
+  label: string;
+  base: string;
+  plan: string;
+  basePct: number;
+  planPct: number;
+}
+
 interface DomainModel {
   world: string;
   doc: string;
   crumb: string;
-  tree: ReadonlyArray<readonly [string, string]>;
+  tree: ReadonlyArray<readonly [string, string, string]>;
   tracks: ReadonlyArray<readonly [string, 'bar' | 'step' | 'wave', number, number]>;
   ticks: readonly string[];
   frames: readonly TimelineFrame[];
@@ -37,8 +47,11 @@ interface DomainModel {
   v4Fn: (v: number) => string;
   breakAt: number;
   levers: Array<[string, string, string, boolean]>;
-  table: ReadonlyArray<readonly [string, string, string]>;
+  table: readonly CounterfactualRow[];
   queryAns: (activeCount: number) => string;
+  commitRuleset: string;
+  commitDigest: string;
+  commitHorizon: string;
 }
 
 function createDomainData(): Record<DomainKey, DomainModel> {
@@ -48,16 +61,16 @@ function createDomainData(): Record<DomainKey, DomainModel> {
       doc: 'Public rules · OCC reserve standards',
       crumb: 'Adversarial shock sweep · Money & Clearing',
       tree: [
-        ['Public statutes', '1:1 reserve eligibility & attestation'],
-        ['Settlement rails', '24/7 rails & bank cutoff windows'],
-        ['Balance sheet', 'Liquid instruments & cash ladders'],
-        ['Counterparties', 'Merchant payout SLAs & limits'],
+        ['Public statutes', '1:1 reserve eligibility & attestation', '4 rules'],
+        ['Settlement rails', '24/7 rails & bank cutoff windows', '6 rules'],
+        ['Balance sheet', 'Liquid instruments & cash ladders', '5 rules'],
+        ['Counterparties', 'Merchant payout SLAs & limits', '3 rules'],
       ],
       tracks: [
-        ['reserve_eligibility', 'bar', 8, 84],
+        ['reserve_eligibility', 'bar', 6, 86],
         ['bank_cutoff_window', 'step', 0, 0],
         ['rail_throughput_24x7', 'wave', 0, 0],
-        ['par_settlement_floor', 'bar', 12, 78],
+        ['par_settlement_floor', 'bar', 10, 80],
       ],
       ticks: ['T+00:00', 'T+12:00', 'T+24:00', 'T+36:00', 'T+48:00'],
       frames: [
@@ -121,9 +134,9 @@ function createDomainData(): Record<DomainKey, DomainModel> {
         ['Morning sweep notice window', 'Aligns large exits with fund settlement hours', '03', true],
       ],
       table: [
-        ['Peak demand multiple', '2.3×', '6.0×'],
-        ['Single-bank outage held', '3.5 h', '48 h+'],
-        ['Par settlement rule', 'Breaks', 'Holds'],
+        { label: 'Peak demand multiple', base: '2.3×', plan: '6.0×', basePct: 38, planPct: 96 },
+        { label: 'Single-bank outage held', base: '3.5 h', plan: '48 h+', basePct: 18, planPct: 94 },
+        { label: 'Par settlement rule', base: 'Breaks', plan: 'Holds', basePct: 24, planPct: 100 },
       ],
       queryAns: (n) =>
         n === 3
@@ -131,22 +144,25 @@ function createDomainData(): Record<DomainKey, DomainModel> {
           : n === 2
             ? 'With one lever disabled, a combined weekend cutoff and 4.1× surge breaches the par floor.'
             : 'With fewer than two structural levers active, the draft breaks at 2.3× demand during bank closure.',
+      commitRuleset: 'OCC reserve standards · Public ruleset',
+      commitDigest: 'sha256: 7c41…a9e0',
+      commitHorizon: '48 h settlement window',
     },
     power: {
       world: 'World · Power & Compute',
       doc: 'Public rules · ISO interconnection queue',
       crumb: 'Adversarial shock sweep · Power & Compute',
       tree: [
-        ['Interconnection queue', 'Substation milestones & slip rules'],
-        ['Generation & storage', 'Grid feed, BESS, bridge power'],
-        ['Compute schedule', 'Phased hall delivery & SLA dates'],
-        ['Project covenants', 'Debt service coverage floor'],
+        ['Interconnection queue', 'Substation milestones & slip rules', '5 rules'],
+        ['Generation & storage', 'Grid feed, BESS, bridge power', '4 rules'],
+        ['Compute schedule', 'Phased hall delivery & SLA dates', '4 rules'],
+        ['Project covenants', 'Debt service coverage floor', '3 rules'],
       ],
       tracks: [
-        ['iso_queue_timeline', 'bar', 16, 78],
+        ['iso_queue_timeline', 'bar', 14, 80],
         ['bridge_power_mw', 'step', 0, 0],
         ['campus_load_curve', 'wave', 0, 0],
-        ['covenant_headroom', 'bar', 6, 86],
+        ['covenant_headroom', 'bar', 8, 84],
       ],
       ticks: ['M+00', 'M+06', 'M+12', 'M+18', 'M+24'],
       frames: [
@@ -210,9 +226,9 @@ function createDomainData(): Record<DomainKey, DomainModel> {
         ['Fuel-collar operating rule', 'Protects debt-service coverage floor', '03', true],
       ],
       table: [
-        ['Interconnection slip held', '+8 mo', '+24 mo'],
-        ['Equipment lead delay', '+4 mo', '+14 mo'],
-        ['Debt covenant floor', 'Breaks', 'Holds'],
+        { label: 'Interconnection slip held', base: '+8 mo', plan: '+24 mo', basePct: 33, planPct: 96 },
+        { label: 'Equipment lead delay', base: '+4 mo', plan: '+14 mo', basePct: 28, planPct: 92 },
+        { label: 'Debt covenant floor', base: 'Breaks', plan: 'Holds', basePct: 22, planPct: 100 },
       ],
       queryAns: (n) =>
         n === 3
@@ -220,19 +236,22 @@ function createDomainData(): Record<DomainKey, DomainModel> {
           : n === 2
             ? 'With one lever disabled, a +14 month substation slip paired with equipment delay breaks the covenant floor.'
             : 'Unbuffered campus commissioning breaches debt service if the ISO queue slips past +8 months.',
+      commitRuleset: 'ISO interconnection queue · Public ruleset',
+      commitDigest: 'sha256: 4b9e…2d18',
+      commitHorizon: '24 mo energization schedule',
     },
     trade: {
       world: 'World · Trade & Supply',
       doc: 'Public rules · Maritime transit & offtake',
       crumb: 'Adversarial shock sweep · Trade & Supply',
       tree: [
-        ['Corridor transit', 'Strait openings & Cape sea-days'],
-        ['Port & berth state', 'Queue depth & loading windows'],
-        ['Offtake contracts', 'Purity specs & delivery dates'],
-        ['Working capital', 'Float coverage & margin lines'],
+        ['Corridor transit', 'Strait openings & Cape sea-days', '4 rules'],
+        ['Port & berth state', 'Queue depth & loading windows', '4 rules'],
+        ['Offtake contracts', 'Purity specs & delivery dates', '5 rules'],
+        ['Working capital', 'Float coverage & margin lines', '3 rules'],
       ],
       tracks: [
-        ['primary_strait_state', 'bar', 6, 46],
+        ['primary_strait_state', 'bar', 6, 48],
         ['reroute_voyage_days', 'step', 0, 0],
         ['working_capital_float', 'wave', 0, 0],
         ['delivery_window_sla', 'bar', 12, 82],
@@ -299,9 +318,9 @@ function createDomainData(): Record<DomainKey, DomainModel> {
         ['Contingent voyage float facility', 'Covers extended sea-day working capital', '03', true],
       ],
       table: [
-        ['Strait closure absorbed', '4 days', '30+ days'],
-        ['Port hold tolerance', '6 days', '21 days'],
-        ['Offtake delivery terms', 'Breaks', 'Holds'],
+        { label: 'Strait closure absorbed', base: '4 days', plan: '30+ days', basePct: 16, planPct: 96 },
+        { label: 'Port hold tolerance', base: '6 days', plan: '21 days', basePct: 28, planPct: 92 },
+        { label: 'Offtake delivery terms', base: 'Breaks', plan: 'Holds', basePct: 20, planPct: 100 },
       ],
       queryAns: (n) =>
         n === 3
@@ -309,22 +328,26 @@ function createDomainData(): Record<DomainKey, DomainModel> {
           : n === 2
             ? 'With one lever disabled, a 14-day closure combined with berth congestion breaks delivery terms.'
             : 'Under the unadjusted plan, a 4-day strait closure exhausts voyage float and breaches offtake delivery.',
+      commitRuleset: 'Maritime transit & offtake · Public ruleset',
+      commitDigest: 'sha256: 9f12…e604',
+      commitHorizon: '28 d voyage & berth window',
     },
   };
 }
 
 function headroomY(val: number, breakAt: number): number {
   const s = 1 / (1 + Math.exp(-0.095 * (val - breakAt)));
-  return 28 + s * 124;
+  return 24 + s * 116;
 }
 
 function loadY(val: number, breakAt: number): number {
   const s = 1 / (1 + Math.exp(-0.085 * (val - breakAt)));
-  return 140 - s * 118;
+  return 128 - s * 106;
 }
 
 export function initHowItWorks(host: HTMLElement): void {
   const DATA = createDomainData();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let curDom: DomainKey = 'money';
   let curStep = 0;
 
@@ -335,47 +358,7 @@ export function initHowItWorks(host: HTMLElement): void {
   const nextBtn = host.querySelector<HTMLButtonElement>('[data-nm-next]');
   const stepReadout = host.querySelector<HTMLElement>('[data-nm-step-count]');
 
-  // ---- 1. Click-to-Switch 4-Stage Controller (All 4 always visible!) -------
-  const setStep = (idx: number, focus = false): void => {
-    const total = panels.length;
-    if (!total) return;
-    curStep = ((idx % total) + total) % total;
-
-    navBtns.forEach((b, i) => {
-      const on = i === curStep;
-      b.classList.toggle('is-on', on);
-      b.setAttribute('aria-selected', String(on));
-      if (on) b.setAttribute('aria-current', 'step');
-      else b.removeAttribute('aria-current');
-    });
-
-    panels.forEach((p, i) => {
-      const on = i === curStep;
-      p.hidden = !on;
-      if (on) {
-        p.classList.remove('is-entering');
-        // Force reflow for crisp Nominal stage choreography on click
-        void p.offsetWidth;
-        p.classList.add('is-entering');
-      } else {
-        p.classList.remove('is-entering');
-      }
-    });
-
-    if (stepReadout) {
-      stepReadout.textContent = `${String(curStep + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
-    }
-
-    if (focus) navBtns[curStep]?.focus();
-  };
-
-  navBtns.forEach((btn, i) => {
-    btn.addEventListener('click', () => setStep(i));
-  });
-  prevBtn?.addEventListener('click', () => setStep(curStep - 1));
-  nextBtn?.addEventListener('click', () => setStep(curStep + 1));
-
-  // ---- 2. Step 01 · Model (Entity Tree + Synchronized State Timeline) ------
+  // ---- Step 01 · Model state clock ----------------------------------------
   const m1World = host.querySelector<HTMLElement>('[data-m1-world]');
   const m1Doc = host.querySelector<HTMLElement>('[data-m1-doc]');
   const m1Tree = host.querySelector<HTMLElement>('[data-m1-tree]');
@@ -387,16 +370,22 @@ export function initHowItWorks(host: HTMLElement): void {
   const m1Pop = host.querySelector<HTMLElement>('[data-m1-pop]');
   const m1PopT = host.querySelector<HTMLElement>('[data-m1-pop-t]');
   const m1PopRows = host.querySelector<HTMLElement>('[data-m1-pop-rows]');
+  const m1PlayBtn = host.querySelector<HTMLButtonElement>('[data-m1-play]');
 
   let selectedEntity = 1;
+  let m1Pct = 44;
+  let m1Playing = false;
+  let m1Raf = 0;
+  let m1Last = 0;
 
   const updateTimeline = (pct: number): void => {
     const c = Math.max(8, Math.min(92, pct));
+    m1Pct = c;
     const d = DATA[curDom];
     const idx = c < 26 ? 0 : c < 52 ? 1 : c < 76 ? 2 : 3;
     const frame = d.frames[idx] ?? d.frames[0]!;
-    if (m1Cross) m1Cross.style.left = `${c.toFixed(1)}%`;
-    if (m1Pop) m1Pop.style.left = `${Math.max(4, Math.min(54, c - 14)).toFixed(1)}%`;
+    if (m1Cross) m1Cross.style.left = `${c.toFixed(2)}%`;
+    if (m1Pop) m1Pop.style.left = `${Math.max(4, Math.min(54, c - 14)).toFixed(2)}%`;
     if (m1PopT) m1PopT.textContent = frame.ts;
     if (m1PopRows) {
       m1PopRows.innerHTML = frame.rows
@@ -405,8 +394,33 @@ export function initHowItWorks(host: HTMLElement): void {
     }
   };
 
+  const setM1Playing = (on: boolean): void => {
+    m1Playing = on && !reducedMotion;
+    if (m1PlayBtn) {
+      m1PlayBtn.setAttribute('aria-pressed', String(m1Playing));
+      m1PlayBtn.textContent = m1Playing ? '❚❚' : '▶';
+    }
+    cancelAnimationFrame(m1Raf);
+    if (m1Playing) {
+      m1Last = performance.now();
+      const tick = (now: number): void => {
+        if (!m1Playing || curStep !== 0) return;
+        const dt = Math.min(0.06, (now - m1Last) / 1000);
+        m1Last = now;
+        let next = m1Pct + dt * 5.2;
+        if (next > 88) next = 14;
+        updateTimeline(next);
+        m1Raf = requestAnimationFrame(tick);
+      };
+      m1Raf = requestAnimationFrame(tick);
+    }
+  };
+
+  m1PlayBtn?.addEventListener('click', () => setM1Playing(!m1Playing));
+
   if (m1Tl) {
     const scrubAt = (clientX: number): void => {
+      if (m1Playing) setM1Playing(false);
       const r = m1Tl.getBoundingClientRect();
       if (!r.width) return;
       updateTimeline(((clientX - r.left) / r.width) * 100);
@@ -415,7 +429,7 @@ export function initHowItWorks(host: HTMLElement): void {
     m1Tl.addEventListener('click', (e) => scrubAt(e.clientX));
   }
 
-  // ---- 3. Step 02 · Simulate (Live Stress Console + Exact Curve Math) ------
+  // ---- Step 02 · Simulate live sweep console ------------------------------
   const m2Crumb = host.querySelector<HTMLElement>('[data-m2-crumb]');
   const m2Nodes = host.querySelector<HTMLElement>('[data-m2-nodes]');
   const m2K1 = host.querySelector<HTMLElement>('[data-m2-k1]');
@@ -428,36 +442,64 @@ export function initHowItWorks(host: HTMLElement): void {
   const m2V5 = host.querySelector<HTMLElement>('[data-m2-v5]');
   const m2CurveH = host.querySelector<SVGPathElement>('[data-m2-curve-h]');
   const m2CurveL = host.querySelector<SVGPathElement>('[data-m2-curve-l]');
+  const m2BreachArea = host.querySelector<SVGPathElement>('[data-m2-breach-area]');
+  const m2BreakMark = host.querySelector<SVGLineElement>('[data-m2-break-mark]');
   const m2Playhead = host.querySelector<SVGGElement>('[data-m2-playhead]');
   const m2Dot = host.querySelector<SVGCircleElement>('[data-m2-dot]');
   const m2Slider = host.querySelector<HTMLInputElement>('[data-m2-slider]');
   const m2Readout = host.querySelector<HTMLElement>('[data-m2-readout]');
+  const m2PlayBtn = host.querySelector<HTMLButtonElement>('[data-m2-play]');
+
+  let m2Playing = false;
+  let m2Raf = 0;
+  let m2Last = 0;
+  let m2Val = 46;
 
   const drawStressCurves = (breakAt: number): void => {
     const ptsH: string[] = [];
     const ptsL: string[] = [];
+    const breachPts: string[] = [];
+    const floorY = 82;
+    const breakX = 10 + (breakAt / 100) * 740;
+
     for (let v = 0; v <= 100; v += 2) {
-      const x = (10 + (v / 100) * 740).toFixed(1);
-      ptsH.push(`${v === 0 ? 'M' : 'L'} ${x} ${headroomY(v, breakAt).toFixed(1)}`);
-      ptsL.push(`${v === 0 ? 'M' : 'L'} ${x} ${loadY(v, breakAt).toFixed(1)}`);
+      const x = 10 + (v / 100) * 740;
+      const yh = headroomY(v, breakAt);
+      const yl = loadY(v, breakAt);
+      ptsH.push(`${v === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${yh.toFixed(1)}`);
+      ptsL.push(`${v === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${yl.toFixed(1)}`);
+      if (v >= breakAt) {
+        breachPts.push(`L ${x.toFixed(1)} ${yh.toFixed(1)}`);
+      }
     }
     m2CurveH?.setAttribute('d', ptsH.join(' '));
     m2CurveL?.setAttribute('d', ptsL.join(' '));
+    if (m2BreachArea) {
+      const dStr = `M ${breakX.toFixed(1)} ${floorY} ${breachPts.join(' ')} L 750 ${floorY} Z`;
+      m2BreachArea.setAttribute('d', dStr);
+    }
+    if (m2BreakMark) {
+      m2BreakMark.setAttribute('x1', breakX.toFixed(1));
+      m2BreakMark.setAttribute('x2', breakX.toFixed(1));
+    }
   };
 
   const updateScrub = (val: number): void => {
+    m2Val = val;
     const d = DATA[curDom];
     drawStressCurves(d.breakAt);
     const x = 10 + (val / 100) * 740;
     const y = headroomY(val, d.breakAt);
     m2Playhead?.setAttribute('transform', `translate(${x.toFixed(1)} 0)`);
     m2Dot?.setAttribute('cy', y.toFixed(1));
+    if (m2Slider) m2Slider.value = String(Math.round(val));
     if (m2V1) m2V1.textContent = d.unit(val);
     if (m2V4) m2V4.textContent = d.v4Fn(val);
 
-    const headroom = (90 - y) / 62;
+    const floorY = 82;
+    const headroom = (floorY - y) / 58;
     const hFixed =
-      Math.abs(headroom) < 0.005
+      Math.abs(headroom) < 0.015
         ? '0.00'
         : `${headroom > 0 ? '+' : ''}${headroom.toFixed(2)}`;
     if (m2V2) m2V2.textContent = hFixed;
@@ -483,7 +525,7 @@ export function initHowItWorks(host: HTMLElement): void {
       }
     }
 
-    if (m2Readout) m2Readout.textContent = `${val}% stress · ${d.unit(val)}`;
+    if (m2Readout) m2Readout.textContent = `${Math.round(val)}% stress · ${d.unit(val)}`;
 
     if (m2Nodes) {
       m2Nodes.innerHTML = d.nodes
@@ -508,9 +550,48 @@ export function initHowItWorks(host: HTMLElement): void {
     }
   };
 
-  m2Slider?.addEventListener('input', () => updateScrub(Number(m2Slider.value)));
+  const setM2Playing = (on: boolean): void => {
+    m2Playing = on && !reducedMotion;
+    if (m2PlayBtn) {
+      m2PlayBtn.setAttribute('aria-pressed', String(m2Playing));
+      m2PlayBtn.textContent = m2Playing ? '❚❚ PAUSE' : '▶ SWEEP';
+    }
+    cancelAnimationFrame(m2Raf);
+    if (m2Playing) {
+      if (m2Val >= 86) m2Val = 12;
+      m2Last = performance.now();
+      let holdUntil = 0;
+      const tick = (now: number): void => {
+        if (!m2Playing || curStep !== 1) return;
+        const dt = Math.min(0.06, (now - m2Last) / 1000);
+        m2Last = now;
+        const brk = DATA[curDom].breakAt;
+        if (now < holdUntil) {
+          m2Raf = requestAnimationFrame(tick);
+          return;
+        }
+        const prev = m2Val;
+        let next = prev + dt * 16;
+        if (prev < brk && next >= brk) {
+          next = brk;
+          holdUntil = now + 1400;
+        } else if (next > 86) {
+          next = 12;
+        }
+        updateScrub(next);
+        m2Raf = requestAnimationFrame(tick);
+      };
+      m2Raf = requestAnimationFrame(tick);
+    }
+  };
 
-  // ---- 4. Step 03 · Intervene (Procedure + Counterfactual + Query) ---------
+  m2PlayBtn?.addEventListener('click', () => setM2Playing(!m2Playing));
+  m2Slider?.addEventListener('input', () => {
+    if (m2Playing) setM2Playing(false);
+    updateScrub(Number(m2Slider.value));
+  });
+
+  // ---- Step 03 · Intervene (Procedure + Counterfactual Bars + Query) ------
   const m3Status = host.querySelector<HTMLElement>('[data-m3-status]');
   const m3Steps = host.querySelector<HTMLElement>('[data-m3-steps]');
   const m3Table = host.querySelector<HTMLElement>('[data-m3-table]');
@@ -552,14 +633,21 @@ export function initHowItWorks(host: HTMLElement): void {
 
     if (m3Table) {
       m3Table.innerHTML = d.table
-        .map(([k, base, plan], idx) => {
+        .map((row, idx) => {
           const held = d.levers[idx]?.[3] ?? false;
+          const pct = held ? row.planPct : row.basePct;
           return `
             <div class="nm-diff__row">
-              <div class="nm-diff__k">${k}</div>
-              <div class="nm-diff__vals">
-                <span class="nm-diff__base">${base}</span>
-                <span class="nm-diff__plan ${held ? '' : 'is-fail'}">→ ${held ? plan : base}</span>
+              <div class="nm-diff__top">
+                <span class="nm-diff__k">${row.label}</span>
+                <span class="nm-diff__vals">
+                  <span class="nm-diff__base">${row.base}</span>
+                  <span class="nm-diff__plan ${held ? '' : 'is-fail'}">→ ${held ? row.plan : row.base}</span>
+                </span>
+              </div>
+              <div class="nm-diff__track" aria-hidden="true">
+                <i class="nm-diff__bbar" style="width:${row.basePct}%"></i>
+                <i class="nm-diff__pbar ${held ? '' : 'is-fail'}" style="width:${pct}%"></i>
               </div>
             </div>`;
         })
@@ -568,6 +656,61 @@ export function initHowItWorks(host: HTMLElement): void {
 
     if (m3Answer) m3Answer.textContent = d.queryAns(active);
   };
+
+  // ---- Step 04 · Commit dynamic ledger fields -----------------------------
+  const m4Ruleset = host.querySelector<HTMLElement>('[data-m4-ruleset]');
+  const m4Digest = host.querySelector<HTMLElement>('[data-m4-digest]');
+  const m4DigestFoot = host.querySelector<HTMLElement>('[data-m4-digest-foot]');
+  const m4Horizon = host.querySelector<HTMLElement>('[data-m4-horizon]');
+  const sealHost = host.querySelector<HTMLElement>('[data-seal-plate]');
+
+  // ---- 1. Click-to-Switch 4-Stage Controller (All 4 always visible!) -------
+  const setStep = (idx: number, focus = false): void => {
+    const total = panels.length;
+    if (!total) return;
+    curStep = ((idx % total) + total) % total;
+
+    // Pause inactive transport loops
+    if (curStep !== 0 && m1Playing) setM1Playing(false);
+    if (curStep !== 1 && m2Playing) setM2Playing(false);
+
+    navBtns.forEach((b, i) => {
+      const on = i === curStep;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-selected', String(on));
+      if (on) b.setAttribute('aria-current', 'step');
+      else b.removeAttribute('aria-current');
+    });
+
+    panels.forEach((p, i) => {
+      const on = i === curStep;
+      p.hidden = !on;
+      if (on) {
+        p.classList.remove('is-entering');
+        void p.offsetWidth;
+        p.classList.add('is-entering');
+      } else {
+        p.classList.remove('is-entering');
+      }
+    });
+
+    if (stepReadout) {
+      stepReadout.textContent = `${String(curStep + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    }
+
+    // Ensure Step 04 stratified Transcription-Device plan seal renders crisply once unhidden
+    if (curStep === 3 && sealHost) {
+      requestAnimationFrame(() => mountSealPlate(sealHost));
+    }
+
+    if (focus) navBtns[curStep]?.focus();
+  };
+
+  navBtns.forEach((btn, i) => {
+    btn.addEventListener('click', () => setStep(i));
+  });
+  prevBtn?.addEventListener('click', () => setStep(curStep - 1));
+  nextBtn?.addEventListener('click', () => setStep(curStep + 1));
 
   // ---- 5. Master Domain Renderer -------------------------------------------
   const renderDomain = (): void => {
@@ -579,10 +722,10 @@ export function initHowItWorks(host: HTMLElement): void {
     if (m1Tree) {
       m1Tree.innerHTML = d.tree
         .map(
-          ([k, v], i) => `
+          ([k, v, ct], i) => `
           <li>
             <button type="button" class="nm-tree__btn ${i === selectedEntity ? 'is-hi' : ''}" data-m1-ent="${i}">
-              <span class="nm-tree__top"><b>${k}</b><i>0${i + 1}</i></span>
+              <span class="nm-tree__top"><b>${k}</b><i>${ct}</i></span>
               <span class="nm-tree__sub">${v}</span>
             </button>
           </li>`,
@@ -591,6 +734,7 @@ export function initHowItWorks(host: HTMLElement): void {
 
       m1Tree.querySelectorAll<HTMLButtonElement>('[data-m1-ent]').forEach((btn) => {
         btn.addEventListener('click', () => {
+          if (m1Playing) setM1Playing(false);
           selectedEntity = Number(btn.dataset['m1Ent']);
           renderDomain();
           updateTimeline(18 + selectedEntity * 22);
@@ -603,11 +747,20 @@ export function initHowItWorks(host: HTMLElement): void {
         .map(([lbl, kind, l, w], i) => {
           let vis = '';
           if (kind === 'bar') {
-            vis = `<div class="nm-bar"><span style="left:${l}%;width:${w}%;background:rgba(18,17,15,0.13)"></span><span style="left:${Math.min(l + 28, 56)}%;width:22%;background:rgba(229,134,0,0.72)"></span></div>`;
+            vis = `<div class="nm-bar">
+              <span class="nm-bar__base" style="left:${l}%;width:${w}%"></span>
+              <span class="nm-bar__sig" style="left:${Math.min(l + 26, 54)}%;width:24%"></span>
+            </div>`;
           } else if (kind === 'step') {
-            vis = `<svg viewBox="0 0 440 22" class="nm-svgline" aria-hidden="true"><path d="M0 17 H86 V5 H206 V17 H318 V7 H440" fill="none" stroke="#141210" stroke-width="1.35" opacity="0.78"/></svg>`;
+            vis = `<svg viewBox="0 0 440 24" class="nm-svgline" aria-hidden="true">
+              <path d="M0 19 H84 V5 H204 V19 H318 V7 H440 V24 H0 Z" fill="rgba(26,23,20,0.045)"/>
+              <path d="M0 19 H84 V5 H204 V19 H318 V7 H440" fill="none" stroke="#1a1714" stroke-width="1.3" opacity="0.82"/>
+            </svg>`;
           } else {
-            vis = `<svg viewBox="0 0 440 22" class="nm-svgline" aria-hidden="true"><path d="M0 14 Q68 4 136 13 T272 12 T440 8" fill="none" stroke="#e58600" stroke-width="1.5"/></svg>`;
+            vis = `<svg viewBox="0 0 440 24" class="nm-svgline" aria-hidden="true">
+              <path d="M0 15 Q55 5 110 13 T220 11 T330 14 T440 8 L440 24 L0 24 Z" fill="rgba(196,122,24,0.10)"/>
+              <path d="M0 15 Q55 5 110 13 T220 11 T330 14 T440 8" fill="none" stroke="#c47a18" stroke-width="1.45"/>
+            </svg>`;
           }
           return `<div class="nm-trk ${i === selectedEntity ? 'is-hi' : ''}"><div class="nm-trk__lbl"><span>${lbl}</span><span>SYNC</span></div>${vis}</div>`;
         })
@@ -627,12 +780,12 @@ export function initHowItWorks(host: HTMLElement): void {
     if (m2K4) m2K4.textContent = d.k4;
     if (m2K5) m2K5.textContent = d.k5;
     if (m2V5) m2V5.textContent = d.v5;
-    if (m2Slider) {
-      m2Slider.value = String(d.breakAt);
-      updateScrub(d.breakAt);
-    } else {
-      updateScrub(d.breakAt);
-    }
+    updateScrub(d.breakAt);
+
+    if (m4Ruleset) m4Ruleset.textContent = d.commitRuleset;
+    if (m4Digest) m4Digest.textContent = d.commitDigest;
+    if (m4DigestFoot) m4DigestFoot.textContent = `DIGEST · ${d.commitDigest.replace('sha256: ', '')}`;
+    if (m4Horizon) m4Horizon.textContent = d.commitHorizon;
 
     renderLevers();
   };

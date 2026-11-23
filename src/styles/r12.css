@@ -185,3 +185,10 @@
   .wc__for { min-height: 4.8em; }
   .wc__qs { margin-top: 0; }
 }
+
+/* ---------------------------------------------------------------- Footer: the name, carved into the paper */
+.foot::before { display: none !important; }
+.foot__mark svg, .foot__mark--word svg { filter: none !important; -webkit-mask-image: none !important; mask-image: none !important; }
+.foot__mark .fc-hi { color: rgba(255, 255, 255, 0.95); }
+.foot__mark .fc-sh { color: rgba(60, 48, 32, 0.2); }
+.foot__mark .fc-face { color: #e9e4da; }

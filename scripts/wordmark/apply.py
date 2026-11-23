@@ -21,14 +21,19 @@ for i, page in enumerate(PAGES):
     if n: open(p, 'w').write(s2)
     print(page, n)
 
-# footer: the twin striped squares, then the name, in orange
+# footer: the twin squares and the name, carved into the paper.
+# Three passes of the same drawing: a light edge (down-right), a soft shadow
+# (up-left), then the face, a shade darker than the page.
 p = os.path.join(ROOT, 'src/partials/footer.html')
 s = open(p).read()
-w, inner = dune.svg_inner('fmc', '#f39200', 11)
 x0 = 270
-svg = (f'<svg viewBox="-4 -4 {dune.f(x0 + w + 8)} 108" preserveAspectRatio="xMidYMid meet" data-foot-svg role="img" aria-label="Foresight Machines">'
-       '<defs><pattern id="fm-stripe" width="10" height="9.375" patternUnits="userSpaceOnUse"><rect width="10" height="5.2" fill="#f39200"/></pattern></defs>'
-       '<rect x="0" y="0" width="100" height="100" fill="url(#fm-stripe)"/><rect x="118" y="0" width="100" height="100" fill="url(#fm-stripe)"/>'
-       f'<g transform="translate({x0} 0)">{inner}</g></svg>')
+layers = ''
+for cls, dx in (('fc-hi', 2.4), ('fc-sh', -2.0), ('fc-face', 0)):
+    w, inner = dune.svg_inner('fmc-' + cls, 'currentColor', 12)
+    sq = '<rect x="0" y="0" width="100" height="100"/><rect x="118" y="0" width="100" height="100"/>'
+    layers += (f'<g class="{cls}" transform="translate({dx} {dx})"><g fill="currentColor" stroke="none">{sq}</g>'
+               f'<g transform="translate({x0} 0)">{inner}</g></g>')
+svg = (f'<svg viewBox="-8 -8 {dune.f(x0 + w + 16)} 116" preserveAspectRatio="xMidYMid meet" data-foot-svg role="img" aria-label="Foresight Machines">'
+       + layers + '</svg>')
 s2, n = re.subn(r'<svg viewBox="[^"]*" preserveAspectRatio="xMidYMid meet" data-foot-svg.*?</svg>', lambda m: svg, s, flags=re.S)
 open(p, 'w').write(s2); print('footer', n)

@@ -93,13 +93,27 @@
     </section>
 
     <main class="main" id="main">
-      <section class="band band--paper hw-band" id="film" data-screen>
-        <div class="wrap">
-          <header class="hw__head">
-            <div><p class="chip">How it works</p><h2 class="h2">How a Foresight Machine reaches an answer.</h2></div>
-            <p class="hw__lead">Shown on a sample AI campus that must reach power on its contracted date, with its debt serviced.</p>
-          </header>
-          <!-- @how -->
+      <section class="band band--paper fm-band" id="film" data-screen>
+        <div class="fm-track" data-film-track>
+          <div class="fm-sticky">
+            <div class="wrap fm-wrap">
+              <div class="fm-head"><p class="chip">How it works</p><h2 class="h2">How a Foresight Machine reaches an answer.</h2></div>
+              <div class="fm" data-film data-s="1">
+                <div class="fm__rail">
+                  <ol class="fm__ch">
+                    <li><button type="button" data-go="1"><i><b></b></i><span class="fm__n">01</span><span class="fm__t">Model</span><span class="fm__d">The institution, and the world it depends on: its capital, contracts, counterparties, markets and rules.</span></button></li>
+                    <li><button type="button" data-go="2"><i><b></b></i><span class="fm__n">02</span><span class="fm__t">Simulate</span><span class="fm__d">Each decision is stress-tested against past crises and the smallest shock that breaks it.</span></button></li>
+                    <li><button type="button" data-go="3"><i><b></b></i><span class="fm__n">03</span><span class="fm__t">Intervene</span><span class="fm__d">It finds the change that holds: a new allocation, new terms, a new sequence.</span></button></li>
+                    <li><button type="button" data-go="4"><i><b></b></i><span class="fm__n">04</span><span class="fm__t">Record</span><span class="fm__d">The answer and its evidence, recorded before the outcome.</span></button></li>
+                  </ol>
+                </div>
+                <div class="fm__frame">
+                  <!-- @film -->
+                  <button type="button" class="fm__play" data-play aria-label="Pause the film"><span class="fm__pi" aria-hidden="true"></span><span data-play-t>Pause</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -106,8 +106,7 @@ def campus():
         d.path(f'M{f(385)} {f(310)}V{f(335)}H{f(195 + i * 205)}V{f(338)}', 'l2')
     d.step()
     # north arrow and scale
-    d.path('M700 790L712 830L700 822L688 830Z', 'l1'); d.text(700, 780, 'N', 'tn', 'middle')
-    d.line(560, 836, 660, 836, 'l2'); d.line(560, 830, 560, 842, 'l2'); d.line(610, 832, 610, 840, 'l3'); d.line(660, 830, 660, 842, 'l2')
+
     leader(d, 300, 154, 520, 40, 'INTERCONNECTION', 'r')
     leader(d, 385, 250, 600, 104, 'SUBSTATION')
     leader(d, 620, 250, 640, 136, '') if False else None
@@ -154,11 +153,18 @@ def vessel():
     d.step()
     return d
 
+def bare(doc):
+    """Drop labels, leader dots and the north arrow: the card names the drawing."""
+    keep = [o for o in doc.o if not o.startswith('<text') and 'class="fd"' not in o and ' ld"' not in o]
+    doc.o = keep
+    return doc
+
+VIEW = {1: '90 70 660 660', 2: '20 10 740 660', 3: '40 110 740 580'}
+
 if __name__ == '__main__':
     out = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'partials')
-    for i, (doc, cap) in enumerate([(vault(), 'Settlement vault <em>— FRONT VIEW</em>'),
-                                    (campus(), 'Data-centre campus <em>— SITE PLAN</em>'),
-                                    (vessel(), 'Container vessel <em>— PLAN AND ELEVATION</em>')], 1):
-        svg = doc.svg('fmp__svg').replace('<svg ', '<svg preserveAspectRatio="xMidYMid meet" ', 1)
-        open(os.path.join(out, f'world-{i}.html'), 'w').write(svg + f'<figcaption class="fmp__cap"><i></i>{cap}</figcaption>')
+    for i, doc in enumerate([vault(), campus(), vessel()], 1):
+        bare(doc)
+        svg = doc.svg('wd').replace(f'viewBox="0 0 {W} {H}"', f'viewBox="{VIEW[i]}" preserveAspectRatio="xMidYMid meet"', 1)
+        open(os.path.join(out, f'world-{i}.html'), 'w').write(svg)
     print('ok')

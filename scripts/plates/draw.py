@@ -75,7 +75,7 @@ def leader(doc, x0, y0, x1, y1, label, side='r', cls='tx'):
     """A label on a short leader: dot at the subject, elbow, text."""
     doc.dot(x0, y0, 2.6)
     xm = x1 - 16 if side == 'r' else x1 + 16
-    doc.path(f'M{f(x0)} {f(y0)}L{f(xm)} {f(y1)}H{f(x1)}', 'l2')
+    doc.path(f'M{f(x0)} {f(y0)}L{f(xm)} {f(y1)}H{f(x1)}', 'l2 ld')
     doc.text(x1 + (8 if side == 'r' else -8), y1 + 5, label, cls, 'start' if side == 'r' else 'end')
 
 def ruler(doc, x0, x1, y, ticks, labels=None, cls='l2'):

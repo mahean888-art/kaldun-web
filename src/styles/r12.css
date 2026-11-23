@@ -1,0 +1,129 @@
+/* ==========================================================================
+   r12 — plates: technical drawings in the manner of a production design book.
+   A warm dark ground with a faint drafting grid, warm-white linework in three
+   weights, one orange accent, mono labels, corner brackets, caption bars.
+   ========================================================================== */
+.fmp { --pl-ink: #efe6d6; --pl-mut: rgba(239, 230, 214, 0.55); --pl-ac: #f39200;
+  position: relative; overflow: hidden; border-radius: 6px; color: var(--pl-ink);
+  background:
+    linear-gradient(rgba(239, 230, 214, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(239, 230, 214, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(rgba(239, 230, 214, 0.07) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, rgba(239, 230, 214, 0.07) 1px, transparent 1px) 0 0 / 120px 120px,
+    radial-gradient(120% 100% at 50% 35%, #2a231c 0%, #1d1813 55%, #15110d 100%); }
+.fmp::before, .fmp::after { content: ''; position: absolute; z-index: 2; width: 22px; height: 22px; pointer-events: none; }
+.fmp::before { top: 16px; right: 16px; border-top: 1.5px solid var(--pl-ink); border-right: 1.5px solid var(--pl-ink); }
+.fmp::after { bottom: 16px; left: 16px; border-bottom: 1.5px solid var(--pl-ink); border-left: 1.5px solid var(--pl-ink); }
+.fmp__svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fmp__svg .dr { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: square; }
+.fmp__svg .l1 { stroke: var(--pl-ink); stroke-width: 1.4; }
+.fmp__svg .l2 { stroke: var(--pl-ink); stroke-width: 0.9; opacity: 0.7; }
+.fmp__svg .l3 { stroke: var(--pl-ink); stroke-width: 0.6; opacity: 0.38; }
+.fmp__svg .ac { stroke: var(--pl-ac); stroke-width: 1.8; }
+.fmp__svg .acf { fill: var(--pl-ac); }
+.fmp__svg .dsh { stroke-dasharray: 0.006 0.006; }
+.fmp__svg .fd { fill: var(--pl-ink); }
+.fmp__svg .fa { fill: rgba(243, 146, 0, 0.16); }
+.fmp__svg .tx { font-family: var(--mono); font-size: 16px; letter-spacing: 0.14em; fill: var(--pl-mut); }
+.fmp__svg .tx--k { fill: var(--pl-ink); }
+.fmp__svg .tx--a { fill: var(--pl-ac); }
+.fmp__svg .tn { font-family: var(--mono); font-size: 14.5px; letter-spacing: 0.08em; fill: var(--pl-mut); }
+.fmp__svg .tv { font-family: var(--sans, system-ui); font-size: 19px; fill: var(--pl-ink); }
+.fmp__svg .ts { font-family: var(--serif); font-size: 40px; fill: var(--pl-ink); }
+/* caption bar: a hairline, a square, the name of the view */
+.fmp__cap { position: absolute; z-index: 2; left: 5.2%; bottom: 6.5%; display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid rgba(239, 230, 214, 0.7); font-size: 15px; letter-spacing: 0.01em; color: var(--pl-ink); }
+.fmp__cap i { flex: none; width: 12px; height: 12px; background: var(--pl-ink); }
+.fmp__cap em { font-style: normal; color: var(--pl-mut); }
+/* the name down the left margin, like a production book's spine */
+.fmp__spine { position: absolute; z-index: 2; left: 18px; top: 22px; width: 11px; height: auto; color: var(--pl-ink); opacity: 0.85; }
+.fmp__svg .cl { stroke-dasharray: 0.03 0.008 0.004 0.008; }
+
+/* ---- How it works, as plates ---- */
+.fm--plates .fm__plates { display: grid; aspect-ratio: 16 / 9; background: #1d1813 !important; border-radius: 6px; box-shadow: 0 40px 90px -50px rgba(20, 14, 8, calc(0.6 * var(--p, 1))); }
+.fm--plates .fm__plates::after { display: none; }
+.fm--plates .fmp { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity 0.45s ease-out, visibility 0s linear 0.45s; border-radius: inherit; }
+.fm--plates .fmp.is-on { opacity: 1; visibility: visible; transition: opacity 0.45s ease-out; }
+/* drawing in: each stroke runs its length, in the plate's order */
+.fmp .dr { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.fmp .dr.dsh { stroke-dasharray: 0.006 0.006; stroke-dashoffset: 0; opacity: 0; }
+.fmp .dr.cl { stroke-dasharray: 0.03 0.008 0.004 0.008; stroke-dashoffset: 0; opacity: 0; }
+.fmp text, .fmp .fd, .fmp .acf, .fmp .fa, .fmp__cap, .fmp__spine { opacity: 0; }
+.fm.is-open .fmp.is-on .dr { stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s cubic-bezier(0.45, 0.05, 0.2, 1) calc(var(--d) * 120ms); }
+.fm.is-open .fmp.is-on .dr.dsh, .fm.is-open .fmp.is-on .dr.cl { opacity: 1; transition: opacity 0.8s ease-out calc(var(--d) * 120ms); }
+.fm.is-open .fmp.is-on .l2.dsh { opacity: 0.7; }
+.fm.is-open .fmp.is-on .l3.cl { opacity: 0.38; }
+.fm.is-open .fmp.is-on text, .fm.is-open .fmp.is-on .fd, .fm.is-open .fmp.is-on .acf, .fm.is-open .fmp.is-on .fa { opacity: 1; transition: opacity 0.6s ease-out calc(300ms + var(--d) * 120ms); }
+.fm.is-open .fmp.is-on .fmp__cap { opacity: 1; transition: opacity 0.6s ease-out 0.2s; }
+.fm.is-open .fmp.is-on .fmp__spine { opacity: 0.85; transition: opacity 0.6s ease-out 0.1s; }
+.fm.is-still .fmp .dr, .fm.is-still .fmp text, .fm.is-still .fmp__cap { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .fmp .dr { stroke-dashoffset: 0 !important; transition: none !important; } .fmp text, .fmp .fd, .fmp .acf, .fmp__cap, .fmp__spine, .fmp .dsh, .fmp .cl { opacity: 1 !important; transition: none !important; } }
+/* the rail: the chosen step carries a full orange line */
+.fm--plates .fm__ch button.is-on b { height: 100% !important; }
+.fm--plates .fm__ch button b { transition: height 0.5s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.fm--plates .fm__ch button:not(.is-on) b { height: 0 !important; }
+.fm--plates .fm__t { font-size: clamp(22px, 1.8vw, 27px); }
+/* opening: the frame widens with the scroll; no clip, the plate keeps its corners */
+@media (min-width: 1024px) and (min-height: 700px) {
+  .fm--plates .fm__frame { clip-path: inset(calc((1 - var(--p)) * 18%) 0 round 6px); }
+}
+@media (max-width: 1023px), (max-height: 699px) {
+  .fm--plates .fm__plates { aspect-ratio: 16 / 9; }
+  .fmp__cap { font-size: 12px; gap: 8px; padding-top: 7px; }
+  .fmp__cap i { width: 8px; height: 8px; }
+  .fmp__spine { display: none; }
+  .fmp::before, .fmp::after { width: 14px; height: 14px; }
+}
+
+/* ---- Worlds: the drawings fill the art column; they draw in when their tab is chosen ---- */
+.dm--tabs .dm__plate { position: relative; margin: 0; background-color: #1d1813; border-radius: 0; border-right: 0 !important; }
+.dm--tabs .dm__plate::before { top: 14px; right: 14px; } .dm--tabs .dm__plate::after { bottom: 14px; left: 14px; }
+.dm--tabs .dm__plate .fmp__svg { position: absolute; left: 4%; right: 4%; top: 4%; bottom: 72px; width: 92%; height: calc(96% - 72px); }
+.dm--tabs .dm__plate .fmp__svg .tx { font-size: 21px; }
+.dm--tabs .dm__plate .fmp__svg .tn { font-size: 19px; }
+.dm--tabs .dm__plate .fmp__cap { left: 7%; bottom: 26px; font-size: 14px; }
+.dm--tabs .dm__p .dm__plate .dr { transition: none; }
+.dm--tabs .dm__p:not([hidden]) .dm__plate .dr { stroke-dashoffset: 0; transition: stroke-dashoffset 1s cubic-bezier(0.45, 0.05, 0.2, 1) calc(var(--d) * 110ms); }
+.dm--tabs .dm__p:not([hidden]) .dm__plate .dr.dsh, .dm--tabs .dm__p:not([hidden]) .dm__plate .dr.cl { opacity: 0.7; transition: opacity 0.8s ease-out calc(var(--d) * 110ms); }
+.dm--tabs .dm__p:not([hidden]) .dm__plate text, .dm--tabs .dm__p:not([hidden]) .dm__plate .fd, .dm--tabs .dm__p:not([hidden]) .dm__plate .acf, .dm--tabs .dm__p:not([hidden]) .dm__plate .fmp__cap { opacity: 1; transition: opacity 0.6s ease-out calc(250ms + var(--d) * 110ms); }
+@media (max-width: 899px) {
+  .dm--tabs .dm__plate { aspect-ratio: 4 / 4.2; }
+  .dm--tabs .dm__plate .fmp__svg { bottom: 56px; height: calc(96% - 56px); }
+  .dm--tabs .dm__plate .fmp__cap { font-size: 12px; bottom: 18px; }
+}
+.dm--tabs .dm__art.dm__plate { background:
+    linear-gradient(rgba(239, 230, 214, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(239, 230, 214, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(rgba(239, 230, 214, 0.07) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, rgba(239, 230, 214, 0.07) 1px, transparent 1px) 0 0 / 120px 120px,
+    radial-gradient(120% 100% at 50% 35%, #2a231c 0%, #1d1813 55%, #15110d 100%) !important; }
+.dm--tabs .dm__art.dm__plate::before, .dm--tabs .dm__art.dm__plate::after { display: block !important; content: '' !important; position: absolute; inset: auto !important; width: 20px !important; height: 20px !important; background: none !important; z-index: 2; }
+.dm--tabs .dm__art.dm__plate::before { top: 14px !important; right: 14px !important; border-top: 1.5px solid #efe6d6; border-right: 1.5px solid #efe6d6; }
+.dm--tabs .dm__art.dm__plate::after { bottom: 14px !important; left: 14px !important; border-bottom: 1.5px solid #efe6d6; border-left: 1.5px solid #efe6d6; }
+
+/* ---- Hero: the subhero as a caption; the lamps as analog indicator lamps ---- */
+.hero .hero__sub { position: relative; padding-top: 16px; padding-left: 24px; border-top: 1px solid rgba(20, 18, 16, 0.55); }
+.hero .hero__sub::before { content: ''; position: absolute; left: 0; top: 23px; width: 10px; height: 10px; background: #141210; }
+/* each lamp: a dark bezel, then glass; lit glass glows amber, dark glass holds a faint warmth */
+.hero__clusters .lc i { position: relative; width: 11px; height: 11px; }
+.hero__clusters .lc i.d, .hero__clusters .lc i.l {
+  background: radial-gradient(circle at 36% 32%, rgba(255, 236, 205, 0.75) 0 14%, rgba(214, 140, 40, 0.34) 38%, rgba(120, 70, 20, 0.32) 100%);
+  box-shadow: 0 0 0 1.5px rgba(29, 24, 19, 0.82), 0 0 0 2.5px rgba(29, 24, 19, 0.12), inset 0 -1px 1.5px rgba(0, 0, 0, 0.25); }
+.hero__clusters.b1 [data-third='1'] i.l, .hero__clusters.b2 [data-third='2'] i.l, .hero__clusters.b3 [data-third='3'] i.l {
+  background: radial-gradient(circle at 36% 32%, #fff2da 0 12%, #ffb648 30%, #f39200 58%, #b96400 100%);
+  box-shadow: 0 0 0 1.5px rgba(29, 24, 19, 0.85), 0 0 0 2.5px rgba(29, 24, 19, 0.12), 0 0 9px 1px rgba(243, 146, 0, 0.55), inset 0 -1px 1.5px rgba(90, 40, 0, 0.35); }
+.hero__clusters .lc i.o { background: radial-gradient(circle at 36% 32%, rgba(255, 255, 255, 0.5) 0 14%, rgba(239, 230, 214, 0.2) 60%); box-shadow: 0 0 0 1.5px rgba(29, 24, 19, 0.82), inset 0 0 0 1.5px #f0900a; }
+#mission .ms__lamps .lc i { width: 11px; height: 11px; }
+
+/* ---- Mission: the drafting grid alone, two corner brackets in ink; quieter category cards ---- */
+#mission .ms { background:
+  linear-gradient(rgba(20, 18, 16, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+  linear-gradient(90deg, rgba(20, 18, 16, 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+  linear-gradient(rgba(20, 18, 16, 0.08) 1px, transparent 1px) 0 0 / 120px 120px,
+  linear-gradient(90deg, rgba(20, 18, 16, 0.08) 1px, transparent 1px) 0 0 / 120px 120px, #fdfcf9 !important; border-color: rgba(20, 18, 16, 0.14); }
+#mission .ms__x i { width: 22px; height: 22px; background: none; }
+#mission .ms__x i:nth-child(1), #mission .ms__x i:nth-child(4) { display: none; }
+#mission .ms__x i:nth-child(2) { top: 16px; right: 16px; border-top: 1.5px solid #141210; border-right: 1.5px solid #141210; }
+#mission .ms__x i:nth-child(3) { bottom: 16px; left: 16px; border-bottom: 1.5px solid #141210; border-left: 1.5px solid #141210; }
+#mission .ct__br { display: none; }
+#mission .ct__c { border-color: rgba(20, 18, 16, 0.14); }
+#mission .ct__c.is-ours { border-color: rgba(243, 146, 0, 0.55); }

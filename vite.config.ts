@@ -7,7 +7,8 @@ const footer = (): Plugin => ({
   transformIndexHtml: (html) =>
     html
       .replace('<!-- @footer -->', readFileSync('src/partials/footer.html', 'utf8'))
-      .replace('<!-- @film -->', readFileSync('src/partials/film.svg', 'utf8')),
+      .replace('<!-- @plates -->', readFileSync('src/partials/plates.html', 'utf8'))
+      .replace(/<!-- @world-(\d) -->/g, (_m, n: string) => readFileSync(`src/partials/world-${n}.html`, 'utf8')),
 });
 
 /**

@@ -1,127 +1,60 @@
 /**
- * The film: one illustrated landscape of the worlds we model, in five scenes.
- *
- * As the section scrolls in, the screen opens from a narrow band to the full
- * width, then the film plays in the site's four steps: Model (opening on the
- * world, then the institution inside it), Simulate, Discover and Record. The
- * step rail beside it names each step, fills a line beside the one playing, and
- * jumps on click; the film loops.
- * The scenes themselves are CSS keyed on data-s (src/styles/r11.css).
- * Under reduced motion the screen is open and the last scene is shown still.
+ * How it works: four steps beside four plates. The steps stay on screen; a
+ * plate changes only when its step is chosen (click, or arrow keys in the
+ * tab list). As the section scrolls in, the frame opens from a narrow band to
+ * full width; the first plate then draws itself in. Each plate draws again
+ * whenever it is chosen. Under reduced motion everything is shown at once.
  */
 import { prefersReducedMotion } from '../lib/prefers';
 
-const MODEL = 'The institution, and the world it depends on: its capital, contracts, counterparties, markets and rules.';
-// Scenes: [duration, caption, step]. The world and the institution are both step 01, Model.
-const SCENES: Array<[number, string, number]> = [
-  [6000, MODEL, 1],
-  [7000, MODEL, 1],
-  [9000, 'Each decision is stress-tested against past crises and the smallest shock that breaks it.', 2],
-  [9000, 'It finds the change that holds: a new allocation, new terms, a new sequence.', 3],
-  [9000, 'The answer and its evidence, recorded before the outcome.', 4],
-];
-const FIRST = [1, 3, 4, 5]; // the first scene of each step
-const step = (n: number): number => SCENES[n - 1]![2];
 const OPEN_AT = 0.86;
 
 export function initFilm(root: HTMLElement): void {
   const reduced = prefersReducedMotion();
   const track = root.closest<HTMLElement>('[data-film-track]');
-  const cap = root.querySelector<HTMLElement>('[data-cap]');
-  const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-go]'));
-  const play = root.querySelector<HTMLButtonElement>('[data-play]');
+  const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-go]'));
+  const plates = Array.from(root.querySelectorAll<HTMLElement>('[data-pl]'));
   const desktop = window.matchMedia('(min-width: 1024px) and (min-height: 700px)');
 
-  let s = 1;
-  let timer = 0;
-  let started = false;
-  let paused = false;
-  let t0 = 0;
-  let raf = 0;
-
-  const setScene = (n: number): void => {
-    s = n;
-    root.dataset['s'] = String(n);
-    if (cap && cap.textContent !== SCENES[n - 1]![1]) {
-      cap.classList.remove('is-in');
-      void cap.offsetWidth;
-      cap.textContent = SCENES[n - 1]![1];
-      cap.classList.add('is-in');
-    }
-    const st = step(n);
-    chips.forEach((c, k) => {
-      c.classList.toggle('is-on', k + 1 === st);
-      c.classList.toggle('is-done', k + 1 < st);
-      c.setAttribute('aria-current', k + 1 === st ? 'step' : 'false');
+  const show = (n: number, focus = false): void => {
+    tabs.forEach((t, k) => {
+      const on = k + 1 === n;
+      t.classList.toggle('is-on', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      if (on && focus) t.focus();
+    });
+    plates.forEach((p, k) => {
+      const on = k + 1 === n;
+      p.classList.toggle('is-on', on);
+      if (on) p.removeAttribute('aria-hidden');
+      else p.setAttribute('aria-hidden', 'true');
     });
   };
 
-  const tick = (): void => {
-    // A step's bar fills across all of its scenes.
-    const st = step(s);
-    const b = chips[st - 1]?.querySelector<HTMLElement>('b');
-    if (b) {
-      const span = SCENES.filter((x) => x[2] === st);
-      const total = span.reduce((a, x) => a + x[0], 0);
-      const before = SCENES.slice(FIRST[st - 1]! - 1, s - 1).reduce((a, x) => a + x[0], 0);
-      b.style.height = `${Math.min(100, ((before + performance.now() - t0) / total) * 100)}%`;
-    }
-    raf = requestAnimationFrame(tick);
-  };
-
-  const schedule = (): void => {
-    window.clearTimeout(timer);
-    cancelAnimationFrame(raf);
-    chips.forEach((c, k) => {
-      const b = c.querySelector<HTMLElement>('b');
-      if (b) b.style.height = k + 1 < step(s) ? '100%' : '0%';
+  tabs.forEach((t, k) => {
+    t.addEventListener('click', () => show(k + 1));
+    t.addEventListener('keydown', (e) => {
+      const i = k + 1;
+      let n = 0;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i % tabs.length) + 1;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = ((i + tabs.length - 2) % tabs.length) + 1;
+      else if (e.key === 'Home') n = 1;
+      else if (e.key === 'End') n = tabs.length;
+      if (!n) return;
+      e.preventDefault();
+      show(n, true);
     });
-    if (paused) return;
-    t0 = performance.now();
-    raf = requestAnimationFrame(tick);
-    timer = window.setTimeout(() => {
-      const n = s === SCENES.length ? 1 : s + 1;
-      setScene(n);
-      schedule();
-    }, SCENES[s - 1]![0]);
-  };
-
-  const start = (): void => {
-    if (started) return;
-    started = true;
-    root.classList.add('is-playing');
-    setScene(1);
-    schedule();
-  };
-
-  chips.forEach((c, k) =>
-    c.addEventListener('click', () => {
-      started = true;
-      root.classList.add('is-playing');
-      setScene(FIRST[k]!);
-      schedule();
-    }),
-  );
-  play?.addEventListener('click', () => {
-    paused = !paused;
-    const pt = play.querySelector<HTMLElement>('[data-play-t]');
-    if (pt) pt.textContent = paused ? 'Play' : 'Pause';
-    play.setAttribute('aria-label', paused ? 'Play the film' : 'Pause the film');
-    root.classList.toggle('is-paused', paused);
-    if (!paused) started = true;
-    schedule();
   });
+  show(1);
 
   if (reduced) {
     root.style.setProperty('--p', '1');
-    root.classList.add('is-still', 'is-open', 'is-playing');
-    setScene(5);
-    paused = true;
-    if (play) play.hidden = true;
+    root.classList.add('is-still', 'is-open');
     return;
   }
 
-  // The screen opens with the scroll, eased toward where the scroll is, then the film starts.
+  // The frame opens with the scroll, eased toward where the scroll is.
   let target = 0;
   let shown = -1;
   let frame = 0;
@@ -130,9 +63,7 @@ export function initFilm(root: HTMLElement): void {
     shown = shown < 0 ? target : shown + (target - shown) * 0.22;
     if (Math.abs(target - shown) < 0.002) shown = target;
     root.style.setProperty('--p', shown.toFixed(4));
-    const open = shown >= OPEN_AT;
-    root.classList.toggle('is-open', open);
-    if (open) start();
+    if (shown >= OPEN_AT) root.classList.add('is-open');
     if (shown !== target) frame = requestAnimationFrame(paint);
   };
   const onScroll = (): void => {
@@ -149,23 +80,12 @@ export function initFilm(root: HTMLElement): void {
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  // Phones and short screens: play when the film is in view.
+  // Phones and short screens: open when the plates are in view.
   const io = new IntersectionObserver(
     (es) => {
-      if (!desktop.matches && es.some((e) => e.isIntersecting)) start();
+      if (!desktop.matches && es.some((e) => e.isIntersecting)) root.classList.add('is-open');
     },
-    { threshold: 0.5 },
+    { threshold: 0.35 },
   );
   io.observe(root);
-
-  // Stop the clock when the film leaves the screen; pick up where it was.
-  const vis = new IntersectionObserver((es) => {
-    if (!started || paused) return;
-    if (es.some((e) => e.isIntersecting)) schedule();
-    else {
-      window.clearTimeout(timer);
-      cancelAnimationFrame(raf);
-    }
-  });
-  vis.observe(root);
 }

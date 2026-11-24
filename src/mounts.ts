@@ -12,6 +12,7 @@ import { initDomains } from './visuals/domains';
 import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
 import { initFilm } from './visuals/film';
+import { initDossier } from './visuals/dossier';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -196,6 +197,8 @@ export function mountHome(root: ParentNode = document): void {
   if (rn) initRun(rn);
   const fm = qs<HTMLElement>('[data-film]', root);
   if (fm) initFilm(fm);
+  const dossier = qs<HTMLElement>('[data-dossier]', root);
+  if (dossier) initDossier(dossier);
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

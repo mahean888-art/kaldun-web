@@ -269,3 +269,15 @@
 .zm1__cur { left: calc(130px + (100% - 144px) * 0.44); }
 .zm1__cur { top: 6px; bottom: auto; height: 142px; }
 .zm1__tip { position: static; margin: 10px 8px 2px; min-width: 0; white-space: nowrap; }
+.hz__cap { justify-content: flex-end; }
+/* Worlds: black dossier cards, the models lifted to read as lit maquettes */
+.dc .dc__frame path:first-child { fill: #1a1815; stroke: #1a1815; }
+.dc .dc__frame path:last-child { stroke: rgba(246,241,232,.22); opacity: 1; }
+.dc .dc__no { color: rgba(246,241,232,.5); }
+.dc .dc__t { color: #f6f1e8; }
+.dc .dc__art [fill="#3b3733"] { fill: #6a6359; }
+.dc .dc__art [fill="#4a4540"] { fill: #7b7367; }
+.dc .dc__art [fill="#2a2724"], .dc .dc__art [fill="#33302b"] { fill: #45403a; }
+.dc .dc__art [fill="#1d1b18"], .dc .dc__art [fill="#26231f"] { fill: #2c2925; }
+.dc .dc__art [stroke="#141210"] { stroke: rgba(246,241,232,.7); }
+.dc .dc__art [stroke="rgba(20,18,16,.22)"] { stroke: rgba(246,241,232,.22); }

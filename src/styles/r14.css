@@ -118,3 +118,35 @@
 .fh__worlds a { display: inline-block; text-align: center; }
 .fh__worlds a span { margin-right: 10px; }
 .fh__worlds a { gap: 0; }
+
+/* ---- hero, second pass: the machine box is back, the lens and the line sit inside it,
+        the lamps run under it and light the third that matches the world in the lens */
+.fh { flex-direction: column; align-items: stretch; justify-content: flex-start; gap: clamp(14px, 2.4vh, 24px); min-height: 100svh;
+  padding: calc(var(--header-h) + clamp(14px, 2.6vh, 24px)) clamp(16px, 4vw, 58px) clamp(16px, 2.4vh, 26px);
+  background-color: var(--fm-paper);
+  background-image: radial-gradient(60% 55% at 0% 100%, rgba(243, 146, 0, 0.10) 0%, transparent 70%), radial-gradient(50% 50% at 100% 0%, rgba(243, 146, 0, 0.07) 0%, transparent 70%); }
+.fh__box { position: relative; flex: 1; display: grid; place-items: center; min-height: 0; padding: clamp(44px, 6.4vh, 60px) clamp(24px, 4vw, 56px);
+  border: 1px solid rgba(20, 18, 16, 0.12); background: #fbfaf6;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset, 0 24px 80px -40px rgba(243, 146, 0, 0.28); }
+.fh__grid { position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(to right, rgba(20, 18, 16, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 18, 16, 0.05) 1px, transparent 1px);
+  background-size: calc(100% / 9) calc(100% / 5); background-position: -1px -1px; }
+.fh__mk { position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(20, 18, 16, 0.45); }
+.fh__mk em { font-style: normal; margin-right: 4px; }
+.fh__mk--tl { top: 18px; left: 20px; } .fh__mk--tr { top: 18px; right: 20px; }
+.fh__mk--br { bottom: 18px; right: 20px; } .fh__mk--bl { bottom: 18px; left: 20px; }
+.fh__x { position: relative; width: 14px; height: 14px; }
+.fh__x::before, .fh__x::after { content: ''; position: absolute; background: #f39200; }
+.fh__x::before { left: 0; right: 0; top: 6.5px; height: 1px; } .fh__x::after { top: 0; bottom: 0; left: 6.5px; width: 1px; }
+.fh__in { position: relative; z-index: 1; max-width: 1240px; }
+.fh .lens { width: clamp(220px, calc(100svh - 430px), 480px); }
+.fh__line { margin-top: clamp(10px, 1.8vh, 22px); font-size: clamp(38px, min(5vw, 8svh), 80px); }
+.fh__sub { margin-top: clamp(6px, 1vh, 12px); font-size: clamp(20px, min(2.1vw, 3.6svh), 34px); }
+.fh__lamps { padding: 0 2px; }
+.fh__lamps .lc i.l { transition: background-color 0.9s ease, box-shadow 0.9s ease; }
+@media (max-width: 759px) {
+  .fh { min-height: auto; padding-top: calc(var(--header-h) + 16px); padding-bottom: 24px; }
+  .fh__box { padding: 52px 16px 56px; }
+  .fh .lens { width: min(78vw, 340px); }
+  .fh__mk--tr, .fh__mk--bl { display: none; }
+}

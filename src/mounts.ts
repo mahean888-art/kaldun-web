@@ -202,7 +202,7 @@ export function mountHome(root: ParentNode = document): void {
   if (dossier) initDossier(dossier);
   initLenses(root);
   const fh = qs<HTMLElement>('.fh', root);
-  if (fh) fh.addEventListener('lens:world', (e) => { const k = (e as CustomEvent<string>).detail; fh.querySelectorAll<HTMLElement>('.fh__worlds li').forEach((li) => li.classList.toggle('is-on', li.dataset['w'] === k)); });
+  if (fh) fh.addEventListener('lens:world', (e) => { const n = { money: 1, power: 2, trade: 3 }[(e as CustomEvent<string>).detail] ?? 1; const l = fh.querySelector<HTMLElement>('[data-fh-lamps]'); if (l) l.className = `fh__lamps hero__clusters b${n}`; });
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

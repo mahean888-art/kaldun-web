@@ -8,7 +8,7 @@
 import { prefersReducedMotion } from '../lib/prefers';
 import type { Engine } from './lens-engine';
 
-const LABELS: Record<string, string> = { money: '01 · Digital money', power: '02 · Power & compute', trade: '03 · Global trade' };
+const LABELS: Record<string, string> = { money: 'Digital money', power: 'Power & compute', trade: 'Global trade' };
 
 function dial(host: HTMLElement): void {
   const svg = host.querySelector<SVGSVGElement>('.lens__dial');

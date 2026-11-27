@@ -13,6 +13,7 @@ import { initSteps } from './visuals/steps';
 import { initRun } from './visuals/run';
 import { initHow } from './visuals/how';
 import { initDossier } from './visuals/dossier';
+import { initLenses } from './visuals/lens';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -199,6 +200,9 @@ export function mountHome(root: ParentNode = document): void {
   if (how) initHow(how);
   const dossier = qs<HTMLElement>('[data-dossier]', root);
   if (dossier) initDossier(dossier);
+  initLenses(root);
+  const fh = qs<HTMLElement>('.fh', root);
+  if (fh) fh.addEventListener('lens:world', (e) => { const k = (e as CustomEvent<string>).detail; fh.querySelectorAll<HTMLElement>('.fh__worlds li').forEach((li) => li.classList.toggle('is-on', li.dataset['w'] === k)); });
   initFields(root);
   initManifesto();
   const hero = qs<HTMLElement>('[data-deck]', root);

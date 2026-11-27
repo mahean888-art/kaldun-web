@@ -11,6 +11,8 @@ const STEP_MS = 5200;
 export function initDossier(root: HTMLElement): void {
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dq]'));
   const qs = Array.from(root.querySelectorAll<HTMLElement>('[data-dq-q]'));
+  const defs = Array.from(root.querySelectorAll<HTMLElement>('[data-dq-d]'));
+  drawFrames(root);
   if (!tabs.length) return;
   let cur = 0;
   let timer = 0;
@@ -26,6 +28,7 @@ export function initDossier(root: HTMLElement): void {
       if (on && focus) t.focus();
     });
     qs.forEach((q) => q.classList.toggle('is-on', q.dataset['dqQ'] === String(n)));
+    defs.forEach((d) => d.classList.toggle('is-on', d.dataset['dqD'] === String(n)));
     root.style.setProperty('--dq-ms', `${STEP_MS}ms`);
     root.classList.remove('is-ticking');
     void root.offsetWidth;
@@ -71,4 +74,28 @@ export function initDossier(root: HTMLElement): void {
     { threshold: 0.35 },
   );
   io.observe(root);
+}
+
+/**
+ * The folder frame, drawn to each card's real size so the tab never
+ * stretches: a low shoulder on the left for the label, a 45° step up, and a
+ * second line inset inside the first.
+ */
+function drawFrames(root: HTMLElement): void {
+  const cards = Array.from(root.querySelectorAll<HTMLElement>('.wk'));
+  const path = (w: number, h: number, i: number): string => {
+    const r = 18 - i * 0.5, sh = 46, step = 40, x0 = Math.min(w * 0.42, 190);
+    const L = 0.75 + i, T = 0.75 + i, R = w - 0.75 - i, B = h - 0.75 - i, S = sh + i;
+    return `M${L} ${S + r}A${r} ${r} 0 0 1 ${L + r} ${S}H${x0 - i * 0.4}L${x0 + step - i * 0.4} ${T}H${R - r}A${r} ${r} 0 0 1 ${R} ${T + r}V${B - r}A${r} ${r} 0 0 1 ${R - r} ${B}H${L + r}A${r} ${r} 0 0 1 ${L} ${B - r}Z`;
+  };
+  const draw = (c: HTMLElement): void => {
+    const svg = c.querySelector<SVGSVGElement>('.wk__frame');
+    if (!svg) return;
+    const w = c.clientWidth, h = c.clientHeight;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.querySelector('.wk__o')?.setAttribute('d', path(w, h, 0));
+    svg.querySelector('.wk__i')?.setAttribute('d', path(w, h, 10));
+  };
+  const ro = new ResizeObserver((es) => es.forEach((e) => draw(e.target as HTMLElement)));
+  cards.forEach((c) => { draw(c); ro.observe(c); });
 }

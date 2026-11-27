@@ -1,0 +1,120 @@
+/* ==========================================================================
+   r14 — the lens. Hero after the deck's first page: the lens, the line, the
+   infrastructure line, the three worlds. The same lens sits in each World card.
+   ========================================================================== */
+
+/* ---- lens (shared) */
+.lens { position: relative; }
+.lens__box { position: relative; aspect-ratio: 1; width: 100%; }
+.lens__poster, .lens__gl { position: absolute; left: 9%; top: 9%; width: 82%; height: 82%; border-radius: 50%; }
+.lens__poster img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.lens__gl { opacity: 0; transition: opacity 0.9s ease; cursor: grab; touch-action: pan-y; }
+.lens__gl:active { cursor: grabbing; }
+.lens.is-live .lens__gl { opacity: 1; }
+.lens__dial { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lens__ring { fill: none; stroke: #141210; stroke-opacity: 0.22; stroke-width: 0.25; }
+.lens__tk { stroke: #141210; stroke-opacity: 0.2; stroke-width: 0.22; }
+.lens__tk--m { stroke-opacity: 0.5; }
+.lens__track { fill: none; stroke: #e2892b; stroke-opacity: 0.16; stroke-width: 0.7; }
+.lens__arc { fill: none; stroke: #e2892b; stroke-width: 0.7; }
+.lens__hand { fill: #e2892b; }
+.lens__lab, .lens__clock { font-family: var(--mono); font-size: var(--lens-fs, 5px); letter-spacing: 0.14em; text-transform: uppercase; fill: #6f6a62; transition: fill 0.6s ease; }
+.lens__lab.on { fill: #a85f00; }
+.lens__clock { fill: #8a857c; }
+
+/* ---- hero */
+.fh { position: relative; display: flex; align-items: center; justify-content: center; min-height: 100svh; padding: calc(var(--header-h) + clamp(16px, 3vh, 40px)) 16px clamp(28px, 6vh, 72px); background: var(--fm-paper); color: var(--fm-ink); }
+.fh__in { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 1360px; text-align: center; }
+.fh .lens { width: clamp(260px, min(50vh, 42vw), 560px); }
+.fh__line { margin: clamp(14px, 2.4vh, 30px) 0 0; font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 5.4vw, 92px); line-height: 1.02; letter-spacing: -0.012em; color: var(--fm-ink); text-wrap: balance; }
+.fh__line em { font-style: italic; }
+.fh__sub { margin: clamp(8px, 1.4vh, 16px) 0 0; font-family: var(--serif); font-size: clamp(22px, 2.15vw, 36px); line-height: 1.15; color: #7a7268; }
+.fh__worlds { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 0; margin: clamp(18px, 3.4vh, 40px) 0 0; padding: 0; list-style: none; }
+.fh__worlds li { display: flex; align-items: center; }
+.fh__worlds li + li::before { content: '·'; margin: 0 18px; color: #b9b1a8; font-family: var(--mono); }
+.fh__worlds a { position: relative; display: inline-flex; gap: 10px; padding: 6px 0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: #6f6a62; text-decoration: none; transition: color 0.6s ease; }
+.fh__worlds a span { color: #a85f00; }
+.fh__worlds a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: #e2892b; transform: scaleX(0); transform-origin: left; transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1); }
+.fh__worlds li.is-on a { color: var(--fm-ink); }
+.fh__worlds li.is-on a::after { transform: scaleX(1); }
+.fh__worlds a:hover { color: var(--fm-ink); }
+
+/* entrance: the glass settles, the line rises, the worlds follow */
+@media (prefers-reduced-motion: no-preference) {
+  .fh .lens { animation: fh-lens 1.6s cubic-bezier(0.2, 0.7, 0.1, 1) both; }
+  .fh .lens__dial { animation: fh-dial 2.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.2s both; }
+  .fh__line { animation: fh-up 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.35s both; }
+  .fh__sub { animation: fh-up 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.55s both; }
+  .fh__worlds { animation: fh-up 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.75s both; }
+}
+@keyframes fh-lens { from { opacity: 0; transform: scale(0.94); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes fh-dial { from { opacity: 0; transform: rotate(-24deg); } to { opacity: 1; transform: none; } }
+@keyframes fh-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 759px) {
+  .fh { min-height: auto; padding-top: calc(var(--header-h) + 28px); padding-bottom: 56px; }
+  .fh .lens { width: min(84vw, 360px); }
+  .fh__worlds { flex-direction: column; align-items: center; }
+  .fh__worlds li + li::before { display: none; }
+}
+
+/* ---- Worlds: folder cards with a lens, after the deck's three worlds */
+.wq__defs { display: grid; margin-top: 18px; }
+.wq__d { grid-area: 1 / 1; margin: 0; max-width: 56ch; font-size: 17px; line-height: 1.45; color: #5f5a52; opacity: 0; transform: translateY(6px); transition: opacity 0.45s ease, transform 0.45s ease; }
+.wq__d.is-on { opacity: 1; transform: none; }
+.wks__row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.2vw, 36px); margin-top: clamp(26px, 3.6vh, 40px); }
+.wk { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 78px clamp(22px, 2.3vw, 34px) 26px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.1, 1); }
+.wk__frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.wk__o { fill: #ece5d9; stroke: #141210; stroke-width: 1.4; transition: fill 0.6s ease; }
+.wk__i { fill: none; stroke: #141210; stroke-opacity: 0.35; stroke-width: 0.8; }
+.wk--first .wk__o { fill: #f6ead7; stroke: #e2892b; }
+.wk--first .wk__i { stroke: #e2892b; stroke-opacity: 0.55; }
+.wk__tab { position: absolute; left: 26px; top: 15px; margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #6f6a62; }
+.wk--first .wk__tab { color: #a85f00; }
+.wk__mk { position: absolute; right: 24px; top: 21px; display: flex; align-items: center; gap: 5px; }
+.wk__mk i { width: 14px; height: 1.5px; background: #e2892b; }
+.wk__mk b { width: 8px; height: 8px; background: #e2892b; }
+.wk > * { position: relative; }
+.wk > .wk__frame { position: absolute; }
+.wk > .wk__tab, .wk > .wk__mk { position: absolute; }
+.lens--card { width: min(68%, 300px); align-self: center; }
+.wk__t { margin: 18px 0 0; padding-bottom: 14px; border-bottom: 1px solid rgba(20, 18, 16, 0.16); font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 2.3vw, 36px); line-height: 1.02; color: var(--fm-ink); }
+.wk__who { margin: 14px 0 0; font-size: 15px; line-height: 1.5; color: #3e3a34; }
+.wk__qs { display: grid; margin: 20px 0 0; padding: 14px 16px 16px; border: 1px solid rgba(20, 18, 16, 0.12); background: rgba(255, 255, 255, 0.45); }
+.wk--first .wk__qs { border-color: rgba(226, 137, 43, 0.45); }
+.wk__q { grid-area: 1 / 1; margin: 0; font-family: var(--serif); font-size: clamp(19px, 1.45vw, 22px); line-height: 1.22; color: var(--fm-ink); opacity: 0; transform: translateY(8px); transition: opacity 0.45s ease, transform 0.45s ease; }
+.wk__q.is-on { opacity: 1; transform: none; }
+.wk__v { display: block; margin-bottom: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #a85f00; }
+.wk__grade { display: flex; justify-content: space-between; gap: 12px; margin: auto 0 0; padding-top: 18px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8a857c; }
+.wk__grade::before { content: ''; position: absolute; left: 0; right: 0; top: 2px; height: 1px; background: rgba(20, 18, 16, 0.14); }
+.wk__grade { position: relative; margin-top: 22px; }
+.wk__grade b { font-weight: 400; color: #141210; }
+.wk--first .wk__grade b { color: #a85f00; }
+@media (hover: hover) and (pointer: fine) {
+  .wk:hover { transform: translateY(-4px); }
+  .wk:hover .wk__o { fill: #f1eadf; }
+  .wk--first:hover .wk__o { fill: #f8edda; }
+}
+@media (prefers-reduced-motion: reduce) { .wq__d, .wk__q, .wk { transition: none; transform: none; } }
+@media (max-width: 1023px) {
+  .wks__row { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .lens--card { width: min(60%, 280px); }
+}
+@media (min-width: 1024px) {
+  .wks__row { grid-template-rows: repeat(5, auto); row-gap: 0; }
+  .wk { display: grid; grid-row: span 5; grid-template-rows: subgrid; }
+  .wk__t { align-self: end; }
+}
+.wk__grade { letter-spacing: 0.12em; white-space: nowrap; align-items: end; }
+.wk__grade span, .wk__grade b { white-space: nowrap; }
+@media (min-width: 1024px) {
+  .wk { grid-template-columns: minmax(0, 1fr); }
+  .lens--card { justify-self: center; }
+}
+.wk__grade { letter-spacing: 0.08em; font-size: 12px; }
+@media (max-width: 1279px) { .wk__grade span { display: none; } .wk__grade { justify-content: flex-end; } .wk__grade b::before { content: 'Reality grades in · '; color: #8a857c; } }
+.fh { overflow-x: clip; }
+@media (max-width: 759px) { .fh .lens__lab { display: none; } }
+.fh__worlds a { display: inline-block; text-align: center; }
+.fh__worlds a span { margin-right: 10px; }
+.fh__worlds a { gap: 0; }

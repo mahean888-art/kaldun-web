@@ -1,447 +1,262 @@
-<section class="band band--paper" id="film" data-screen>
-        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+<section class="band band--paper hz-band" id="film" data-screen>
         <div class="wrap">
-          <p class="chip">How it works</p>
           <header class="hz__head">
-            <h2 class="h2">Four steps from a world to a decision.</h2>
-            <p class="hz__h2" aria-hidden="true"></p>
-            <p class="lead hz__h3">One living model of the institution’s world. Tested against adversaries before anything is committed, and graded against reality after.</p>
+            <div class="hz__h1"><p class="chip">How it works</p><h2 class="h2">How a Foresight Machine reaches an answer.</h2></div>
+            <div class="hz__h2" aria-hidden="true"></div>
+            <p class="hz__h3">One model of the institution and its world, run forward until it breaks, changed until it holds, and committed before the outcome is known.</p>
           </header>
-
           <div class="hz" data-hz>
-            <nav class="hz__nav" aria-label="How a Foresight Machine works">
-              <ol>
-                <li><a href="#how-1" data-hz-link="1" class="is-on"><em>01</em><span>Model the world</span></a></li>
-                <li><a href="#how-2" data-hz-link="2"><em>02</em><span>Simulate to failure</span></a></li>
-                <li><a href="#how-3" data-hz-link="3"><em>03</em><span>Intervene and discover</span></a></li>
-                <li><a href="#how-4" data-hz-link="4"><em>04</em><span>Commit the record</span></a></li>
-              </ol>
-              <div class="hz__meta">
-                <span>Architecture</span>
-                <p>One engine, applied to any coupled financial or physical system.</p>
+            <aside class="hz__nav">
+              <div class="hz__navin">
+                <ol class="hz__list">
+                  <li><a href="#hz-1" data-hz-go="1" class="is-on">Model the world</a></li>
+                  <li><a href="#hz-2" data-hz-go="2">Simulate to failure</a></li>
+                  <li><a href="#hz-3" data-hz-go="3">Intervene and discover</a></li>
+                  <li><a href="#hz-4" data-hz-go="4">Commit the record</a></li>
+                </ol>
+                <a class="btn hz__cta" href="/discuss/">Discuss a decision</a>
               </div>
-            </nav>
-
+            </aside>
             <div class="hz__steps">
-              <!-- ==================== 01 MODEL THE WORLD ==================== -->
-              <article class="hz__step" id="how-1" data-hz-step="1">
-                <header class="hz__sh">
-                  <p class="hz__k"><span>01</span>Model</p>
-                  <h3 class="hz__t">Model the world.</h3>
-                  <p class="hz__p">Every institution sits inside a coupled system of counterparties, contracts, capital and physical constraints. A Foresight Machine encodes those rules from primary records and keeps current state synchronized continuously.</p>
-                </header>
 
-                <figure class="nm-stage">
-                  <div class="nm-chrome">
-                    <span class="nm-chrome__id"><i></i>FM / MODEL ENGINE</span>
-                    <span class="nm-chrome__path">STATE GRAPH · RULESET COMPILER</span>
-                    <span class="nm-chrome__tag">142 RULES VERIFIED</span>
-                  </div>
-                  <div class="nm-body nm-body--model">
-                    <div class="nm-canvas">
-                      <svg viewBox="10 38 620 234" class="nm-svg" role="img" aria-label="Coupled institutional system topology linking records, rules, counterparties, and forward state">
-                        <defs>
-                          <linearGradient id="nm-flow-1" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="#f39200" stop-opacity="0.15"/>
-                            <stop offset="50%" stop-color="#f39200" stop-opacity="0.95"/>
-                            <stop offset="100%" stop-color="#f39200" stop-opacity="0.25"/>
-                          </linearGradient>
-                          <radialGradient id="nm-core-glow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#f39200" stop-opacity="0.26"/>
-                            <stop offset="100%" stop-color="#f39200" stop-opacity="0"/>
-                          </radialGradient>
-                        </defs>
-                        <!-- Precision background coordinate lines -->
-                        <g stroke="rgba(245,239,230,0.05)" stroke-width="1">
-                          <line x1="0" y1="78" x2="640" y2="78"/><line x1="0" y1="155" x2="640" y2="155"/><line x1="0" y1="232" x2="640" y2="232"/>
-                          <line x1="160" y1="0" x2="160" y2="310"/><line x1="320" y1="0" x2="320" y2="310"/><line x1="480" y1="0" x2="480" y2="310"/>
-                        </g>
-
-                        <!-- Core ambient glow -->
-                        <circle cx="320" cy="155" r="96" fill="url(#nm-core-glow)"/>
-
-                        <!-- Structural coupling edges -->
-                        <g fill="none" stroke="rgba(245,239,230,0.22)" stroke-width="1.2">
-                          <path d="M168 78 C220 78, 224 134, 256 146"/>
-                          <path d="M168 155 L252 155"/>
-                          <path d="M168 232 C220 232, 224 176, 256 164"/>
-                          <path d="M388 146 C420 134, 424 96, 472 96"/>
-                          <path d="M388 164 C420 176, 424 214, 472 214"/>
-                        </g>
-
-                        <!-- Animated amber signal pulses along edges -->
-                        <g fill="none" stroke="url(#nm-flow-1)" stroke-width="2" class="nm-pulse-paths">
-                          <path d="M168 78 C220 78, 224 134, 256 146"/>
-                          <path d="M168 155 L252 155"/>
-                          <path d="M168 232 C220 232, 224 176, 256 164"/>
-                          <path d="M388 146 C420 134, 424 96, 472 96"/>
-                          <path d="M388 164 C420 176, 424 214, 472 214"/>
-                        </g>
-
-                        <!-- Left input layer: 3 primary institutional feeds -->
-                        <g class="nm-node">
-                          <rect x="24" y="54" width="144" height="48" rx="3" fill="#171310" stroke="rgba(245,239,230,0.22)"/>
-                          <text x="38" y="74" class="nm-lbl">01 · LEDGERS</text>
-                          <text x="38" y="91" class="nm-val">Capital &amp; positions</text>
-                        </g>
-                        <g class="nm-node">
-                          <rect x="24" y="131" width="144" height="48" rx="3" fill="#171310" stroke="rgba(243,146,0,0.5)"/>
-                          <text x="38" y="151" class="nm-lbl nm-lbl--am">02 · CONTRACTS</text>
-                          <text x="38" y="168" class="nm-val">Covenants &amp; terms</text>
-                        </g>
-                        <g class="nm-node">
-                          <rect x="24" y="208" width="144" height="48" rx="3" fill="#171310" stroke="rgba(245,239,230,0.22)"/>
-                          <text x="38" y="228" class="nm-lbl">03 · CONSTRAINTS</text>
-                          <text x="38" y="245" class="nm-val">Capacity &amp; lead times</text>
-                        </g>
-
-                        <!-- Center compiled World State Engine -->
-                        <g class="nm-core">
-                          <rect x="252" y="106" width="136" height="98" rx="4" fill="#1b1510" stroke="#f39200" stroke-width="1.4"/>
-                          <rect x="260" y="114" width="120" height="82" rx="2" fill="none" stroke="rgba(243,146,0,0.28)" stroke-dasharray="3 3"/>
-                          <circle cx="320" cy="142" r="14" fill="none" stroke="#f39200" stroke-width="1.2"/>
-                          <circle cx="320" cy="142" r="4" fill="#f39200"/>
-                          <text x="320" y="174" text-anchor="middle" class="nm-core-t">COUPLED WORLD</text>
-                          <text x="320" y="188" text-anchor="middle" class="nm-core-s">t = 0 · synchronized</text>
-                        </g>
-
-                        <!-- Right output layer: Executable outputs -->
-                        <g class="nm-node">
-                          <rect x="472" y="66" width="144" height="60" rx="3" fill="#171310" stroke="rgba(245,239,230,0.24)"/>
-                          <text x="486" y="88" class="nm-lbl">COUNTERPARTIES</text>
-                          <text x="486" y="108" class="nm-val">Incentives &amp; reactions</text>
-                        </g>
-                        <g class="nm-node">
-                          <rect x="472" y="184" width="144" height="60" rx="3" fill="#171310" stroke="rgba(243,146,0,0.45)"/>
-                          <text x="486" y="206" class="nm-lbl nm-lbl--am">FORWARD STATE</text>
-                          <text x="486" y="226" class="nm-val">Ready for simulation</text>
-                        </g>
-
-                        <!-- Node junction dots -->
-                        <g fill="#f39200">
-                          <circle cx="168" cy="78" r="2.8"/><circle cx="168" cy="155" r="3.2"/><circle cx="168" cy="232" r="2.8"/>
-                          <circle cx="252" cy="155" r="3.2"/><circle cx="388" cy="146" r="2.8"/><circle cx="388" cy="164" r="2.8"/>
-                          <circle cx="472" cy="96" r="2.8"/><circle cx="472" cy="214" r="3.2"/>
-                        </g>
-                      </svg>
+              <!-- 01 ============================================================ -->
+              <article class="hz__step" id="hz-1" data-hz="1">
+                <div class="hz__intro">
+                  <h3 class="hz__t">One model of the world, on one clock</h3>
+                  <p class="hz__p">Contracts, ledgers, market data, public rules and physical feeds become one executable model of the institution and everything it depends on. Every fact keeps the time it became known.</p>
+                  <p class="hz__tags"><span>Ingest</span><span>Entities</span><span>Rules</span><span>As-of time</span></p>
+                </div>
+                <figure class="hz__fig">
+                  <div class="hz__stage"><div class="zs zs--1" data-zs="1" aria-hidden="true">
+                    <svg class="z1__orbit" viewBox="0 0 960 560"><ellipse cx="480" cy="290" rx="392" ry="214"/>
+                      <path d="M150 128C230 150 250 214 300 214M88 290H300M150 452C230 430 250 366 300 366M810 128C730 150 710 214 660 214M872 290H660M810 452C730 430 710 366 660 366"/></svg>
+                    <div class="z1__n" style="left:150px;top:128px"><i class="z1__ic">§</i><b>9</b><span>Contracts</span></div>
+                    <div class="z1__n" style="left:88px;top:290px"><i class="z1__ic">≡</i><b>4</b><span>Ledgers</span></div>
+                    <div class="z1__n" style="left:150px;top:452px"><i class="z1__ic">⌇</i><b>6</b><span>Market data</span></div>
+                    <div class="z1__n" style="left:810px;top:128px"><i class="z1__ic">¶</i><b>3</b><span>Public rules</span></div>
+                    <div class="z1__n" style="left:872px;top:290px"><i class="z1__ic">◉</i><b>5</b><span>Physical feeds</span></div>
+                    <div class="z1__n" style="left:810px;top:452px"><i class="z1__ic">▤</i><b>2</b><span>Filings</span></div>
+                    <div class="z1__panel">
+                      <div class="z1__q"><i class="z1__lens"></i><span data-type="counterparty b exposure"></span><i class="z1__caret"></i><kbd>↵</kbd></div>
+                      <div class="z1__body">
+                        <ul class="z1__res">
+                          <li data-r="0"><i>◇</i><b>Counterparty B</b><span>Entity · 14 contracts</span></li>
+                          <li data-r="1"><i>⌇</i><b>exposure.counterparty_b</b><span>Series · daily</span></li>
+                          <li data-r="2"><i>§</i><b>Master agreement</b><span>Contract · §7 Termination</span></li>
+                          <li data-r="3"><i>§</i><b>Collateral schedule</b><span>Contract · Annex 3</span></li>
+                          <li data-r="4"><i>¶</i><b>Capital rule</b><span>Public rule · in force</span></li>
+                        </ul>
+                        <div class="z1__card">
+                          <p class="z1__k"><span>exposure.counterparty_b</span><span>Series</span></p>
+                          <p class="z1__name">Exposure to Counterparty B</p>
+                          <p class="z1__v"><b data-tick="412.6">412.6</b> $M <em>as of today</em></p>
+                          <svg class="z1__spark" viewBox="0 0 220 56" preserveAspectRatio="none"><path d="M0 44 L18 40 L36 42 L54 36 L72 38 L90 30 L108 33 L126 26 L144 29 L162 22 L180 25 L198 18 L220 20"/></svg>
+                          <p class="z1__stats"><span>Min<b>318.0</b></span><span>Max<b>431.9</b></span><span>Mean<b>377.4</b></span></p>
+                          <p class="z1__ref">Referenced in <b>Master agreement · §7.2</b></p>
+                        </div>
+                      </div>
                     </div>
-                    <aside class="nm-rail" aria-label="Rule citations">
-                      <p class="nm-rail__h">Verified Ruleset</p>
-                      <ul class="nm-rules">
-                        <li><span>R-01</span><b>Liquidity reserve floor</b><em>Filing §4.2</em></li>
-                        <li><span>R-02</span><b>Counterparty netting cut</b><em>Schedule B</em></li>
-                        <li><span>R-03</span><b>Physical delivery lag</b><em>Contract §11</em></li>
-                        <li><span>R-04</span><b>Collateral call trigger</b><em>Annex IV</em></li>
-                      </ul>
-                      <p class="nm-rail__foot"><span>Source coverage</span><b>100% cited</b></p>
-                    </aside>
-                  </div>
+                  </div></div>
+                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
-
                 <div class="hz__cells">
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--sync">
-                      <div class="nm-sync__row"><span>State ledgers</span><i><b style="left:4%;width:92%"></b></i><em>Live</em></div>
-                      <div class="nm-sync__row"><span>Contract rules</span><i><b style="left:8%;width:84%"></b></i><em>Cited</em></div>
-                      <div class="nm-sync__row"><span>External feeds</span><i><b style="left:0%;width:96%" class="is-am"></b></i><em>Synced</em></div>
-                      <div class="nm-sync__row"><span>Constraint bounds</span><i><b style="left:14%;width:78%"></b></i><em>Locked</em></div>
+                    <p class="hz__ch">Every fact on one clock</p>
+                    <p class="hz__cp">A replay sees only what was known at the time. Nothing from later leaks into the past.</p>
+                    <div class="hz__mini zm1" aria-hidden="true">
+                      <div class="zm1__rows">
+                        <p><span>contract.terms</span><i style="--a:0;--b:100%"></i></p>
+                        <p><span>ledger.balance</span><i class="ln"></i></p>
+                        <p><span>market.rate</span><i class="ln ln--2"></i></p>
+                        <p><span>rule.capital</span><i style="--a:62%;--b:38%"></i></p>
+                      </div>
+                      <div class="zm1__cur"></div><div class="zm1__tip"><b>As of T − 90 days</b><span><em>contract.terms</em>v3</span><span><em>ledger.balance</em>$1.86B</span><span><em>market.rate</em>4.25%</span><span class="is-x"><em>rule.capital</em>not yet known</span></div>
                     </div>
-                    <h4>Current state, read continuously</h4>
-                    <p>Positions, obligations and external conditions stay current automatically — no manual spreadsheet rebuilds.</p>
                   </div>
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--cite">
-                      <p><span>Rule §4.2</span><b>Reserve coverage floor</b><em>Verified</em></p>
-                      <p><span>Rule §7.1</span><b>Settlement cutoff window</b><em>Verified</em></p>
-                      <p><span>Rule §9.4</span><b>Capacity lead constraint</b><em>Verified</em></p>
+                    <p class="hz__ch">Built from evidence</p>
+                    <p class="hz__cp">Every rule in the model points to the clause, record or observation it came from.</p>
+                    <div class="hz__mini zm2" aria-hidden="true">
+                      <p class="zm2__h">Rules <span>→ Source</span></p>
+                      <p class="zm2__r"><b>Close-out on downgrade</b><span>Master agreement · §7.2</span></p>
+                      <p class="zm2__r"><b>Margin within one day</b><span>Collateral schedule · Annex 3</span></p>
+                      <p class="zm2__r"><b>Settlement window</b><span>Operating hours · bank notice</span></p>
+                      <p class="zm2__r"><b>Capital floor</b><span>Capital rule · in force</span></p>
                     </div>
-                    <h4>Every rule linked to its source</h4>
-                    <p>No black-box heuristics. Every equation and boundary traces directly back to the governing document or physical law.</p>
                   </div>
                 </div>
               </article>
 
-              <!-- ==================== 02 SIMULATE TO FAILURE ==================== -->
-              <article class="hz__step" id="how-2" data-hz-step="2">
-                <header class="hz__sh">
-                  <p class="hz__k"><span>02</span>Simulate</p>
-                  <h3 class="hz__t">Simulate to failure.</h3>
-                  <p class="hz__p">The machine runs thousands of coupled futures forward and pairs every candidate plan against an adversary searching for the smallest shock that breaks it.</p>
-                </header>
-
-                <figure class="nm-stage">
-                  <div class="nm-chrome">
-                    <span class="nm-chrome__id"><i></i>FM / STRESS ENGINE</span>
-                    <span class="nm-chrome__path">ADVERSARIAL ROLLOUT · 10,000 TRAJECTORIES</span>
-                    <span class="nm-chrome__tag nm-chrome__tag--warn">BREACH FOUND · T+18D</span>
-                  </div>
-                  <div class="nm-metrics">
-                    <div><span>Futures run</span><b>10,000</b></div>
-                    <div><span>Tail breach rate</span><b class="is-warn">14.2%</b></div>
-                    <div><span>Min breaking shock</span><b class="is-am">−6.4%</b></div>
-                    <div><span>First failure horizon</span><b>T + 18d</b></div>
-                  </div>
-                  <div class="nm-body nm-body--chart">
-                    <svg viewBox="0 0 860 310" class="nm-svg" role="img" aria-label="Trajectory fan chart showing 10,000 simulated futures, the breach threshold, and the minimum breaking shock">
-                      <defs>
-                        <linearGradient id="nm-breach-zone" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stop-color="#c9502a" stop-opacity="0.22"/>
-                          <stop offset="100%" stop-color="#c9502a" stop-opacity="0.03"/>
-                        </linearGradient>
-                        <linearGradient id="nm-env-fill" x1="0" y1="0" x2="1" y2="0">
-                          <stop offset="0%" stop-color="#f5efe6" stop-opacity="0.02"/>
-                          <stop offset="100%" stop-color="#f5efe6" stop-opacity="0.09"/>
-                        </linearGradient>
-                      </defs>
-
-                      <!-- Horizontal & vertical precision ticks -->
-                      <g stroke="rgba(245,239,230,0.06)" stroke-width="1">
-                        <line x1="56" y1="42" x2="824" y2="42"/>
-                        <line x1="56" y1="102" x2="824" y2="102"/>
-                        <line x1="56" y1="162" x2="824" y2="162"/>
-                        <line x1="56" y1="222" x2="824" y2="222"/>
-                        <line x1="248" y1="26" x2="248" y2="274"/>
-                        <line x1="440" y1="26" x2="440" y2="274"/>
-                        <line x1="632" y1="26" x2="632" y2="274"/>
-                      </g>
-
-                      <!-- Breach zone shading below threshold y=206 -->
-                      <rect x="56" y="206" width="768" height="68" fill="url(#nm-breach-zone)"/>
-                      <line x1="56" y1="206" x2="824" y2="206" stroke="#c9502a" stroke-width="1.2" stroke-dasharray="5 5"/>
-                      <text x="816" y="198" text-anchor="end" class="nm-axis nm-axis--warn">BREACH THRESHOLD</text>
-
-                      <!-- 5th-95th percentile distribution envelope -->
-                      <path d="M56 122 C200 116, 360 88, 560 66 L824 44 L824 252 L560 228 C360 198, 200 154, 56 122 Z" fill="url(#nm-env-fill)"/>
-
-                      <!-- Multi-trajectory simulated paths -->
-                      <g fill="none" stroke="rgba(245,239,230,0.19)" stroke-width="1">
-                        <path d="M56 122 C190 115, 360 84, 550 68 C670 58, 750 52, 824 48"/>
-                        <path d="M56 122 C210 118, 390 100, 580 86 C690 79, 760 76, 824 72"/>
-                        <path d="M56 122 C200 120, 380 114, 560 108 C680 104, 760 102, 824 98"/>
-                        <path d="M56 122 C210 125, 390 128, 560 132 C680 134, 760 130, 824 128"/>
-                        <path d="M56 122 C200 130, 370 144, 560 156 C680 162, 760 160, 824 158"/>
-                        <path d="M56 122 C200 136, 360 162, 540 176 C660 184, 750 186, 824 188"/>
-                        <path d="M56 122 C190 142, 330 182, 480 218 C610 242, 720 248, 824 254" stroke="rgba(201,80,42,0.45)"/>
-                        <path d="M56 122 C180 144, 310 188, 450 230 C590 256, 710 262, 824 268" stroke="rgba(201,80,42,0.35)"/>
-                      </g>
-
-                      <!-- Median baseline trajectory -->
-                      <path d="M56 122 C210 121, 390 118, 580 114 C700 112, 770 110, 824 108" fill="none" stroke="rgba(245,239,230,0.65)" stroke-width="1.6"/>
-                      <text x="816" y="100" text-anchor="end" class="nm-axis">MEDIAN PATH</text>
-
-                      <!-- Adversarial minimum breaking shock path (highlighted luminous amber) -->
-                      <path d="M56 122 C165 130, 260 156, 362 206 C470 250, 620 262, 824 266" fill="none" stroke="#f39200" stroke-width="2.4" class="nm-shock-line"/>
-
-                      <!-- Exact breach marker ring -->
-                      <circle cx="362" cy="206" r="14" fill="rgba(243,146,0,0.16)" stroke="#f39200" stroke-width="1.2"/>
-                      <circle cx="362" cy="206" r="4.2" fill="#f39200"/>
-                      <line x1="362" y1="192" x2="362" y2="146" stroke="#f39200" stroke-width="1"/>
-                      <rect x="372" y="130" width="218" height="40" rx="3" fill="#18130e" stroke="rgba(243,146,0,0.65)"/>
-                      <text x="384" y="147" class="nm-lbl nm-lbl--am">ADVERSARIAL SHOCK #0418</text>
-                      <text x="384" y="162" class="nm-val">Plan breaks at T+18d (−6.4%)</text>
-
-                      <!-- X-axis timeline labels -->
-                      <g class="nm-axis">
-                        <text x="56" y="294">T + 0</text>
-                        <text x="248" y="294" text-anchor="middle">T + 15D</text>
-                        <text x="440" y="294" text-anchor="middle">T + 30D</text>
-                        <text x="632" y="294" text-anchor="middle">T + 60D</text>
-                        <text x="824" y="294" text-anchor="end">T + 90D</text>
-                      </g>
-                    </svg>
-                  </div>
+              <!-- 02 ============================================================ -->
+              <article class="hz__step" id="hz-2" data-hz="2">
+                <div class="hz__intro">
+                  <h3 class="hz__t">Pushed until it breaks</h3>
+                  <p class="hz__p">Each decision runs forward against past crises and an adversary searching for the smallest shock that breaks it. No probabilities are assumed: the answer is where it fails.</p>
+                  <p class="hz__tags"><span>Replay</span><span>Stress</span><span>Adversary</span><span>Breaking point</span></p>
+                </div>
+                <figure class="hz__fig">
+                  <div class="hz__stage"><div class="zs zs--2" data-zs="2" aria-hidden="true">
+                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Plan as drafted</span><span class="zw__sep">·</span><span class="zw__sub">Stress sweep · run 7</span><span class="zw__right">Edited just now <b class="zw__av"></b><b class="zw__av zw__av--2"></b><span class="zw__share">Share</span></span></div>
+                    <div class="zw__body">
+                      <div class="zw__rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+                      <div class="zw__main">
+                        <div class="zw__tabs"><span class="is-on">Sweep</span><span>Replay</span><span>Adversary</span></div>
+                        <div class="zw__grid">
+                          <div class="zw__panel zw__map"><p class="zw__ph">Dependencies</p>
+                            <svg viewBox="0 0 280 196"><g class="zw__edges"><path d="M50 60L140 36M50 60L120 120M140 36L230 70M120 120L230 70M120 120L196 168M230 70L196 168M50 60L40 150M40 150L120 120"/><path class="zw__hot" d="M120 120L196 168"/></g>
+                              <g class="zw__nodes"><circle cx="50" cy="60" r="9"/><circle cx="140" cy="36" r="7"/><circle cx="120" cy="120" r="11"/><circle cx="230" cy="70" r="8"/><circle class="zw__hotn" cx="196" cy="168" r="8"/><circle cx="40" cy="150" r="6"/></g></svg>
+                          </div>
+                          <div class="zw__panel zw__vals"><p class="zw__ph">Latest values</p>
+                            <div class="zw__tiles">
+                              <div data-t="head"><span>headroom</span><b>186</b><em>$M</em></div>
+                              <div data-t="cov"><span>coverage</span><b>1.34</b><em>×</em></div>
+                              <div data-t="exp"><span>exposure</span><b>412</b><em>$M</em></div>
+                              <div data-t="call"><span>margin_call</span><b>0</b><em>$M</em></div>
+                              <div data-t="slip"><span>delivery_slip</span><b>0</b><em>days</em></div>
+                              <div data-t="shock"><span>shock</span><b>0.0</b><em>×</em></div>
+                            </div>
+                          </div>
+                          <div class="zw__panel zw__chart"><p class="zw__ph">Headroom under shock</p>
+                            <div class="zw__plot"><svg viewBox="0 0 600 150" preserveAspectRatio="none"><path class="zw__gl" d="M0 20H600M0 75H600M0 130H600"/><rect class="zw__brk" x="360" y="0" width="240" height="150"/><path class="zw__zero" d="M0 112H600"/><path class="zw__l1" d="M0 20 C120 26 240 52 360 112 S520 150 600 150"/><path class="zw__l2" d="M0 120 C160 118 300 96 360 82 S500 40 600 26"/></svg><i class="zw__cur"></i><span class="zw__brkl">Breaks · 1.8×</span></div>
+                            <p class="zw__x"><span>0.0×</span><span>0.5×</span><span>1.0×</span><span>1.5×</span><span>2.0×</span><span>2.5×</span><span>3.0×</span></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="zw__foot"><span>Shock <b>0.0×</b> → <b>3.0×</b></span><span class="zw__ctl">⏮ ⏭</span><span>Step <b>0.1×</b></span><span class="zw__adv">Adversary ⟁</span></div>
+                  </div></div>
+                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
-
                 <div class="hz__cells">
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--regimes">
-                      <p><span>Demand &amp; flow spike</span><em>2,400 runs</em><b>Holds</b></p>
-                      <p class="is-fail"><span>Correlated counterparty shock</span><em>1,800 runs</em><b>Breaks</b></p>
-                      <p class="is-fail"><span>Lead-time &amp; liquidity crunch</span><em>1,200 runs</em><b>Breaks</b></p>
+                    <p class="hz__ch">Past crises, replayed</p>
+                    <p class="hz__cp">History the model has never seen, replayed at this institution’s size against its own terms.</p>
+                    <div class="hz__mini zm3" aria-hidden="true">
+                      <p><span>Funding freeze</span><em>Replay 01</em><b>Holds</b></p>
+                      <p><span>Counterparty default</span><em>Replay 02</em><b>Holds</b></p>
+                      <p class="is-x"><span>Rate shock, 300 bp</span><em>Replay 03</em><b>Breaks · day 3</b></p>
+                      <p><span>Supply cut</span><em>Replay 04</em><b>Holds</b></p>
                     </div>
-                    <h4>Full stress distribution, not three cases</h4>
-                    <p>Instead of best, base and worst spreadsheets, the engine tests coupled cascades across the full regime space.</p>
                   </div>
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--frontier">
-                      <svg viewBox="0 0 344 112" aria-hidden="true">
-                        <path d="M24 94 H324 M24 94 V14" stroke="rgba(20,18,16,0.35)" stroke-width="1" fill="none"/>
-                        <path d="M132 14 L324 14 L324 94 L228 94 C188 72, 160 46, 132 14 Z" fill="rgba(201,80,42,0.1)"/>
-                        <path d="M132 14 C160 46, 188 72, 228 94" stroke="#c9502a" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-                        <line x1="24" y1="94" x2="184" y2="66" stroke="#f39200" stroke-width="2"/>
-                        <circle cx="184" cy="66" r="4.5" fill="#f39200"/>
-                        <text x="194" y="61" fill="#141210" font-size="9.5" font-family="var(--mono)">MIN BREAKING SHOCK</text>
-                        <text x="32" y="28" fill="#7c756b" font-size="9.5" font-family="var(--mono)">SAFE REGION</text>
-                      </svg>
+                    <p class="hz__ch">The smallest shock that breaks it</p>
+                    <p class="hz__cp">An adversary searches combinations of shocks for the nearest point of failure.</p>
+                    <div class="hz__mini zm4" aria-hidden="true">
+                      <svg viewBox="0 0 320 180"><path class="zm4__ax" d="M30 10V160H310"/><path class="zm4__fail" d="M30 10H310V160H250C200 120 140 70 30 46Z"/><path class="zm4__b" d="M30 46C140 70 200 120 250 160"/><path class="zm4__r" d="M30 160L148 92"/><circle class="zm4__p" cx="148" cy="92" r="5"/><text x="156" y="88">Nearest failure</text><text class="zm4__t" x="300" y="176" text-anchor="end">Shock A</text><text class="zm4__t" x="36" y="20">Shock B</text></svg>
                     </div>
-                    <h4>The exact breaking boundary</h4>
-                    <p>An adversary searches continuously for the smallest realistic disturbance that pushes the current plan past failure.</p>
                   </div>
                 </div>
               </article>
 
-              <!-- ==================== 03 INTERVENE AND DISCOVER ==================== -->
-              <article class="hz__step" id="how-3" data-hz-step="3">
-                <header class="hz__sh">
-                  <p class="hz__k"><span>03</span>Intervene</p>
-                  <h3 class="hz__t">Intervene and discover.</h3>
-                  <p class="hz__p">Rather than stopping at a warning, the machine searches across allocations, sequencing and contract terms to find the plan that holds across every stress regime.</p>
-                </header>
-
-                <figure class="nm-stage">
-                  <div class="nm-chrome">
-                    <span class="nm-chrome__id"><i></i>FM / INTERVENTION STUDIO</span>
-                    <span class="nm-chrome__path">BASELINE PLAN VS. COUNTERFACTUAL SYNTHESIS</span>
-                    <span class="nm-chrome__tag">99.4% REGIMES HELD</span>
-                  </div>
-                  <div class="nm-body nm-body--intervene">
-                    <div class="nm-compare">
-                      <svg viewBox="0 0 860 220" class="nm-svg" role="img" aria-label="Comparison showing baseline plan breaching threshold versus synthesized intervention holding safely above threshold">
-                        <defs>
-                          <linearGradient id="nm-headroom" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#f39200" stop-opacity="0.22"/>
-                            <stop offset="100%" stop-color="#f39200" stop-opacity="0.02"/>
-                          </linearGradient>
-                        </defs>
-                        <g stroke="rgba(245,239,230,0.06)" stroke-width="1">
-                          <line x1="48" y1="44" x2="824" y2="44"/>
-                          <line x1="48" y1="104" x2="824" y2="104"/>
-                          <line x1="48" y1="164" x2="824" y2="164"/>
-                        </g>
-
-                        <!-- Safety threshold -->
-                        <line x1="48" y1="164" x2="824" y2="164" stroke="rgba(201,80,42,0.75)" stroke-width="1.2" stroke-dasharray="5 5"/>
-                        <text x="56" y="156" class="nm-axis nm-axis--warn">MIN OPERATING BOUND</text>
-
-                        <!-- Intervention vertical line -->
-                        <line x1="240" y1="24" x2="240" y2="196" stroke="rgba(243,146,0,0.55)" stroke-width="1" stroke-dasharray="3 3"/>
-                        <text x="248" y="34" class="nm-lbl nm-lbl--am">INTERVENTION APPLIED · T+4D</text>
-
-                        <!-- Shaded headroom gain between intervention and threshold -->
-                        <path d="M240 112 C370 100, 520 76, 680 68 L824 62 L824 164 L240 164 Z" fill="url(#nm-headroom)"/>
-
-                        <!-- Baseline plan (breaches threshold) -->
-                        <path d="M48 92 C140 98, 200 106, 240 112 C340 132, 430 176, 560 192 C670 200, 750 198, 824 196" fill="none" stroke="#c9502a" stroke-width="1.8" stroke-dasharray="5 4"/>
-                        <text x="816" y="210" text-anchor="end" class="nm-axis nm-axis--warn">CURRENT PLAN · BREACHES (−14.2%)</text>
-
-                        <!-- Synthesized intervention (holds cleanly) -->
-                        <path d="M48 92 C140 98, 200 106, 240 112 C370 100, 520 76, 680 68 C745 65, 790 63, 824 62" fill="none" stroke="#f39200" stroke-width="2.6"/>
-                        <circle cx="240" cy="112" r="4.5" fill="#f39200"/>
-                        <circle cx="824" cy="62" r="4.5" fill="#f39200"/>
-                        <text x="816" y="50" text-anchor="end" class="nm-lbl nm-lbl--am">RECOMMENDED INTERVENTION · HOLDS (99.4%)</text>
-                      </svg>
-                    </div>
-                    <div class="nm-levers">
-                      <div class="nm-lever">
-                        <span>Lever 01</span>
-                        <b>Re-sequence capital commitment</b>
-                        <em>Tail breach 14.2% → 0.6%</em>
-                      </div>
-                      <div class="nm-lever">
-                        <span>Lever 02</span>
-                        <b>Re-allocate contingency buffer</b>
-                        <em>Headroom +4.1×</em>
-                      </div>
-                      <div class="nm-lever">
-                        <span>Lever 03</span>
-                        <b>Amend counterparty trigger terms</b>
-                        <em>Cost delta −18 bps</em>
+              <!-- 03 ============================================================ -->
+              <article class="hz__step" id="hz-3" data-hz="3">
+                <div class="hz__intro">
+                  <h3 class="hz__t">An agent for every role</h3>
+                  <p class="hz__p">Treasury, risk, operations, legal and the party across the table each get an agent that works the model toward its own goal, within its own rules. Together they search for the change that holds.</p>
+                  <p class="hz__tags"><span>Optimize</span><span>Discover</span><span>Coordinate</span><span>Underwrite</span></p>
+                </div>
+                <figure class="hz__fig">
+                  <div class="hz__stage"><div class="zs zs--3" data-zs="3" aria-hidden="true">
+                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Terms with Counterparty B</span><span class="zw__sep">·</span><span class="zw__sub">Intervene</span><span class="zw__right"><span class="zw__share">Share</span></span></div>
+                    <div class="za">
+                      <aside class="za__agents"><p class="za__h">Agents</p>
+                        <p data-ag="0"><i class="za__d"></i>Treasury<em>Funding and liquidity</em></p>
+                        <p data-ag="1"><i class="za__d"></i>Risk<em>Limits and replays</em></p>
+                        <p data-ag="2"><i class="za__d"></i>Operations<em>Settlement and timing</em></p>
+                        <p data-ag="3"><i class="za__d"></i>Legal<em>Contracts and rules</em></p>
+                        <p data-ag="4" class="za__ext"><i class="za__d"></i>Counterparty B<em>Shared terms only</em></p>
+                      </aside>
+                      <div class="za__thread">
+                        <div class="za__ask"><span>Team</span>Find terms that hold through a default of two counterparties, without raising funding cost.</div>
+                        <div class="za__m" data-m="0"><b>Treasury</b>Tried 214 arrangements within today’s limits. The best holds to 1.6×.</div>
+                        <div class="za__m" data-m="1"><b>Risk</b>Searched beyond them. Three hold in every replay and under the adversary.</div>
+                        <div class="za__m" data-m="2"><b>Legal</b>All three fit the master agreement. One needs a notice clause.</div>
+                        <div class="za__m" data-m="3"><b>Counterparty B</b>Accepts two of the three on shared terms.</div>
+                        <div class="za__res" data-m="4"><p class="za__rk">Found</p><p class="za__rt">Staged collateral, a 10-day notice clause and a second clearing line</p><p class="za__rs"><span>Holds to <b>2.4×</b></span><span>Funding cost <b>unchanged</b></span><span>Team plan <b>1.3×</b></span></p></div>
+                        <div class="za__in">Ask the agents…<i>↑</i></div>
                       </div>
                     </div>
-                  </div>
+                  </div></div>
+                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
-
                 <div class="hz__cells">
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--matrix">
-                      <p class="is-h"><span>Candidate plan</span><em>Base</em><em>Stress</em><em>Tail</em></p>
-                      <p><span>Team baseline</span><i class="on"></i><i></i><i></i></p>
-                      <p><span>Buffer only</span><i class="on"></i><i class="on"></i><i></i></p>
-                      <p class="is-best"><span>Synthesized plan</span><i class="on am"></i><i class="on am"></i><i class="on am"></i></p>
+                    <p class="hz__ch">Each within its own rules</p>
+                    <p class="hz__cp">An agent sees what its role may see. The party across the table sees only the terms both share.</p>
+                    <div class="hz__mini zm5" aria-hidden="true">
+                      <p class="zm5__h"><span></span><em>Own data</em><em>Model</em><em>Shared terms</em></p>
+                      <p><span>Treasury</span><i class="on"></i><i class="on"></i><i class="on"></i></p>
+                      <p><span>Risk</span><i class="on"></i><i class="on"></i><i class="on"></i></p>
+                      <p><span>Legal</span><i class="on"></i><i class="on"></i><i class="on"></i></p>
+                      <p><span>Counterparty B</span><i></i><i></i><i class="on"></i></p>
                     </div>
-                    <h4>Tested against what it replaces</h4>
-                    <p>Every candidate intervention is compared head-to-head against the team’s own plan under identical rules.</p>
                   </div>
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--inv">
-                      <p><span>Covenant invariants</span><b>0 violations</b></p>
-                      <p><span>Counterparty equilibrium</span><b>Stable</b></p>
-                      <p><span>Worst-case survival</span><b>99.4% held</b></p>
+                    <p class="hz__ch">Checked before it is shown</p>
+                    <p class="hz__cp">Every option is run again against the rules, history, the adversary and the team’s own plan.</p>
+                    <div class="hz__mini zm6" aria-hidden="true">
+                      <p><i></i>Rules<b>Pass</b></p>
+                      <p><i></i>Held-out history<b>78 of 78 weeks</b></p>
+                      <p><i></i>Adversary<b>Holds to 2.4×</b></p>
+                      <p><i></i>Team’s plan<b>1.3×</b></p>
                     </div>
-                    <h4>Experiment before commitment</h4>
-                    <p>Test allocations, phasing and multi-party agreements in the shared model before signing or deploying capital.</p>
                   </div>
                 </div>
               </article>
 
-              <!-- ==================== 04 COMMIT THE RECORD ==================== -->
-              <article class="hz__step" id="how-4" data-hz-step="4">
-                <header class="hz__sh">
-                  <p class="hz__k"><span>04</span>Record</p>
-                  <h3 class="hz__t">Commit the record.</h3>
-                  <p class="hz__p">Before anything happens, the prediction and chosen intervention are sealed cryptographically. When reality arrives, the record is graded automatically and every miss becomes a new test.</p>
-                </header>
-
-                <figure class="nm-stage">
-                  <div class="nm-chrome">
-                    <span class="nm-chrome__id"><i></i>FM / AUDIT LEDGER</span>
-                    <span class="nm-chrome__path">PRE-COMMITMENT SEAL · OUTCOME GRADING</span>
-                    <span class="nm-chrome__tag">SEALED BEFORE OUTCOME</span>
-                  </div>
-                  <div class="nm-body nm-body--record">
-                    <div class="nm-seal-head">
-                      <div>
-                        <p class="nm-seal-k">Decision commitment digest (SHA-256)</p>
-                        <p class="nm-seal-hash" data-hz-hash>9f4c 82b1 e704 19a8 6c3e 441b d310 f82e</p>
-                      </div>
-                      <span class="nm-stamp">PRE-COMMITTED</span>
-                    </div>
-                    <div class="nm-audit-grid">
-                      <div class="nm-audit-card">
-                        <span>01 · Before the fact</span>
-                        <b>Forecast &amp; plan locked</b>
-                        <p>Timestamped digest written prior to market or physical realization.</p>
-                      </div>
-                      <div class="nm-audit-card">
-                        <span>02 · Reality arrives</span>
-                        <b>Scored on observed truth</b>
-                        <p>Predicted bounds compared directly with realized outcome.</p>
-                      </div>
-                      <div class="nm-audit-card is-am">
-                        <span>03 · Closed loop</span>
-                        <b>Misses sharpen the model</b>
-                        <p>Every residual error becomes a permanent adversarial test case.</p>
+              <!-- 04 ============================================================ -->
+              <article class="hz__step" id="hz-4" data-hz="4">
+                <div class="hz__intro">
+                  <h3 class="hz__t">Committed before the outcome</h3>
+                  <p class="hz__p">The answer, its evidence and the team’s own plan are hashed and timestamped together before the outcome is known, then scored when it arrives. Every miss becomes a new test.</p>
+                  <p class="hz__tags"><span>Hash</span><span>Timestamp</span><span>Score</span><span>Learn</span></p>
+                </div>
+                <figure class="hz__fig">
+                  <div class="hz__stage"><div class="zs zs--4" data-zs="4" aria-hidden="true">
+                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Record</span><span class="zw__sep">·</span><span class="zw__sub">No. 0414</span><span class="zw__right"><span class="zw__share">Share</span></span></div>
+                    <div class="zr">
+                      <aside class="zr__chain">
+                        <p class="zr__b"><b>No. 0411</b><span class="mono">a41c…07e2</span><em class="ok">Scored</em></p>
+                        <p class="zr__b"><b>No. 0412</b><span class="mono">5e0d…b913</span><em class="ok">Scored</em></p>
+                        <p class="zr__b"><b>No. 0413</b><span class="mono">c27a…4f10</span><em>Outcome pending</em></p>
+                        <p class="zr__b is-on"><b>No. 0414</b><span class="mono" data-short>3e9f…c21a</span><em class="zr__new">Sealing</em></p>
+                      </aside>
+                      <div class="zr__main">
+                        <p class="zr__no">No. 0414</p>
+                        <p class="zr__q">Terms through a default of two counterparties</p>
+                        <div class="zr__two"><div><p class="zr__k">Machine</p><p class="zr__v">Staged collateral, notice clause, second clearing line</p></div><div><p class="zr__k">Team’s plan</p><p class="zr__v">Raise the liquidity buffer</p></div></div>
+                        <p class="zr__row"><span>Evidence</span><b>Model v23 · 6 replays · sweep run 7 · agent thread</b></p>
+                        <p class="zr__row"><span>Previous</span><b class="mono">c27a90e1…d3b84f10</b></p>
+                        <p class="zr__row zr__hash"><span>SHA-256</span><b class="mono" data-hash="3e9f0b7a51c6d2e48f913a07c5be2d61e4a8f07139dc5b2e0a6f48c19d7ec21a"></b></p>
+                        <p class="zr__row"><span>Timestamp</span><b class="mono">2026-11-24 14:02:11 UTC</b></p>
+                        <div class="zr__steps"><span class="is-on" data-st="0"><i></i>Committed</span><span data-st="1"><i></i>Outcome</span><span data-st="2"><i></i>Scored</span></div>
+                        <p class="zr__seal">Sealed</p>
                       </div>
                     </div>
-                  </div>
+                  </div></div>
+                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
-
                 <div class="hz__cells">
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--hash">
-                      <p class="nm-hash__row"><span>Sealed</span><b>T + 00:00 UTC</b></p>
-                      <p class="nm-hash__row"><span>Graded</span><b>T + 18d Observed</b></p>
-                      <p class="nm-hash__row"><span>Residual</span><b class="is-am">Within 95% bound</b></p>
+                    <p class="hz__ch">Sealed before the fact</p>
+                    <p class="hz__cp">Each record carries the hash of the one before it, so no answer can be changed once the outcome is known.</p>
+                    <div class="hz__mini zm7" aria-hidden="true">
+                      <p class="zm7__f">sha256( question, answer, evidence, team plan, time, previous )</p>
+                      <p class="zm7__arrow">↓</p>
+                      <p class="zm7__h">3e9f0b7a51c6d2e4<br>8f913a07c5be2d61<br>e4a8f07139dc5b2e<br>0a6f48c19d7ec21a</p>
                     </div>
-                    <h4>No hindsight rewriting</h4>
-                    <p>Every call is written down before the outcome is known — creating an auditable institutional track record.</p>
                   </div>
                   <div class="hz__cell">
-                    <div class="nm-mini nm-mini--cal">
-                      <svg viewBox="0 0 320 112" aria-hidden="true">
-                        <path d="M24 94 H304 M24 94 V12" stroke="rgba(20,18,16,0.35)" stroke-width="1" fill="none"/>
-                        <path d="M24 72 L94 69 L164 65 L234 62 L304 60" stroke="#a69f94" stroke-width="1.6" fill="none"/>
-                        <path d="M24 68 L94 56 L164 42 L234 29 L304 18" stroke="#f39200" stroke-width="2.2" fill="none"/>
-                        <circle cx="304" cy="18" r="3.5" fill="#f39200"/>
-                        <text x="292" y="13" text-anchor="end" fill="#a85f00" font-size="9.5" font-family="var(--mono)">FORESIGHT MACHINE</text>
-                        <text x="296" y="76" text-anchor="end" fill="#7c756b" font-size="9.5" font-family="var(--mono)">STATIC BASELINE</text>
-                      </svg>
+                    <p class="hz__ch">Scored when the outcome arrives</p>
+                    <p class="hz__cp">The machine is scored beside the team’s own plan. A change to the model ships only if it does better on unseen history and worse on no past case.</p>
+                    <div class="hz__mini zm8" aria-hidden="true">
+                      <svg viewBox="0 0 320 150" preserveAspectRatio="none"><path class="zm8__g" d="M0 20H320M0 75H320M0 130H320"/><path class="zm8__t" d="M0 60 L40 72 L80 50 L120 78 L160 58 L200 84 L240 62 L280 80 L320 66"/><path class="zm8__m" d="M0 70 L40 84 L80 92 L120 98 L160 104 L200 108 L240 113 L280 116 L320 120"/></svg>
+                      <p class="zm8__lg"><span><i class="m"></i>Machine</span><span><i class="t"></i>Team’s plan</span><span class="zm8__y">Distance from the outcome</span></p>
                     </div>
-                    <h4>Compounds with every decision</h4>
-                    <p>A model update ships only if it beats prior versions on unseen history and regresses on zero past cases.</p>
                   </div>
                 </div>
               </article>
+
             </div>
           </div>
         </div>

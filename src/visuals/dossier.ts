@@ -1,11 +1,12 @@
 /**
- * Worlds: capability selector synced across the three Dune-framed world cards.
- * Selecting a capability (Predict, Optimize, Discover, Coordinate, Price risk)
- * shows the matching definition and real institutional question in every world.
+ * Worlds: one question at a time. The four kinds of question are chosen once
+ * for all three worlds, so a reader sees the same intervention across money,
+ * power and trade. While the section is in view the questions step on their
+ * own; the first click or key hands control to the reader.
  */
 import { prefersReducedMotion } from '../lib/prefers';
 
-const STEP_MS = 5600;
+const STEP_MS = 5200;
 
 export function initDossier(root: HTMLElement): void {
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dq]'));
@@ -70,43 +71,31 @@ export function initDossier(root: HTMLElement): void {
       if (es.some((e) => e.isIntersecting)) run();
       else window.clearInterval(timer);
     },
-    { threshold: 0.25 },
+    { threshold: 0.35 },
   );
   io.observe(root);
 }
 
 /**
- * Draw the Dune-styled chamfered folder silhouette precisely to each card's
- * rendered dimensions so the notched top-left tab and inner hairline stay
- * razor-sharp at every viewport width.
+ * The folder frame, drawn to each card's real size so the tab never
+ * stretches: a low shoulder on the left for the label, a 45° step up, and a
+ * second line inset inside the first.
  */
 function drawFrames(root: HTMLElement): void {
   const cards = Array.from(root.querySelectorAll<HTMLElement>('.wk'));
   const path = (w: number, h: number, i: number): string => {
-    if (w < 40 || h < 40) return '';
-    const r = Math.max(8, 16 - i * 0.45);
-    const sh = 40;
-    const step = 34;
-    const x0 = Math.min(w * 0.4, 164);
-    const L = 0.75 + i;
-    const T = 0.75 + i;
-    const R = w - 0.75 - i;
-    const B = h - 0.75 - i;
-    const S = sh + i;
+    const r = 18 - i * 0.5, sh = 46, step = 40, x0 = Math.min(w * 0.42, 190);
+    const L = 0.75 + i, T = 0.75 + i, R = w - 0.75 - i, B = h - 0.75 - i, S = sh + i;
     return `M${L} ${S + r}A${r} ${r} 0 0 1 ${L + r} ${S}H${x0 - i * 0.4}L${x0 + step - i * 0.4} ${T}H${R - r}A${r} ${r} 0 0 1 ${R} ${T + r}V${B - r}A${r} ${r} 0 0 1 ${R - r} ${B}H${L + r}A${r} ${r} 0 0 1 ${L} ${B - r}Z`;
   };
   const draw = (c: HTMLElement): void => {
     const svg = c.querySelector<SVGSVGElement>('.wk__frame');
     if (!svg) return;
-    const w = c.clientWidth;
-    const h = c.clientHeight;
+    const w = c.clientWidth, h = c.clientHeight;
     svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
     svg.querySelector('.wk__o')?.setAttribute('d', path(w, h, 0));
-    svg.querySelector('.wk__i')?.setAttribute('d', path(w, h, 9));
+    svg.querySelector('.wk__i')?.setAttribute('d', path(w, h, 10));
   };
   const ro = new ResizeObserver((es) => es.forEach((e) => draw(e.target as HTMLElement)));
-  cards.forEach((c) => {
-    draw(c);
-    ro.observe(c);
-  });
+  cards.forEach((c) => { draw(c); ro.observe(c); });
 }

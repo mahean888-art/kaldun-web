@@ -28,38 +28,38 @@ export type World = {
 export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): World {
   const scene = new THREE.Scene();
 
-  // Continuous twilight-to-obsidian architectural studio atmosphere
-  const C_STUDIO = new THREE.Color('#1B1612');
-  const C_DUSK = new THREE.Color('#16110D');
-  const C_NIGHT = new THREE.Color('#0A0806');
-  scene.background = C_STUDIO.clone();
-  scene.fog = new THREE.FogExp2('#15110E', 0.0115);
+  // Warm museum studio daylight -> golden dusk -> deep architectural night
+  const C_DAY = new THREE.Color('#EFEAE1');
+  const C_DUSK = new THREE.Color('#D5A87A');
+  const C_NIGHT = new THREE.Color('#14110E');
+  scene.background = C_DAY.clone();
+  scene.fog = new THREE.Fog(C_DAY.clone(), 64, 140);
 
   const pm = new THREE.PMREMGenerator(renderer);
   scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.42;
+  scene.environmentIntensity = 0.35;
   pm.dispose();
 
-  // Warm key directional sun + crisp cool rim light + grounded studio fill
-  const sun = new THREE.DirectionalLight(0xffe4be, 3.1);
+  // Crisp studio daylight sun + cool sky bounce + soft warm rim
+  const sun = new THREE.DirectionalLight(0xfff4e4, 2.85);
   sun.castShadow = true;
   sun.shadow.mapSize.set(shadowSize, shadowSize);
-  Object.assign(sun.shadow.camera, { left: -28, right: 28, top: 28, bottom: -28, near: 4, far: 140 });
+  Object.assign(sun.shadow.camera, { left: -28, right: 28, top: 28, bottom: -28, near: 4, far: 145 });
   sun.shadow.bias = -0.00025;
   sun.shadow.normalBias = 0.028;
   sun.shadow.radius = 2.4;
 
-  const rim = new THREE.DirectionalLight(0x88acd4, 0.85);
+  const rim = new THREE.DirectionalLight(0xd9e4f0, 0.55);
   rim.position.set(-48, 34, -42);
 
-  const hemi = new THREE.HemisphereLight(0xdfd3c3, 0x1d1712, 0.58);
+  const hemi = new THREE.HemisphereLight(0xfdf8f0, 0xb0a390, 0.72);
   scene.add(sun, sun.target, rim, hemi);
 
   // Deterministic PRNG so the world is identical across static posters and live WebGL
   let seed = 17;
   const rnd = (): number => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  // ---- High-resolution procedural architectural facade PBR textures
+  // ---- High-resolution procedural architectural alabaster/limestone facade PBR textures
   const emissiveMats: THREE.MeshStandardMaterial[] = [];
   const emissiveLamps: THREE.MeshStandardMaterial[] = [];
 
@@ -84,10 +84,10 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
     cEm.height = H;
     const e = cEm.getContext('2d')!;
 
-    // Architectural stone / anodized cladding base
-    x.fillStyle = darkTone ? '#3f3b36' : '#c8bfb0';
+    // Architectural alabaster & warm travertine stone cladding
+    x.fillStyle = darkTone ? '#dfd7ca' : '#f4efe7';
     x.fillRect(0, 0, W, H);
-    r.fillStyle = '#d8d8d8'; // matte stone piers
+    r.fillStyle = '#dcdcdc';
     r.fillRect(0, 0, W, H);
     e.fillStyle = '#000000';
     e.fillRect(0, 0, W, H);
@@ -96,47 +96,41 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
       const y0 = j * ch;
       const isMech = j > 2 && j % 11 === 0;
       if (isMech) {
-        // Mechanical ventilation floor band
-        x.fillStyle = darkTone ? '#25221f' : '#80776b';
+        x.fillStyle = darkTone ? '#c4baa9' : '#dbd2c4';
         x.fillRect(0, y0 + 2, W, ch - 4);
         for (let l = 0; l < W; l += 4) {
-          x.fillStyle = 'rgba(0,0,0,0.35)';
+          x.fillStyle = 'rgba(20,18,16,0.12)';
           x.fillRect(l, y0 + 3, 2, ch - 6);
         }
         continue;
       }
 
-      // Recessed architectural glazing ribbon
-      x.fillStyle = darkTone ? '#1a1e23' : '#2c2f33';
+      // Recessed architectural glazing ribbon (cool mineral slate glass)
+      x.fillStyle = darkTone ? '#8f8a82' : '#aba49a';
       x.fillRect(0, y0 + 3, W, ch - 6);
 
-      // Subtle spandrel shadow under lintel
-      x.fillStyle = 'rgba(0,0,0,0.35)';
+      // Subtle architectural lintel shadow
+      x.fillStyle = 'rgba(20,18,16,0.16)';
       x.fillRect(0, y0 + 3, W, 2);
 
-      // Smooth reflective glass roughness
-      r.fillStyle = '#323232';
+      // Reflective glass roughness
+      r.fillStyle = '#404040';
       r.fillRect(0, y0 + 3, W, ch - 6);
 
-      // Vertical mullions & selectively lit interior bays
       for (let i = 0; i < cols; i++) {
         const x0 = i * cw;
-        x.fillStyle = darkTone ? '#4b4640' : '#bdb4a4';
+        x.fillStyle = darkTone ? '#e4ddd1' : '#f6f2eb';
         x.fillRect(x0, y0, 3, ch);
-        r.fillStyle = '#d0d0d0';
+        r.fillStyle = '#d4d4d4';
         r.fillRect(x0, y0, 3, ch);
 
         if (rnd() < lit) {
           const warm = rnd();
-          const v = 165 + rnd() * 90;
+          const v = 175 + rnd() * 80;
           const R = Math.min(255, Math.round(v));
-          const G = Math.round(v * (warm > 0.35 ? 0.66 : 0.8));
-          const B = Math.round(v * (warm > 0.35 ? 0.24 : 0.52));
-          const grad = e.createLinearGradient(0, y0 + 3, 0, y0 + ch - 3);
-          grad.addColorStop(0, `rgb(${Math.round(R * 0.55)},${Math.round(G * 0.5)},${Math.round(B * 0.45)})`);
-          grad.addColorStop(0.65, `rgb(${R},${G},${B})`);
-          grad.addColorStop(1, `rgb(${Math.round(R * 0.82)},${Math.round(G * 0.78)},${Math.round(B * 0.7)})`);
-          e.fillStyle = grad;
+          const G = Math.round(v * (warm > 0.35 ? 0.65 : 0.78));
+          const B = Math.round(v * (warm > 0.35 ? 0.22 : 0.48));
+          e.fillStyle = `rgb(${R},${G},${B})`;
           e.fillRect(x0 + 4, y0 + 4, cw - 6, ch - 8);
         }
       }
@@ -158,26 +152,26 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
     const f = facade(cols, rows, lit, darkTone);
     const m = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      roughness: 0.85,
-      metalness: darkTone ? 0.28 : 0.12,
+      roughness: 0.84,
+      metalness: darkTone ? 0.12 : 0.06,
       map: f.map,
       roughnessMap: f.roughnessMap,
       emissive: 0xffffff,
       emissiveMap: f.emissiveMap,
-      emissiveIntensity: 0.8,
+      emissiveIntensity: 0,
     });
     emissiveMats.push(m);
     return m;
   };
 
-  // Architectural ground texture with subtle engraved engineering grid
+  // Warm museum alabaster drafting base with subtle engraved engineering grid
   const groundTex = (() => {
     const c = document.createElement('canvas');
     c.width = c.height = 512;
     const x = c.getContext('2d')!;
-    x.fillStyle = '#24201c';
+    x.fillStyle = '#eae3d6';
     x.fillRect(0, 0, 512, 512);
-    x.strokeStyle = 'rgba(225, 210, 190, 0.045)';
+    x.strokeStyle = 'rgba(20, 18, 16, 0.05)';
     x.lineWidth = 1;
     for (let i = 0; i <= 512; i += 32) {
       x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 512); x.stroke();
@@ -191,38 +185,38 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
     return t;
   })();
 
-  // Core architectural material library
-  const STONE_HI = new THREE.MeshStandardMaterial({ color: 0xd4cab9, roughness: 0.82, metalness: 0.05 });
-  const STONE_MID = new THREE.MeshStandardMaterial({ color: 0xaba192, roughness: 0.86, metalness: 0.06 });
-  const STONE_DARK = new THREE.MeshStandardMaterial({ color: 0x4b453e, roughness: 0.8, metalness: 0.12 });
-  const TITANIUM = new THREE.MeshStandardMaterial({ color: 0x6c665d, roughness: 0.36, metalness: 0.45 });
-  const DARK_STEEL = new THREE.MeshStandardMaterial({ color: 0x2e2a26, roughness: 0.48, metalness: 0.42 });
-  const GROUND = new THREE.MeshStandardMaterial({ map: groundTex, roughness: 0.94, metalness: 0.04 });
-  const ROAD = new THREE.MeshStandardMaterial({ color: 0x1b1815, roughness: 0.92 });
-  const SIDEWALK = new THREE.MeshStandardMaterial({ color: 0x35302a, roughness: 0.88 });
-  const LINE = new THREE.LineBasicMaterial({ color: 0x8f8374, transparent: true, opacity: 0.55 });
+  // Museum architectural alabaster, travertine & brushed satin material library
+  const STONE_HI = new THREE.MeshStandardMaterial({ color: 0xf6f1e8, roughness: 0.84, metalness: 0.02 });
+  const STONE_MID = new THREE.MeshStandardMaterial({ color: 0xe6dfd3, roughness: 0.88, metalness: 0.03 });
+  const STONE_DARK = new THREE.MeshStandardMaterial({ color: 0xcbc2b4, roughness: 0.86, metalness: 0.05 });
+  const TITANIUM = new THREE.MeshStandardMaterial({ color: 0xc2b9aa, roughness: 0.44, metalness: 0.25 });
+  const DARK_STEEL = new THREE.MeshStandardMaterial({ color: 0x999084, roughness: 0.56, metalness: 0.22 });
+  const GROUND = new THREE.MeshStandardMaterial({ map: groundTex, roughness: 0.96, metalness: 0.01 });
+  const ROAD = new THREE.MeshStandardMaterial({ color: 0xd9d1c4, roughness: 0.94 });
+  const SIDEWALK = new THREE.MeshStandardMaterial({ color: 0xe7e0d4, roughness: 0.9 });
+  const LINE = new THREE.LineBasicMaterial({ color: 0xafa494, transparent: true, opacity: 0.72 });
   const AMBER = new THREE.MeshStandardMaterial({
-    color: 0xf39200,
-    roughness: 0.35,
-    metalness: 0.15,
+    color: 0xe5871c,
+    roughness: 0.48,
+    metalness: 0.08,
     emissive: 0xf39200,
-    emissiveIntensity: 0.9,
+    emissiveIntensity: 0.14,
   });
   const AMBER_CROWN = new THREE.MeshStandardMaterial({
-    color: 0xffc670,
-    roughness: 0.3,
+    color: 0xe89024,
+    roughness: 0.4,
     emissive: 0xf39200,
-    emissiveIntensity: 1.5,
+    emissiveIntensity: 0.28,
   });
   const CAR = new THREE.MeshStandardMaterial({
-    color: 0xd4a46a,
-    roughness: 0.35,
+    color: 0xe5871c,
+    roughness: 0.45,
     emissive: 0xf39200,
-    emissiveIntensity: 1.15,
+    emissiveIntensity: 0.25,
   });
-  const FOLIAGE = new THREE.MeshStandardMaterial({ color: 0x3a3731, roughness: 0.9 });
+  const FOLIAGE = new THREE.MeshStandardMaterial({ color: 0xc8c1b4, roughness: 0.92 });
 
-  // Glossy dark architectural water normal map
+  // Silky architectural celadon-slate harbor water
   const nC = document.createElement('canvas');
   nC.width = nC.height = 256;
   {
@@ -233,8 +227,8 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
         const v = Math.sin(i * 0.15 + Math.sin(j * 0.07) * 1.4) * 0.5 + Math.sin(j * 0.19 + i * 0.05) * 0.5;
         const w = Math.cos(i * 0.17 - j * 0.1) * 0.5 + Math.cos(j * 0.14) * 0.5;
         const p = (j * 256 + i) * 4;
-        img.data[p] = 128 + v * 26;
-        img.data[p + 1] = 128 + w * 26;
+        img.data[p] = 128 + v * 22;
+        img.data[p + 1] = 128 + w * 22;
         img.data[p + 2] = 255;
         img.data[p + 3] = 255;
       }
@@ -245,13 +239,13 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
   waterN.wrapS = waterN.wrapT = THREE.RepeatWrapping;
   waterN.repeat.set(12, 22);
   const WATER = new THREE.MeshPhysicalMaterial({
-    color: 0x0e151a,
-    roughness: 0.24,
-    metalness: 0.18,
-    clearcoat: 0.85,
-    clearcoatRoughness: 0.28,
+    color: 0xb1bcbc,
+    roughness: 0.28,
+    metalness: 0.05,
+    clearcoat: 0.75,
+    clearcoatRoughness: 0.26,
     normalMap: waterN,
-    normalScale: new THREE.Vector2(0.09, 0.09),
+    normalScale: new THREE.Vector2(0.08, 0.08),
   });
 
   const add = <T extends THREE.Object3D>(o: T, cast = true, rec = true): T => {
@@ -570,7 +564,7 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
     }
     const ctMat = STONE_HI.clone();
     ctMat.side = THREE.DoubleSide;
-    const throatMat = new THREE.MeshStandardMaterial({ color: 0x161310, roughness: 0.98 });
+    const throatMat = new THREE.MeshStandardMaterial({ color: 0x8f877c, roughness: 0.96 });
     const topR = prof[prof.length - 1]!.x;
     for (const dx of [0, 3.85]) {
       const cx = POWER.x + 1.0 + dx;
@@ -738,8 +732,8 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
   // ---- 03 GLOBAL TRADE: Deep-Water Port & Chokepoint Corridor
   const PORT = new THREE.Vector3(-16, 0, 2);
   const cgeo = new THREE.BoxGeometry(1.22, 0.5, 0.49);
-  const contMats = [0x9e9587, 0x746d64, 0x565049, 0x3b3733].map(
-    (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.72, metalness: 0.14 }),
+  const contMats = [0xf5f0e7, 0xe7e0d4, 0xd9d0c2, 0xc7bdb0].map(
+    (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.78, metalness: 0.05 }),
   );
   const stacks = contMats.map((m) => {
     const im = new THREE.InstancedMesh(cgeo, m, 260);
@@ -959,34 +953,34 @@ export function buildWorld(renderer: THREE.WebGLRenderer, shadowSize = 2048): Wo
     const day = (T / dayLen + 0.34) % 1;
     const elev = Math.sin((day - 0.25) * Math.PI * 2);
     const az = day * Math.PI * 2;
-    sun.position.set(Math.cos(az) * 62, Math.max(12, elev * 42 + 22), Math.sin(az) * 28 + 34);
+    sun.position.set(Math.cos(az) * 62, Math.max(10, elev * 52 + 16), Math.sin(az) * 28 + 34);
 
-    // Smooth modulation between dramatic Golden Architectural Dusk and Deep Luminous Obsidian Night
-    const night = ss(0.25, -0.35, elev);
-    const dusk = 1 - night;
+    // Crisp museum studio daylight -> golden dusk -> glowing architectural night
+    const night = ss(0.06, -0.24, elev);
+    const dusk = (1 - night) * ss(0.46, 0.04, elev);
 
-    sun.intensity = 1.65 + 1.85 * dusk;
-    sun.color.setRGB(1.0, 0.86 + dusk * 0.06, 0.68 + dusk * 0.14);
-    rim.intensity = 0.72 + 0.32 * night;
-    hemi.intensity = 0.32 + 0.36 * dusk;
-    scene.environmentIntensity = 0.24 + 0.26 * dusk;
+    sun.intensity = 3.1 * ss(-0.1, 0.22, elev);
+    sun.color.setRGB(1.0, 0.94 - dusk * 0.18, 0.86 - dusk * 0.34);
+    rim.intensity = 0.52 * (1 - night * 0.45);
+    hemi.intensity = 0.12 + 0.62 * (1 - night);
+    scene.environmentIntensity = 0.06 + 0.32 * (1 - night);
 
-    bg.copy(C_STUDIO).lerp(C_DUSK, 0.45 * (1 - dusk)).lerp(C_NIGHT, night * 0.85);
+    bg.copy(C_DAY).lerp(C_DUSK, dusk * 0.78).lerp(C_NIGHT, night);
     (scene.background as THREE.Color).copy(bg);
-    (scene.fog as THREE.FogExp2).color.copy(bg);
+    (scene.fog as THREE.Fog).color.copy(bg);
 
-    emissiveMats.forEach((m) => (m.emissiveIntensity = 0.52 + 1.35 * night));
-    AMBER.emissiveIntensity = 0.55 + 0.75 * night;
-    AMBER_CROWN.emissiveIntensity = 1.2 + 0.9 * night;
-    CAR.emissiveIntensity = 1.2 + 1.4 * night;
-    emissiveLamps.forEach((m) => (m.emissiveIntensity = 1.6 + 1.9 * night));
+    emissiveMats.forEach((m) => (m.emissiveIntensity = 0.02 + 1.65 * night + 0.38 * dusk));
+    AMBER.emissiveIntensity = 0.14 + 0.85 * night + 0.2 * dusk;
+    AMBER_CROWN.emissiveIntensity = 0.26 + 1.3 * night + 0.35 * dusk;
+    CAR.emissiveIntensity = 0.28 + 1.9 * night + 0.45 * dusk;
+    emissiveLamps.forEach((m) => (m.emissiveIntensity = 0.18 + 2.8 * night + 0.55 * dusk));
 
     wireMat.uniforms['time']!.value = T;
-    wireMat.uniforms['glow']!.value = 0.85 + 0.75 * night;
+    wireMat.uniforms['glow']!.value = 0.32 + 0.8 * dusk + 1.35 * night;
     flowMat.uniforms['time']!.value = T;
-    flowMat.uniforms['glow']!.value = 0.72 + 0.6 * night;
+    flowMat.uniforms['glow']!.value = 0.35 + 0.65 * dusk + 1.15 * night;
     routeMat.uniforms['time']!.value = T;
-    routeMat.uniforms['glow']!.value = 0.75 + 0.65 * night;
+    routeMat.uniforms['glow']!.value = 0.45 + 0.6 * dusk + 1.0 * night;
 
     waterN.offset.set(T * 0.004, T * 0.007);
     moveCars(dt);

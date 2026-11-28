@@ -36,8 +36,8 @@ export function createEngine(opts: { reduced: boolean; exporting?: boolean }): E
     powerPreference: 'high-performance',
   });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.14;
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.toneMappingExposure = 1.02;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -61,8 +61,8 @@ export function createEngine(opts: { reduced: boolean; exporting?: boolean }): E
       float alpha = 1.0 - smoothstep(1.0 - aa, 1.0, r);
       if (alpha <= 0.0) { gl_FragColor = vec4(0.0); return; }
 
-      // Subtle precision optical barrel refraction
-      vec2 q = p * mix(0.89, 1.0, r * r);
+      // Precision optical barrel refraction
+      vec2 q = p * mix(0.88, 1.0, r * r);
       float ca = 0.0045 * pow(r, 5.0);
       vec3 col = vec3(
         texture2D(tScene, q * (1.0 + ca) * 0.5 + 0.5).r,
@@ -70,24 +70,16 @@ export function createEngine(opts: { reduced: boolean; exporting?: boolean }): E
         texture2D(tScene, q * (1.0 - ca) * 0.5 + 0.5).b
       );
 
-      // Deep optical edge absorption & chamfer vignette
-      col *= 1.0 - 0.34 * smoothstep(0.74, 1.0, r);
+      // Gentle optical bevel shading around the perimeter
+      col *= 1.0 - 0.21 * smoothstep(0.76, 1.0, r);
 
-      // Machined sapphire bezel rim + subtle amber internal catchlight
-      float rim = smoothstep(0.968, 0.996, r);
+      // Subtle hairline optical rim & studio specular reflection arc
       vec2 np = normalize(p + 1e-5);
-      float topSpec = smoothstep(0.15, 0.92, dot(np, normalize(vec2(-0.72, 0.78))));
-      float botWarm = smoothstep(0.2, 0.95, dot(np, normalize(vec2(0.65, -0.76))));
-      col += vec3(0.98, 0.94, 0.88) * (0.12 + 0.24 * topSpec) * rim;
-      col += vec3(0.96, 0.58, 0.12) * (0.14 * botWarm) * rim;
-
-      // Upper-left convex studio glass reflection crescent
-      float arc = smoothstep(0.0075, 0.0, abs(r - 0.948)) * smoothstep(0.42, 0.96, dot(np, normalize(vec2(-0.75, 0.72))));
-      col += vec3(1.0, 0.97, 0.92) * (0.2 + 0.08 * night) * arc;
-
-      // Soft optical dome sheen
-      vec2 hp = p - vec2(-0.42, 0.48);
-      col += vec3(1.0, 0.96, 0.9) * 0.042 * exp(-dot(hp, hp) * 6.0);
+      col += vec3(1.0, 0.98, 0.94) * (0.14 + 0.12 * night) * smoothstep(0.972, 0.997, r);
+      float arc = smoothstep(0.008, 0.0, abs(r - 0.952)) * smoothstep(0.38, 0.95, dot(np, normalize(vec2(-0.75, 0.75))));
+      col += vec3(1.0) * (0.18 + 0.1 * night) * arc;
+      vec2 hp = p - vec2(-0.44, 0.48);
+      col += vec3(1.0, 0.98, 0.95) * (0.045 + 0.04 * night) * exp(-dot(hp, hp) * 5.5);
 
       gl_FragColor = vec4(col, alpha);
       #include <tonemapping_fragment>

@@ -14,6 +14,7 @@ import { initRun } from './visuals/run';
 import { initHow } from './visuals/how';
 import { initDossier } from './visuals/dossier';
 import { initLenses } from './visuals/lens';
+import { initForesightLens } from './visuals/foresight-lens';
 import { initFields } from './visuals/field';
 import { initManifesto } from './lib/manifesto';
 import { ACTIONS } from './data/actions';
@@ -201,6 +202,7 @@ export function mountHome(root: ParentNode = document): void {
   const dossier = qs<HTMLElement>('[data-dossier]', root);
   if (dossier) initDossier(dossier);
   initLenses(root);
+  initForesightLens(root);
   const fh = qs<HTMLElement>('.fh', root);
   if (fh) fh.addEventListener('lens:world', (e) => { const n = { money: 1, power: 2, trade: 3 }[(e as CustomEvent<string>).detail] ?? 1; const l = fh.querySelector<HTMLElement>('[data-fh-lamps]'); if (l) l.className = `fh__lamps hero__clusters b${n}`; });
   initFields(root);

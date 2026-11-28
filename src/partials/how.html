@@ -8,11 +8,12 @@
           <div class="hz" data-hz>
             <aside class="hz__nav">
               <div class="hz__navin">
+                <p class="hz__navk">Operating sequence</p>
                 <ol class="hz__list">
-                  <li><a href="#hz-1" data-hz-go="1" class="is-on">Model the world</a></li>
-                  <li><a href="#hz-2" data-hz-go="2">Simulate to failure</a></li>
-                  <li><a href="#hz-3" data-hz-go="3">Intervene and discover</a></li>
-                  <li><a href="#hz-4" data-hz-go="4">Commit the record</a></li>
+                  <li><a href="#hz-1" data-hz-go="1" class="is-on"><span>01</span>Model the world</a></li>
+                  <li><a href="#hz-2" data-hz-go="2"><span>02</span>Simulate to failure</a></li>
+                  <li><a href="#hz-3" data-hz-go="3"><span>03</span>Intervene and discover</a></li>
+                  <li><a href="#hz-4" data-hz-go="4"><span>04</span>Commit the record</a></li>
                 </ol>
                 <a class="btn hz__cta" href="/discuss/">Discuss a decision</a>
               </div>
@@ -22,42 +23,86 @@
               <!-- 01 ============================================================ -->
               <article class="hz__step" id="hz-1" data-hz="1">
                 <div class="hz__intro">
+                  <p class="hz__num">01 / MODEL</p>
                   <h3 class="hz__t">One model of the world, on one clock</h3>
                   <p class="hz__p">Contracts, ledgers, market data, public rules and physical feeds become one executable model of the institution and everything it depends on. Every fact keeps the time it became known.</p>
                   <p class="hz__tags"><span>Ingest</span><span>Entities</span><span>Rules</span><span>As-of time</span></p>
                 </div>
                 <figure class="hz__fig">
-                  <div class="hz__stage"><div class="zs zs--1" data-zs="1" aria-hidden="true">
-                    <svg class="z1__orbit" viewBox="0 0 960 560"><ellipse cx="480" cy="290" rx="392" ry="214"/>
-                      <path d="M150 128C230 150 250 214 300 214M88 290H300M150 452C230 430 250 366 300 366M810 128C730 150 710 214 660 214M872 290H660M810 452C730 430 710 366 660 366"/></svg>
-                    <div class="z1__n" style="left:150px;top:128px"><i class="z1__ic">§</i><b>9</b><span>Contracts</span></div>
-                    <div class="z1__n" style="left:88px;top:290px"><i class="z1__ic">≡</i><b>4</b><span>Ledgers</span></div>
-                    <div class="z1__n" style="left:150px;top:452px"><i class="z1__ic">⌇</i><b>6</b><span>Market data</span></div>
-                    <div class="z1__n" style="left:810px;top:128px"><i class="z1__ic">¶</i><b>3</b><span>Public rules</span></div>
-                    <div class="z1__n" style="left:872px;top:290px"><i class="z1__ic">◉</i><b>5</b><span>Physical feeds</span></div>
-                    <div class="z1__n" style="left:810px;top:452px"><i class="z1__ic">▤</i><b>2</b><span>Filings</span></div>
-                    <div class="z1__panel">
-                      <div class="z1__q"><i class="z1__lens"></i><span data-type="counterparty b exposure"></span><i class="z1__caret"></i><kbd>↵</kbd></div>
-                      <div class="z1__body">
-                        <ul class="z1__res">
-                          <li data-r="0"><i>◇</i><b>Counterparty B</b><span>Entity · 14 contracts</span></li>
-                          <li data-r="1"><i>⌇</i><b>exposure.counterparty_b</b><span>Series · daily</span></li>
-                          <li data-r="2"><i>§</i><b>Master agreement</b><span>Contract · §7 Termination</span></li>
-                          <li data-r="3"><i>§</i><b>Collateral schedule</b><span>Contract · Annex 3</span></li>
-                          <li data-r="4"><i>¶</i><b>Capital rule</b><span>Public rule · in force</span></li>
-                        </ul>
-                        <div class="z1__card">
-                          <p class="z1__k"><span>exposure.counterparty_b</span><span>Series</span></p>
-                          <p class="z1__name">Exposure to Counterparty B</p>
-                          <p class="z1__v"><b data-tick="412.6">412.6</b> $M <em>as of today</em></p>
-                          <svg class="z1__spark" viewBox="0 0 220 56" preserveAspectRatio="none"><path d="M0 44 L18 40 L36 42 L54 36 L72 38 L90 30 L108 33 L126 26 L144 29 L162 22 L180 25 L198 18 L220 20"/></svg>
-                          <p class="z1__stats"><span>Min<b>318.0</b></span><span>Max<b>431.9</b></span><span>Mean<b>377.4</b></span></p>
-                          <p class="z1__ref">Referenced in <b>Master agreement · §7.2</b></p>
+                  <div class="hz__stage">
+                    <div class="fmui fmui--1 is-found" data-zs="1" aria-hidden="true">
+                      <div class="fmui__bar">
+                        <span class="fmui__mk"><i></i><i></i></span>
+                        <span class="fmui__app">Model</span>
+                        <span class="fmui__sep">/</span>
+                        <span class="fmui__sub">World graph &amp; provenance</span>
+                        <span class="fmui__right"><span class="fmui__dot"></span>29 sources synced<span class="fmui__pill">AS-OF CLOCK</span></span>
+                      </div>
+                      <div class="fmui__m1">
+                        <aside class="m1__sources">
+                          <p class="m1__sh">Sources <span>29</span></p>
+                          <ul>
+                            <li class="is-hi"><span class="m1__ic">§</span><b>Contracts</b><em>9</em></li>
+                            <li><span class="m1__ic">≡</span><b>Ledgers</b><em>4</em></li>
+                            <li><span class="m1__ic">⌇</span><b>Market data</b><em>6</em></li>
+                            <li><span class="m1__ic">¶</span><b>Public rules</b><em>3</em></li>
+                            <li><span class="m1__ic">◉</span><b>Physical feeds</b><em>5</em></li>
+                            <li><span class="m1__ic">▤</span><b>Filings</b><em>2</em></li>
+                          </ul>
+                          <div class="m1__clockbox">
+                            <span>As-of state</span>
+                            <b>Zero leakage</b>
+                            <i class="m1__bar"><b></b></i>
+                          </div>
+                        </aside>
+                        <div class="m1__main">
+                          <div class="m1__search">
+                            <span class="m1__mag">⌕</span>
+                            <span class="m1__typed" data-type="counterparty b exposure">counterparty b exposure</span>
+                            <i class="m1__caret"></i>
+                            <kbd>↵</kbd>
+                          </div>
+                          <div class="m1__split">
+                            <ul class="m1__res">
+                              <li data-r="0"><b>Counterparty B</b><span>Entity · 14 contracts</span></li>
+                              <li data-r="1" class="is-hi"><b>exposure.counterparty_b</b><span>Series · daily</span></li>
+                              <li data-r="2"><b>Master agreement</b><span>Contract · §7 Termination</span></li>
+                              <li data-r="3"><b>Collateral schedule</b><span>Contract · Annex 3</span></li>
+                              <li data-r="4"><b>Capital rule</b><span>Public rule · in force</span></li>
+                            </ul>
+                            <div class="m1__card">
+                              <p class="m1__ck"><span>exposure.counterparty_b</span><em>SERIES</em></p>
+                              <p class="m1__cname">Exposure to Counterparty B</p>
+                              <p class="m1__val"><b data-tick="412.6">412.6</b> <span>$M</span> <em>as of today</em></p>
+                              <svg class="m1__spark" viewBox="0 0 260 76" preserveAspectRatio="none">
+                                <defs>
+                                  <linearGradient id="m1-fill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#f39200" stop-opacity="0.28"/>
+                                    <stop offset="100%" stop-color="#f39200" stop-opacity="0"/>
+                                  </linearGradient>
+                                </defs>
+                                <path class="m1__gl" d="M0 16H260M0 40H260M0 64H260"/>
+                                <path d="M0 58 L22 52 L44 55 L66 46 L88 49 L110 38 L132 42 L154 32 L176 35 L198 25 L220 29 L242 20 L260 22 L260 76 L0 76 Z" fill="url(#m1-fill)"/>
+                                <path class="m1__line" d="M0 58 L22 52 L44 55 L66 46 L88 49 L110 38 L132 42 L154 32 L176 35 L198 25 L220 29 L242 20 L260 22"/>
+                                <circle cx="260" cy="22" r="3.5" fill="#f39200"/>
+                              </svg>
+                              <div class="m1__stats">
+                                <span><em>Min</em><b>318.0</b></span>
+                                <span><em>Max</em><b>431.9</b></span>
+                                <span><em>Mean</em><b>377.4</b></span>
+                              </div>
+                              <p class="m1__ref">Source clause <b>Master agreement · §7.2</b></p>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      <div class="fmui__foot">
+                        <span>Entities <b>1,240</b> · Rules compiled <b>418</b></span>
+                        <span>Clock <b>As-of enforced</b></span>
+                      </div>
                     </div>
-                  </div></div>
-                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
+                  </div>
+                  <figcaption class="hz__cap"><span>01 · Model workspace — primary-source entity &amp; rule compiler</span><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
                 <div class="hz__cells">
                   <div class="hz__cell">
@@ -70,14 +115,15 @@
                         <p><span>market.rate</span><i class="ln ln--2"></i></p>
                         <p><span>rule.capital</span><i style="--a:62%;--b:38%"></i></p>
                       </div>
-                      <div class="zm1__cur"></div><div class="zm1__tip"><b>As of T − 90 days</b><span><em>contract.terms</em>v3</span><span><em>ledger.balance</em>$1.86B</span><span><em>market.rate</em>4.25%</span><span class="is-x"><em>rule.capital</em>not yet known</span></div>
+                      <div class="zm1__cur"></div>
+                      <div class="zm1__tip"><b>As of T − 90 days</b><span><em>contract.terms</em>v3</span><span><em>ledger.balance</em>$1.86B</span><span><em>market.rate</em>4.25%</span><span class="is-x"><em>rule.capital</em>not yet known</span></div>
                     </div>
                   </div>
                   <div class="hz__cell">
                     <p class="hz__ch">Built from evidence</p>
                     <p class="hz__cp">Every rule in the model points to the clause, record or observation it came from.</p>
                     <div class="hz__mini zm2" aria-hidden="true">
-                      <p class="zm2__h">Rules <span>→ Source</span></p>
+                      <p class="zm2__h">Compiled rules <span>→ Primary source</span></p>
                       <p class="zm2__r"><b>Close-out on downgrade</b><span>Master agreement · §7.2</span></p>
                       <p class="zm2__r"><b>Margin within one day</b><span>Collateral schedule · Annex 3</span></p>
                       <p class="zm2__r"><b>Settlement window</b><span>Operating hours · bank notice</span></p>
@@ -90,42 +136,76 @@
               <!-- 02 ============================================================ -->
               <article class="hz__step" id="hz-2" data-hz="2">
                 <div class="hz__intro">
+                  <p class="hz__num">02 / SIMULATE</p>
                   <h3 class="hz__t">Pushed until it breaks</h3>
                   <p class="hz__p">Each decision runs forward against past crises and an adversary searching for the smallest shock that breaks it. No probabilities are assumed: the answer is where it fails.</p>
                   <p class="hz__tags"><span>Replay</span><span>Stress</span><span>Adversary</span><span>Breaking point</span></p>
                 </div>
                 <figure class="hz__fig">
-                  <div class="hz__stage"><div class="zs zs--2" data-zs="2" aria-hidden="true">
-                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Plan as drafted</span><span class="zw__sep">·</span><span class="zw__sub">Stress sweep · run 7</span><span class="zw__right">Edited just now <b class="zw__av"></b><b class="zw__av zw__av--2"></b><span class="zw__share">Share</span></span></div>
-                    <div class="zw__body">
-                      <div class="zw__rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
-                      <div class="zw__main">
-                        <div class="zw__tabs"><span class="is-on">Sweep</span><span>Replay</span><span>Adversary</span></div>
-                        <div class="zw__grid">
-                          <div class="zw__panel zw__map"><p class="zw__ph">Dependencies</p>
-                            <svg viewBox="0 0 280 196"><g class="zw__edges"><path d="M50 60L140 36M50 60L120 120M140 36L230 70M120 120L230 70M120 120L196 168M230 70L196 168M50 60L40 150M40 150L120 120"/><path class="zw__hot" d="M120 120L196 168"/></g>
-                              <g class="zw__nodes"><circle cx="50" cy="60" r="9"/><circle cx="140" cy="36" r="7"/><circle cx="120" cy="120" r="11"/><circle cx="230" cy="70" r="8"/><circle class="zw__hotn" cx="196" cy="168" r="8"/><circle cx="40" cy="150" r="6"/></g></svg>
+                  <div class="hz__stage">
+                    <div class="fmui fmui--2" data-zs="2" aria-hidden="true">
+                      <div class="fmui__bar">
+                        <span class="fmui__mk"><i></i><i></i></span>
+                        <span class="fmui__app">Simulate</span>
+                        <span class="fmui__sep">/</span>
+                        <span class="fmui__sub">Plan as drafted · Stress sweep · run 07</span>
+                        <span class="fmui__right"><span class="m2__tabs"><i class="is-on">Sweep</i><i>Replay</i><i>Adversary</i></span></span>
+                      </div>
+                      <div class="m2__kpis">
+                        <div data-t="head"><span>headroom</span><b>186</b><em>$M</em></div>
+                        <div data-t="cov"><span>coverage</span><b>1.34</b><em>×</em></div>
+                        <div data-t="exp"><span>exposure</span><b>412</b><em>$M</em></div>
+                        <div data-t="call"><span>margin_call</span><b>0</b><em>$M</em></div>
+                        <div data-t="slip"><span>delivery_slip</span><b>0</b><em>d</em></div>
+                        <div data-t="shock"><span>shock</span><b>0.0</b><em>×</em></div>
+                      </div>
+                      <div class="m2__split">
+                        <div class="m2__panel m2__graph">
+                          <p class="m2__ph">Dependency cascade</p>
+                          <svg viewBox="0 0 260 190">
+                            <g class="m2__edges">
+                              <path d="M52 54 L132 34 M52 54 L118 102 M132 34 L214 64 M118 102 L214 64 M52 54 L48 144 M48 144 L118 102 M214 64 L194 154"/>
+                              <path class="m2__hot" d="M118 102 L194 154"/>
+                            </g>
+                            <g class="m2__nodes">
+                              <circle cx="52" cy="54" r="7"/><text x="52" y="38" text-anchor="middle">Funding</text>
+                              <circle cx="132" cy="34" r="6"/><text x="132" y="20" text-anchor="middle">Market</text>
+                              <circle cx="118" cy="102" r="9"/><text x="118" y="85" text-anchor="middle">Institution</text>
+                              <circle cx="214" cy="64" r="7"/><text x="214" y="48" text-anchor="middle">Rules</text>
+                              <circle cx="48" cy="144" r="6"/><text x="48" y="164" text-anchor="middle">Settlement</text>
+                              <circle class="m2__hotn" cx="194" cy="154" r="8"/><text class="m2__hott" x="194" y="176" text-anchor="middle">Counterparty B</text>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="m2__panel m2__chart">
+                          <p class="m2__ph">Headroom under shock <span>1,000 adversarial paths</span></p>
+                          <div class="m2__plot">
+                            <svg viewBox="0 0 540 165" preserveAspectRatio="none">
+                              <path class="m2__gl" d="M0 24H540M0 68H540M0 112H540M0 154H540"/>
+                              <rect class="m2__brk" x="324" y="0" width="216" height="165"/>
+                              <!-- Ensemble trajectory fan -->
+                              <path class="m2__fan" d="M0 26 C110 30 220 50 324 102 S460 144 540 156 L540 165 L324 128 C220 74 110 42 0 32 Z"/>
+                              <path class="m2__sp" d="M0 28 C110 32 220 58 324 108 S460 148 540 158"/>
+                              <path class="m2__sp" d="M0 28 C110 36 220 68 324 122 S460 156 540 162"/>
+                              <path class="m2__sp" d="M0 28 C110 29 220 46 324 96 S460 136 540 148"/>
+                              <path class="m2__zero" d="M0 114H540"/>
+                              <path class="m2__l1" d="M0 28 C110 34 220 60 324 114 S460 152 540 160"/>
+                              <path class="m2__l2" d="M0 132 C140 128 260 106 324 90 S450 48 540 30"/>
+                            </svg>
+                            <i class="m2__cur"></i>
+                            <span class="m2__brkl">Breaks · 1.8×</span>
+                            <span class="m2__floor">Covenant floor</span>
                           </div>
-                          <div class="zw__panel zw__vals"><p class="zw__ph">Latest values</p>
-                            <div class="zw__tiles">
-                              <div data-t="head"><span>headroom</span><b>186</b><em>$M</em></div>
-                              <div data-t="cov"><span>coverage</span><b>1.34</b><em>×</em></div>
-                              <div data-t="exp"><span>exposure</span><b>412</b><em>$M</em></div>
-                              <div data-t="call"><span>margin_call</span><b>0</b><em>$M</em></div>
-                              <div data-t="slip"><span>delivery_slip</span><b>0</b><em>days</em></div>
-                              <div data-t="shock"><span>shock</span><b>0.0</b><em>×</em></div>
-                            </div>
-                          </div>
-                          <div class="zw__panel zw__chart"><p class="zw__ph">Headroom under shock</p>
-                            <div class="zw__plot"><svg viewBox="0 0 600 150" preserveAspectRatio="none"><path class="zw__gl" d="M0 20H600M0 75H600M0 130H600"/><rect class="zw__brk" x="360" y="0" width="240" height="150"/><path class="zw__zero" d="M0 112H600"/><path class="zw__l1" d="M0 20 C120 26 240 52 360 112 S520 150 600 150"/><path class="zw__l2" d="M0 120 C160 118 300 96 360 82 S500 40 600 26"/></svg><i class="zw__cur"></i><span class="zw__brkl">Breaks · 1.8×</span></div>
-                            <p class="zw__x"><span>0.0×</span><span>0.5×</span><span>1.0×</span><span>1.5×</span><span>2.0×</span><span>2.5×</span><span>3.0×</span></p>
-                          </div>
+                          <p class="m2__x"><span>0.0×</span><span>0.5×</span><span>1.0×</span><span>1.5×</span><span>2.0×</span><span>2.5×</span><span>3.0×</span></p>
                         </div>
                       </div>
+                      <div class="fmui__foot">
+                        <span>Shock <b data-shock-out>0.0×</b> → <b>3.0×</b> · Step <b>0.1×</b></span>
+                        <span class="m2__adv">ADVERSARY ACTIVE</span>
+                      </div>
                     </div>
-                    <div class="zw__foot"><span>Shock <b>0.0×</b> → <b>3.0×</b></span><span class="zw__ctl">⏮ ⏭</span><span>Step <b>0.1×</b></span><span class="zw__adv">Adversary ⟁</span></div>
-                  </div></div>
-                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
+                  </div>
+                  <figcaption class="hz__cap"><span>02 · Simulation console — historical replay &amp; adversarial breaking-point sweep</span><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
                 <div class="hz__cells">
                   <div class="hz__cell">
@@ -142,7 +222,27 @@
                     <p class="hz__ch">The smallest shock that breaks it</p>
                     <p class="hz__cp">An adversary searches combinations of shocks for the nearest point of failure.</p>
                     <div class="hz__mini zm4" aria-hidden="true">
-                      <svg viewBox="0 0 320 180"><path class="zm4__ax" d="M30 10V160H310"/><path class="zm4__fail" d="M30 10H310V160H250C200 120 140 70 30 46Z"/><path class="zm4__b" d="M30 46C140 70 200 120 250 160"/><path class="zm4__r" d="M30 160L148 92"/><circle class="zm4__p" cx="148" cy="92" r="5"/><text x="156" y="88">Nearest failure</text><text class="zm4__t" x="300" y="176" text-anchor="end">Shock A</text><text class="zm4__t" x="36" y="20">Shock B</text></svg>
+                      <svg viewBox="0 0 340 184">
+                        <defs>
+                          <pattern id="zm4-h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(201,80,42,0.18)" stroke-width="1"/>
+                          </pattern>
+                        </defs>
+                        <path class="zm4__grid" d="M36 44H324M36 82H324M36 120H324M108 14V158M180 14V158M252 14V158"/>
+                        <path class="zm4__fail" d="M36 14H324V158H264C212 116 146 68 36 44Z"/>
+                        <path d="M36 14H324V158H264C212 116 146 68 36 44Z" fill="url(#zm4-h)"/>
+                        <circle cx="36" cy="158" r="68" fill="none" stroke="rgba(20,18,16,0.08)" stroke-dasharray="2 3"/>
+                        <circle cx="36" cy="158" r="126" fill="none" stroke="rgba(243,146,0,0.35)" stroke-dasharray="2 3"/>
+                        <path class="zm4__b" d="M36 44C146 68 212 116 264 158"/>
+                        <path class="zm4__ax" d="M36 14V158H324"/>
+                        <path class="zm4__r" d="M36 158L152 88"/>
+                        <circle class="zm4__p" cx="152" cy="88" r="4.5"/>
+                        <circle cx="152" cy="88" r="9" fill="none" stroke="#f39200" stroke-width="1"/>
+                        <text class="zm4__lbl" x="166" y="84">Nearest failure</text>
+                        <text class="zm4__sub" x="166" y="99">min ||Δshock|| = 1.8×</text>
+                        <text class="zm4__t" x="322" y="175" text-anchor="end">Shock axis A →</text>
+                        <text class="zm4__t" x="44" y="24">Shock axis B ↑</text>
+                      </svg>
                     </div>
                   </div>
                 </div>
@@ -151,33 +251,60 @@
               <!-- 03 ============================================================ -->
               <article class="hz__step" id="hz-3" data-hz="3">
                 <div class="hz__intro">
+                  <p class="hz__num">03 / INTERVENE</p>
                   <h3 class="hz__t">An agent for every role</h3>
                   <p class="hz__p">Treasury, risk, operations, legal and the party across the table each get an agent that works the model toward its own goal, within its own rules. Together they search for the change that holds.</p>
                   <p class="hz__tags"><span>Optimize</span><span>Discover</span><span>Coordinate</span><span>Underwrite</span></p>
                 </div>
                 <figure class="hz__fig">
-                  <div class="hz__stage"><div class="zs zs--3" data-zs="3" aria-hidden="true">
-                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Terms with Counterparty B</span><span class="zw__sep">·</span><span class="zw__sub">Intervene</span><span class="zw__right"><span class="zw__share">Share</span></span></div>
-                    <div class="za">
-                      <aside class="za__agents"><p class="za__h">Agents</p>
-                        <p data-ag="0"><i class="za__d"></i>Treasury<em>Funding and liquidity</em></p>
-                        <p data-ag="1"><i class="za__d"></i>Risk<em>Limits and replays</em></p>
-                        <p data-ag="2"><i class="za__d"></i>Operations<em>Settlement and timing</em></p>
-                        <p data-ag="3"><i class="za__d"></i>Legal<em>Contracts and rules</em></p>
-                        <p data-ag="4" class="za__ext"><i class="za__d"></i>Counterparty B<em>Shared terms only</em></p>
-                      </aside>
-                      <div class="za__thread">
-                        <div class="za__ask"><span>Team</span>Find terms that hold through a default of two counterparties, without raising funding cost.</div>
-                        <div class="za__m" data-m="0"><b>Treasury</b>Tried 214 arrangements within today’s limits. The best holds to 1.6×.</div>
-                        <div class="za__m" data-m="1"><b>Risk</b>Searched beyond them. Three hold in every replay and under the adversary.</div>
-                        <div class="za__m" data-m="2"><b>Legal</b>All three fit the master agreement. One needs a notice clause.</div>
-                        <div class="za__m" data-m="3"><b>Counterparty B</b>Accepts two of the three on shared terms.</div>
-                        <div class="za__res" data-m="4"><p class="za__rk">Found</p><p class="za__rt">Staged collateral, a 10-day notice clause and a second clearing line</p><p class="za__rs"><span>Holds to <b>2.4×</b></span><span>Funding cost <b>unchanged</b></span><span>Team plan <b>1.3×</b></span></p></div>
-                        <div class="za__in">Ask the agents…<i>↑</i></div>
+                  <div class="hz__stage">
+                    <div class="fmui fmui--3" data-zs="3" aria-hidden="true">
+                      <div class="fmui__bar">
+                        <span class="fmui__mk"><i></i><i></i></span>
+                        <span class="fmui__app">Intervene</span>
+                        <span class="fmui__sep">/</span>
+                        <span class="fmui__sub">Terms with Counterparty B</span>
+                        <span class="fmui__right"><span class="fmui__pill">214 POLICIES SEARCHED</span></span>
+                      </div>
+                      <div class="m3__body">
+                        <aside class="m3__agents">
+                          <p class="m3__ah">Role agents</p>
+                          <div class="m3__ag is-done" data-ag="0"><i class="m3__d"></i><div><b>Treasury</b><span>Funding &amp; liquidity</span></div></div>
+                          <div class="m3__ag is-done" data-ag="1"><i class="m3__d"></i><div><b>Risk</b><span>Limits &amp; replays</span></div></div>
+                          <div class="m3__ag is-done" data-ag="2"><i class="m3__d"></i><div><b>Operations</b><span>Settlement &amp; timing</span></div></div>
+                          <div class="m3__ag is-done" data-ag="3"><i class="m3__d"></i><div><b>Legal</b><span>Contracts &amp; rules</span></div></div>
+                          <p class="m3__bound">Security boundary</p>
+                          <div class="m3__ag m3__ag--ext is-done" data-ag="4"><i class="m3__d"></i><div><b>Counterparty B</b><span>Shared terms only</span></div></div>
+                        </aside>
+                        <div class="m3__main">
+                          <div class="m3__obj">
+                            <span>Objective</span>
+                            <p>Find terms that hold through a default of two counterparties, without raising funding cost.</p>
+                          </div>
+                          <div class="m3__log">
+                            <div class="m3__row is-in" data-m="0"><span>Treasury</span><p>Tried 214 arrangements within today’s limits. Best holds to <b>1.6×</b>.</p><em>LIMIT</em></div>
+                            <div class="m3__row is-in" data-m="1"><span>Risk</span><p>Searched beyond current limits. Three hold in every replay and under the adversary.</p><em>78/78</em></div>
+                            <div class="m3__row is-in" data-m="2"><span>Legal</span><p>All three fit the master agreement. One needs a notice clause.</p><em>PASS</em></div>
+                            <div class="m3__row is-in" data-m="3"><span>Counterparty B</span><p>Accepts two of the three on shared terms.</p><em>AGREED</em></div>
+                          </div>
+                          <div class="m3__res is-in" data-m="4">
+                            <p class="m3__rk">Discovered intervention · verified</p>
+                            <p class="m3__rt">Staged collateral, a 10-day notice clause and a second clearing line</p>
+                            <div class="m3__deltas">
+                              <span>Holds to <b>2.4×</b></span>
+                              <span>Funding cost <b>unchanged</b></span>
+                              <span>Team’s plan <b>1.3×</b></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fmui__foot">
+                        <span>Boundary <b>Private ledgers isolated</b></span>
+                        <span>Verification <b>All constraints satisfied</b></span>
                       </div>
                     </div>
-                  </div></div>
-                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
+                  </div>
+                  <figcaption class="hz__cap"><span>03 · Intervention workbench — multi-role counterfactual policy search</span><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
                 <div class="hz__cells">
                   <div class="hz__cell">
@@ -207,41 +334,66 @@
               <!-- 04 ============================================================ -->
               <article class="hz__step" id="hz-4" data-hz="4">
                 <div class="hz__intro">
+                  <p class="hz__num">04 / RECORD</p>
                   <h3 class="hz__t">Committed before the outcome</h3>
                   <p class="hz__p">The answer, its evidence and the team’s own plan are hashed and timestamped together before the outcome is known, then scored when it arrives. Every miss becomes a new test.</p>
                   <p class="hz__tags"><span>Hash</span><span>Timestamp</span><span>Score</span><span>Learn</span></p>
                 </div>
                 <figure class="hz__fig">
-                  <div class="hz__stage"><div class="zs zs--4" data-zs="4" aria-hidden="true">
-                    <div class="zw__bar"><span class="zw__mk"><i></i><i></i></span><span class="zw__ttl">Record</span><span class="zw__sep">·</span><span class="zw__sub">No. 0414</span><span class="zw__right"><span class="zw__share">Share</span></span></div>
-                    <div class="zr">
-                      <aside class="zr__chain">
-                        <p class="zr__b"><b>No. 0411</b><span class="mono">a41c…07e2</span><em class="ok">Scored</em></p>
-                        <p class="zr__b"><b>No. 0412</b><span class="mono">5e0d…b913</span><em class="ok">Scored</em></p>
-                        <p class="zr__b"><b>No. 0413</b><span class="mono">c27a…4f10</span><em>Outcome pending</em></p>
-                        <p class="zr__b is-on"><b>No. 0414</b><span class="mono" data-short>3e9f…c21a</span><em class="zr__new">Sealing</em></p>
-                      </aside>
-                      <div class="zr__main">
-                        <p class="zr__no">No. 0414</p>
-                        <p class="zr__q">Terms through a default of two counterparties</p>
-                        <div class="zr__two"><div><p class="zr__k">Machine</p><p class="zr__v">Staged collateral, notice clause, second clearing line</p></div><div><p class="zr__k">Team’s plan</p><p class="zr__v">Raise the liquidity buffer</p></div></div>
-                        <p class="zr__row"><span>Evidence</span><b>Model v23 · 6 replays · sweep run 7 · agent thread</b></p>
-                        <p class="zr__row"><span>Previous</span><b class="mono">c27a90e1…d3b84f10</b></p>
-                        <p class="zr__row zr__hash"><span>SHA-256</span><b class="mono" data-hash="3e9f0b7a51c6d2e48f913a07c5be2d61e4a8f07139dc5b2e0a6f48c19d7ec21a"></b></p>
-                        <p class="zr__row"><span>Timestamp</span><b class="mono">2026-11-24 14:02:11 UTC</b></p>
-                        <div class="zr__steps"><span class="is-on" data-st="0"><i></i>Committed</span><span data-st="1"><i></i>Outcome</span><span data-st="2"><i></i>Scored</span></div>
-                        <p class="zr__seal">Sealed</p>
+                  <div class="hz__stage">
+                    <div class="fmui fmui--4 is-sealed" data-zs="4" aria-hidden="true">
+                      <div class="fmui__bar">
+                        <span class="fmui__mk"><i></i><i></i></span>
+                        <span class="fmui__app">Record</span>
+                        <span class="fmui__sep">/</span>
+                        <span class="fmui__sub">No. 0414 · Chained commitment ledger</span>
+                        <span class="fmui__right"><span class="m4__badge">PRE-COMMITTED</span></span>
+                      </div>
+                      <div class="m4__body">
+                        <aside class="m4__chain">
+                          <div class="m4__blk"><b>No. 0411</b><span class="mono">a41c…07e2</span><em class="ok">Scored</em></div>
+                          <div class="m4__blk"><b>No. 0412</b><span class="mono">5e0d…b913</span><em class="ok">Scored</em></div>
+                          <div class="m4__blk"><b>No. 0413</b><span class="mono">c27a…4f10</span><em>Pending</em></div>
+                          <div class="m4__blk is-on"><b>No. 0414</b><span class="mono">3e9f…c21a</span><em class="zr__new">Committed</em></div>
+                        </aside>
+                        <div class="m4__main">
+                          <div class="m4__top">
+                            <div>
+                              <p class="m4__no">COMMITMENT NO. 0414</p>
+                              <p class="m4__q">Terms through a default of two counterparties</p>
+                            </div>
+                          </div>
+                          <div class="m4__two">
+                            <div class="is-ours"><p class="m4__k">Foresight Machine</p><p class="m4__v">Staged collateral, notice clause, second clearing line</p></div>
+                            <div><p class="m4__k">Team’s plan</p><p class="m4__v">Raise the liquidity buffer</p></div>
+                          </div>
+                          <dl class="m4__meta">
+                            <div><dt>Evidence</dt><dd>Model v23 · 6 replays · sweep run 07 · agent verification</dd></div>
+                            <div><dt>Previous</dt><dd class="mono">c27a90e1…d3b84f10</dd></div>
+                            <div class="m4__hashrow"><dt>SHA-256</dt><dd class="mono" data-hash="3e9f0b7a51c6d2e48f913a07c5be2d61e4a8f07139dc5b2e0a6f48c19d7ec21a">3e9f0b7a51c6d2e48f913a07c5be2d61e4a8f07139dc5b2e0a6f48c19d7ec21a</dd></div>
+                            <div><dt>Timestamp</dt><dd class="mono">2026-11-24 14:02:11 UTC</dd></div>
+                          </dl>
+                          <div class="m4__steps">
+                            <span class="is-on" data-st="0"><i></i>Committed</span>
+                            <span data-st="1"><i></i>Outcome</span>
+                            <span data-st="2"><i></i>Scored</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fmui__foot">
+                        <span>Integrity <b>Append-only hash chain</b></span>
+                        <span>Scoring <b>Side-by-side against team baseline</b></span>
                       </div>
                     </div>
-                  </div></div>
-                  <figcaption class="hz__cap"><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
+                  </div>
+                  <figcaption class="hz__cap"><span>04 · Record ledger — cryptographic pre-commitment &amp; outcome scoring</span><button type="button" class="hz__pause" data-pause aria-label="Pause the screens"><i></i></button></figcaption>
                 </figure>
                 <div class="hz__cells">
                   <div class="hz__cell">
                     <p class="hz__ch">Sealed before the fact</p>
                     <p class="hz__cp">Each record carries the hash of the one before it, so no answer can be changed once the outcome is known.</p>
                     <div class="hz__mini zm7" aria-hidden="true">
-                      <p class="zm7__f">sha256( question, answer, evidence, team plan, time, previous )</p>
+                      <p class="zm7__f">sha256( question, answer, evidence, team_plan, timestamp, prev_hash )</p>
                       <p class="zm7__arrow">↓</p>
                       <p class="zm7__h">3e9f0b7a51c6d2e4<br>8f913a07c5be2d61<br>e4a8f07139dc5b2e<br>0a6f48c19d7ec21a</p>
                     </div>
@@ -250,8 +402,12 @@
                     <p class="hz__ch">Scored when the outcome arrives</p>
                     <p class="hz__cp">The machine is scored beside the team’s own plan. A change to the model ships only if it does better on unseen history and worse on no past case.</p>
                     <div class="hz__mini zm8" aria-hidden="true">
-                      <svg viewBox="0 0 320 150" preserveAspectRatio="none"><path class="zm8__g" d="M0 20H320M0 75H320M0 130H320"/><path class="zm8__t" d="M0 60 L40 72 L80 50 L120 78 L160 58 L200 84 L240 62 L280 80 L320 66"/><path class="zm8__m" d="M0 70 L40 84 L80 92 L120 98 L160 104 L200 108 L240 113 L280 116 L320 120"/></svg>
-                      <p class="zm8__lg"><span><i class="m"></i>Machine</span><span><i class="t"></i>Team’s plan</span><span class="zm8__y">Distance from the outcome</span></p>
+                      <svg viewBox="0 0 320 150" preserveAspectRatio="none">
+                        <path class="zm8__g" d="M0 20H320M0 75H320M0 130H320"/>
+                        <path class="zm8__t" d="M0 60 L40 72 L80 50 L120 78 L160 58 L200 84 L240 62 L280 80 L320 66"/>
+                        <path class="zm8__m" d="M0 70 L40 84 L80 92 L120 98 L160 104 L200 108 L240 113 L280 116 L320 120"/>
+                      </svg>
+                      <p class="zm8__lg"><span><i class="m"></i>Machine</span><span><i class="t"></i>Team’s plan</span><span class="zm8__y">Distance from outcome ↓</span></p>
                     </div>
                   </div>
                 </div>

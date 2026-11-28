@@ -3,16 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0806" />
     <title>Foresight Machines</title>
-    <link rel="canonical" href="https://foresightmachines.com/" />
     <meta
       name="description"
       content="Every institution will run on a Foresight Machine to simulate its world and change what happens next."
     />
-    <meta name="theme-color" content="#0e0c0a" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="canonical" href="https://foresightmachines.com/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="image" href="/lens-all.webp" type="image/webp" fetchpriority="high" />
     <link rel="preload" href="/fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/plexmono-600-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -31,58 +30,82 @@
     <script type="module" src="/src/pages/home.ts"></script>
   </head>
 
-  <body class="fm-home">
+  <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="cap" aria-hidden="true"></div>
     <div class="frame" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
-
     <header class="bar">
       <a class="bar__brand" href="#top" aria-label="Foresight Machines — top of page"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span><svg class="wm wm--draw" viewBox="-4 -4 1885 108" role="img" aria-label="Foresight Machines"><clipPath id="wmc1"><rect x="-2" y="0" width="1881" height="100"/></clipPath><g clip-path="url(#wmc1)" fill="none" stroke="currentColor" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="8"><path d="M0 7.5H86M68.8 50H7.5V100M120.5 50A42.5 42.5 0 1 1 205.5 50A42.5 42.5 0 1 1 120.5 50ZM240 7.5H294.5A24 24 0 0 1 318.5 31.5V100M247.5 100V48H302.5A16 16 0 0 0 318.5 32M445 7.5H403A42.5 42.5 0 0 0 403 92.5H445M560 7.5H500.8A21.2 21.2 0 0 0 500.8 50H531.2A21.2 21.2 0 0 1 531.2 92.5H472M594.5 0V100M721 7.5H679A42.5 42.5 0 0 0 679 92.5H713.5V52H684.2M755.5 0V100M824.5 0V100M755.5 50H824.5M859 7.5H947M903 7.5V100M1026.5 100V31.8A24.2 24.2 0 0 1 1075 31.8V100M1075 31.8A24.2 24.2 0 0 1 1123.5 31.8V100M1162.4 108L1208 16.8L1253.6 108M1377 7.5H1335A42.5 42.5 0 0 0 1335 92.5H1377M1411.5 0V100M1480.5 0V100M1411.5 50H1480.5M1522.5 0V100M1564.5 100V43A35.5 35.5 0 0 1 1635.5 43V100M1762 7.5H1720A42.5 42.5 0 0 0 1720 92.5H1762M1877 7.5H1817.8A21.2 21.2 0 0 0 1817.8 50H1848.2A21.2 21.2 0 0 1 1848.2 92.5H1789"/></g><circle cx="411.9" cy="50" r="13.5" fill="currentColor"/><circle cx="1728.9" cy="50" r="13.5" fill="currentColor"/></svg></a>
       <nav class="lamps" aria-label="Sections" data-lamps>
         <a href="#top" data-name="01 · Home" aria-label="01 · Home"></a>
-        <a href="#film" data-name="02 · How it works" aria-label="02 · How it works"></a>
-        <a href="#mission" data-name="03 · Mission" aria-label="03 · Mission"></a>
-        <a href="#domains" data-name="04 · Worlds" aria-label="04 · Worlds"></a>
-        <a href="#validation" data-name="05 · Validation" aria-label="05 · Validation"></a>
+        <span class="lamps__group">
+          <a href="#film" data-name="02 · How it works" aria-label="02 · How it works"></a>
+          <a href="#mission" data-name="03 · Mission" aria-label="03 · Mission"></a>
+          <a href="#domains" data-name="04 · Worlds" aria-label="04 · Worlds"></a>
+          <a href="#validation" data-name="05 · Validation" aria-label="05 · Validation"></a>
+        </span>
         <a href="#manifesto" data-name="06 · Manifesto" aria-label="06 · Manifesto"></a>
       </nav>
       <nav class="bar__nav" aria-label="Site"><a href="/journal/the-future-should-be-engineered-with-foresight/">Manifesto</a><a class="bar__cta" href="/discuss/">Discuss a decision</a></nav>
     </header>
 
-    <section class="fh fh--dark" id="top">
+    <section class="fh" id="top">
       <div class="fh__box">
+        <div class="fh__grid" aria-hidden="true"></div>
+        <span class="fh__scale" aria-hidden="true"></span>
         <span class="fh__mk fh__mk--tl" aria-hidden="true"><i class="fh__x"></i><em>01</em>Model</span>
         <span class="fh__mk fh__mk--tr" aria-hidden="true"><em>02</em>Simulate<i class="fh__x"></i></span>
-        <span class="fh__mk fh__mk--br" aria-hidden="true"><em>03</em>Intervene<i class="fh__x"></i></span>
-        <span class="fh__mk fh__mk--bl" aria-hidden="true"><i class="fh__x"></i><em>04</em>Record</span>
+        <span class="fh__mk fh__mk--br" aria-hidden="true"><span class="fh__sq"><i></i><i></i></span><em>03</em>Intervene<i class="fh__x"></i></span>
+        <span class="fh__mk fh__mk--bl" aria-hidden="true"><i class="fh__x"></i><span class="fh__sq"><i></i><i></i></span><em>04</em>Record</span>
         <div class="fh__in">
-          <div class="lens lens--hero" data-foresight-lens data-lens-day="0.34">
+          <div class="lens lens--hero" data-lens="all" data-lens-day="0.42">
             <div class="lens__box">
-              <div class="lens__fallback" aria-hidden="true"></div>
-              <svg class="lens__dial" viewBox="-106 -106 212 212" aria-hidden="true"></svg>
+              <picture class="lens__poster"><img src="/lens-all.webp" width="900" height="900" alt="" fetchpriority="high" /></picture>
+              <svg class="lens__dial" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
             </div>
-            <p class="sr-only">An interactive optical foresight instrument showing a phase-space terrain of possible futures branching forward in time, with a single calibrated amber intervention trajectory holding through the bifurcation. Drag horizontally to scrub time ahead.</p>
+            <p class="sr-only">A glass lens onto a living model of the world: a financial district, a power and compute campus and a port, with traffic, steam, cranes and a ship under way. The ring is a dial that runs time ahead.</p>
           </div>
-          <h1 class="fh__line">Every institution will run on a <em>Foresight&nbsp;Machine.</em></h1>
+          <h1 class="fh__line">Every institution will run on a Foresight&nbsp;Machine.</h1>
           <p class="fh__sub">Foresight infrastructure for the financial and physical world.</p>
-          <p class="fh__actions">
-            <a class="btn fh__btn" href="/discuss/">Discuss a decision</a>
-            <a class="fh__more" href="#film">How it works <span aria-hidden="true">↓</span></a>
-          </p>
         </div>
       </div>
-      <div class="fh__console" aria-hidden="true">
-        <div class="fh__lamps hero__clusters b1" data-fh-lamps>
-          <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span></span>
-          <span class="lc" style="--c:3" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-          <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
-          <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
-          <span class="lc" style="--c:9" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
-          <span class="lc" style="--c:10" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
-          <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
-        </div>
+      <div class="fh__lamps hero__clusters b1" aria-hidden="true" data-fh-lamps>
+        <span class="lc" style="--c:1" data-third="1">
+          <span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span>
+          <span class="lc__code">032</span>
+        </span>
+        <span class="lc" style="--c:3" data-third="1">
+          <span class="lc__code">FORESIGHT</span>
+          <span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span>
+        </span>
+        <span class="lc" style="--c:5" data-third="2">
+          <span class="lc__lamps">
+            <span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span>
+            <span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span>
+          </span>
+        </span>
+        <span class="lc" style="--c:7" data-third="2">
+          <span class="lc__lamps">
+            <span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span>
+            <span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span>
+          </span>
+        </span>
+        <span class="lc" style="--c:9" data-third="3">
+          <span class="lc__code">012 5621</span>
+          <span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span>
+        </span>
+        <span class="lc" style="--c:10" data-third="3">
+          <span class="lc__code">563</span>
+          <span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span>
+        </span>
+        <span class="lc lc--end" style="--c:12" data-third="3">
+          <span class="lc__lamps">
+            <span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span>
+            <span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span>
+          </span>
+        </span>
       </div>
     </section>
 
@@ -94,24 +117,30 @@
         <div class="wrap">
           <p class="chip">Mission</p>
           <div class="ms"><span class="ms__x" aria-hidden="true"><i></i><i></i><i></i><i></i></span><h2 class="ms__line" data-lightup>Build foresight infrastructure for the financial and physical world.</h2></div>
-          <div class="ms__cols">
-            <h3 class="ms__h">There’s forecasting, and there’s foresight.</h3>
-            <div class="prose" data-lightup>
-              <p>Forecasting tells you what is likely. Machines now do it <a href="https://forecastingresearch.substack.com/p/ai-models-have-likely-reached-parity" target="_blank" rel="noopener">as well as the best people</a>.</p>
-              <p>But no commitment is settled alone. Other institutions, agreements and rules decide it, and that system has outrun the tools we plan with.</p>
-              <p>Inside most institutions it still lives in a spreadsheet, one scenario at a time.</p>
-              <p>A Foresight Machine runs the whole system forward, finds where the plan breaks, then intervenes: a different allocation, new terms, a sequence that makes a project possible.</p>
-              <p>No one can experiment on a real institution.</p>
-              <p>Anyone can experiment on its Foresight Machine, before anything is committed.</p>
-            </div>
+          <div class="ms__lamps hero__clusters b1 b2 b3" aria-hidden="true">
+            <span class="lc" style="--c:1" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i><i class="d"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:3" data-third="1"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:5" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="o"></i><i class="o"></i></span></span></span>
+            <span class="lc" style="--c:7" data-third="2"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="l"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="gap"></i><i class="gap"></i><i class="d"></i><i class="gap"></i><i class="o"></i><i class="o"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:9" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="l"></i></span></span></span>
+            <span class="lc" style="--c:10" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="l"></i><i class="d"></i></span></span></span>
+            <span class="lc lc--end" style="--c:12" data-third="3"><span class="lc__lamps"><span class="lc__row"><i class="d"></i><i class="d"></i><i class="d"></i><i class="gap"></i><i class="gap"></i><i class="l"></i><i class="l"></i></span><span class="lc__row"><i class="l"></i><i class="gap"></i><i class="d"></i><i class="l"></i><i class="o"></i><i class="o"></i><i class="d"></i></span></span></span>
           </div>
+          <div class="ms__split"><div class="ms__cols">
+            <p>Decisions of consequence sit inside coupled systems — contracts, capital, infrastructure, counterparties, rules.</p>
+            <p>Inside most institutions they still live in spreadsheets, one scenario at a time.</p>
+            <p>A Foresight Machine runs the whole system forward, finds where the plan breaks, then intervenes: a different allocation, new terms, a sequence that makes a project possible.</p>
+            <p>No one can experiment on a real institution.</p>
+            <p>Anyone can experiment on its Foresight Machine, before anything is committed.</p>
+          </div></div>
 
           <div class="ct" aria-label="What kind of thing this is">
             <ol class="ct__cells">
-              <li class="ct__c"><span class="ct__idx">01</span><p class="ct__k">Dashboards</p><p class="ct__a">Show what happened.</p><p class="ct__b">You read them.</p></li>
-              <li class="ct__c"><span class="ct__idx">02</span><p class="ct__k">Forecasts</p><p class="ct__a">Estimate what is likely.</p><p class="ct__b">You interpret them.</p></li>
-              <li class="ct__c is-ours"><span class="ct__idx">03</span><p class="ct__k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p><p class="ct__a">Find the plan that holds.</p><p class="ct__b">You set the goal and decide.</p></li>
+              <li class="ct__c"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__k">Dashboards</p><p class="ct__a">Show what happened.</p><p class="ct__b">You read them.</p></li>
+              <li class="ct__c"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__k">Forecasts</p><p class="ct__a">Estimate what is likely.</p><p class="ct__b">You interpret them.</p></li>
+              <li class="ct__c is-ours"><span class="ct__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><p class="ct__k"><span class="bar__squares" aria-hidden="true"><i></i><i></i></span>Foresight Machines</p><p class="ct__a">Find the plan that holds.</p><p class="ct__b">You set the goal and decide.</p></li>
             </ol>
+            <div class="ct__bar" aria-hidden="true"><i></i><i></i><i class="is-ours"></i></div>
           </div>
         </div>
       </section>
@@ -119,26 +148,21 @@
       <section class="band band--paper" id="domains" data-screen>
         <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap">
-          <div class="dm__top">
-            <div class="dm__head">
-              <p class="chip">Worlds</p>
-              <h2 class="h2">Wherever capital is committed.</h2>
-            </div>
-            <p class="lead dm__lead">Each is a world of its own, with its institutions, its flows and its rules, joined to the others by the money that moves between them. We model the world of money first, then follow it into the worlds it builds.</p>
-          </div>
+          <p class="chip">Worlds</p>
+          <header class="wk-head">
+            <h2 class="h2">Wherever capital is committed.</h2>
+            <p class="lead">Each is a world of its own, with its institutions, its flows and its rules, joined to the others by the money that moves between them. We model the world of money first, then follow it into the worlds it builds.</p>
+          </header>
 
           <div class="dcs wks" data-dossier>
             <div class="wq">
-              <div class="wq__bar">
-                <div class="dq" role="tablist" aria-label="What a Foresight Machine does">
-                  <span class="dq__lab">What it does</span>
-                  <button type="button" role="tab" class="dq__b is-on" aria-selected="true" data-dq="0"><em>01</em>Predict<i></i></button>
-                  <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="1"><em>02</em>Optimize<i></i></button>
-                  <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="2"><em>03</em>Discover<i></i></button>
-                  <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="3"><em>04</em>Coordinate<i></i></button>
-                  <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="4"><em>05</em>Price risk<i></i></button>
-                </div>
-                <button type="button" class="wq__all" data-dq-all aria-pressed="false">View all 5</button>
+              <div class="dq" role="tablist" aria-label="What a Foresight Machine does">
+                <span class="dq__lab">Capability</span>
+                <button type="button" role="tab" class="dq__b is-on" aria-selected="true" data-dq="0"><span>01</span>Predict<i></i></button>
+                <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="1"><span>02</span>Optimize<i></i></button>
+                <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="2"><span>03</span>Discover<i></i></button>
+                <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="3"><span>04</span>Coordinate<i></i></button>
+                <button type="button" role="tab" class="dq__b" aria-selected="false" data-dq="4"><span>05</span>Price risk<i></i></button>
               </div>
               <div class="wq__defs" aria-live="polite">
                 <p class="wq__d is-on" data-dq-d="0">Calls what happens next, and is scored when it does.</p>
@@ -150,121 +174,74 @@
             </div>
 
             <div class="wks__row">
-              <!-- World 01 -->
-              <article class="wk wk--first">
+              <article class="wk wk--first" data-lens-zone>
                 <svg class="wk__frame" aria-hidden="true"><path class="wk__o"/><path class="wk__i"/></svg>
-                <p class="wk__tab">World 01 · Start</p>
+                <p class="wk__tab">World 01</p>
                 <span class="wk__mk" aria-hidden="true"><i></i><b></b></span>
-                <figure class="wk__plate" aria-hidden="true">
-                  <svg viewBox="0 0 360 156" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g stroke="rgba(242,237,228,0.08)" stroke-width="1">
-                      <line x1="0" y1="39" x2="360" y2="39"/><line x1="0" y1="78" x2="360" y2="78"/><line x1="0" y1="117" x2="360" y2="117"/>
-                      <line x1="72" y1="0" x2="72" y2="156"/><line x1="144" y1="0" x2="144" y2="156"/><line x1="216" y1="0" x2="216" y2="156"/><line x1="288" y1="0" x2="288" y2="156"/>
-                    </g>
-                    <circle cx="180" cy="78" r="56" stroke="rgba(242,237,228,0.14)" stroke-dasharray="3 4"/>
-                    <circle cx="180" cy="78" r="32" stroke="rgba(243,146,0,0.45)"/>
-                    <path d="M56 44 L180 78 L304 42 M68 118 L180 78 L294 114 M118 28 L180 78 L244 128 M120 130 L180 78 L242 28" stroke="rgba(242,237,228,0.22)" stroke-width="1"/>
-                    <path d="M56 44 Q118 42 180 78 T304 42" stroke="#f39200" stroke-width="1.6"/>
-                    <path d="M68 118 Q130 96 180 78 T294 114" stroke="rgba(243,146,0,0.55)" stroke-width="1.2" stroke-dasharray="4 3"/>
-                    <g fill="#15120f" stroke="rgba(242,237,228,0.65)" stroke-width="1.2">
-                      <circle cx="56" cy="44" r="5"/><circle cx="304" cy="42" r="5"/>
-                      <circle cx="68" cy="118" r="4.5"/><circle cx="294" cy="114" r="4.5"/>
-                      <circle cx="118" cy="28" r="4"/><circle cx="244" cy="128" r="4"/>
-                      <circle cx="120" cy="130" r="4"/><circle cx="242" cy="28" r="4"/>
-                    </g>
-                    <circle cx="180" cy="78" r="7.5" fill="#f39200"/>
-                    <circle cx="180" cy="78" r="14" stroke="#f39200" stroke-opacity="0.45"/>
-                    <text x="16" y="20" class="wk__svgk">24/7 LIQUIDITY GRAPH · 1,000–1,500 NODES</text>
-                    <text x="344" y="144" text-anchor="end" class="wk__svgk wk__svgk--am">PAR 1.0000</text>
-                  </svg>
-                </figure>
+                <div class="wk__stage">
+                  <div class="lens lens--card" data-lens="money" data-lens-day="0.38" data-lens-t="2.5">
+                    <div class="lens__box">
+                      <picture class="lens__poster"><img src="/lens-money.webp" width="640" height="640" alt="" loading="lazy" decoding="async" /></picture>
+                      <svg class="lens__dial" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+                    </div>
+                  </div>
+                </div>
                 <h3 class="wk__t">Digital money</h3>
                 <p class="wk__who">Issuers, exchanges, banks, custodians, market makers and payment networks: 1,000–1,500 institutions on one 24/7 graph.</p>
                 <div class="wk__qs" aria-live="polite">
-                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v"><em>01</em>Predict</span>Weekend net positions and the peg, by Friday noon.</p>
-                  <p class="wk__q" data-dq-q="1"><span class="wk__v"><em>02</em>Optimize</span>Hold par through an 8% Friday redemption wave at least cost.</p>
-                  <p class="wk__q" data-dq-q="2"><span class="wk__v"><em>03</em>Discover</span>The collateral mark that would have stopped 10/10’s $0.65 USDe spiral.</p>
-                  <p class="wk__q" data-dq-q="3"><span class="wk__v"><em>04</em>Coordinate</span>Card prefunding, receivables credit and weekend netting.</p>
-                  <p class="wk__q" data-dq-q="4"><span class="wk__v"><em>05</em>Price risk</span>Parametric depeg cover, backstops and curator bonds.</p>
+                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v">Predict</span>Weekend net positions and the peg, by Friday noon.</p>
+                  <p class="wk__q" data-dq-q="1"><span class="wk__v">Optimize</span>Hold par through an 8% Friday redemption wave at least cost.</p>
+                  <p class="wk__q" data-dq-q="2"><span class="wk__v">Discover</span>The collateral mark that would have stopped 10/10’s $0.65 USDe spiral.</p>
+                  <p class="wk__q" data-dq-q="3"><span class="wk__v">Coordinate</span>Card prefunding, receivables credit and weekend netting.</p>
+                  <p class="wk__q" data-dq-q="4"><span class="wk__v">Price risk</span>Parametric depeg cover, backstops and curator bonds.</p>
                 </div>
                 <p class="wk__grade"><span>Reality grades in</span><b>Seconds to days</b></p>
               </article>
 
-              <!-- World 02 -->
-              <article class="wk">
+              <article class="wk" data-lens-zone>
                 <svg class="wk__frame" aria-hidden="true"><path class="wk__o"/><path class="wk__i"/></svg>
                 <p class="wk__tab">World 02</p>
                 <span class="wk__mk" aria-hidden="true"><i></i><b></b></span>
-                <figure class="wk__plate" aria-hidden="true">
-                  <svg viewBox="0 0 360 156" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g stroke="rgba(242,237,228,0.08)" stroke-width="1">
-                      <line x1="0" y1="39" x2="360" y2="39"/><line x1="0" y1="78" x2="360" y2="78"/><line x1="0" y1="117" x2="360" y2="117"/>
-                      <line x1="72" y1="0" x2="72" y2="156"/><line x1="144" y1="0" x2="144" y2="156"/><line x1="216" y1="0" x2="216" y2="156"/><line x1="288" y1="0" x2="288" y2="156"/>
-                    </g>
-                    <!-- Generation & Substation Bus -->
-                    <rect x="28" y="54" width="54" height="52" rx="2" stroke="rgba(242,237,228,0.45)" fill="rgba(242,237,228,0.04)"/>
-                    <path d="M40 86 L55 62 L70 86 M45 78 H65" stroke="rgba(242,237,228,0.55)" stroke-width="1.2"/>
-                    <line x1="82" y1="80" x2="140" y2="80" stroke="#f39200" stroke-width="1.6"/>
-                    <!-- Transformer step-down coils -->
-                    <circle cx="152" cy="80" r="12" stroke="#f39200" stroke-width="1.4"/>
-                    <circle cx="168" cy="80" r="12" stroke="rgba(242,237,228,0.65)" stroke-width="1.4"/>
-                    <line x1="180" y1="80" x2="218" y2="80" stroke="rgba(242,237,228,0.45)" stroke-width="1.4"/>
-                    <!-- Phased Compute Halls -->
-                    <path d="M218 46 V114 M218 46 H244 M218 80 H244 M218 114 H244" stroke="rgba(242,237,228,0.38)" stroke-width="1.2"/>
-                    <rect x="244" y="36" width="84" height="20" rx="2" stroke="#f39200" fill="rgba(243,146,0,0.14)"/>
-                    <rect x="244" y="70" width="84" height="20" rx="2" stroke="rgba(242,237,228,0.42)" fill="rgba(242,237,228,0.05)"/>
-                    <rect x="244" y="104" width="84" height="20" rx="2" stroke="rgba(242,237,228,0.24)" stroke-dasharray="3 3" fill="none"/>
-                    <text x="16" y="20" class="wk__svgk">GRID BUS · SUBSTATION · COMPUTE PHASING</text>
-                    <text x="344" y="144" text-anchor="end" class="wk__svgk wk__svgk--am">DSCR ≥ 1.20×</text>
-                  </svg>
-                </figure>
+                <div class="wk__stage">
+                  <div class="lens lens--card" data-lens="power" data-lens-day="0.55" data-lens-t="2.5">
+                    <div class="lens__box">
+                      <picture class="lens__poster"><img src="/lens-power.webp" width="640" height="640" alt="" loading="lazy" decoding="async" /></picture>
+                      <svg class="lens__dial" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+                    </div>
+                  </div>
+                </div>
                 <h3 class="wk__t">Power, compute and megainfrastructure</h3>
                 <p class="wk__who">Grid operators, hyperscalers, power producers, project financiers and sovereign capital, racing to power the AI buildout.</p>
                 <div class="wk__qs" aria-live="polite">
-                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v"><em>01</em>Predict</span>The next PJM capacity auction; a campus’s first-power date.</p>
-                  <p class="wk__q" data-dq-q="1"><span class="wk__v"><em>02</em>Optimize</span>A transformer slips 7 months: the phasing that keeps debt service covered.</p>
-                  <p class="wk__q" data-dq-q="2"><span class="wk__v"><em>03</em>Discover</span>A tenant cuts 20%: the path to default on $8.5B of GPU debt.</p>
-                  <p class="wk__q" data-dq-q="3"><span class="wk__v"><em>04</em>Coordinate</span>Flexible-load terms between utilities and hyperscalers.</p>
-                  <p class="wk__q" data-dq-q="4"><span class="wk__v"><em>05</em>Price risk</span>Energization-delay cover: only a third to half of campuses are insured.</p>
+                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v">Predict</span>The next PJM capacity auction; a campus’s first-power date.</p>
+                  <p class="wk__q" data-dq-q="1"><span class="wk__v">Optimize</span>A transformer slips 7 months: the phasing that keeps debt service covered.</p>
+                  <p class="wk__q" data-dq-q="2"><span class="wk__v">Discover</span>A tenant cuts 20%: the path to default on $8.5B of GPU debt.</p>
+                  <p class="wk__q" data-dq-q="3"><span class="wk__v">Coordinate</span>Flexible-load terms between utilities and hyperscalers.</p>
+                  <p class="wk__q" data-dq-q="4"><span class="wk__v">Price risk</span>Energization-delay cover: only a third to half of campuses are insured.</p>
                 </div>
                 <p class="wk__grade"><span>Reality grades in</span><b>Hours to quarters</b></p>
               </article>
 
-              <!-- World 03 -->
-              <article class="wk">
+              <article class="wk" data-lens-zone>
                 <svg class="wk__frame" aria-hidden="true"><path class="wk__o"/><path class="wk__i"/></svg>
                 <p class="wk__tab">World 03</p>
                 <span class="wk__mk" aria-hidden="true"><i></i><b></b></span>
-                <figure class="wk__plate" aria-hidden="true">
-                  <svg viewBox="0 0 360 156" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g stroke="rgba(242,237,228,0.08)" stroke-width="1">
-                      <line x1="0" y1="39" x2="360" y2="39"/><line x1="0" y1="78" x2="360" y2="78"/><line x1="0" y1="117" x2="360" y2="117"/>
-                      <line x1="72" y1="0" x2="72" y2="156"/><line x1="144" y1="0" x2="144" y2="156"/><line x1="216" y1="0" x2="216" y2="156"/><line x1="288" y1="0" x2="288" y2="156"/>
-                    </g>
-                    <!-- Blocked chokepoint direct route -->
-                    <path d="M36 96 C96 84 142 64 184 64 C228 64 274 52 324 44" stroke="rgba(242,237,228,0.28)" stroke-width="1.3" stroke-dasharray="4 4"/>
-                    <!-- Rerouted optimal corridor -->
-                    <path d="M36 96 C104 126 196 130 256 96 C286 78 304 58 324 44" stroke="#f39200" stroke-width="1.8"/>
-                    <!-- Chokepoint rings -->
-                    <circle cx="164" cy="66" r="14" stroke="#c9502a" stroke-opacity="0.7" stroke-dasharray="3 2"/>
-                    <circle cx="164" cy="66" r="3.5" fill="#c9502a"/>
-                    <circle cx="222" cy="58" r="10" stroke="rgba(243,146,0,0.55)" stroke-dasharray="2 2"/>
-                    <circle cx="222" cy="58" r="3" fill="#f39200"/>
-                    <!-- Origin & Destination ports -->
-                    <rect x="31" y="91" width="10" height="10" fill="#15120f" stroke="#f2ede4" stroke-width="1.4"/>
-                    <rect x="319" y="39" width="10" height="10" fill="#f39200"/>
-                    <text x="16" y="20" class="wk__svgk">MARITIME CORRIDORS · CHOKEPOINTS · LC RAILS</text>
-                    <text x="344" y="144" text-anchor="end" class="wk__svgk wk__svgk--am">REROUTE +11D</text>
-                  </svg>
-                </figure>
+                <div class="wk__stage">
+                  <div class="lens lens--card" data-lens="trade" data-lens-day="0.7" data-lens-t="2.5">
+                    <div class="lens__box">
+                      <picture class="lens__poster"><img src="/lens-trade.webp" width="640" height="640" alt="" loading="lazy" decoding="async" /></picture>
+                      <svg class="lens__dial" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+                    </div>
+                  </div>
+                </div>
                 <h3 class="wk__t">Global trade</h3>
                 <p class="wk__who">Carriers, ports, commodity houses, trade-finance banks and insurers, moving goods through chokepoints and tariff regimes.</p>
                 <div class="wk__qs" aria-live="polite">
-                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v"><em>01</em>Predict</span>Whether China extends its rare-earth export pause on Jan 10.</p>
-                  <p class="wk__q" data-dq-q="1"><span class="wk__v"><em>02</em>Optimize</span>Hormuz premium at 10%: reroute or wait, and amend the LC in time.</p>
-                  <p class="wk__q" data-dq-q="2"><span class="wk__v"><em>03</em>Discover</span>Bab al-Mandeb shut, Hormuz at 7.5%: six weeks of Asia–Europe trade.</p>
-                  <p class="wk__q" data-dq-q="3"><span class="wk__v"><em>04</em>Coordinate</span>LC amendment rules and war-risk cost sharing during reroutes.</p>
-                  <p class="wk__q" data-dq-q="4"><span class="wk__v"><em>05</em>Price risk</span>War-risk and transit cover on observable triggers.</p>
+                  <p class="wk__q is-on" data-dq-q="0"><span class="wk__v">Predict</span>Whether China extends its rare-earth export pause on Jan 10.</p>
+                  <p class="wk__q" data-dq-q="1"><span class="wk__v">Optimize</span>Hormuz premium at 10%: reroute or wait, and amend the LC in time.</p>
+                  <p class="wk__q" data-dq-q="2"><span class="wk__v">Discover</span>Bab al-Mandeb shut, Hormuz at 7.5%: six weeks of Asia–Europe trade.</p>
+                  <p class="wk__q" data-dq-q="3"><span class="wk__v">Coordinate</span>LC amendment rules and war-risk cost sharing during reroutes.</p>
+                  <p class="wk__q" data-dq-q="4"><span class="wk__v">Price risk</span>War-risk and transit cover on observable triggers.</p>
                 </div>
                 <p class="wk__grade"><span>Reality grades in</span><b>Days to quarters</b></p>
               </article>
@@ -274,6 +251,7 @@
       </section>
 
       <section class="band band--dark" id="validation" data-screen>
+        <span class="band__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="wrap">
           <p class="chip">Validation</p>
           <div class="pv">
@@ -281,10 +259,7 @@
               <h2 class="h2">A Foresight Machine earns trust the way a trader does: by its record.</h2>
               <p class="lead">Every machine is tested where it can fail safely, then where it cannot cheat, then where it counts.</p>
             </header>
-            <figure class="pv__sheet">
-              <!-- @proving -->
-              <figcaption class="pv__cap"><i></i>The proving path <em>— RL environments → Held-out replay → Live pre-committed decisions</em></figcaption>
-            </figure>
+            <figure class="pv__sheet"><!-- @proving --><figcaption class="pv__cap"><i></i>The proving path<em>Three progressive gates · closed feedback loop</em></figcaption></figure>
             <ol class="pv__st">
               <li><p class="pv__k"><span>01</span>RL environments</p><p class="pv__l">Where it can fail safely.</p><p class="pv__b">Its own world, a task and an answer that can be checked exactly. Every plan meets an adversary searching for the smallest shock that breaks it.</p></li>
               <li><p class="pv__k"><span>02</span>Replay</p><p class="pv__l">Where it cannot cheat.</p><p class="pv__b">History it has never seen, scored on what actually happened.</p></li>
@@ -309,6 +284,7 @@
         <div class="wrap">
           <p class="chip">Manifesto</p>
           <div class="win win--feature">
+            <span class="win__br" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             <div class="feat">
               <h2 class="feat__title">The future should be engineered with foresight.</h2>
               <div class="feat__row">

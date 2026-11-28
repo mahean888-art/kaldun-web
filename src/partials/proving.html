@@ -1,166 +1,91 @@
-<svg class="pv__svg" viewBox="0 0 1200 430" role="img" aria-label="The proving path: three consecutive gates — RL environments, held-out replay, and live pre-committed decisions — with misses feeding back as new environments." xmlns="http://www.w3.org/2000/svg">
+<svg class="pv__svg" viewBox="0 0 1200 410" role="img" aria-label="The proving path: three progressive verification gates — 01 RL environments, 02 Historical replay, and 03 Live decisions — connected by a closed feedback loop where every miss becomes a new environment.">
   <defs>
-    <linearGradient id="pv-track" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="pv-beam" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#f39200" stop-opacity="0.35"/>
       <stop offset="50%" stop-color="#f39200" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#f39200" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffb84d" stop-opacity="1"/>
     </linearGradient>
-    <linearGradient id="pv-panel" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#191612"/>
-      <stop offset="100%" stop-color="#110f0c"/>
-    </linearGradient>
-    <linearGradient id="pv-amber-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+    <radialGradient id="pv-halo" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#f39200" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#f39200" stop-opacity="0.0"/>
+      <stop offset="100%" stop-color="#f39200" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pv-loop" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#f39200" stop-opacity="0.72"/>
+      <stop offset="50%" stop-color="#f39200" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#f39200" stop-opacity="0.72"/>
     </linearGradient>
-    <pattern id="pv-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(242,237,228,0.08)" stroke-width="1"/>
-    </pattern>
-    <filter id="pv-glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="3.5" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
   </defs>
 
-  <!-- Calibrated top & bottom telemetry rulers -->
-  <g class="pv-ruler" stroke="rgba(242,237,228,0.14)" stroke-width="1">
-    <line x1="48" y1="36" x2="1152" y2="36"/>
-    <line x1="48" y1="394" x2="1152" y2="394"/>
-    <path d="M48 30v12 M200 33v6 M360 33v6 M520 33v6 M600 28v16 M680 33v6 M840 33v6 M1000 33v6 M1152 30v12"/>
+  <!-- Subtle architectural plate frame & coordinate ticks -->
+  <g stroke="rgba(245,239,230,0.055)" stroke-width="1">
+    <line x1="60" y1="74" x2="1140" y2="74"/>
+    <line x1="60" y1="158" x2="1140" y2="158"/>
+    <line x1="60" y1="242" x2="1140" y2="242"/>
+    <line x1="60" y1="326" x2="1140" y2="326"/>
+    <line x1="220" y1="36" x2="220" y2="354"/>
+    <line x1="600" y1="36" x2="600" y2="354"/>
+    <line x1="980" y1="36" x2="980" y2="354"/>
   </g>
-  <text class="pv-meta" x="48" y="23">PROVING ARCHITECTURE · STRICT MONOTONIC PROMOTION</text>
-  <text class="pv-meta" x="1152" y="23" text-anchor="end">GATE 01 → GATE 02 → GATE 03</text>
 
-  <!-- Main horizontal amber progression bus connecting the three chambers -->
-  <line x1="358" y1="196" x2="424" y2="196" stroke="url(#pv-track)" stroke-width="2"/>
-  <polygon points="418,191 426,196 418,201" fill="#f39200"/>
-  <line x1="726" y1="196" x2="792" y2="196" stroke="url(#pv-track)" stroke-width="2"/>
-  <polygon points="786,191 794,196 786,201" fill="#f39200"/>
+  <!-- Calibrated ascending confidence trajectory connecting all three gates -->
+  <path d="M84 240 L220 222 L590 178 L948 134 L1106 115" fill="none" stroke="url(#pv-beam)" stroke-width="2.2"/>
+  <path d="M84 254 L220 238 L590 200 L948 156" fill="none" stroke="rgba(245,239,230,0.12)" stroke-width="1" stroke-dasharray="3 5"/>
 
-  <!-- Feedback return loop: Every miss in Live Decisions creates a new RL Environment -->
-  <path class="pv-loop" d="M972 324 L972 362 L202 362 L202 326" fill="none" stroke="rgba(243,146,0,0.52)" stroke-width="1.4" stroke-dasharray="5 5"/>
-  <polygon points="197,332 202,323 207,332" fill="#f39200"/>
-  <rect x="444" y="349" width="312" height="26" rx="2" fill="#0f0d0b" stroke="rgba(243,146,0,0.35)" stroke-width="1"/>
-  <text class="pv-loop-t" x="600" y="366" text-anchor="middle">EVERY MISS BECOMES A NEW ENVIRONMENT</text>
+  <!-- Closed feedback return arc: Live decisions -> RL environments -->
+  <path d="M948 184 C948 354, 220 354, 220 280" fill="none" stroke="url(#pv-loop)" stroke-width="1.35" stroke-dasharray="6 5"/>
+  <polygon points="220,274 215,285 225,285" fill="#f39200"/>
+  <rect x="410" y="324" width="360" height="24" rx="2" fill="#120f0c" stroke="rgba(243,146,0,0.38)"/>
+  <text x="590" y="340" text-anchor="middle" class="pv-mono pv-mono--am">EVERY MISS BECOMES A NEW ENVIRONMENT</text>
 
-  <!-- ================= STAGE 01: RL ENVIRONMENTS ================= -->
-  <g transform="translate(48, 66)">
-    <rect width="310" height="258" rx="3" fill="url(#pv-panel)" stroke="rgba(242,237,228,0.16)" stroke-width="1"/>
-    <path d="M0 12V0H12 M298 0H310V12 M0 246V258H12 M298 258H310V246" fill="none" stroke="rgba(242,237,228,0.45)" stroke-width="1.2"/>
-    <line x1="0" y1="42" x2="310" y2="42" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-idx" x="18" y="26">01</text>
-    <text class="pv-title" x="44" y="26">RL ENVIRONMENTS</text>
-    <text class="pv-tag" x="292" y="26" text-anchor="end">SANDBOX</text>
-
-    <!-- Plot grid -->
-    <g stroke="rgba(242,237,228,0.06)" stroke-width="1">
-      <line x1="20" y1="74" x2="290" y2="74"/>
-      <line x1="20" y1="112" x2="290" y2="112"/>
-      <line x1="20" y1="150" x2="290" y2="150"/>
-      <line x1="20" y1="188" x2="290" y2="188"/>
-      <line x1="88" y1="62" x2="88" y2="198"/>
-      <line x1="156" y1="62" x2="156" y2="198"/>
-      <line x1="224" y1="62" x2="224" y2="198"/>
+  <!-- ==================== GATE 01: RL ENVIRONMENTS ==================== -->
+  <g transform="translate(220 222)">
+    <circle r="68" fill="url(#pv-halo)"/>
+    <circle r="52" fill="#120f0c" stroke="rgba(245,239,230,0.22)" stroke-width="1.1"/>
+    <circle r="36" fill="none" stroke="rgba(243,146,0,0.42)" stroke-width="1" stroke-dasharray="3 4"/>
+    <circle r="20" fill="none" stroke="rgba(245,239,230,0.3)" stroke-width="1"/>
+    <!-- Adversarial shock probes converging on the plan -->
+    <g stroke="#f39200" stroke-width="1.2" opacity="0.85">
+      <line x1="-44" y1="-25" x2="-15" y2="-8"/>
+      <line x1="-42" y1="26" x2="-14" y2="9"/>
+      <line x1="40" y1="-28" x2="14" y2="-9"/>
     </g>
-
-    <!-- Adversarial failure floor -->
-    <rect x="20" y="168" width="270" height="30" fill="rgba(201,80,42,0.10)"/>
-    <line x1="20" y1="168" x2="290" y2="168" stroke="#c9502a" stroke-width="1" stroke-dasharray="3 3"/>
-    <text class="pv-micro pv-micro--bad" x="284" y="186" text-anchor="end">BREAKING FLOOR</text>
-
-    <!-- Adversary shock trajectories (failing) -->
-    <path d="M24 106 C76 112 124 136 168 176 L210 192" fill="none" stroke="rgba(242,237,228,0.22)" stroke-width="1.2"/>
-    <path d="M24 106 C84 108 142 128 196 174 L244 190" fill="none" stroke="rgba(242,237,228,0.28)" stroke-width="1.2"/>
-    <path d="M24 106 C68 118 110 148 148 182" fill="none" stroke="rgba(201,80,42,0.55)" stroke-width="1.2"/>
-    <circle cx="148" cy="182" r="3" fill="#c9502a"/>
-    <circle cx="196" cy="174" r="3" fill="#c9502a"/>
-
-    <!-- Verified policy path surviving adversary -->
-    <path d="M24 106 C88 104 138 118 188 102 C226 90 258 84 286 80" fill="none" stroke="#f39200" stroke-width="2.2" filter="url(#pv-glow)"/>
-    <circle cx="24" cy="106" r="3.5" fill="#f2ede4"/>
-    <circle cx="286" cy="80" r="4" fill="#f39200"/>
-
-    <!-- Adversary probe arrow -->
-    <path d="M164 68 L164 102" stroke="#f39200" stroke-width="1" stroke-dasharray="2 2"/>
-    <polygon points="160,98 164,106 168,98" fill="#f39200"/>
-    <text class="pv-micro pv-micro--am" x="172" y="75">ADVERSARY PROBE</text>
-
-    <!-- Bottom telemetry footer -->
-    <line x1="0" y1="216" x2="310" y2="216" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-foot" x="18" y="241">FAIL SAFELY · EXACT CHECK</text>
-    <text class="pv-status" x="292" y="241" text-anchor="end">PASS ✓</text>
+    <circle r="5.5" fill="#f39200"/>
+    <line x1="0" y1="-52" x2="0" y2="-104" stroke="rgba(245,239,230,0.38)" stroke-width="1"/>
+    <text x="0" y="-124" text-anchor="middle" class="pv-title"><tspan class="pv-n">01</tspan>  RL environments</text>
+    <text x="0" y="-108" text-anchor="middle" class="pv-sub">FAIL SAFELY · ADVERSARIAL SEARCH</text>
   </g>
 
-  <!-- ================= STAGE 02: HELD-OUT REPLAY ================= -->
-  <g transform="translate(426, 66)">
-    <rect width="300" height="258" rx="3" fill="url(#pv-panel)" stroke="rgba(242,237,228,0.18)" stroke-width="1"/>
-    <path d="M0 12V0H12 M288 0H300V12 M0 246V258H12 M288 258H300V246" fill="none" stroke="rgba(242,237,228,0.45)" stroke-width="1.2"/>
-    <line x1="0" y1="42" x2="300" y2="42" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-idx" x="18" y="26">02</text>
-    <text class="pv-title" x="44" y="26">REPLAY</text>
-    <text class="pv-tag" x="282" y="26" text-anchor="end">UNSEEN HISTORY</text>
-
-    <!-- Left: Known history; Right: Sealed held-out window -->
-    <rect x="150" y="56" width="132" height="146" fill="url(#pv-hatch)"/>
-    <line x1="150" y1="54" x2="150" y2="202" stroke="#f39200" stroke-width="1.5"/>
-    <rect x="116" y="52" width="68" height="17" rx="2" fill="#f39200"/>
-    <text class="pv-pill" x="150" y="64" text-anchor="middle">AS-OF T₀</text>
-
-    <!-- Known historical series -->
-    <polyline points="20,152 44,142 68,148 92,126 116,132 140,118 150,120" fill="none" stroke="#f2ede4" stroke-width="1.8"/>
-    <!-- Held-out actual history (dashed ivory) -->
-    <polyline points="150,120 174,104 198,138 222,162 246,144 276,128" fill="none" stroke="rgba(242,237,228,0.5)" stroke-width="1.5" stroke-dasharray="4 3"/>
-    <!-- Machine out-of-sample forecast band + line -->
-    <path d="M150 120 L174 96 L198 126 L222 148 L246 132 L276 116 L276 144 L246 158 L222 174 L198 152 L174 120 Z" fill="url(#pv-amber-fade)"/>
-    <polyline points="150,120 174,108 198,139 222,159 246,143 276,129" fill="none" stroke="#f39200" stroke-width="2.2"/>
-
-    <text class="pv-micro" x="22" y="194">KNOWABLE</text>
-    <text class="pv-micro pv-micro--am" x="278" y="194" text-anchor="end">HELD-OUT · SCORED</text>
-
-    <line x1="0" y1="216" x2="300" y2="216" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-foot" x="18" y="241">ZERO LOOKAHEAD</text>
-    <text class="pv-status" x="282" y="241" text-anchor="end">VERIFIED ✓</text>
+  <!-- ==================== GATE 02: HISTORICAL REPLAY ==================== -->
+  <g transform="translate(590 178)">
+    <circle r="68" fill="url(#pv-halo)"/>
+    <circle r="52" fill="#120f0c" stroke="rgba(245,239,230,0.26)" stroke-width="1.1"/>
+    <!-- Blind historical cutoff vertical line + predicted vs observed points -->
+    <line x1="-6" y1="-42" x2="-6" y2="42" stroke="rgba(243,146,0,0.75)" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <path d="M-36 17 L-6 5 L16 -8 L35 -17" fill="none" stroke="#f39200" stroke-width="1.8"/>
+    <circle cx="16" cy="-6" r="4" fill="none" stroke="#f5efe6" stroke-width="1.4"/>
+    <circle cx="35" cy="-15" r="4" fill="none" stroke="#f5efe6" stroke-width="1.4"/>
+    <circle cx="-6" cy="5" r="4.5" fill="#f39200"/>
+    <line x1="0" y1="-52" x2="0" y2="-86" stroke="rgba(245,239,230,0.38)" stroke-width="1"/>
+    <text x="0" y="-106" text-anchor="middle" class="pv-title"><tspan class="pv-n">02</tspan>  Replay</text>
+    <text x="0" y="-90" text-anchor="middle" class="pv-sub">UNSEEN HISTORY · ZERO HINDSIGHT</text>
   </g>
 
-  <!-- ================= STAGE 03: LIVE DECISIONS ================= -->
-  <g transform="translate(794, 66)">
-    <rect width="358" height="258" rx="3" fill="url(#pv-panel)" stroke="rgba(243,146,0,0.45)" stroke-width="1.2"/>
-    <path d="M0 12V0H12 M346 0H358V12 M0 246V258H12 M346 258H358V246" fill="none" stroke="#f39200" stroke-width="1.4"/>
-    <line x1="0" y1="42" x2="358" y2="42" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-idx" x="18" y="26">03</text>
-    <text class="pv-title" x="44" y="26">LIVE DECISIONS</text>
-    <text class="pv-tag pv-tag--am" x="340" y="26" text-anchor="end">SEALED RECORD</text>
-
-    <!-- Cryptographic pre-commitment ledger rows -->
-    <g transform="translate(18, 58)">
-      <rect width="322" height="40" rx="2" fill="rgba(243,146,0,0.08)" stroke="rgba(243,146,0,0.35)" stroke-width="1"/>
-      <text class="pv-micro pv-micro--am" x="12" y="16">PRE-COMMITTED · BEFORE OUTCOME</text>
-      <text class="pv-hash" x="12" y="32">SHA-256  3e9f0b7a51c6d2e4 · · · 19d7ec21a</text>
-      <circle cx="304" cy="20" r="4" fill="#f39200"/>
-
-      <!-- Realized scoring comparison bars -->
-      <text class="pv-micro" x="0" y="64">CALIBRATION VS. TEAM BASELINE</text>
-
-      <text class="pv-bar-l" x="0" y="88">MACHINE</text>
-      <rect x="82" y="77" width="180" height="14" rx="2" fill="rgba(242,237,228,0.07)"/>
-      <rect x="82" y="77" width="154" height="14" rx="2" fill="#f39200"/>
-      <text class="pv-bar-v" x="322" y="88" text-anchor="end">SCORED</text>
-
-      <text class="pv-bar-l" x="0" y="114">TEAM PLAN</text>
-      <rect x="82" y="103" width="180" height="14" rx="2" fill="rgba(242,237,228,0.07)"/>
-      <rect x="82" y="103" width="102" height="14" rx="2" fill="rgba(242,237,228,0.32)"/>
-
-      <text class="pv-micro" x="0" y="142">NO REGRESSION ON ANY PAST CASE</text>
-      <text class="pv-micro pv-micro--am" x="322" y="142" text-anchor="end">LOCKED</text>
-    </g>
-
-    <line x1="0" y1="216" x2="358" y2="216" stroke="rgba(242,237,228,0.1)"/>
-    <text class="pv-foot" x="18" y="241">WHERE IT COUNTS · REAL OUTCOMES</text>
-    <text class="pv-status" x="340" y="241" text-anchor="end">LIVE ●</text>
+  <!-- ==================== GATE 03: LIVE DECISIONS ==================== -->
+  <g transform="translate(948 134)">
+    <circle r="76" fill="url(#pv-halo)"/>
+    <circle r="52" fill="#14100b" stroke="#f39200" stroke-width="1.5"/>
+    <circle r="42" fill="none" stroke="rgba(243,146,0,0.32)" stroke-width="1"/>
+    <!-- Cryptographic pre-commitment seal diamond -->
+    <polygon points="0,-23 23,0 0,23 -23,0" fill="rgba(243,146,0,0.14)" stroke="#f39200" stroke-width="1.5"/>
+    <polygon points="0,-9 9,0 0,9 -9,0" fill="#f39200"/>
+    <line x1="0" y1="-52" x2="0" y2="-66" stroke="#f39200" stroke-width="1.1"/>
+    <text x="0" y="-86" text-anchor="middle" class="pv-title"><tspan class="pv-n">03</tspan>  Live decisions</text>
+    <text x="0" y="-70" text-anchor="middle" class="pv-sub pv-sub--am">SEALED BEFORE OUTCOME · GRADED AFTER</text>
   </g>
 
-  <!-- Animated signal pulse sweeping across the proving path -->
-  <circle class="pv-pulse" r="4.5" fill="#f39200" filter="url(#pv-glow)">
-    <animateMotion dur="5.6s" repeatCount="indefinite" path="M358 196 L426 196 M726 196 L794 196"/>
-  </circle>
+  <!-- Calibrated direction ticks between gates -->
+  <g fill="#f39200" opacity="0.85">
+    <polygon points="410,199 400,195 401,204"/>
+    <polygon points="774,155 764,151 765,160"/>
+  </g>
 </svg>
